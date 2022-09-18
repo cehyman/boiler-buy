@@ -5,28 +5,26 @@
 ### Local Setup
 1. Create a virtual environment for the app:
     * Windows 
-        '''
+        ```
         py -m venv .venv
         .venv/scripts/activate
-        ''' 
+        ```
 
     * macOS/linux 
-        '''
+        ```
         python3 -m venv .venv
         source .venv/bin/activate
-        '''
-        
-
+        ```
 
 2. Install the dependencies:
-    '''
+    ```
     pip install -r requirements.txt
-    '''
+    ```
 
 3. Run the app:
-    '''
+    ```
     python3 manage.py runserver
-    '''
+    ```
     * App will be available on http://127.0.0.1:8000
 
 
