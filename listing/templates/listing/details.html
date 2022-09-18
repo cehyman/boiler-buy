@@ -1,0 +1,25 @@
+{% extends "listing/base.html" %}
+{% load listing_extras %}
+{% block title %}Listing Details{% endblock %}
+{% block head %}
+  {{ block.super }}
+  <style>
+    body {
+        min-height: 75rem;
+        padding-top: 4.5rem;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+    <h1>{{ listing.name }}</h1>
+    <div class="row">
+        <div class="col-md-2 fw-bold">Price:</div>
+        <div class="col">{{ listing.price }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 fw-bold">Description:</div>
+        <div class="col">{{ listing.description }}</div>                
+    </div>
+
+{% endblock %}
+

@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'restaurant_review.apps.RestaurantReviewConfig',
+    'listing.apps.ListingConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,6 +1,6 @@
-{% extends "restaurant_review/base.html" %}
-{% load restaurant_extras %}
-{% block title %}Restaurant List{% endblock %}
+{% extends "listing/base.html" %}
+{% load listing_extras %}
+{% block title %}Listings{% endblock %}
 {% block head %}
     {{ block.super }}
     <style>
@@ -42,9 +42,9 @@
   </style>
 {% endblock %}
 {% block content %}
-  <h1>Restaurants</h1>
+  <h1>Listings</h1>
 
-  {% if restaurants %}
+  {% if listings %}
       <table class="table">
           <thead>
               <tr>
@@ -54,20 +54,19 @@
               </tr>
           </thead>
           <tbody>
-              {% for restaurant in restaurants %}
+              {% for listing in listings %}
                   <tr>
-                      <td>{{ restaurant.name }}</td>
-                      <td>{% star_rating restaurant.avg_rating restaurant.review_count   %}   </td>
-                      <td class="text-end"><a href="{% url 'details' restaurant.id %}" class="btn btn-sm btn-primary">Details</a></td>
+                      <td>{{ listing.name }}</td>
+                      <td class="text-end"><a href="{% url 'details' listing.id %}" class="btn btn-sm btn-primary">Details</a></td>
                   </tr>
               {% endfor %}
           </tbody>
       </table>
   {% else %}
-      <p>No restaurants exist.  Select Add new restaurant to add one.</p>
+      <p>No listings exist.  Select Add new listing to add one.</p>
   {% endif %}
 
   <div class="d-flex justify-content-end">
-          <a href="{% url 'create_restaurant' %}" class="btn btn-success px-4 gap-3">Add new restaurant</a>
+          <a href="{% url 'create_listing' %}" class="btn btn-success px-4 gap-3">Add new listing</a>
   </div>
 {% endblock %}
