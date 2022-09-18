@@ -2,6 +2,11 @@
 
 ## Available on http://boiler-buy.azurewebsites.net/
 
+### Rules
+1. NO PUSHING TO MASTER - Create your own branch for each feature
+2. To merge to master create a pull request
+3. To merge pull request to master someone else needs to approve it
+
 ### Local Setup
 1. Create a virtual environment for the app:
     * Windows 
