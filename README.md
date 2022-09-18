@@ -2,6 +2,8 @@
 
 ## Available on http://boiler-buy.azurewebsites.net/
 
+### THIS APP USES THE DJANGO FRAMEWORK FIND OUT MORE HERE https://docs.djangoproject.com/en/4.1/
+
 ### Rules
 1. NO PUSHING TO MASTER - Create your own branch for each feature
 2. To merge to master create a pull request
