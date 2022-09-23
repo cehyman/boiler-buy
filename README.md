@@ -43,6 +43,11 @@
     ```
     npm install -g @angular/cli
     ```
+    
+3.5 Update/Install packages:
+   ```
+   npm install
+   ```
 
 4. Run the Angular App:
     Run:
