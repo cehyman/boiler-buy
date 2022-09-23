@@ -39,9 +39,9 @@
 
 2. Go into the ```/boiler-buy/boiler-buy/``` directory
 
-3. Install/Update packages:
+3. Install Angular-CLI
     ```
-    npm install
+    npm install -g @angular/cli
     ```
 
 4. Run the Angular App:
@@ -50,7 +50,7 @@
     ng serve
     ```
     * To automatically open the app, add the ```--open``` flag
-    * App will be available on localhost:4200
+    * App will be available on http://localhost:4200
 
 5. To test:
     ```
