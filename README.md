@@ -34,7 +34,7 @@
     ```
     * App will be available on http://127.0.0.1:8000
 
-### Angular
+### Angular (https://angular.io/docs)
 1. Download Node.js & npm (if not installed):
 
 2. Go into the ```/boiler-buy/boiler-buy/``` directory
