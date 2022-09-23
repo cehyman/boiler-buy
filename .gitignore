@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.vs/VSWorkspaceState.json
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
+.vs/boiler-buy/config/applicationhost.config
+.vs/boiler-buy/v16/.suo
