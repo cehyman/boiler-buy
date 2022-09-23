@@ -54,7 +54,7 @@
 
 5. To test:
     ```
-    ng serve
+    ng test
     ```
     * Write tests in the spec.ts files
 
