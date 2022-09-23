@@ -35,7 +35,7 @@ npm install
 * Test the code
 <!-- Add steps to run the tests suite and/or manually test -->
 ```
-np test
+
 ```
 
 ## What to Check
