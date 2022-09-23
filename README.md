@@ -63,7 +63,7 @@
     ```
     * Write tests in the spec.ts files
 
-5. Before pushing:
+6. Before pushing:
     ```
     ng build
     ```

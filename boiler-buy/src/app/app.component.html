@@ -1,4 +1,9 @@
 <h1>{{title}}</h1>
 
-<!-- This is where the routed views are displayed -->
+<!-- This is where the routed views are displayed, if we are not at '/' -->
 <router-outlet></router-outlet>
+
+<!-- Or we can navigate to it with a link -->
+<nav>
+    <a routerLink="/example">Link to example component</a>
+</nav>
