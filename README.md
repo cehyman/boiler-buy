@@ -34,6 +34,35 @@
     ```
     * App will be available on http://127.0.0.1:8000
 
+### Angular
+1. Download Node.js & npm (if not installed):
+
+2. Go into the ```/boiler-buy/boiler-buy/``` directory
+
+3. Install/Update packages:
+    ```
+    npm install
+    ```
+
+4. Run the Angular App:
+    Run:
+    ```
+    ng serve
+    ```
+    * To automatically open the app, add the ```--open``` flag
+    * App will be available on localhost:4200
+
+5. To test:
+    ```
+    ng serve
+    ```
+    * Write tests in the spec.ts files
+
+5. Before pushing:
+    ```
+    ng build
+    ```
+
 
 ### Requirements
 
