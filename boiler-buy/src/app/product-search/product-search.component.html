@@ -1,0 +1,27 @@
+<div class="topnav">
+    <a routerLink="/home/">Home</a>
+
+    <div class="search-container">
+        <form action="">
+            <input class="search-bar" type="text" matInput placeholder="Search Products" name="search" [(ngModel)]= "search">
+            <button class="search-button">
+                <mat-icon>search</mat-icon>
+            </button>
+        </form>
+    </div>
+    
+    <a routerLink="/profile/">Profile</a>
+</div>
+
+<div class="main-content">
+    <!-- new component for filter section? -->
+    <div class="filter-section">
+        user story 16-18: create a filter component and add the filter component here
+        <p>example: &lt;filter-section&gt;&lt;/filter-section&gt; </p>
+    </div>
+    <div class="product-listings-container">
+        <!-- use a component for the listing -->
+        This is where the product listings will go
+    </div>
+
+</div>

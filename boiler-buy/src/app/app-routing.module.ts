@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule, Routes } from '@angular/router';
 
 import { ExampleComponent } from './example/example.component';
+import { ProductSearchComponent } from './product-search/product-search.component';
 
 const routes: Routes = [
-  { path: 'example', component: ExampleComponent }
+  { path: 'example', component: ExampleComponent },
+  { path: 'product-search', component: ProductSearchComponent}
 ];
 
 @NgModule({
