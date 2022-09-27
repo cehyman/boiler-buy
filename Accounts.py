@@ -1,11 +1,12 @@
 import psycopg2
+
 class Accounts:
     def __init__(account, username, password, email):
         account.username = username
         account.password = password
         account.email = email
     
-    def connectDB():
+    def addAccount(username, password, email):
         conn = psycopg2.connect(
         host="boilerbuy-pgsql.postgres.database.azure.com",
         database="listings",
@@ -13,14 +14,22 @@ class Accounts:
         password="password")
 
         cur = conn.cursor()
-        cur.execute('INSERT INTO Accounts (username, password, email) VALUES("joe","hello","hello@gmail.com");')
-        cur.execute('SELECT * FROM Accounts;')
+        cur.execute("SELECT * FROM accounts WHERE username='?';", username)
         results = cur.fetchall()
         print(results)
+        if len(results) > 0:
+            print("Username already taken.")
+            return
+        cur.execute("SELECT * FROM accounts WHERE email='?';", email)
+        results = cur.fetchall()
+        print(results)
+        if len(results) > 0:
+            print("Email is linked to an account already.")
+            return
+        cur.execute("INSERT INTO accounts (username, password, email) VALUES('jc','pass!','jc@gmail.com');")
         if conn is not None:
             conn.close()
             print('Database connection closed.')
 
     if __name__ == '__main__':
-        connectDB()
-    
+        addAccount('jc', 'pass!', 'jc@gmail.com')
