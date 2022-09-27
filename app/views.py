@@ -3,7 +3,12 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
-from listing.models import Listing
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from rest_framework import permissions
+from config.serializers import UserSerializer, GroupSerializer
+
+from app.models import Listing
 
 # Create your views here.
 
@@ -49,4 +54,19 @@ def add_listing(request):
         return HttpResponseRedirect(reverse('details', args=(listing.id,)))
 
 
-    
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
