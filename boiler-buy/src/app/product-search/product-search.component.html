@@ -17,11 +17,10 @@
     <!-- new component for filter section? -->
     <div class="filter-section">
         user story 16-18: create a filter component and add the filter component here
-        <p>example: &lt;filter-section&gt;&lt;/filter-section&gt; </p>
+        <p>example: &lt;app-filter-section&gt;&lt;/app-filter-section&gt; </p>
     </div>
     <div class="product-listings-container">
-        <!-- use a component for the listing -->
-        This is where the product listings will go
+        <!-- basically a for loop for each element in the array 'products' -->
+        <app-product-listing *ngFor="let product of products; let i = index" [object]="product"></app-product-listing>
     </div>
-
 </div>
