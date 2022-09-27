@@ -1,18 +1,13 @@
 import psycopg2
 
 class Accounts:
-    def __init__(account, username, password, email):
-        account.username = username
-        account.password = password
-        account.email = email
-    
     def addAccount(username, password, email):
         conn = psycopg2.connect(
         host="boilerbuy-pgsql.postgres.database.azure.com",
         database="listings",
         user="user",
         password="password")
-
+        
         cur = conn.cursor()
         cur.execute("SELECT * FROM accounts WHERE username='?';", username)
         results = cur.fetchall()
