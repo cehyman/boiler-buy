@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from '../product-types';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-search',
@@ -9,29 +11,31 @@ export class ProductSearchComponent implements OnInit {
 
   search: String = "";
 
-  products: product[] = [];
+  products: Product[] = [];
 
-  constructor() { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     //TODO: do api call to get the list of products, with applicable filters applied
     //save the list to the array 'products'
+    //this.getProductList();
 
-    //this.products = [{"title": "shoes", price: 45}, {"title": "new car", price: 2}];
+    //in place of the api call:
     this.dothis();
   }
 
   async dothis():Promise<void> {
     await new Promise(resolve => setTimeout(resolve, 1500));
-    this.products = [{"title": "shoes", price: 45}, {"title": "new car", price: 2}];
+    this.products = [{name: "shoes", priceDollars: 45} as Product, {name: "new car", priceDollars: 2} as Product];
     await new Promise(resolve => setTimeout(resolve, 750));
-    this.products.push({"title": "newItem", price: 108});
+    this.products.push({name: "newItem", priceDollars: 108} as Product);
+  }
+
+  getProductList() {
+    this.productService.getProductList().subscribe((productList) => {
+      this.products = productList;
+    });
   }
 
   
-}
-
-type product = {
-  title: String,
-  price: number,
 }

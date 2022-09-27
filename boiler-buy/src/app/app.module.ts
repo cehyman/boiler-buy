@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductListingComponent } from './product-listing/product-listing.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProductListingComponent } from './product-listing/product-listing.compo
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
