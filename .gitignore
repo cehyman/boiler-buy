@@ -130,3 +130,7 @@ dmypy.json
 
 # VS specific stuff
 .vs/
+
+# Angular stuff
+angular/.angular/
+angular/node_modules/
