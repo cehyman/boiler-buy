@@ -49,12 +49,12 @@
     npm install -g @angular/cli
     ```
     
-3. (.5) Update/Install packages:
+4. Update/Install packages:
    ```
    npm install
    ```
 
-4. Run the Angular App:
+5. Run the Angular App:
     Run:
     ```
     ng serve
@@ -62,13 +62,13 @@
     * To automatically open the app, add the ```--open``` flag
     * App will be available on http://localhost:4200
 
-5. To test:
+6. To test:
     ```
     ng test
     ```
     * Write tests in the spec.ts files
 
-5. Before pushing:
+7. Before pushing:
     ```
     ng build
     ```
