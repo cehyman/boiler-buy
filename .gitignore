@@ -131,6 +131,5 @@ dmypy.json
 # VS specific stuff
 .vs/
 
-# Angular specific stuff
-/boiler-buy/node_modules/
-/boiler-buy/.angular/
+# virtual env
+/boiler-buy-venv
