@@ -1,10 +1,19 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { ProductSearchComponent } from './product-search/product-search.component';
+
+const routes: Routes = [
+  { path: 'product-search', component: ProductSearchComponent}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  declarations: [],
+  imports: [
+    CommonModule,
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
