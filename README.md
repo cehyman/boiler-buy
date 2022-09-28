@@ -1,6 +1,6 @@
 # Boiler Buy
 
-## Available on http://boiler-buy.azurewebsites.net/ SOON (NOT IN PRODUCTION YET)
+## Available on http://boiler-buy.azurewebsites.net/ (NOT WORKING YET)
 
 ### THIS APP USES THE DJANGO FRAMEWORK FIND OUT MORE HERE https://docs.djangoproject.com/en/4.1/
 
@@ -49,7 +49,7 @@
     npm install -g @angular/cli
     ```
     
-3.5 Update/Install packages:
+3. (.5) Update/Install packages:
    ```
    npm install
    ```
