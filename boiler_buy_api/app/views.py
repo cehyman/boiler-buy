@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Listing
+from .serializers import ListingSerializer
+
+#create your views here
+class ListingViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Listing.objects.all()
+    serializer_class = ListingSerializer
