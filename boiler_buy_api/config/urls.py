@@ -20,7 +20,7 @@ from rest_framework import routers
 from app import views
 
 router = routers.DefaultRouter()
-router.register(r'questions', views.QuestionViewSet)
+router.register(r'listings', views.ListingViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
