@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ProfilePicComponent } from './profile-pic/profile-pic.component';
+import { FeatureButtonsComponent } from './feature-buttons/feature-buttons.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
     UserInfoComponent,
-    ProfilePicComponent
+    ProfilePicComponent,
+    FeatureButtonsComponent
   ],
   imports: [
     BrowserModule,
