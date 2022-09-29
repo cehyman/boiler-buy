@@ -25,4 +25,5 @@ router.register(r'listings', views.ListingViewSet)
 urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('trentsTest/', views.trentsTest)
 ]

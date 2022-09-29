@@ -12,7 +12,6 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProductList(): Observable<ProductList> {
-    //TODO: write api for this somewhere?
-    return this.http.get('http://boiler-buy.azurewebsites.net/api/v1/') as Observable<ProductList>;
+    return this.http.get('http://localhost:8000/trentsTest/', {responseType: 'json'}) as Observable<ProductList>;
   }
 }
