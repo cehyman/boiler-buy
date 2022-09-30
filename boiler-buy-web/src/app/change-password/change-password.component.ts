@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ChangePasswordService } from '../change-password.service';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -16,8 +15,8 @@ export class ChangePasswordComponent implements OnInit {
   email:string = "";
   curUsers:any = []
 
-  constructor(private changePasswordService: ChangePasswordService, private http:HttpClient) { }
-  // constructor() {}
+  constructor(private changePasswordService: ChangePasswordService) { }
+
   ngOnInit(): void {
   }
 
@@ -36,5 +35,4 @@ export class ChangePasswordComponent implements OnInit {
     }
     this.changePasswordService.updatePassword(userName, newPassword, email); 
   }
-
 }
