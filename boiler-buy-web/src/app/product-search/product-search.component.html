@@ -16,8 +16,17 @@
 <div class="main-content">
     <!-- new component for filter section? -->
     <div class="filter-section">
-        user story 16-18: create a filter component and add the filter component here
-        <p>example: &lt;app-filter-section&gt;&lt;/app-filter-section&gt; </p>
+        <mat-card>
+            <mat-card-content>
+                <h2>Filters</h2>
+                <section>
+                    <mat-checkbox>Min. Price: </mat-checkbox>
+                    <input matInput type="number">
+                    <mat-checkbox>Max. Price: </mat-checkbox>
+                    <input matInput type="number">
+                </section>
+            </mat-card-content>
+        </mat-card>
     </div>
     <div class="product-listings-container">
         <!-- basically a for loop for each element in the array 'products' -->
