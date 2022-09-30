@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
-
   userName:string = "";
   oldPassword:string = "";
   newPassword:string = "";
