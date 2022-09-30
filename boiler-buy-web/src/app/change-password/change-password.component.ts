@@ -14,17 +14,12 @@ export class ChangePasswordComponent implements OnInit {
   email:string = "";
   curUsers:any = []
 
-<<<<<<< HEAD
   constructor(private changePasswordService: ChangePasswordService, private http:HttpClient) { }
-=======
-  constructor(private changePasswordService: ChangePasswordService) { }
->>>>>>> ba14c60 (Fixed issue with http)
   // constructor() {}
   ngOnInit(): void {
   }
 
   updatePasswordInfo(userName:string, email:string, oldPassword:string, newPassword:string) {
-<<<<<<< HEAD
     if (userName.length == 0 || oldPassword.length == 0 || newPassword.length == 0 || email.length == 0) {
       alert("All fields must be fieled out.")
       return;
@@ -38,8 +33,18 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
     this.changePasswordService.updatePassword(userName, newPassword, email); 
-=======
-    this.changePasswordService.updatePassword(userName, email, newPassword); 
->>>>>>> ba14c60 (Fixed issue with http)
+  }
+
+  userName?:string;
+  oldPassword?:string;
+  newPassword?:string;
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  onSelect(userName:string, oldPassword:string, newPassword:string) {
+    
   }
 }
