@@ -21,9 +21,9 @@ from app import views
 
 router = routers.DefaultRouter()
 router.register(r'listings', views.ListingViewSet)
+router.register(r'products', views.ProductViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
-    path('admin/', admin.site.urls),
-    path('trentsTest/', views.trentsTest)
+    path('admin/', admin.site.urls)
 ]

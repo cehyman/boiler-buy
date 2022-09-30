@@ -12,6 +12,6 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProductList(): Observable<ProductList> {
-    return this.http.get('http://localhost:8000/trentsTest/', {responseType: 'json'}) as Observable<ProductList>;
+    return this.http.get('http://localhost:8000/api/v1/products/', {responseType: 'json'}) as Observable<ProductList>;
   }
 }

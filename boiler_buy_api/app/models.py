@@ -7,3 +7,16 @@ class Listing(models.Model):
     description = models.CharField(max_length=250)
     def __str__(self):
         return self.name
+        
+class Product(models.Model):
+    priceDollars = models.PositiveIntegerField()
+    priceCents = models.PositiveSmallIntegerField()
+    shippingDollars = models.PositiveIntegerField()
+    shippingCents = models.PositiveSmallIntegerField()
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=250)
+    reported = models.BooleanField()
+    isPending = models.BooleanField()
+    isSold = models.BooleanField()
+    canShip = models.BooleanField()
+    canMeet = models.BooleanField()
