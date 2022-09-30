@@ -5,18 +5,18 @@
     <form>
         <div class="inputContainer">
             <label for="username"><b>Username</b></label><br>
-            <input type="text" placeholder="Ex: jsmith123" name="username" id="username" required><br>
+            <input [(ngModel)]="account.username" type="text" placeholder="Ex: jsmith123" name="username" id="username" required><br>
 
             <label for="email"><b>Email</b></label><br>
-            <input type="text" placeholder="Enter Email" name="email" id="email" required><br>
+            <input [(ngModel)]="account.email" type="text" placeholder="Enter Email" name="email" id="email" required><br>
         
             <label for="pass"><b>Password</b></label><br>
-            <input type="text" placeholder="Enter Password" name="pass" id="pass" required><br>
+            <input [(ngModel)]="account.password" type="text" placeholder="Enter Password" name="pass" id="pass" required><br>
         
             <label for="pass2"><b>Repeat Password</b></label><br>
             <input type="text" placeholder="Enter Password" name="pass2" id="pass2" required><br>
         
-            <button type="submit" class="registerBtn">Register</button>
+            <button (click)="addAccount()" type="submit" class="registerBtn">Register</button>
             <p>Need to Implement Adding to Database</p>
         </div>
         

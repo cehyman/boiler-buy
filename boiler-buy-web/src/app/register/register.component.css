@@ -8,7 +8,6 @@ label{
     text-align: center;
 }
 
-/* Add padding to containers */
 .inputContainer {
     margin: auto;
     width: 50%;
@@ -16,7 +15,6 @@ label{
     padding: 10px;
 }
 
-/* Full-width input fields */
 input[type=text] {
   width: 50%;
   padding: 15px;
