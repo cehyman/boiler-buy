@@ -34,17 +34,4 @@ export class ChangePasswordComponent implements OnInit {
     }
     this.changePasswordService.updatePassword(userName, newPassword, email); 
   }
-
-  userName?:string;
-  oldPassword?:string;
-  newPassword?:string;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  onSelect(userName:string, oldPassword:string, newPassword:string) {
-    
-  }
 }
