@@ -6,22 +6,29 @@ import {Accounts} from "../accounts"
 @Component({
   selector: 'register.component',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+  providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit{
- 
-  account = new Accounts()
+  accountUsername:string = '';
+  accountPassword:string = '';
+  accountEmail:string = '';
 
   constructor(private registerService:RegisterService) {}
  
   ngOnInit() {
-    
   }
  
-  addAccount() {
-    this.registerService.addAccount(this.account)
-      .subscribe(data => {
-        console.log(data)
-      })      
+  registerAccount() {
+    // this.registerService.addNewAccount(this.account).subscribe(
+    //   response => {
+    //     alert('User ' + this.account.username + ' has been created!')
+    //   },
+    //   error => console.log('error', error)
+    // );      
+    console.log("Register");
+    console.log('Username:' + this.accountUsername)
+    console.log('Password:' + this.accountPassword)
+    console.log('Email:' + this.accountEmail)
   }
 }

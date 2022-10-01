@@ -1,7 +1,11 @@
 from rest_framework import viewsets
 
-from .models import Listing, Register
-from .serializers import ListingSerializer, RegisterSerializer
+from .models import Listing, Account
+from .serializers import ListingSerializer, AccountSerializer
+# from rest_framework.response import Response
+# from rest_framework import Status
+from django.shortcuts import render
+from rest_framework.decorators import api_view
 
 from django.http import HttpResponse
 
@@ -12,6 +16,6 @@ class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
 
-class RegisterViewSet(viewsets.ModelViewSet):
-    queryset = Register.objects.all()
-    serializer_class = RegisterSerializer
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = Account.object.all()
+    serializer_class = AccountSerializer
