@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-listing',
@@ -13,7 +14,7 @@ export class CreateListingComponent implements OnInit {
   listingPrice: string = '';
   listingDescription: string = '';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -24,6 +25,18 @@ export class CreateListingComponent implements OnInit {
     console.log(`listingTitle: ${this.listingTitle}`)
     console.log(`listingPrice: ${this.listingPrice}`)
     console.log(`listingDesc: ${this.listingDescription}`)
+    
+    var body = {
+      name: this.listingTitle,
+      price: this.listingPrice,
+      description: this.listingDescription
+    };
+
+    var request = this.http.post<any>("/api/v1/listings/", body, {observe: 'response'});
+
+    request.subscribe((data: any) => {
+      console.log(`Observed post request: ${data}`)
+    })
   }
 
 }
