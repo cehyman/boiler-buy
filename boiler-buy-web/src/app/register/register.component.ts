@@ -31,15 +31,27 @@ export class RegisterComponent implements OnInit{
     console.log('Username:' + this.accountUsername)
     console.log('Password:' + this.accountPassword)
     console.log('Email:' + this.accountEmail)
-    this.http.post('http://localhost:8000/api/v1/register/',
-      JSON.stringify({
+    // this.http.post('http://localhost:8000/api/v1/register/',
+    //   JSON.stringify({
+    //     username: this.accountUsername,
+    //     password: this.accountPassword,
+    //     email: this.accountEmail,
+    //   })).subscribe(
+    //     data => {
+    //       alert('ok');
+    //     }
+    //   )
+
+      var body = {
         username: this.accountUsername,
         password: this.accountPassword,
-        email: this.accountEmail,
-      })).subscribe(
-        data => {
-          alert('ok');
-        }
-      )
+        email: this.accountEmail
+      };
+  
+      var request = this.http.post<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+  
+      request.subscribe((data: any) => {
+        console.log(`Observed post request: ${data}`)
+      })
   }
 }
