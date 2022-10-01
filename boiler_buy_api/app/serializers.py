@@ -11,8 +11,8 @@ class ListingSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('username', 'password', 'email')
+        fields = '__all__'
     
-    def create(self, data):
-        account = Account.objects.createAccount(data)
-        return account
+    # def create(self, data):
+    #     account = Account.objects.createAccount(data)
+    #     return account

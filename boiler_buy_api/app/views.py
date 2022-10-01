@@ -17,5 +17,5 @@ class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ListingSerializer
 
 class AccountViewSet(viewsets.ModelViewSet):
-    queryset = Account.object.all()
     serializer_class = AccountSerializer
+    queryset = Account.object.all()
