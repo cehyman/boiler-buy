@@ -4,4 +4,4 @@ export interface Accounts {
     email: string;
 }
 
-interface AccountsArray extends Array<Accounts> {}
+export interface AccountsList extends Array<Accounts> {}

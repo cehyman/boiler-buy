@@ -1,7 +1,5 @@
 import { Component, Input , OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
 import { RegisterService } from '../register.service';
-import {Accounts} from "../accounts"
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -14,34 +12,48 @@ export class RegisterComponent implements OnInit{
   accountUsername:string = '';
   accountPassword:string = '';
   accountEmail:string = '';
+  accountRepeatPassword = '';
+  curUsers:any = []
 
   constructor(private http: HttpClient) {}
  
   ngOnInit() {
+    var request = this.http.get('http://localhost:8000/api/v1/accounts/')
+    let i = 0
+    request.subscribe((data: any) => {
+      this.curUsers.push(data);
+    })
   }
  
   registerAccount() {
-    // this.registerService.addNewAccount(this.account).subscribe(
-    //   response => {
-    //     alert('User ' + this.account.username + ' has been created!')
-    //   },
-    //   error => console.log('error', error)
-    // );      
-    console.log("Register");
-    console.log('Username:' + this.accountUsername)
-    console.log('Password:' + this.accountPassword)
-    console.log('Email:' + this.accountEmail)
-    // this.http.post('http://localhost:8000/api/v1/register/',
-    //   JSON.stringify({
-    //     username: this.accountUsername,
-    //     password: this.accountPassword,
-    //     email: this.accountEmail,
-    //   })).subscribe(
-    //     data => {
-    //       alert('ok');
-    //     }
-    //   )
-
+    if (this.accountUsername.length == 0 || this.accountPassword.length == 0 || this.accountRepeatPassword.length == 0 || this.accountEmail.length == 0) {
+      alert("All fields must be fieled out.")
+      return;
+    }
+    if (this.accountPassword != this.accountRepeatPassword) {
+      alert("Passwords do not match.")
+      return;
+    }
+    if (this.accountEmail.length < 11 || this.accountEmail.slice(-11) != "@purdue.edu") {
+      alert("Must use a valid Purdue email.")
+      return;
+    }
+    let i = 0
+    console.log(this.curUsers[0].length)
+    for (i = 0; i < this.curUsers[0].length; i++) {
+      console.log(this.accountUsername)
+      console.log(this.curUsers[0][i]['username'])
+      console.log(this.accountEmail)
+      console.log(this.curUsers[0][i]['email'])
+      if (this.accountUsername == this.curUsers[0][i]['username']) {
+        alert("Username exists already.")
+        break;
+      } else if (this.accountEmail == this.curUsers[0][i]['email']) {
+        alert("Email in use already.")
+        break;
+      }
+    }
+    if (i >= this.curUsers[0].length) {
       var body = {
         username: this.accountUsername,
         password: this.accountPassword,
@@ -51,7 +63,9 @@ export class RegisterComponent implements OnInit{
       var request = this.http.post<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
-        console.log(`Observed post request: ${data}`)
+        console.log(data)
       })
+      alert("Account Created!")
+    }
   }
 }
