@@ -69,3 +69,8 @@
       border: 1px solid #ccc;
     }
 }
+
+.spinner {
+    margin: 0 auto;
+    stroke: black;
+}
