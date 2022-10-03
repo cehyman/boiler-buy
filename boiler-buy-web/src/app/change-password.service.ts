@@ -5,9 +5,13 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ChangePasswordService {
+<<<<<<< HEAD
 
   curUsers:any = [];
 
+=======
+  
+>>>>>>> ba14c60 (Fixed issue with http)
   updatePassword(userName:string, newPassword:string, email:string) {
     var body = {
       username: userName,
