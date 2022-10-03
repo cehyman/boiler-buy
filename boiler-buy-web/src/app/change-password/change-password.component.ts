@@ -8,17 +8,19 @@ import { ChangePasswordService } from '../change-password.service';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  userName?:string;
-  oldPassword?:string;
-  newPassword?:string;
+  userName:string = "";
+  oldPassword:string = "";
+  newPassword:string = "";
+  email:string = "";
+  curUsers:any = []
 
   constructor(private changePasswordService: ChangePasswordService) { }
 
   ngOnInit(): void {
   }
 
-  onSelect(userName:string, oldPassword:string, newPassword:string) {
-    this.changePasswordService.updatePassword(userName, oldPassword, newPassword);
+  updatePasswordInfo(userName:string, email:string, oldPassword:string, newPassword:string) {
+    this.changePasswordService.updatePassword(userName, email, newPassword);
   }
 
 }
