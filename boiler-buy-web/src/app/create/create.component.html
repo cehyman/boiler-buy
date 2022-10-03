@@ -15,7 +15,14 @@
                 required><br>
 
             <label for="description"><b>Description</b></label><br>
-            <input [(ngModel)]="description" type="text" name="description" required><br>
+            <textarea [(ngModel)]="description"
+                rows="8"
+                cols="40"
+                type="text" 
+                name="description" 
+                required>
+
+            </textarea><br>
 
             <button (click)="submit()" type="submit">Create Listing</button>
         </div>
