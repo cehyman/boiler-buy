@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ChangePasswordService {
-
+  
   updatePassword(userName:string, newPassword:string, email:string) {
     var body = {
       username: userName,
