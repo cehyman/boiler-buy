@@ -4,7 +4,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 
 const routes: Routes = [{
   path: 'change-password', component: ChangePasswordComponent
-}];
+},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
