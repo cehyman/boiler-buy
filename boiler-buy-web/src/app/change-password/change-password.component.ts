@@ -15,12 +15,12 @@ export class ChangePasswordComponent implements OnInit {
   curUsers:any = []
 
   constructor(private changePasswordService: ChangePasswordService) { }
-
+  // constructor() {}
   ngOnInit(): void {
   }
 
   updatePasswordInfo(userName:string, email:string, oldPassword:string, newPassword:string) {
-    this.changePasswordService.updatePassword(userName, email, newPassword);
+    this.changePasswordService.updatePassword(userName, email, newPassword); 
   }
 
 }
