@@ -1,0 +1,23 @@
+<div class="header">
+    Create a Product Listing
+</div>
+<div class="create">
+    <form>
+        <div class="inputContainer">
+            <label for="name"><b>Product Name</b></label><br>
+            <input [(ngModel)]="name" type="text" name="name" required><br>
+
+            <label for="price"><b>Price</b></label><br>
+            <input [(ngModel)]="price" 
+                name="price"
+                placeholder="$0.00" 
+                (blur)="transformPrice($event)" 
+                required><br>
+
+            <label for="description"><b>Description</b></label><br>
+            <input [(ngModel)]="description" type="text" name="description" required><br>
+
+            <button (click)="submit()" type="submit">Create Listing</button>
+        </div>
+    </form>
+</div>

@@ -9,11 +9,14 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
+import { CreateComponent } from './create/create.component';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent
+    RegisterComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatNativeDateModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent]
   // bootstrap: [RegisterComponent]
 })
