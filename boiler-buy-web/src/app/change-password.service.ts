@@ -21,5 +21,4 @@ export class ChangePasswordService {
   }
 
   constructor(private http:HttpClient) { }
-
 }
