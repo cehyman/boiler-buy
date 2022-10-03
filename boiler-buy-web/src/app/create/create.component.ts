@@ -12,22 +12,25 @@ export class CreateComponent implements OnInit {
   prevPrice: string = '';
   description: string = '';
 
-  constructor(private currencyPipe: CurrencyPipe) { 
-
+  constructor(private currencyPipe: CurrencyPipe) {
   }
 
   ngOnInit(): void {
   } 
 
   transformPrice(event: FocusEvent) {
-    var formatted = this.currencyPipe.transform(this.price, '$');
-    var target = event.target as HTMLInputElement;
-
-    if(formatted != null) {
-      this.price = formatted;
+    var num = this.price.replace('$', '');
+    if(isNaN(Number(num))) {
+      this.price = '';
     }
     else {
-      target.value = ''
+      var formatted = this.currencyPipe.transform(num, '$');
+      var target = event.target as HTMLInputElement;
+  
+      if(formatted != null)
+        this.price = formatted;
+      else
+        this.price = '';
     }
   }
 
