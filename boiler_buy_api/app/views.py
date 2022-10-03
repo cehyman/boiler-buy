@@ -12,7 +12,7 @@ from django.http import HttpResponse
 import json
 
 #create your views here
-class ListingViewSet(viewsets.ReadOnlyModelViewSet):
+class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
 

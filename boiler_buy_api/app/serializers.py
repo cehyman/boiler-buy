@@ -12,7 +12,3 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['username', 'password', 'email']
-    
-    # def create(self, data):
-    #     account = Account.objects.createAccount(data)
-    #     return account

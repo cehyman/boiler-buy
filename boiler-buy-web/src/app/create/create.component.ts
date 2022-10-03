@@ -1,4 +1,5 @@
 import { CurrencyPipe, formatCurrency } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,17 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class CreateComponent implements OnInit {
   name: string = '';
   price: string = '';
-  prevPrice: string = '';
   description: string = '';
 
-  constructor(private currencyPipe: CurrencyPipe) {
+  constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
   }
 
   ngOnInit(): void {
   } 
 
   transformPrice(event: FocusEvent) {
-    var num = this.price.replace('$', '');
+    var num = this.price.replace(/(\$|\,)/gm, '');
     if(isNaN(Number(num))) {
       this.price = '';
     }
@@ -35,6 +35,19 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
+    // Convet the currency to a number to store in the database
+    var strippedString = this.price.replace(/(\,|\$)/gm, '');
+    var numPrice: number = Number(strippedString);
+    var requestBody = {
+      name: this.name,
+      price: numPrice,
+      description: this.description
+    };
 
+    var request = this.http.post<any>("/api/v1/listings/", requestBody, {observe: "response"});
+
+    request.subscribe((data: any) => {
+      console.log("Request sent!");
+    })
   }
 }
