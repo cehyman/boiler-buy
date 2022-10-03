@@ -16,7 +16,7 @@ export class ChangePasswordComponent implements OnInit {
   curUsers:any = []
 
   constructor(private changePasswordService: ChangePasswordService) { }
-
+  // constructor() {}
   ngOnInit(): void {
   }
 
