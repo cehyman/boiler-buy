@@ -22,6 +22,7 @@ from app import views
 router = routers.DefaultRouter()
 router.register(r'listings', views.ListingViewSet)
 router.register(r'products', views.ProductViewSet)
+router.register(r'accounts', views.AccountViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),

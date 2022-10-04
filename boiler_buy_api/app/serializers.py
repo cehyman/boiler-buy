@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Listing, Product
+from .models import Listing, Product, Account
 
 
 class ListingSerializer(serializers.ModelSerializer):
@@ -13,3 +13,12 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
             'isPending', 'isSold', 'canShip', 'canMeet']
+
+class AccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['username', 'password', 'email']
+    
+    # def create(self, data):
+    #     account = Account.objects.createAccount(data)
+    #     return account

@@ -50,12 +50,15 @@ import { ProductSearchComponent } from './product-search/product-search.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductListingComponent } from './product-listing/product-listing.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductSearchComponent,
-    ProductListingComponent
+    ProductListingComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -98,9 +101,11 @@ import { HttpClientModule } from '@angular/common/http';
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  // bootstrap: [RegisterComponent]
 })
 export class AppModule { }

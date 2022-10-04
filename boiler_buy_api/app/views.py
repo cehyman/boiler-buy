@@ -1,10 +1,12 @@
 from rest_framework import viewsets
 
-from .models import Listing, Product
-from .serializers import ListingSerializer, ProductSerializer
+from .models import Listing, Product, Account
+from .serializers import ListingSerializer, ProductSerializer, AccountSerializer
 
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
+from django.shortcuts import render
+from rest_framework.decorators import api_view
 
 import json
 
@@ -12,6 +14,10 @@ import json
 class ListingViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
+
+class AccountViewSet(viewsets.ModelViewSet):
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
