@@ -6,7 +6,7 @@ from .models import Listing, Account
 class ListingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
-        fields = ['name', 'price', 'description']
+        fields = ['name', 'price', 'description', 'stock']
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:

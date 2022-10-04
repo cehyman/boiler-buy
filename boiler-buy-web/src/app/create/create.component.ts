@@ -11,12 +11,13 @@ export class CreateComponent implements OnInit {
   name: string = '';
   price: string = '';
   description: string = '';
+  stock: number = 1;
 
   constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
   }
 
   ngOnInit(): void {
-  } 
+  }  
 
   transformPrice(event: FocusEvent) {
     var num = this.price.replace(/(\$|\,)/gm, '');
@@ -41,7 +42,8 @@ export class CreateComponent implements OnInit {
     var requestBody = {
       name: this.name,
       price: numPrice,
-      description: this.description
+      description: this.description,
+      stock: this.stock
     };
 
     var request = this.http.post<any>("/api/v1/listings/", requestBody, {observe: "response"});

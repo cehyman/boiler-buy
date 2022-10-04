@@ -14,6 +14,13 @@
                 (blur)="transformPrice($event)" 
                 required><br>
 
+            <label for="stock"><b>Amount in stock</b></label><br>
+            <input [(ngModel)]="stock"
+                name="stock"
+                type="number"
+                placeholder="1"
+                required><br>
+
             <label for="description"><b>Description</b></label><br>
             <textarea [(ngModel)]="description"
                 rows="8"
@@ -21,7 +28,6 @@
                 type="text" 
                 name="description" 
                 required>
-
             </textarea><br>
 
             <button (click)="submit()" type="submit">Create Listing</button>
