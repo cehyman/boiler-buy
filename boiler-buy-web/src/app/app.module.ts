@@ -11,12 +11,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
 import { CreateComponent } from './create/create.component';
 import { CurrencyPipe } from '@angular/common';
+import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    CreateComponent
+    CreateComponent,
+    PictureUploadComponent
   ],
   imports: [
     BrowserModule,
