@@ -16,7 +16,7 @@ export class ProductService {
   }
 
   filterSearch(params: FilterSearchInput): Observable<ProductList> {
-    const url = new URL('http://localhost:8000/api/v1/products/search');
+    const url = new URL('http://localhost:8000/api/v1/products/');
 
     if (params.name != null && params.name != '') url.searchParams.set('name', params.name);
     if (params.productType != null) url.searchParams.set('productType', params.productType);

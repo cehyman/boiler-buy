@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductSearchComponent } from './product-search/product-search.component';
 
 const routes: Routes = [
-  { path: 'product-search', component: ProductSearchComponent}
+  { path: 'products/search', component: ProductSearchComponent}
 ];
 
 @NgModule({
