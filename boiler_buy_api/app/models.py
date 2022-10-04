@@ -9,6 +9,7 @@ class Listing(models.Model):
         return self.name
         
 class Product(models.Model):
+    productType = models.CharField(max_length=50)
     priceDollars = models.PositiveIntegerField()
     priceCents = models.PositiveSmallIntegerField()
     shippingDollars = models.PositiveIntegerField()

@@ -1,5 +1,6 @@
 export interface Product {
     id: number,
+    productType: string,
     priceDollars: number,
     priceCents: number,
     shippingDollars: number,
