@@ -1,0 +1,46 @@
+<div class="topnav">
+    <a routerLink="/home/">Home</a>
+
+    <div class="search-container">
+        <form action="">
+            <input class="search-bar" type="text" matInput placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
+            <button class="search-button" color="primary" (click)="buttonSearchClick()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </form>
+    </div>
+    
+    <a routerLink="/profile/">Profile</a>
+</div>
+
+<div class="main-content">
+    <div class="filter-section">
+        <mat-card>
+            <mat-card-content>
+                <h2>Filters</h2>
+                <section>
+                    <mat-checkbox>Min. Price: </mat-checkbox>
+                    <input matInput type="number">
+                    <mat-checkbox>Max. Price: </mat-checkbox>
+                    <input matInput type="number">
+                </section>
+                <button mat-raised-button (click)="applyFilters()">Apply filters</button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="product-listings-container">
+        <!-- progress spinner if the user hits search -->
+        <mat-card *ngIf="loading === true">
+            <mat-card-content>
+                <mat-progress-spinner
+                    class="spinner"
+                    [color]="color"
+                    [mode]="mode">
+                </mat-progress-spinner>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- basically a for loop for each element in the array 'products' -->
+        <app-product-listing *ngFor="let product of products; let i = index" [object]="product"></app-product-listing>
+    </div>
+</div>
