@@ -27,7 +27,12 @@ export class UserInfoComponent implements OnInit {
     console.log("But value of saved username in session saver is $s",this.appcomp.getUsername())
     this.globals.username = <string> this.appcomp.getUsername()
 
-    this.curruser = <string> this.appcomp.getUsername()
+    if (this.appcomp.getUsername()) {
+      this.curruser = <string> this.appcomp.getUsername()
+    } else {
+      this.curruser = "Username"
+    }
+
     this.currpass = <string> this.appcomp.getPassword()
     this.curremail = <string> this.appcomp.getEmail()
   }
