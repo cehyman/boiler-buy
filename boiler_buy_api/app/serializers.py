@@ -14,7 +14,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
             'isPending', 'isSold', 'canShip', 'canMeet']
 
-class AccountSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
         fields = ['username', 'password', 'email']

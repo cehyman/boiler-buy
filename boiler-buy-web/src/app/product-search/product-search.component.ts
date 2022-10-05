@@ -44,6 +44,13 @@ export class ProductSearchComponent implements OnInit {
 
   applyFilters() {
     //change filters
+    this.loading = true;
+    this.products = [];
+    this.productService.filterSearch(this.filters).subscribe((productList) => {
+      console.log(productList);
+      this.products = productList;
+      this.loading = false;
+    })
   }
 
 }

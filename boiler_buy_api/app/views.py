@@ -18,6 +18,8 @@ class ListingViewSet(viewsets.ModelViewSet):
 class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
     queryset = Account.objects.all()
+    lookup_field = "email"
+    lookup_value_regex = "[^/]+"
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -32,5 +34,13 @@ class ProductViewSet(viewsets.ModelViewSet):
         else:
             # get all products
             data = Product.objects.all().values()
-        
+        if (request.GET.__contains__('minPrice') or request.GET.__contains__('maxPrice')):
+            minPrice = request.GET.get('minPrice')
+            maxPrice = request.GET.get('maxPrice')
+            if (minPrice == None and maxPrice == None):
+                data = Product.objects.filter(name__icontains=name).values()
+            elif (minPrice == None and maxPrice != None):
+                data = Product.objects.filter(priceDollars__lte=maxPrice).values()
+            elif (minPrice != None and maxPrice == None):
+                data = Product.objects.filter(priceDollars__gte=minPrice, priceDollars__lte=maxPrice).values()
         return JsonResponse(list(data), safe=False)
