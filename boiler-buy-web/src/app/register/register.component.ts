@@ -86,9 +86,16 @@ export class RegisterComponent implements OnInit{
         console.log(data)
       })
       alert("Account Created!")
+
+      //saving current userdata
+      //10/5 WILL SAVE ALL USERDATA AND NOT QUERY TO BACKEND YET
+      //TODO: Delete globals vars, query and api to backend
+
       //myGlobals.username=this.accountUsername;
       this.globals.username = this.accountUsername
-      this.appcomp.saveData(this.accountUsername)
+      this.appcomp.saveUsername(this.accountUsername)
+      this.appcomp.savePassword(this.accountPassword)
+      this.appcomp.saveEmail(this.accountEmail)
       console.log('Global username is now %s', this.globals.username)
     }
   }

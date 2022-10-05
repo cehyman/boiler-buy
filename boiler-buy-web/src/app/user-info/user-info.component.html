@@ -1,7 +1,7 @@
 <!-- Shift + Option + F for auto format -->
 
 <!-- TODO: Link user info with backend -->
-<div>
+<div class = "profile-card">
 
     <div>
         <label class="form-control-label" for="input-username">{{curruser}}</label>
@@ -10,18 +10,17 @@
     <div>
         <label class="form-control-label" for="input-password">Password</label>
         <input type="text" id="input-password" class="form-control form-control-alternative" placeholder="Password"
-            value="not password" readonly>
+            value={{currpass}} readonly>
     </div>
-        
-
 
     <div>
-        <label class="form-control-label" for="input-purdue-email">Purdue Email</label>
-        <input type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="Purdue Email Sample"
-            value="alkdsjf@purdue.edu" readonly>
+        <label class="form-control-label" for="input-purdue-email">Email</label>
+        <input type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="xxxx@purdue.edu"
+            value={{curremail}} readonly>
     </div>
 
     <div>
         <button class="edit-acc-info-button">Edit Account Information</button>
+        <button class="delete-acc-button">Delete Account</button>
     </div>
 </div>

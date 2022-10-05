@@ -7,14 +7,30 @@ import {Globals} from './globals'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Boiler Buy';
-  private globals: Globals = new Globals;
+  title = 'Boiler Buy'
+  private globals: Globals = new Globals
 
-  saveData(username: string) {
-    sessionStorage.setItem('username', username);
+  saveUsername(username: string) {
+    sessionStorage.setItem('username', username)
   }
 
-  getData() {
-    return sessionStorage.getItem('username');
+  savePassword(password: string) {
+    sessionStorage.setItem('password', password)
+  }
+
+  saveEmail(email: string) {
+    sessionStorage.setItem('email', email)
+  }
+
+  getUsername() {
+    return sessionStorage.getItem('username')
+  }
+
+  getPassword() {
+    return sessionStorage.getItem('password')
+  }
+
+  getEmail() {
+    return sessionStorage.getItem('email')
   }
 }
