@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'profile-pic',
+  selector: 'app-profile-pic',
   templateUrl: './profile-pic.component.html',
   styleUrls: ['./profile-pic.component.css']
 })
