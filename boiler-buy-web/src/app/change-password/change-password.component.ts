@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePasswordService } from '../change-password.service';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-change-password',
@@ -14,13 +16,26 @@ export class ChangePasswordComponent implements OnInit {
   email:string = "";
   curUsers:any = []
 
-  constructor(private changePasswordService: ChangePasswordService) { }
+  constructor(private changePasswordService: ChangePasswordService, private http:HttpClient) { }
   // constructor() {}
   ngOnInit(): void {
   }
 
   updatePasswordInfo(userName:string, email:string, oldPassword:string, newPassword:string) {
-    this.changePasswordService.updatePassword(userName, email, newPassword); 
+    if (userName.length == 0 || oldPassword.length == 0 || newPassword.length == 0 || email.length == 0) {
+      alert("All fields must be fieled out.")
+      return;
+    }
+    if (oldPassword == newPassword) {
+      alert("Passwords should not match.")
+      return;
+    }
+    if (email.length < 11 || email.slice(-11) != "@purdue.edu") {
+      alert("Must use a valid Purdue email.")
+      return;
+    }
+    
+    this.changePasswordService.updatePassword(userName, newPassword, email); 
   }
 
 }
