@@ -48,7 +48,6 @@ import { MatTableModule } from '@angular/material/table';
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserInfoComponent } from './user-info/user-info.component';
-import { ProfilePicComponent } from './profile-pic/profile-pic.component';
 import { FeatureButtonsComponent } from './feature-buttons/feature-buttons.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -64,7 +63,6 @@ import {MatNativeDateModule} from '@angular/material/core';
     AppComponent,
     ProfileComponent,
     UserInfoComponent,
-    ProfilePicComponent,
     FeatureButtonsComponent,
     ProductSearchComponent,
     ProductListingComponent,
