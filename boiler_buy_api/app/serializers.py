@@ -11,14 +11,10 @@ class ListingSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
+        fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
             'isPending', 'isSold', 'canShip', 'canMeet']
 
-class AccountSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
         fields = ['username', 'password', 'email']
-    
-    # def create(self, data):
-    #     account = Account.objects.createAccount(data)
-    #     return account

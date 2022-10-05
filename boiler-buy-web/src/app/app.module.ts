@@ -52,10 +52,13 @@ import { ProductListingComponent } from './product-listing/product-listing.compo
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import {MatNativeDateModule} from '@angular/material/core';
+import { CreateComponent } from './create/create.component';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CreateComponent,
     ProductSearchComponent,
     ProductListingComponent,
     RegisterComponent
@@ -104,8 +107,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatTableModule,
     MatNativeDateModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
-  // bootstrap: [RegisterComponent]
+  providers: [CurrencyPipe],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

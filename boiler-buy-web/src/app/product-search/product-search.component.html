@@ -20,9 +20,9 @@
                 <h2>Filters</h2>
                 <section>
                     <mat-checkbox>Min. Price: </mat-checkbox>
-                    <input matInput type="number">
+                    <input [(ngModel)] = "filters.minPrice" matInput type="number">
                     <mat-checkbox>Max. Price: </mat-checkbox>
-                    <input matInput type="number">
+                    <input [(ngModel)] = "filters.maxPrice" matInput type="number">
                 </section>
                 <button mat-raised-button (click)="applyFilters()">Apply filters</button>
             </mat-card-content>
