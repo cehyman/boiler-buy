@@ -15,7 +15,7 @@ export class ChangePasswordComponent implements OnInit {
   email:string = "";
   curUsers:any = []
 
-  constructor(private changePasswordService: ChangePasswordService) { }
+  constructor(private changePasswordService: ChangePasswordService, private http:HttpClient) { }
   // constructor() {}
   ngOnInit(): void {
   }
