@@ -1,4 +1,4 @@
-import { CurrencyPipe, formatCurrency } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 

@@ -1,1 +1,20 @@
-<p>picture-upload works!</p>
+
+<div class="picture-upload">
+    <form>
+        <input type="file"
+            id="fileSelectionInput"
+            multiple
+            accept="image/*"
+            (change)="addFiles($event)"
+            style="display: none"
+            required>
+        <button onclick="fileSelectionInput.click()">Upload a Picture</button>
+    </form>
+
+    <!-- Angular go brrrr -->
+    <div *ngFor="let file of selectedFiles">
+        {{ file.name }}
+        <button (click)="removePhoto($event, file.name)">x</button>
+    </div>
+
+</div>
