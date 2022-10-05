@@ -1,6 +1,10 @@
 import { Component, Input , OnInit} from '@angular/core';
 import { RegisterService } from '../register.service';
 import { HttpClient } from '@angular/common/http';
+import { AppComponent } from '../app.component';
+
+//global variables
+import {Globals} from '../globals'
 
 @Component({
   selector: 'register.component',
@@ -15,15 +19,31 @@ export class RegisterComponent implements OnInit{
   accountRepeatPassword = '';
   curUsers:any = []
 
+  private globals: Globals = new Globals;
+  private appcomp: AppComponent = new AppComponent();
+
+  /*constructor(private http: HttpClient, private globals: Globals) {
+    this.username = globals.username;
+  }*/
+
   constructor(private http: HttpClient) {}
  
   ngOnInit() {
+    console.log("Starting value of gloabl username is %s", this.globals.username)
     var request = this.http.get('http://localhost:8000/api/v1/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
     })
+
   }
+
+  /*constructor(private globals: Globals) {
+    this.username = globals.username;
+  }
+  private updateCurrentUser() {
+    this.globals.username = this.accountUsername
+  }*/
  
   registerAccount() {
     if (this.accountUsername.length == 0 || this.accountPassword.length == 0 || this.accountRepeatPassword.length == 0 || this.accountEmail.length == 0) {
@@ -66,6 +86,10 @@ export class RegisterComponent implements OnInit{
         console.log(data)
       })
       alert("Account Created!")
+      //myGlobals.username=this.accountUsername;
+      this.globals.username = this.accountUsername
+      this.appcomp.saveData(this.accountUsername)
+      console.log('Global username is now %s', this.globals.username)
     }
   }
 }

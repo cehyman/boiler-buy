@@ -1,5 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
 
+import {Globals} from './globals'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +8,13 @@ import { Component, HostBinding } from '@angular/core';
 })
 export class AppComponent {
   title = 'Boiler Buy';
+  private globals: Globals = new Globals;
+
+  saveData(username: string) {
+    sessionStorage.setItem('username', username);
+  }
+
+  getData() {
+    return sessionStorage.getItem('username');
+  }
 }
