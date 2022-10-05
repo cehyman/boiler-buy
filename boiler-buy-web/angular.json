@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "scripts": []
@@ -62,6 +63,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "boiler-buy:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "boiler-buy-web:build:production"
@@ -99,6 +104,10 @@
     }
   },
   "cli": {
+<<<<<<< HEAD
     "analytics": "249de0c2-8839-43a1-98e6-aea119e5cae7"
+=======
+    "analytics": false
+>>>>>>> master
   }
 }
