@@ -12,8 +12,9 @@
     </form>
 
     <!-- Angular go brrrr -->
-    <div *ngFor="let file of selectedFiles">
+    <div *ngFor="let file of selectedFiles; let i = index">
         {{ file.name }}
+        <img src={{previewUrls[i]}}/>
         <button (click)="removePhoto($event, file.name)">x</button>
     </div>
 
