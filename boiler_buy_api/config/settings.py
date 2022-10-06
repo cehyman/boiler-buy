@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-=4xdxla$s3ed*1(*8xdiwo&xqbzl(tj^h9nda^$d4s5(g)71@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "boilerbuy-api.azurewebsites.net"
+]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200"
 ]
