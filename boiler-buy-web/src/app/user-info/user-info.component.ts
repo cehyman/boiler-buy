@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { AppComponent } from '../app.component';
 
@@ -19,8 +20,8 @@ export class UserInfoComponent implements OnInit {
   currpass:string = ''
   curremail:string = ''
 
-  constructor() {
-  }
+  constructor(private http: HttpClient) {}
+  
 
   ngOnInit(): void {
     console.log("Starting value of gloabl username is %s", this.globals.username)
@@ -35,6 +36,10 @@ export class UserInfoComponent implements OnInit {
 
     this.currpass = <string> this.appcomp.getPassword()
     this.curremail = <string> this.appcomp.getEmail()
+  }
+
+  deleteAccount() {
+    //TODO: deletes account should create and use a service file for request
   }
 
 

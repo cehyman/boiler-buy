@@ -24,10 +24,6 @@ export class RegisterComponent implements OnInit{
   private globals: Globals = new Globals;
   private appcomp: AppComponent = new AppComponent();
 
-  /*constructor(private http: HttpClient, private globals: Globals) {
-    this.username = globals.username;
-  }*/
-
   constructor(private http: HttpClient) {}
  
   ngOnInit() {
@@ -39,13 +35,6 @@ export class RegisterComponent implements OnInit{
     })
 
   }
-
-  /*constructor(private globals: Globals) {
-    this.username = globals.username;
-  }
-  private updateCurrentUser() {
-    this.globals.username = this.accountUsername
-  }*/
  
   registerAccount() {
     if (this.accountUsername.length == 0 || this.accountPassword.length == 0 || this.accountRepeatPassword.length == 0 || this.accountEmail.length == 0) {
