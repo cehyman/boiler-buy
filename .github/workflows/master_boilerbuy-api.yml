@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'BackendAPI'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -61,5 +61,5 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'BoilerBuy-API'
-          slot-name: 'BackendAPI'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1B09CA89AD864E9396274D21DFD60FCA }}
