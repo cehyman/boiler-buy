@@ -8,6 +8,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - boiler_buy_api/**
   workflow_dispatch:
 
 jobs:
