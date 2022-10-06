@@ -32,7 +32,7 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
     if (oldPassword == newPassword) {
-      alert("New password should match old password.")
+      alert("New password should not match old password.")
       return;
     }
     if (newPassword != repeatPassword) {
