@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { AppComponent } from '../app.component';
 
 //global variables
 import {Globals} from '../globals'
+import { DeleteAccountService } from '../delete-account.service';
 
 @Component({
   selector: 'app-user-info',
@@ -12,15 +14,18 @@ import {Globals} from '../globals'
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
+  status:string = ''
+  errorMessage:string = ''
 
   public globals: Globals = new Globals;
   private appcomp: AppComponent = new AppComponent();
+  private deleteAccService: DeleteAccountService = new DeleteAccountService(this.http);
 
   curruser:string = ''
   currpass:string = ''
   curremail:string = ''
 
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {}
   
 
   ngOnInit(): void {
@@ -38,8 +43,25 @@ export class UserInfoComponent implements OnInit {
     this.curremail = <string> this.appcomp.getEmail()
   }
 
-  deleteAccount() {
+  deleteAccount(email:string) {
     //TODO: deletes account should create and use a service file for request
+    console.log("Linked correctly")
+    this.deleteAccService.deleteUser(this.curremail).subscribe({
+      next: data => {
+          this.status = 'Delete successful';
+      },
+      error: error => {
+          this.errorMessage = error.message;
+          console.error('There was an error!', error);
+      }
+    });
+    
+    this.appcomp.removeUsername
+    this.appcomp.removePassword
+    this.appcomp.removeEmail
+
+    alert('Deleted User. Returning Back to Register')
+    this.router.navigate(['/register'])
   }
 
 

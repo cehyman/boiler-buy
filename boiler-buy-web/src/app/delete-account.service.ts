@@ -5,10 +5,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DeleteAccountService {
+  //URL:string = "https://localhost:8000/api/v1/accounts/"
 
-  DeleteAccountService(email:string) {
-    
+  deleteUser(email:string) {
+    var accountURL = "http://localhost:8000/api/v1/accounts/".concat(email).concat("/");
+    return this.http.delete(accountURL)
   }
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private http:HttpClient) { }
 }
