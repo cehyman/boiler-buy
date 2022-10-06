@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
             name='Product',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ("productType", models.CharField(max_length=50)),
                 ('priceDollars', models.PositiveIntegerField()),
                 ('priceCents', models.PositiveSmallIntegerField()),
                 ('shippingDollars', models.PositiveIntegerField()),
