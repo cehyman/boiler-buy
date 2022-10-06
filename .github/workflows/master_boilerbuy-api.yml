@@ -37,7 +37,7 @@ jobs:
         with:
           name: python-app
           path: |
-            . 
+            ./boiler_buy_api 
             !venv/
 
   deploy:
