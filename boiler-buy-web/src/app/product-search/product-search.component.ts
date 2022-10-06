@@ -11,6 +11,10 @@ import { ProductService } from '../product.service';
 })
 export class ProductSearchComponent implements OnInit {
   products: Product[] = [];
+  types = [
+    {name:'Food', value:'Food', checked:false},
+    {name:'Electronics', value:'Electronics', checked:false},
+  ]
   filters: FilterSearchInput = {} as FilterSearchInput;
   
   color: ThemePalette = 'primary';
@@ -44,6 +48,12 @@ export class ProductSearchComponent implements OnInit {
 
   applyFilters() {
     //change filters
+    var temp =  this.types
+      .filter(type => type.checked)
+      .map(type => type.value)
+    console.log(temp)
+    this.filters.productType = temp
+    console.log(this.filters.productType)
     this.loading = true;
     this.products = [];
     this.productService.filterSearch(this.filters).subscribe((productList) => {
