@@ -24,9 +24,11 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Change directory
+        run: cd boiler_buy_api
+
       - name: Create and start virtual environment
         run: |
-          cd boiler_buy_api
           python -m venv venv
           source venv/bin/activate
       
