@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit{
  
   ngOnInit() {
     console.log("Starting value of gloabl username is %s", this.globals.username)
-    var request = this.http.get('http://localhost:8000/api/v1/accounts/')
+    var request = this.http.get('http://localhost:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
