@@ -1,6 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 
 @Component({
   selector: 'app-create',
@@ -12,6 +13,8 @@ export class CreateComponent implements OnInit {
   price: string = '';
   description: string = '';
   stock: number = 1;
+
+  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
   constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
   }
@@ -39,11 +42,15 @@ export class CreateComponent implements OnInit {
     // Convet the currency to a number to store in the database
     var strippedString = this.price.replace(/(\,|\$)/gm, '');
     var numPrice: number = Number(strippedString);
+
+    var files = this.picUpload.getFiles();
+
     var requestBody = {
       name: this.name,
       price: numPrice,
       description: this.description,
-      stock: this.stock
+      stock: this.stock,
+      pictures: files
     };
 
     var request = this.http.post<any>("/api/v1/listings/", requestBody, {observe: "response"});

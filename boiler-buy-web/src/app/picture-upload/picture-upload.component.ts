@@ -16,8 +16,8 @@ import { ThisReceiver } from '@angular/compiler';
   styleUrls: ['./picture-upload.component.css']
 })
 export class PictureUploadComponent implements OnInit {
-  selectedFiles: File[] = [];
-  previewUrls: any[] = [];
+  protected selectedFiles: File[] = [];
+  protected previewUrls: any[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -76,5 +76,9 @@ export class PictureUploadComponent implements OnInit {
 
     this.selectedFiles.splice(idx, 1);
     this.previewUrls.splice(idx, 1);
+  }
+
+  getFiles(): File[] {
+    return this.selectedFiles;
   }
 }
