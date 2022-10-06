@@ -53,4 +53,4 @@ jobs:
           app-name: 'boiler-buy'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_605473BAADE04A4894FBD6D0DD04E5BA }}
-          package: .
+          package: ./boiler-buy-web
