@@ -63,5 +63,4 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'BoilerBuy-API'
-          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F84E0BB3B7EC4978B1E9097B7399685D }}
