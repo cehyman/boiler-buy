@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from django.conf.urls import url
+from rest_framework_swagger.views import get_swagger_view
 
 from app import views
+
+schema_view = get_swagger_view(title='BoilerBuy API')
+
 
 router = routers.DefaultRouter()
 router.register(r'listings', views.ListingViewSet)
@@ -25,6 +30,7 @@ router.register(r'products', views.ProductViewSet)
 router.register(r'accounts', views.AccountViewSet)
 
 urlpatterns = [
+    url(r'^$', schema_view),
     path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls)
 ]
