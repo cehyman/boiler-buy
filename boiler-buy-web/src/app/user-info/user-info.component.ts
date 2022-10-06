@@ -56,9 +56,9 @@ export class UserInfoComponent implements OnInit {
       }
     });
     
-    this.appcomp.removeUsername
-    this.appcomp.removePassword
-    this.appcomp.removeEmail
+    this.appcomp.removeUsername()
+    this.appcomp.removePassword()
+    this.appcomp.removeEmail()
 
     alert('Deleted User. Returning Back to Register')
     this.router.navigate(['/register'])

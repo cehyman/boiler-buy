@@ -2,6 +2,7 @@ import { Component, Input , OnInit} from '@angular/core';
 import { RegisterService } from '../register.service';
 import { HttpClient } from '@angular/common/http';
 import { AppComponent } from '../app.component';
+import { Router } from '@angular/router';
 
 //global variables
 import {Globals} from '../globals'
@@ -24,7 +25,7 @@ export class RegisterComponent implements OnInit{
   private globals: Globals = new Globals;
   private appcomp: AppComponent = new AppComponent();
 
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {}
  
   ngOnInit() {
     console.log("Starting value of gloabl username is %s", this.globals.username)
@@ -88,6 +89,8 @@ export class RegisterComponent implements OnInit{
       this.appcomp.savePassword(this.accountPassword)
       this.appcomp.saveEmail(this.accountEmail)
       console.log('Global username is now %s', this.globals.username)
+
+      this.router.navigate(['/profile'])
     }
   }
   changeUsername() {
