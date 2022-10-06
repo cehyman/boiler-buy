@@ -19,7 +19,7 @@ export class ProductService {
     const url = new URL('http://localhost:8000/api/v1/products/');
 
     if (params.name != null && params.name != '') url.searchParams.set('name', params.name);
-    if (params.productType != null) url.searchParams.set('productType', params.productType);
+    if (params.productType != null) url.searchParams.set('productType', params.productType.toString());
     if (params.minPrice != null) url.searchParams.set('minPrice', params.minPrice.toString());
     if (params.maxPrice != null) url.searchParams.set('maxPrice', params.maxPrice.toString());
     if (params.sellerRatingLowerBound != null) url.searchParams.set('sellerRatingLowerBound', params.sellerRatingLowerBound.toString());
