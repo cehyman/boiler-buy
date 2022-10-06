@@ -9,30 +9,52 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ChangePasswordComponent implements OnInit {
 
+  
+
   userName:string = "";
   oldPassword:string = "";
   newPassword:string = "";
   email:string = "";
-  curUsers:any = []
+  data:string = ""
 
   constructor(private changePasswordService: ChangePasswordService, private http:HttpClient) { }
   // constructor() {}
   ngOnInit(): void {
+    var request = this.http.get('http://localhost:8000/api/v1/accounts/spabbise@purdue.edu/')
+    request.subscribe((data: any) => {
+      // this.curUsers.push(data);
+      this.data = data.password;
+      console.log(this.data)
+      // console.log(oldPassword)
+    })
+    // let i = 0
+    // request.subscribe((data: any) => {
+    //   this.curUsers.push(data);
+    // })
   }
 
   updatePasswordInfo(userName:string, email:string, oldPassword:string, newPassword:string) {
-    if (userName.length == 0 || oldPassword.length == 0 || newPassword.length == 0 || email.length == 0) {
-      alert("All fields must be fieled out.")
-      return;
+    
+    
+
+    if(this.data != oldPassword) {
+      alert("Incorrect old password!")
+     
     }
-    if (oldPassword == newPassword) {
-      alert("Passwords should not match.")
-      return;
-    }
-    if (this.email.length < 11 || email.slice(-11) != "@purdue.edu") {
-      alert("Must use a valid Purdue email.")
-      return;
-    }
-    this.changePasswordService.updatePassword(userName, newPassword, email); 
+    else {
+      if (userName.length == 0 || oldPassword.length == 0 || newPassword.length == 0 || email.length == 0) {
+        alert("All fields must be filled out.")
+        return;
+      }
+      if (oldPassword == newPassword) {
+        alert("Passwords should not match.")
+        return;
+      }
+      if (this.email.length < 11 || email.slice(-11) != "@purdue.edu") {
+        alert("Must use a valid Purdue email.")
+        return;
+      }
+      this.changePasswordService.updatePassword(userName, oldPassword, newPassword, email); 
+    }    
   }
 }
