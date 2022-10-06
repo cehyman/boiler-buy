@@ -8,37 +8,58 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
-
   userName:string = "";
   oldPassword:string = "";
   newPassword:string = "";
   repeatPassword:string = "";
   email:string = "";
   data:string = ""
+  curUsers:any = []
 
   constructor(private changePasswordService: ChangePasswordService, private http:HttpClient) { }
-  // constructor() {}
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    var request = this.http.get('http://localhost:8000/api/v1/accounts/')
+    let i = 0
+    request.subscribe((data: any) => {
+      this.curUsers.push(data);
+    })
+  }
 
   updatePasswordInfo(userName:string, email:string, oldPassword:string, newPassword:string, repeatPassword:string) {
-    
-      if (userName.length == 0 || oldPassword.length == 0 || newPassword.length == 0 || email.length == 0) {
-        alert("All fields must be filled out.")
-        return;
+    if (userName.length == 0 || oldPassword.length == 0 || newPassword.length == 0 || email.length == 0) {
+      alert("All fields must be filled out.")
+      return;
+    }
+    if (oldPassword == newPassword) {
+      alert("New password should match old password.")
+      return;
+    }
+    if (newPassword != repeatPassword) {
+      alert("New password should match repeated password.")
+      return;
+    }
+    if (this.email.length < 11 || email.slice(-11) != "@purdue.edu") {
+      alert("Must use a valid Purdue email.")
+      return;
+    }
+    let i = 0
+    console.log(this.curUsers[0].length)
+    for (i = 0; i < this.curUsers[0].length; i++) {
+      console.log(this.userName)
+      console.log(this.curUsers[0][i]['username'])
+      console.log(email == this.curUsers[0][i]['email'])
+      console.log(this.curUsers[0][i]['email'])
+      console.log(this.curUsers[0][i]['password'])
+      if(email == this.curUsers[0][i]['email']) {
+        if(oldPassword != this.curUsers[0][i]['password']) {
+          alert("Incorrect old password!")
+          return;
+        }
+        break;
       }
-      if (oldPassword == newPassword) {
-        alert("Passwords should not match.")
-        return;
-      }
-      if (newPassword != repeatPassword) {
-        alert("New password should match repeated password.")
-        return;
-      }
-      if (this.email.length < 11 || email.slice(-11) != "@purdue.edu") {
-        alert("Must use a valid Purdue email.")
-        return;
-      }
-      this.changePasswordService.updatePassword(userName, oldPassword, newPassword, email); 
-    // }    
+    }
+    this.curUsers[0][i]['password'] = newPassword;
+    this.changePasswordService.updatePassword(userName, oldPassword, newPassword, email); 
   }
 }
