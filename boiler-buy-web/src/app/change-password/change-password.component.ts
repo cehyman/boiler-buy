@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePasswordService } from '../change-password.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { AppComponent } from '../app.component';
 
@@ -19,7 +20,10 @@ export class ChangePasswordComponent implements OnInit {
   curUsers:any = []
 
   private appcomp: AppComponent = new AppComponent();
-  constructor(private changePasswordService: ChangePasswordService, private http:HttpClient) { }
+  constructor (
+    private router:Router, 
+    private changePasswordService: ChangePasswordService, 
+    private http:HttpClient) { }
 
   ngOnInit(): void {
     var request = this.http.get('http://localhost:8000/api/accounts/')
@@ -63,7 +67,11 @@ export class ChangePasswordComponent implements OnInit {
       }
     }
     this.curUsers[0][i]['password'] = newPassword;
+    this.appcomp.saveUsername(userName);
     this.appcomp.savePassword(newPassword);
+    this.appcomp.saveEmail(email);
     this.changePasswordService.updatePassword(userName, oldPassword, newPassword, email); 
+
+    this.router.navigate(['/profile'])
   }
 }
