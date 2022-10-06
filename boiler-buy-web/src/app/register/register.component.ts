@@ -2,6 +2,7 @@ import { Component, Input , OnInit} from '@angular/core';
 import { RegisterService } from '../register.service';
 import { HttpClient } from '@angular/common/http';
 import { AppComponent } from '../app.component';
+import { Router } from '@angular/router';
 
 //global variables
 import {Globals} from '../globals'
@@ -24,28 +25,17 @@ export class RegisterComponent implements OnInit{
   private globals: Globals = new Globals;
   private appcomp: AppComponent = new AppComponent();
 
-  /*constructor(private http: HttpClient, private globals: Globals) {
-    this.username = globals.username;
-  }*/
-
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {}
  
   ngOnInit() {
     console.log("Starting value of gloabl username is %s", this.globals.username)
-    var request = this.http.get('http://localhost:8000/api/v1/accounts/')
+    var request = this.http.get('http://localhost:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
     })
 
   }
-
-  /*constructor(private globals: Globals) {
-    this.username = globals.username;
-  }
-  private updateCurrentUser() {
-    this.globals.username = this.accountUsername
-  }*/
  
   registerAccount() {
     if (this.accountUsername.length == 0 || this.accountPassword.length == 0 || this.accountRepeatPassword.length == 0 || this.accountEmail.length == 0) {
@@ -82,7 +72,7 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail
       };
   
-      var request = this.http.post<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+      var request = this.http.post<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
@@ -99,6 +89,8 @@ export class RegisterComponent implements OnInit{
       this.appcomp.savePassword(this.accountPassword)
       this.appcomp.saveEmail(this.accountEmail)
       console.log('Global username is now %s', this.globals.username)
+
+      this.router.navigate(['/profile'])
     }
   }
   changeUsername() {
@@ -135,7 +127,7 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail
       };
   
-      var request = this.http.patch<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+      var request = this.http.patch<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
