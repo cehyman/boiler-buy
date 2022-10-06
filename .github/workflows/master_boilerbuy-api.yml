@@ -56,7 +56,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: python-app
-          path: .
+          path: ./boiler_buy_api
           
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
