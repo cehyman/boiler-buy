@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ThisReceiver } from '@angular/compiler';
 
+
+/**
+ * This component handles the photo-upload selection from the user.
+ * 
+ * The user clicks the "Upload a Picture" button, and then they can select 
+ * pictures from their device's storage. When they click open, the files are
+ * added to a list and the file data is turned into a preview image.
+ */
 @Component({
   selector: 'app-picture-upload',
   templateUrl: './picture-upload.component.html',
@@ -53,6 +61,9 @@ export class PictureUploadComponent implements OnInit {
     }
   }
 
+  // This is called by one of the X buttons for the photos. The X button has a
+  // custom data attribute that contains the index in the list that it is, and
+  // this is used to remove the item from the list
   removePhoto(event: Event) {
     var target = event.target as HTMLButtonElement;
 
