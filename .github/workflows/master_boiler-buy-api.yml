@@ -26,9 +26,9 @@ jobs:
 
       - name: Create and start virtual environment
         run: |
+          cd boiler_buy_api
           python -m venv venv
           source venv/bin/activate
-          cd boiler_buy_api
       
       - name: Install dependencies
         run: pip install -r requirements.txt
