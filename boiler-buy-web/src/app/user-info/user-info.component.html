@@ -1,0 +1,30 @@
+<!-- Shift + Option + F for auto format -->
+
+<!-- TODO: Link user info with backend -->
+<div class = "profile-card">
+
+    <div class="profile-pic">
+        <img class="round" src="https://api-private.atlassian.com/users/1a39e945ae51e44675e6c70f682173c4/avatar" alt="user" /> 
+    </div>
+
+    <div>
+        <label class="form-control-label" for="input-username">{{curruser}}</label>
+    </div> 
+
+    <div>
+        <label class="form-control-label" for="input-password">Password</label>
+        <input type="text" id="input-password" class="form-control form-control-alternative" placeholder="Password"
+            value={{currpass}} readonly>
+    </div>
+
+    <div>
+        <label class="form-control-label" for="input-purdue-email">Email</label>
+        <input type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="xxxx@purdue.edu"
+            value={{curremail}} readonly>
+    </div>
+
+    <div>
+        <button class="edit-acc-info-button">Edit Account Information</button>
+        <button class="delete-acc-button">Delete Account</button>
+    </div>
+</div>
