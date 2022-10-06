@@ -31,18 +31,26 @@ class ProductViewSet(viewsets.ModelViewSet):
         data = Product.objects.values()
         if (request.GET.__contains__('name')):
             # search by name
+            print("here")
             name = request.GET.get('name')
             data = Product.objects.filter(name__icontains=name).values()
         else:
             # get all products
+            print("here2")
             data = Product.objects.all().values()
-        if (request.GET.__contains__('minPrice') or request.GET.__contains__('maxPrice')):
+        if (request.GET.get('productType') != ""):
+            print(request.GET.get('productType'))
+            print("here3")
+            type = request.GET.get('productType')
+            print(type)
+            typeSplit = type.split(",")
+            data = data.filter(productType__in=typeSplit).values()
+        if (request.GET.get('minPrice') != None):
+            print("here4")
             minPrice = request.GET.get('minPrice')
+            data = data.filter(priceDollars__gte=minPrice).values()
+        if (request.GET.get('maxPrice') != None):
+            print("here5")
             maxPrice = request.GET.get('maxPrice')
-            if (minPrice == None and maxPrice == None):
-                data = Product.objects.filter(name__icontains=name).values()
-            elif (minPrice == None and maxPrice != None):
-                data = Product.objects.filter(priceDollars__lte=maxPrice).values()
-            elif (minPrice != None and maxPrice == None):
-                data = Product.objects.filter(priceDollars__gte=minPrice, priceDollars__lte=maxPrice).values()
+            data = data.filter(priceDollars__lte=maxPrice).values()
         return JsonResponse(list(data), safe=False)
