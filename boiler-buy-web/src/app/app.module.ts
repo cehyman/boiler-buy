@@ -44,7 +44,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
+
 import { AppComponent } from './app.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { FeatureButtonsComponent } from './feature-buttons/feature-buttons.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,6 +63,9 @@ import { CurrencyPipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
+    ProfileComponent,
+    UserInfoComponent,
+    FeatureButtonsComponent,
     CreateComponent,
     ProductSearchComponent,
     ProductListingComponent,
