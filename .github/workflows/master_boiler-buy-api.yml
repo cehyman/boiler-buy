@@ -8,6 +8,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - boiler-buy-api/**
   workflow_dispatch:
 
 jobs:
@@ -26,6 +28,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+          cd boiler_buy_api
       
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -44,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'Production-Api'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -59,5 +62,4 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'boiler-buy-api'
-          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_672A5B99DFD34FB1A96E8EFB9CD684E4 }}
