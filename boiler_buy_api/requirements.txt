@@ -1,7 +1,7 @@
 django
 djangorestframework
 django-cors-headers
-django-rest-swagger
+drf-yasg
 requests
 psycopg2-binary
 python-dotenv
