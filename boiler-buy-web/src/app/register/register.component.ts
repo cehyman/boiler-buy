@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit{
   constructor(private http: HttpClient) {}
  
   ngOnInit() {
-    var request = this.http.get('http://localhost:8000/api/v1/accounts/')
+    var request = this.http.get('http://localhost:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail
       };
   
-      var request = this.http.post<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+      var request = this.http.post<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail
       };
   
-      var request = this.http.patch<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+      var request = this.http.patch<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
