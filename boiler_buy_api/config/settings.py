@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-=4xdxla$s3ed*1(*8xdiwo&xqbzl(tj^h9nda^$d4s5(g)71@g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "boilerbuy-api.azurewebsites.net",
+    "127.0.0.1",
+    "localhost"
+]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200"
 ]
@@ -40,10 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'rest_framework',
     'corsheaders',
     'app',
 ]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

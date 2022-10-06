@@ -44,7 +44,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
+
 import { AppComponent } from './app.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { FeatureButtonsComponent } from './feature-buttons/feature-buttons.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -54,16 +59,22 @@ import { RegisterComponent } from './register/register.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import { CreateComponent } from './create/create.component';
 import { CurrencyPipe } from '@angular/common';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProfileComponent,
+    UserInfoComponent,
+    FeatureButtonsComponent,
     CreateComponent,
     ProductSearchComponent,
     ProductListingComponent,
-    RegisterComponent
+    RegisterComponent,
+    ChangePasswordComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

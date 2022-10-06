@@ -10,6 +10,8 @@ from rest_framework.decorators import api_view
 
 import json
 
+
+
 #create your views here
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()

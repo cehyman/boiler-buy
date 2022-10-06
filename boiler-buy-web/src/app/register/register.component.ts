@@ -1,6 +1,10 @@
 import { Component, Input , OnInit} from '@angular/core';
 import { RegisterService } from '../register.service';
 import { HttpClient } from '@angular/common/http';
+import { AppComponent } from '../app.component';
+
+//global variables
+import {Globals} from '../globals'
 
 @Component({
   selector: 'register.component',
@@ -17,15 +21,31 @@ export class RegisterComponent implements OnInit{
   accountChangeUsername:string = ''
   curUsers:any = []
 
+  private globals: Globals = new Globals;
+  private appcomp: AppComponent = new AppComponent();
+
+  /*constructor(private http: HttpClient, private globals: Globals) {
+    this.username = globals.username;
+  }*/
+
   constructor(private http: HttpClient) {}
  
   ngOnInit() {
-    var request = this.http.get('http://localhost:8000/api/v1/accounts/')
+    console.log("Starting value of gloabl username is %s", this.globals.username)
+    var request = this.http.get('http://localhost:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
     })
+
   }
+
+  /*constructor(private globals: Globals) {
+    this.username = globals.username;
+  }
+  private updateCurrentUser() {
+    this.globals.username = this.accountUsername
+  }*/
  
   registerAccount() {
     if (this.accountUsername.length == 0 || this.accountPassword.length == 0 || this.accountRepeatPassword.length == 0 || this.accountEmail.length == 0) {
@@ -62,12 +82,23 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail
       };
   
-      var request = this.http.post<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+      var request = this.http.post<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
       })
       alert("Account Created!")
+
+      //saving current userdata
+      //10/5 WILL SAVE ALL USERDATA AND NOT QUERY TO BACKEND YET
+      //TODO: Delete globals vars, query and api to backend
+
+      //myGlobals.username=this.accountUsername;
+      this.globals.username = this.accountUsername
+      this.appcomp.saveUsername(this.accountUsername)
+      this.appcomp.savePassword(this.accountPassword)
+      this.appcomp.saveEmail(this.accountEmail)
+      console.log('Global username is now %s', this.globals.username)
     }
   }
   changeUsername() {
@@ -104,7 +135,7 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail
       };
   
-      var request = this.http.patch<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+      var request = this.http.patch<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
