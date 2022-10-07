@@ -1,0 +1,54 @@
+<div class="header">
+    <h1>Edit a Product Listing</h1>
+</div>
+<div class="editProduct">
+    <form>
+        <div class="inputContainer">
+            <label for="name"><b>Product Name</b></label><br>
+            <input [(ngModel)]="name" type="text" name="name" required><br>
+
+            <label for="price"><b>Price</b></label><br>
+            <input [(ngModel)]="price" 
+                name="price"
+                placeholder="$0.00" 
+                (blur)="onBlurPrice($event)" 
+                required><br>
+
+            <label for="stock"><b>Amount in stock</b></label><br>
+            <input [(ngModel)]="stock"
+                name="stock"
+                type="number"
+                placeholder="1"
+                required><br>
+
+            <label for="description"><b>Description</b></label><br>
+            <textarea [(ngModel)]="description"
+                rows="8"
+                cols="40"
+                type="text" 
+                name="description" 
+                required>
+            </textarea><br>
+            
+            <input type="checkbox" [checked]="canMeet" (change)="canMeet = !canMeet">Willing to meet up<br>
+
+            <input type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship<br>
+            
+            <!-- We only want the user to set a shipping price if they are willing to ship-->
+            <div *ngIf="canShip == true">
+                <label for="shipPrice"><b>Shipping Price</b></label><br>
+                <input [(ngModel)]="shipPrice" 
+                    name="shipPrice"
+                    placeholder="$0.00" 
+                    (blur)="onBlurShipPrice($event)" 
+                    required><br>
+            </div>
+
+            <label><b>Upload Pictures</b></label><br>
+            <app-picture-upload #picUpload></app-picture-upload>
+            <br><br>
+
+            <button (click)="submit()" type="submit">Create Listing</button>
+        </div>
+    </form>
+</div>
