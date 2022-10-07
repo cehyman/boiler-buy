@@ -1,6 +1,11 @@
 import { Component, Input , OnInit} from '@angular/core';
 import { RegisterService } from '../register.service';
 import { HttpClient } from '@angular/common/http';
+import { AppComponent } from '../app.component';
+import { Router } from '@angular/router';
+
+//global variables
+import {Globals} from '../globals'
 
 @Component({
   selector: 'register.component',
@@ -12,17 +17,24 @@ export class RegisterComponent implements OnInit{
   accountUsername:string = '';
   accountPassword:string = '';
   accountEmail:string = '';
-  accountRepeatPassword = '';
+  accountRepeatPassword:string = '';
+  accountChangeUsernameEmail:string = ''
+  accountChangeUsername:string = ''
   curUsers:any = []
 
-  constructor(private http: HttpClient) {}
+  private globals: Globals = new Globals;
+  private appcomp: AppComponent = new AppComponent();
+
+  constructor(private router: Router, private http: HttpClient) {}
  
   ngOnInit() {
-    var request = this.http.get('http://localhost:8000/api/v1/accounts/')
+    console.log("Starting value of gloabl username is %s", this.globals.username)
+    var request = this.http.get('http://localhost:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
     })
+
   }
  
   registerAccount() {
@@ -60,12 +72,67 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail
       };
   
-      var request = this.http.post<any>("http://localhost:8000/api/v1/accounts/", body, {observe: 'response'});
+      var request = this.http.post<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
       })
       alert("Account Created!")
+
+      //saving current userdata
+      //10/5 WILL SAVE ALL USERDATA AND NOT QUERY TO BACKEND YET
+      //TODO: Delete globals vars, query and api to backend
+
+      //myGlobals.username=this.accountUsername;
+      this.globals.username = this.accountUsername
+      this.appcomp.saveUsername(this.accountUsername)
+      this.appcomp.savePassword(this.accountPassword)
+      this.appcomp.saveEmail(this.accountEmail)
+      console.log('Global username is now %s', this.globals.username)
+
+      this.router.navigate(['/profile'])
+    }
+  }
+  changeUsername() {
+    // console.log(this.curUsers[0].length)
+    var found = false
+    var validUser = false
+    let j = 0
+    for (let i = 0; i < this.curUsers[0].length; i++) {
+      console.log(this.curUsers[0][i]['email'])
+      if (this.accountChangeUsernameEmail == this.curUsers[0][i]['email']) {
+        found = true
+        console.log("Found!")
+        break;
+      }
+    }
+    for (j = 0; j < this.curUsers[0].length; j++) {
+      if (this.accountChangeUsername == this.curUsers[0][j]['username']) {
+        break;
+      }
+    }
+    if (j >= this.curUsers[0].length) {
+      validUser = true
+    }
+    if (found == false && validUser == false) {
+      alert("Invalid Email and Username is taken")
+    } else if (found == false && validUser == true) {
+      alert("Invalid Email")
+    } else if (found == true && validUser == false) {
+      alert("Username is taken")
+    }
+    if (found == true && validUser == true) {
+      var body = {
+        username: this.accountChangeUsername,
+        email: this.accountEmail
+      };
+  
+      var request = this.http.patch<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
+  
+      request.subscribe((data: any) => {
+        console.log(data)
+      })
+      alert("Username Changed!")
     }
   }
 }
