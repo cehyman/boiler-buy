@@ -67,7 +67,8 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
-    //var files = this.picUpload.getFiles()[0];
+    var file = this.picUpload.getFiles()[0];
+    
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     
     console.log(`Product Type: ${this.type}`);
@@ -78,20 +79,20 @@ export class CreateComponent implements OnInit {
       [shipDollars, shipCents] = this.currencyToDollarsCents(this.shipPrice);
     }
 
-    var requestBody = {
-      productType: this.type,
-      priceDollars: priceDollars,
-      priceCents: priceCents,
-      shippingDollars: shipDollars,
-      shippingCents: shipCents,
-      stockCount: this.stock,
-      name: this.name,
-      description: this.description,
-      canShip: this.canShip,
-      canMeet: this.canMeet
-    };
+    var formData = new FormData();
+    formData.append("productType", this.type);
+    formData.append("priceDollars", `${priceDollars}`);
+    formData.append("priceCents", `${priceCents}`);
+    formData.append("shippingDollars", `${shipDollars}`);
+    formData.append("shippingCents", `${shipCents}`);
+    formData.append("stockCount", `${this.stock}`);
+    formData.append("name", this.name);
+    formData.append("description", this.description);
+    formData.append("canShip", `${this.canShip}`);
+    formData.append("canMeet", `${this.canMeet}`);
+    formData.append("image", file);
 
-    var request = this.http.post<any>("/api/products/", requestBody, {observe: "response"});
+    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

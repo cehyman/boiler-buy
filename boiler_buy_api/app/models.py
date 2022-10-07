@@ -26,6 +26,8 @@ class Product(models.Model):
     canShip = models.BooleanField()
     canMeet = models.BooleanField()
     
+    image = models.FileField(null=True, blank=True, upload_to='products/', )
+    
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
