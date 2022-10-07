@@ -60,16 +60,15 @@ class ProductViewSet(viewsets.ModelViewSet):
             if (shop.count() > 0):
                 shopID = shop.get().get("id")
                 account = Account.objects.filter(shop=shopID).values().get()
-
-                print(account.get("email"))
-
-        
+                prod['sellerRating'] = account.get("sellerRating")
+                prod['sellerRatingCount'] = account.get("sellerRatingCount")
+            else:
+                # products that don't have a shop yet
+                prod['sellerRating'] = 0
+                prod['sellerRatingCount'] = 0
 
         return JsonResponse(list(data), safe=False)
 
-    def getProductsSeller(product):
-        
-        return 1
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
