@@ -38,7 +38,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             # get all products
             print("here2")
             data = Product.objects.all().values()
-        if (request.GET.get('productType') != ""):
+        if (request.GET.get('productType') != None and request.GET.get('productType') != ""):
             print(request.GET.get('productType'))
             print("here3")
             type = request.GET.get('productType')
