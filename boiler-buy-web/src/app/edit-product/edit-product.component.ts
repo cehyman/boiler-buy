@@ -22,6 +22,8 @@ export class EditProductComponent implements OnInit {
 
   prodId: number = -1;
 
+  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private currencyPipe: CurrencyPipe, 
@@ -60,6 +62,9 @@ export class EditProductComponent implements OnInit {
         this.shipPrice = this.dollarsCentsToString(data.shippingDollars, data.shippingCents);
       else
         this.shipPrice = '';
+
+      var image: string = data.image;
+      this.picUpload.loadFromDatabase(id, image);
     });
   }
 
@@ -111,7 +116,7 @@ export class EditProductComponent implements OnInit {
   }
 
   submit() {
-    //var files = this.picUpload.getFiles()[0];
+    var file = this.picUpload.getFiles()[0];
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     
     var shipDollars = 0, shipCents = 0;
@@ -119,21 +124,21 @@ export class EditProductComponent implements OnInit {
     if(this.canShip) {
       [shipDollars, shipCents] = this.currencyToDollarsCents(this.shipPrice);
     }
+    
+    var formData = new FormData();
+    formData.append("productType", this.type);
+    formData.append("priceDollars", `${priceDollars}`);
+    formData.append("priceCents", `${priceCents}`);
+    formData.append("shippingDollars", `${shipDollars}`);
+    formData.append("shippingCents", `${shipCents}`);
+    formData.append("stockCount", `${this.stock}`);
+    formData.append("name", this.name);
+    formData.append("description", this.description);
+    formData.append("canShip", `${this.canShip}`);
+    formData.append("canMeet", `${this.canMeet}`);
+    formData.append("image", file);
 
-    var requestBody = {
-      productType: this.type,
-      priceDollars: priceDollars,
-      priceCents: priceCents,
-      shippingDollars: shipDollars,
-      shippingCents: shipCents,
-      stockCount: this.stock,
-      name: this.name,
-      description: this.description,
-      canShip: this.canShip,
-      canMeet: this.canMeet
-    };
-
-    var request = this.http.put<any>(`/api/products/${this.prodId}/`, requestBody, {observe: "response"});
+    var request = this.http.put<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {
       console.log("Request sent!");
     })

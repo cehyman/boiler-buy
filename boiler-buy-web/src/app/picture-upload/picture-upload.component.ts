@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ThisReceiver } from '@angular/compiler';
+import { ReadVarExpr, ThisReceiver } from '@angular/compiler';
 
 
 /**
@@ -59,6 +59,26 @@ export class PictureUploadComponent implements OnInit {
       }
       reader.readAsDataURL(file);
     }
+  }
+
+  loadFromDatabase(id: number, fileName: string) {
+    console.log(`Loading images for ad ${id} from the database`);
+    console.log(`Image to load: ${fileName}`);
+
+    const options = {
+      observe: 'body'
+    };
+    var request = this.http.get<any>(fileName, {
+      responseType: 'blob' as 'json', //wtf
+    });
+
+    request.subscribe((response: any) => {
+      console.log(`response: ${typeof(response)} = ${response}`)
+
+      let reader = new FileReader();
+      this.selectedFiles.push(new File([response], fileName));
+      this.previewUrls.push(fileName);
+    });
   }
 
   // This is called by one of the X buttons for the photos. The X button has a
