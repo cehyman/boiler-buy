@@ -12,6 +12,8 @@ export interface Product {
     isSold: boolean,
     canShip: boolean,
     canMeet: boolean,
+    sellerRating: number,
+    sellerRatingCount: number,
 }
 
 export interface ProductList extends Array<Product> { }
@@ -24,3 +26,4 @@ export interface FilterSearchInput {
     sellerRatingLowerBound: number | null,
     tags: string[] | null
 }
+
