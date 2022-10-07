@@ -16,6 +16,7 @@ export class CreateComponent implements OnInit {
   stock: number = 1;
   canMeet: boolean = true;
   canShip: boolean = false;
+  type: string = 'Electronics';
 
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
@@ -34,7 +35,7 @@ export class CreateComponent implements OnInit {
   }
 
   transformPriceStr(price: string): string {
-    var num = this.price.replace(/(\$|\,)/gm, '');
+    var num = price.replace(/(\$|\,)/gm, '');
 
     //If the input is not a number, don't try to convert it. 
     if(isNaN(Number(num)))
@@ -69,14 +70,16 @@ export class CreateComponent implements OnInit {
     //var files = this.picUpload.getFiles()[0];
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     
+    console.log(`Product Type: ${this.type}`);
+
     var shipDollars = 0, shipCents = 0;
 
     if(this.canShip) {
-      [shipDollars, shipCents] = this.currencyToDollarsCents(this.price);
+      [shipDollars, shipCents] = this.currencyToDollarsCents(this.shipPrice);
     }
 
     var requestBody = {
-      productType: "food",
+      productType: this.type,
       priceDollars: priceDollars,
       priceCents: priceCents,
       shippingDollars: shipDollars,

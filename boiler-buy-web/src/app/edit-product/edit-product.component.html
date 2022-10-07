@@ -30,6 +30,12 @@
                 required>
             </textarea><br>
             
+            <label for="type"><b>Product Type</b></label><br>
+            <select name="type" [(ngModel)]="type">
+                <option value="Electronics">Electronics</option>
+                <option value="Food">Food</option>
+            </select><br>
+
             <input type="checkbox" [checked]="canMeet" (change)="canMeet = !canMeet">Willing to meet up<br>
 
             <input type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship<br>
