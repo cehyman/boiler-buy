@@ -1,3 +1,4 @@
+from itertools import product
 from rest_framework import viewsets
 
 from .models import *
@@ -51,7 +52,24 @@ class ProductViewSet(viewsets.ModelViewSet):
             print("here5")
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
+
+        # very inefficient way of doing it but I'm rushed on time
+        for prod in data:
+            shop = Shop.objects.filter(products=prod.get("id")).values()
+
+            if (shop.count() > 0):
+                shopID = shop.get().get("id")
+                account = Account.objects.filter(shop=shopID).values().get()
+
+                print(account.get("email"))
+
+        
+
         return JsonResponse(list(data), safe=False)
+
+    def getProductsSeller(product):
+        
+        return 1
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
