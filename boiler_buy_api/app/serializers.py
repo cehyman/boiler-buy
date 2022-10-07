@@ -12,7 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
-            'isPending', 'isSold', 'canShip', 'canMeet']
+            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount']
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

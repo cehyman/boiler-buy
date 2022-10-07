@@ -11,8 +11,11 @@ import { PictureUploadComponent } from '../picture-upload/picture-upload.compone
 export class CreateComponent implements OnInit {
   name: string = '';
   price: string = '';
+  shipPrice: string = '';
   description: string = '';
   stock: number = 1;
+  canMeet: boolean = true;
+  canShip: boolean = false;
 
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
@@ -22,38 +25,70 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
   }  
 
-  transformPrice(event: FocusEvent) {
+  onBlurPrice(event: FocusEvent) {
+    this.price = this.transformPriceStr(this.price);
+  }
+
+  onBlurShipPrice(event: FocusEvent) {
+    this.shipPrice = this.transformPriceStr(this.shipPrice);
+  }
+
+  transformPriceStr(price: string): string {
     var num = this.price.replace(/(\$|\,)/gm, '');
-    if(isNaN(Number(num))) {
-      this.price = '';
+
+    //If the input is not a number, don't try to convert it. 
+    if(isNaN(Number(num)))
+      return '';
+    else
+      return this.currencyPipe.transform(num, '$') ?? '';
+  }
+
+  currencyToDollarsCents(price: string): [number, number] {
+    let strippedString = price.replace(/(\,|\$)/gm, '');
+    if(strippedString == '')
+      return [0, 0];
+    
+    let split = strippedString.split('.', 2);
+
+    if(split.length != 2) {
+      alert(`Error splitting price string: "${price}"`);
     }
-    else {
-      var formatted = this.currencyPipe.transform(num, '$');
-      var target = event.target as HTMLInputElement;
-  
-      if(formatted != null)
-        this.price = formatted;
-      else
-        this.price = '';
-    }
+
+    let dollars: number = Number(split[0]);
+    let cents: number = Number(split[1]);
+
+    if(isNaN(dollars))
+      alert(`Error: dollar amount of "${price}" is not a number`);
+    if(isNaN(cents))
+      alert(`Error: cents amount of "${price}" is not a number`);
+
+    return [dollars, cents];
   }
 
   submit() {
-    // Convet the currency to a number to store in the database
-    var strippedString = this.price.replace(/(\,|\$)/gm, '');
-    var numPrice: number = Number(strippedString);
+    //var files = this.picUpload.getFiles()[0];
+    let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
+    
+    var shipDollars = 0, shipCents = 0;
 
-    var files = this.picUpload.getFiles();
+    if(this.canShip) {
+      [shipDollars, shipCents] = this.currencyToDollarsCents(this.price);
+    }
 
     var requestBody = {
+      productType: "food",
+      priceDollars: priceDollars,
+      priceCents: priceCents,
+      shippingDollars: shipDollars,
+      shippingCents: shipCents,
+      stockCount: this.stock,
       name: this.name,
-      price: numPrice,
       description: this.description,
-      stock: this.stock,
-      pictures: files
+      canShip: this.canShip,
+      canMeet: this.canMeet
     };
 
-    var request = this.http.post<any>("/api/listings/", requestBody, {observe: "response"});
+    var request = this.http.post<any>("/api/products/", requestBody, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

@@ -17,14 +17,15 @@ class Product(models.Model):
     priceCents = models.PositiveSmallIntegerField()
     shippingDollars = models.PositiveIntegerField()
     shippingCents = models.PositiveSmallIntegerField()
+    stockCount = models.PositiveBigIntegerField(default=1)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
-    reported = models.BooleanField()
-    isPending = models.BooleanField()
-    isSold = models.BooleanField()
+    reported = models.BooleanField(default=False, blank=True)
+    isPending = models.BooleanField(default=False, blank=True)
+    isSold = models.BooleanField(default=False, blank=True)
     canShip = models.BooleanField()
     canMeet = models.BooleanField()
-
+    
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
