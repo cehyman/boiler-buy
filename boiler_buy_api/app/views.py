@@ -22,6 +22,12 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_field = "email"
     lookup_value_regex = "[^/]+"
 
+    def create(self, request):
+        newShop = Shop.objects.create()
+        account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
+        shop=newShop)
+        return JsonResponse({'observe': 'response'})
+
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

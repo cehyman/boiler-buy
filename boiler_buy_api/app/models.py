@@ -35,6 +35,6 @@ class Account(models.Model):
         return str(self.username)
 
 class Shop(models.Model):
-    description = models.CharField(max_length=250)
-    isVisible = models.BooleanField()
+    description = models.CharField(max_length=250, default='')
+    isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
