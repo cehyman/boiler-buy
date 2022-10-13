@@ -59,12 +59,13 @@ class ProductViewSet(viewsets.ModelViewSet):
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
 
-        # very inefficient way of doing it but I'm rushed on time
         for prod in data:
             shop = Shop.objects.filter(products=prod.get("id")).values()
 
             if (shop.count() > 0):
                 shopID = shop.get().get("id")
+                print('product id:', prod.get('id'))
+                print('shopID:', shopID)
                 account = Account.objects.filter(shop=shopID).values().get()
                 prod['sellerRating'] = account.get("sellerRating")
                 prod['sellerRatingCount'] = account.get("sellerRatingCount")
