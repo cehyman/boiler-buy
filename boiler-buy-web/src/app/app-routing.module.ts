@@ -8,8 +8,8 @@ import { ProductSearchComponent } from './product-search/product-search.componen
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-  {path: 'register', component: RegisterComponent},
-  {path: 'create', component: CreateComponent},
+  { path: 'register', component: RegisterComponent},
+  { path: 'create', component: CreateComponent},
   { path: 'products/search', component: ProductSearchComponent},
   { path: 'profile', component: ProfileComponent },
   {path: 'change-password', component: ChangePasswordComponent}

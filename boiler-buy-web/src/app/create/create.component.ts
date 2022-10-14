@@ -44,7 +44,7 @@ export class CreateComponent implements OnInit {
       description: this.description
     };
 
-    var request = this.http.post<any>("/api/v1/listings/", requestBody, {observe: "response"});
+    var request = this.http.post<any>("/api/listings/", requestBody, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");
