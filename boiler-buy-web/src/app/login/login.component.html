@@ -1,0 +1,20 @@
+<div class="header">
+    <h1>Login Page</h1>
+</div>
+<div class="register">
+    <form>
+        <div class="inputContainer">
+            <label for="username"><b>Username</b></label><br>
+            <input [(ngModel)]="accountUsername" type="text" placeholder="Ex: jsmith123" name="username" id="username" required><br>
+
+            <label for="pass"><b>Password</b></label><br>
+            <input [(ngModel)]="accountPassword" type="text" placeholder="Enter Password" name="pass" id="pass" required><br>
+
+            <button (click)="login()" type="submit" class="registerBtn">Login</button>
+        </div>
+        
+        <div class="loginContainer">
+            <p>New to Boiler Buy? <a href="http://localhost:4200/register">Register</a>.</p>
+        </div>
+    </form>
+</div>

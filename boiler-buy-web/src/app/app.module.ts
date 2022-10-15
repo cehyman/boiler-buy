@@ -60,6 +60,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { CreateComponent } from './create/create.component';
 import { CurrencyPipe } from '@angular/common';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ProductSearchComponent,
     ProductListingComponent,
     RegisterComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    LoginComponent
   ],
   imports: [
     FormsModule,
