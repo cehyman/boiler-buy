@@ -9,7 +9,7 @@ export class ChangePasswordService {
 
   data:string = ""
   curUsers:any = []
-  updatePassword(userName:string, oldPassword:string, newPassword:string, email:string) {
+  updatePassword(newPassword:string, email:string) {
         var body = {
           password: newPassword
         };
