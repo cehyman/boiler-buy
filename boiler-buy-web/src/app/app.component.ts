@@ -1,4 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
+import { DeleteAccountService } from './delete-account.service';
 
 import {Globals} from './globals'
 @Component({
@@ -32,5 +33,17 @@ export class AppComponent {
 
   getEmail() {
     return sessionStorage.getItem('email')
+  }
+
+  removeUsername() {
+    sessionStorage.removeItem('username')
+  }
+
+  removePassword() {
+    sessionStorage.removeItem('password')
+  }
+
+  removeEmail() {
+    sessionStorage.removeItem('email')
   }
 }
