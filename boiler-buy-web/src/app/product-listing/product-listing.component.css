@@ -2,3 +2,13 @@
     border-style: solid;
     border-width: 1px;
 }
+
+.name_seller_rating {
+    display: flex;
+    flex-direction: column;
+}
+
+.icon-text {
+    display: flex;
+    align-items: center;
+}
