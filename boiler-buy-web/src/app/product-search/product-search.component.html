@@ -23,6 +23,18 @@
                     <input [(ngModel)] = "filters.minPrice" matInput type="number">
                     <mat-checkbox>Max. Price: </mat-checkbox>
                     <input [(ngModel)] = "filters.maxPrice" matInput type="number">
+                    <div class="form-group">
+                        <label for="types">Types:</label>
+                        <div *ngFor="let type of types; let i = index">
+                            <label>
+                                <input type="checkbox"
+                                       name="types"
+                                       value="{{type.value}}"
+                                       [(ngModel)]="type.checked"/>
+                                {{type.name}}
+                            </label>
+                        </div>
+                    </div>
                 </section>
                 <button mat-raised-button (click)="applyFilters()">Apply filters</button>
             </mat-card-content>
