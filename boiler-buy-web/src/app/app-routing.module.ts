@@ -6,13 +6,15 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { RegisterComponent } from './register/register.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'create', component: CreateComponent},
   { path: 'products/search', component: ProductSearchComponent},
   { path: 'profile', component: ProfileComponent },
-  {path: 'change-password', component: ChangePasswordComponent}
+  { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'edit/:id', component: EditProductComponent}
 ];
 
 @NgModule({

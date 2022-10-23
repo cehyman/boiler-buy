@@ -6,4 +6,5 @@ requests
 psycopg2-binary
 python-dotenv
 whitenoise
+pillow
 

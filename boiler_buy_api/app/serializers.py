@@ -7,13 +7,13 @@ from .models import Listing, Product, Account, Shop
 class ListingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
-        fields = ['name', 'price', 'description']
+        fields = ['name', 'price', 'description', 'stock']
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
-            'isPending', 'isSold', 'canShip', 'canMeet']
+            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image']
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
