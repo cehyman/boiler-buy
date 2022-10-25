@@ -46,10 +46,13 @@ class ProductViewSet(viewsets.ModelViewSet):
         if (request.GET.get('productType') != None and request.GET.get('productType') != ""):
             print(request.GET.get('productType'))
             print("here3")
-            type = request.GET.get('productType')
-            print(type)
-            typeSplit = type.split(",")
-            data = data.filter(productType__in=typeSplit).values()
+            if (request.GET.get('productType') != ""):
+                print("here3.5")
+                type = request.GET.get('productType')
+                print(type)
+                typeSplit = type.split(",")
+                data = data.filter(productType__in=typeSplit).values()
+            # print(request.GET.get('productType'))
         if (request.GET.get('minPrice') != None):
             print("here4")
             minPrice = request.GET.get('minPrice')
