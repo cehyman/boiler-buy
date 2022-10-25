@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit{
     var request = this.http.get('http://localhost:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
+      console.log(data)
       this.curUsers.push(data);
     })
 
@@ -69,7 +70,10 @@ export class RegisterComponent implements OnInit{
       var body = {
         username: this.accountUsername,
         password: this.accountPassword,
-        email: this.accountEmail
+        email: this.accountEmail,
+        shop_id: 10,
+        seller_rating: 5,
+        sellerRatingCount: 2
       };
   
       var request = this.http.post<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
