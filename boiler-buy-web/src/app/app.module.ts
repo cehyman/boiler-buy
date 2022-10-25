@@ -59,19 +59,24 @@ import { RegisterComponent } from './register/register.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import { CreateComponent } from './create/create.component';
 import { CurrencyPipe } from '@angular/common';
+import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RegisterComponent,
     ProfileComponent,
     UserInfoComponent,
     FeatureButtonsComponent,
     CreateComponent,
+    PictureUploadComponent,
     ProductSearchComponent,
     ProductListingComponent,
     RegisterComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    EditProductComponent
   ],
   imports: [
     FormsModule,

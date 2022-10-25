@@ -1,7 +1,7 @@
 <div class="header">
-    <h1>Create a Product Listing</h1>
+    <h1>Edit a Product Listing</h1>
 </div>
-<div class="create">
+<div class="editProduct">
     <form>
         <div class="inputContainer">
             <label for="name"><b>Product Name</b></label><br>
@@ -29,13 +29,13 @@
                 name="description" 
                 required>
             </textarea><br>
-
+            
             <label for="type"><b>Product Type</b></label><br>
             <select name="type" [(ngModel)]="type">
                 <option value="Electronics">Electronics</option>
                 <option value="Food">Food</option>
             </select><br>
-            
+
             <input type="checkbox" [checked]="canMeet" (change)="canMeet = !canMeet">Willing to meet up<br>
 
             <input type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship<br>
@@ -54,7 +54,7 @@
             <app-picture-upload #picUpload></app-picture-upload>
             <br><br>
 
-            <button (click)="submit()" type="submit">Create Listing</button>
+            <button (click)="submit()" type="submit">Update Product</button>
         </div>
     </form>
 </div>

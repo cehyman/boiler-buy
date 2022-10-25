@@ -1,14 +1,16 @@
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 
+
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.css']
 })
-export class CreateComponent implements OnInit {
+export class EditProductComponent implements OnInit {
   name: string = '';
   price: string = '';
   shipPrice: string = '';
@@ -18,13 +20,60 @@ export class CreateComponent implements OnInit {
   canShip: boolean = false;
   type: string = 'Electronics';
 
+  prodId: number = -1;
+
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
-  constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private currencyPipe: CurrencyPipe, 
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
-  }  
+    // Get the product ID of the product we need to edit
+    var urlStr = this.activatedRoute.snapshot.url.toString();
+    var id: number = Number(urlStr.split(',')[1]);
+    if(isNaN(id)) {
+      alert(`Invalid URL "${urlStr}": "${id}"`);
+      return;
+    }
+    
+    this.prodId = id;
+    this.loadProduct(id);
+  }
+
+  loadProduct(id: number) {
+    console.log(`Loading product with id "${id}"`);
+    
+    var request = this.http.get<any>(`api/products/${id}`, {observe: "body"});
+    request.subscribe((data: any) => {
+      // Set the fields that can be set out of the box
+      this.name = data.name;
+      this.description = data.description;
+      this.stock = data.stockCount;
+      this.canMeet = data.canMeet;
+      this.canShip = data.canShip;
+      this.type = data.productType;
+
+      this.price = this.dollarsCentsToString(data.priceDollars, data.priceCents);
+
+      if(this.canShip)
+        this.shipPrice = this.dollarsCentsToString(data.shippingDollars, data.shippingCents);
+      else
+        this.shipPrice = '';
+
+      var image: string = data.image;
+      this.picUpload.loadFromDatabase(id, image);
+    });
+  }
+
+  dollarsCentsToString(dollars: number, cents: number): string {
+    // The cents field needs to be padded out with a '0' so that it is
+    // always 2 characters
+    var centsStr = (cents < 10 ? '0' : '') + cents.toString();
+    return `$${dollars}.${centsStr}`;
+  }
 
   onBlurPrice(event: FocusEvent) {
     this.price = this.transformPriceStr(this.price);
@@ -35,7 +84,7 @@ export class CreateComponent implements OnInit {
   }
 
   transformPriceStr(price: string): string {
-    var num = price.replace(/(\$|\,)/gm, '');
+    var num = this.price.replace(/(\$|\,)/gm, '');
 
     //If the input is not a number, don't try to convert it. 
     if(isNaN(Number(num)))
@@ -68,17 +117,14 @@ export class CreateComponent implements OnInit {
 
   submit() {
     var file = this.picUpload.getFiles()[0];
-    
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     
-    console.log(`Product Type: ${this.type}`);
-
     var shipDollars = 0, shipCents = 0;
 
     if(this.canShip) {
       [shipDollars, shipCents] = this.currencyToDollarsCents(this.shipPrice);
     }
-
+    
     var formData = new FormData();
     formData.append("productType", this.type);
     formData.append("priceDollars", `${priceDollars}`);
@@ -92,8 +138,7 @@ export class CreateComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("image", file);
 
-    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
-
+    var request = this.http.put<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {
       console.log("Request sent!");
     })
