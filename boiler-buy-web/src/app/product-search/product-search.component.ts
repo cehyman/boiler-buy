@@ -53,7 +53,9 @@ export class ProductSearchComponent implements OnInit {
       .map(type => type.value)
     console.log(temp)
     this.filters.productType = temp
-    console.log(this.filters.productType)
+    // console.log(this.filters.productType)
+    console.log(this.filters.minSellerRating)
+    console.log(this.filters.maxSellerRating)
     this.loading = true;
     this.products = [];
     this.productService.filterSearch(this.filters).subscribe((productList) => {

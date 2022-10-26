@@ -61,7 +61,6 @@ class ProductViewSet(viewsets.ModelViewSet):
             print("here5")
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
-
         for prod in data:
             shop = Shop.objects.filter(products=prod.get("id")).values()
 
@@ -76,7 +75,15 @@ class ProductViewSet(viewsets.ModelViewSet):
                 # products that don't have a shop yet
                 prod['sellerRating'] = 0
                 prod['sellerRatingCount'] = 0
-
+        print(data)
+        # if (request.GET.get('minSellerRating') != None):
+        #     minSellerRating = request.GET.get('minSellerRating')
+        #     print(minSellerRating)
+        #     data = data.filter(sellerRating__gte=minSellerRating).values()
+        # if (request.GET.get('maxSellerRating') != None):
+        #     maxSellerRating = request.GET.get('maxSellerRating')
+        #     print(maxSellerRating)
+        #     data = data.filter(sellerRating__lte=maxSellerRating).values()
         return JsonResponse(list(data), safe=False)
 
 

@@ -20,9 +20,13 @@
                 <h2>Filters</h2>
                 <section>
                     <mat-checkbox>Min. Price: </mat-checkbox>
-                    <input [(ngModel)] = "filters.minPrice" matInput type="number">
+                    <input [(ngModel)] = "filters.minPrice" matInput type="number"><br>
                     <mat-checkbox>Max. Price: </mat-checkbox>
-                    <input [(ngModel)] = "filters.maxPrice" matInput type="number">
+                    <input [(ngModel)] = "filters.maxPrice" matInput type="number"><br>
+                    <mat-checkbox>Min. Seller Rating: </mat-checkbox>
+                    <input [(ngModel)] = "filters.minSellerRating" matInput type="number"><br>
+                    <mat-checkbox>Max. Seller Rating: </mat-checkbox>
+                    <input [(ngModel)] = "filters.maxSellerRating" matInput type="number">
                     <div class="form-group">
                         <label for="types">Types:</label>
                         <div *ngFor="let type of types; let i = index">

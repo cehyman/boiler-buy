@@ -22,7 +22,8 @@ export class ProductService {
     if (params.productType != null) url.searchParams.set('productType', params.productType.toString());
     if (params.minPrice != null) url.searchParams.set('minPrice', params.minPrice.toString());
     if (params.maxPrice != null) url.searchParams.set('maxPrice', params.maxPrice.toString());
-    if (params.sellerRatingLowerBound != null) url.searchParams.set('sellerRatingLowerBound', params.sellerRatingLowerBound.toString());
+    if (params.minSellerRating != null) url.searchParams.set('minSellerRating', params.minSellerRating.toString());
+    if (params.maxSellerRating != null) url.searchParams.set('maxSellerRating', params.maxSellerRating.toString());
     if (params.tags != null) url.searchParams.set('tags', params.tags.toString());
 
     console.log(url.toString());
