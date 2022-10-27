@@ -84,8 +84,9 @@ export class ChangeUsernameComponent implements OnInit {
         var body = {
           username: this.newUsername
         };
-        console.log(this.email2)
-        var accountURL = "http://localhost:8000/api/accounts/".concat(this.email2).concat("/");
+        console.log(this.email)
+        var accountURL = "http://localhost:8000/api/accounts/".concat(this.email).concat("/");
+        console.log(accountURL)
         var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
     
         patchRequest.subscribe((data: any) => {
