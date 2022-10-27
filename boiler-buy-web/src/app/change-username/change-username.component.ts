@@ -26,13 +26,13 @@ export class ChangeUsernameComponent implements OnInit {
     private http:HttpClient) { }
 
   ngOnInit(): void {
-    // if(this.appcomp.getUsername() == null || this.appcomp.getUsername() == "") {
-    //   console.log("here")
-    //   this.router.navigate(['/login'])
-    // }
-    // this.oldUsername = this.appcomp.getUsername() || ""
-    // Hardcoded for now
-    this.oldUsername = "pog"
+    if(this.appcomp.getUsername() == null || this.appcomp.getUsername() == "") {
+      console.log("here")
+      this.router.navigate(['/login'])
+    }
+    this.oldUsername = this.appcomp.getUsername() || ""
+    console.log(this.oldUsername)
+    // this.oldUsername = "pog"
     var request = this.http.get('http://localhost:8000/api/accounts/')
     request.subscribe((data: any) => {
       this.curUsers.push(data);

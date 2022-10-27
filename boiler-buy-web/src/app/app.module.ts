@@ -81,7 +81,7 @@ import { SellerReviewComponent } from './seller-review/seller-review.component';
     ChangePasswordComponent,
     EditProductComponent,
     ChangeUsernameComponent,
-    SellerReviewComponent
+    SellerReviewComponent,
     LoginComponent,
     EditProductComponent
   ],
