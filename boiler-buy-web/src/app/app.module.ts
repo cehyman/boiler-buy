@@ -61,6 +61,7 @@ import { CreateComponent } from './create/create.component';
 import { CurrencyPipe } from '@angular/common';
 import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { LoginComponent } from './login/login.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
@@ -81,6 +82,8 @@ import { SellerReviewComponent } from './seller-review/seller-review.component';
     EditProductComponent,
     ChangeUsernameComponent,
     SellerReviewComponent
+    LoginComponent,
+    EditProductComponent
   ],
   imports: [
     FormsModule,
