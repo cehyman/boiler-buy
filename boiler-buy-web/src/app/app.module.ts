@@ -61,6 +61,7 @@ import { CreateComponent } from './create/create.component';
 import { CurrencyPipe } from '@angular/common';
 import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { LoginComponent } from './login/login.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
@@ -76,6 +77,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     ProductListingComponent,
     RegisterComponent,
     ChangePasswordComponent,
+    LoginComponent,
     EditProductComponent
   ],
   imports: [
