@@ -37,6 +37,7 @@ class Account(models.Model):
     shop = models.ForeignKey("Shop", on_delete=models.CASCADE, null=True)
     sellerRating = models.FloatField(default=0)
     sellerRatingCount = models.IntegerField(default=0)
+    sellerReviews = ArrayField(models.CharField(max_length=500))
 
     def __str__(self):
         return str(self.username)

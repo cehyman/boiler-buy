@@ -63,6 +63,7 @@ import { PictureUploadComponent } from './picture-upload/picture-upload.componen
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
+import { SellerReviewComponent } from './seller-review/seller-review.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { ChangeUsernameComponent } from './change-username/change-username.compo
     RegisterComponent,
     ChangePasswordComponent,
     EditProductComponent,
-    ChangeUsernameComponent
+    ChangeUsernameComponent,
+    SellerReviewComponent
   ],
   imports: [
     FormsModule,
