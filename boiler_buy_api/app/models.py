@@ -31,8 +31,12 @@ class Product(models.Model):
     image = models.FileField(null=True, blank=True, upload_to='products/')
 
 class ProductImage(models.Model):
-    image = models.ImageField(null=True, blank=False, upload_to="products/")
+    def uploadTo(self, filename):
+        return f"products/{self.product.id}/{filename}"
+    
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(null=True, blank=False, upload_to=uploadTo)
+
     
 class Account(models.Model):
     username = models.CharField(max_length=30)

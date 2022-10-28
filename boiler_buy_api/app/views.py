@@ -58,7 +58,6 @@ class ProductViewSet(viewsets.ModelViewSet):
             description = request.data.get('description'),
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
-            image = request.data.get('image'),
             brand = request.data.get('brand')
         )
         print('product id: ', product.id)
@@ -71,6 +70,11 @@ class ProductViewSet(viewsets.ModelViewSet):
 
         # connect the product to the shop by adding it to the shops list of products
         shop.products.add(product.id)
+        
+        # Add all the images and connect them to this product
+        formImages = request.data.getlist('images')
+        for image in formImages:
+            ProductImage.objects.create(image=image, product=product)
         
         # generic non-error response
         return JsonResponse({'observe': 'response'})
