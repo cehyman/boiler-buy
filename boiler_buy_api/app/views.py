@@ -23,8 +23,8 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
-        if (request.data.get('username') == 'placeholder'):
-            return JsonResponse({'error': 'Username \'placeholder\' cannot be used'}, status=400)
+        if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
+            return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
 
         newShop = Shop.objects.create(description=request.data.get('username'))
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
