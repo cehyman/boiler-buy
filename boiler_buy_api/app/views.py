@@ -124,6 +124,9 @@ class ProductViewSet(viewsets.ModelViewSet):
 
         return JsonResponse(list(data), safe=False)
 
+class ProductImageViewSet(viewsets.ModelViewSet):
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()

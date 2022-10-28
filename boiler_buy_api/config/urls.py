@@ -38,6 +38,7 @@ router.register(r'listings', views.ListingViewSet)
 router.register(r'products', views.ProductViewSet)
 router.register(r'accounts', views.AccountViewSet)
 router.register(r'shops', views.ShopViewSet)
+router.register(r'product-images', views.ProductImageViewSet)
 
 urlpatterns = [
     re_path(r'^$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
