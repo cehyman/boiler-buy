@@ -27,7 +27,7 @@ class Product(models.Model):
     isSold = models.BooleanField(default=False, blank=True)
     canShip = models.BooleanField()
     canMeet = models.BooleanField()
-    
+    brand = models.CharField(max_length=128, default="")
     image = models.FileField(null=True, blank=True, upload_to='products/', )
     
 class Account(models.Model):
