@@ -41,7 +41,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     # override the automatic creation of the object in the database
     def create(self, request):
         # user isn't logged in, hopefully nobody wants this username
-        if (request.data.get('username') == 'placeholder'):
+        if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'User is not logged in'}, status=401)
         
 
