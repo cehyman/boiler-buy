@@ -93,6 +93,8 @@ export class ChangeUsernameComponent implements OnInit {
           console.log(data)
         })
         alert("Changed username")
+
+        this.appcomp.saveUsername(this.newUsername)
     }
     // if (match) {
       // var body = {
