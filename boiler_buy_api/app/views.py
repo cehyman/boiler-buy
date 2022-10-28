@@ -59,6 +59,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
             image = request.data.get('image'),
+            brand = request.data.get('brand')
         )
         print('product id: ', product.id)
 
