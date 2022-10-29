@@ -27,6 +27,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
 
         newShop = Shop.objects.create(description=request.data.get('username'))
+        newWistlist = Wistlist.objects.create()
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
         shop=newShop)
 
@@ -127,3 +128,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
+
+class WishlistViewSet(viewsets.ModelViewSet):
+    queryset = Wistlist.objects.all()
+    serializer_class = WistlistSerializer

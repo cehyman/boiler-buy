@@ -37,6 +37,7 @@ class Account(models.Model):
     shop = models.ForeignKey("Shop", on_delete=models.CASCADE, null=True)
     sellerRating = models.FloatField(default=0)
     sellerRatingCount = models.IntegerField(default=0)
+    wishlist = models.ForeignKey("Wistlist", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.username)
@@ -44,4 +45,7 @@ class Account(models.Model):
 class Shop(models.Model):
     description = models.CharField(max_length=250, default='')
     isVisible = models.BooleanField(default=False)
+    products = models.ManyToManyField("Product")
+
+class Wistlist(models.Model):
     products = models.ManyToManyField("Product")
