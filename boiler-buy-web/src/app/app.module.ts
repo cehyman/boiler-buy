@@ -53,7 +53,7 @@ import { FeatureButtonsComponent } from './feature-buttons/feature-buttons.compo
 import { AppRoutingModule } from './app-routing.module';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductListingComponent } from './product-listing/product-listing.component';
+import { ProductListingComponent, PurchaseConfirmationDialog } from './product-listing/product-listing.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -80,7 +80,8 @@ import { PurchaseHistoryComponent } from './purchase-history/purchase-history.co
     ChangePasswordComponent,
     LoginComponent,
     EditProductComponent,
-    PurchaseHistoryComponent
+    PurchaseHistoryComponent,
+    PurchaseConfirmationDialog
   ],
   imports: [
     FormsModule,

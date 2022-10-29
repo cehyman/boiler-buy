@@ -18,7 +18,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
-        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'purchases']
+        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount']#, 'purchases']
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
