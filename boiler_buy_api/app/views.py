@@ -8,6 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import render
 from rest_framework.decorators import api_view
+from rest_framework.decorators import action
 
 import json
 
@@ -43,7 +44,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         # user isn't logged in, hopefully nobody wants this username
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'User is not logged in'}, status=401)
-        
 
         print('data:', request.data)
         # add the product to the database (and get the product's id)
@@ -79,6 +79,22 @@ class ProductViewSet(viewsets.ModelViewSet):
         # generic non-error response
         return JsonResponse({'observe': 'response'})
 
+    # Allows the images for this product to be retrieved. This is called with a path of the form:
+    # /products/<id>/retrieveImages
+    # This is a seperate function so that the entirety of the retrieve function doesn't need
+    # written
+    @action(detail=True, methods=['get'])
+    def retrieveImages(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        images = product.images.all()
+        
+        nameList = list([])
+        
+        for image in images:
+            nameList.append(image.image.url)
+        
+        print(f"{nameList}")
+        return JsonResponse(nameList, safe=False)
 
     # override default list (because we want to filter before we send the response)
     def list(self, request):

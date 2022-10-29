@@ -67,12 +67,20 @@ export class EditProductComponent implements OnInit {
       else
         this.shipPrice = '';
       
-      var imageUrl = new URL(data.image);
-      if(imageUrl.pathname != "/media/undefined") {
-        var image: string = data.image;
-        this.picUpload.loadFromDatabase(id, image);
-      }
+      console.log(`data: ${data}`)
+      // var imageUrl = new URL(data.images);
+      // if(imageUrl.pathname != "/media/undefined") {
+      //   var image: string = data.image;
+      //   this.picUpload.loadFromDatabase(id, image);
+      // }
     });
+
+    var imageRequest = this.http.get<any>(`api/products/${id}/retrieveImages`, {observe: "body"});
+    imageRequest.subscribe((data: any) => {
+      for (const name of data) {
+        this.picUpload.loadFromDatabase(this.prodId, name);
+      }
+    })
   }
 
   dollarsCentsToString(dollars: number, cents: number): string {
