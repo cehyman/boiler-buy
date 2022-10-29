@@ -23,15 +23,60 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
-        newShop = Shop.objects.create()
+        if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
+            return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
+
+        newShop = Shop.objects.create(description=request.data.get('username'))
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
         shop=newShop)
+
+        print('newShop: ', newShop.id)
+        print('username: ', account)
         return JsonResponse({'observe': 'response'})
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    # override the automatic creation of the object in the database
+    def create(self, request):
+        # user isn't logged in, hopefully nobody wants this username
+        if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
+            return JsonResponse({'error': 'User is not logged in'}, status=401)
+        
+
+        print('data:', request.data)
+        # add the product to the database (and get the product's id)
+        product = Product.objects.create(
+            productType = request.data.get('productType'),
+            priceDollars = request.data.get('priceDollars'),
+            priceCents = request.data.get('priceCents'),
+            shippingDollars = request.data.get('shippingDollars'),
+            shippingCents = request.data.get('shippingCents'),
+            stockCount = request.data.get('stockCount'),
+            name = request.data.get('name'),
+            description = request.data.get('description'),
+            canShip = bool(request.data.get('canShip')),
+            canMeet = bool(request.data.get('canMeet')),
+            image = request.data.get('image'),
+            brand = request.data.get('brand')
+        )
+        print('product id: ', product.id)
+
+        # get user object of the user adding this product
+        user = Account.objects.get(username=request.data.get('username'))
+
+        # get user's shop
+        shop = Shop.objects.get(id=user.shop_id)
+
+        # connect the product to the shop by adding it to the shops list of products
+        shop.products.add(product.id)
+        
+        # generic non-error response
+        return JsonResponse({'observe': 'response'})
+
+
+    # override default list (because we want to filter before we send the response)
     def list(self, request):
         data = Product.objects.values()
         if (request.GET.__contains__('name')):
