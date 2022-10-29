@@ -117,7 +117,7 @@ export class CreateComponent implements OnInit {
     formData.append("username", this.curruser);
     formData.append("brand", this.brand);
 
-    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
+    var request = this.http.post<any>("http://localhost:8000/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

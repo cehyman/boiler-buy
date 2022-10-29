@@ -20,6 +20,7 @@ export class ProductService {
 
     if (params.name != null && params.name != '') url.searchParams.set('name', params.name);
     if (params.productType != null) url.searchParams.set('productType', params.productType.toString());
+    if (params.brand != null) url.searchParams.set('brand', params.brand.toString());
     if (params.minPrice != null) url.searchParams.set('minPrice', params.minPrice.toString());
     if (params.maxPrice != null) url.searchParams.set('maxPrice', params.maxPrice.toString());
     if (params.minSellerRating != null) url.searchParams.set('minSellerRating', params.minSellerRating.toString());

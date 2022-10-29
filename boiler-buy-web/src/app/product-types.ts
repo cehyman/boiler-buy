@@ -25,6 +25,7 @@ export interface FilterSearchInput {
     maxPrice: number | null,
     minSellerRating: number | null,
     maxSellerRating: number | null,
+    brand: string[] | null,
     tags: string[] | null
 }
 

@@ -65,6 +65,7 @@ import { LoginComponent } from './login/login.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { SellerReviewComponent } from './seller-review/seller-review.component';
     ChangeUsernameComponent,
     SellerReviewComponent,
     LoginComponent,
-    EditProductComponent
+    EditProductComponent,
+    ProductDetailsComponent
   ],
   imports: [
     FormsModule,
