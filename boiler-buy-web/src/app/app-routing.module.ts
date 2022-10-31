@@ -10,6 +10,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { LoginComponent } from './login/login.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent},
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'edit/:id', component: EditProductComponent},
   { path: 'change-username', component: ChangeUsernameComponent},
   { path: 'sellerReview', component: SellerReviewComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'products/:id', component: ProductDetailsComponent}
 ];
 
 @NgModule({
