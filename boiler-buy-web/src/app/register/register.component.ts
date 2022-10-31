@@ -73,7 +73,8 @@ export class RegisterComponent implements OnInit{
         email: this.accountEmail,
         shop_id: 10,
         seller_rating: 5,
-        sellerRatingCount: 2
+        sellerRatingCount: 2,
+        sellerReviews: []
       };
   
       var request = this.http.post<any>("http://localhost:8000/api/accounts/", body, {observe: 'response'});
