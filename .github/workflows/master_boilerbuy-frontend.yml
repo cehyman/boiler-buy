@@ -32,9 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: |
-            ./boiler-buy-web
-            !venv/
+          path: dist/boiler-buy-web
 
   deploy:
     runs-on: ubuntu-latest
