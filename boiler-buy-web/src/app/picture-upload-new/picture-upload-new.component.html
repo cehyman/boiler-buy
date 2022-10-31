@@ -1,0 +1,19 @@
+
+<div class="picture-upload">
+    <form>
+        <input type="file"
+            id="fileSelectionInput"
+            multiple
+            accept="image/*"
+            (change)="addPhotos($event)"
+            style="display: none"
+            required>
+        <button onclick="fileSelectionInput.click()">Upload a Picture</button>
+    </form>
+
+    <div *ngFor="let url of getPreviewUrls(); let i = index">
+        <img src={{url}} class="preview"/>
+
+        <button (click)="removePhoto($event)" [attr.data-idx]="i">x</button>
+    </div>
+</div>

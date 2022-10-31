@@ -17,12 +17,71 @@ export class PictureUploadNewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getPreviewUrls(): URL[] {
-    return this.selectedImages.map(image => image.url);
+  // Returns all the preview URLS for the uploaded images
+  getPreviewUrls(): (URL | null)[] {
+    return this.selectedImages
+      .filter(image => image.url !== null)
+      .map(image => image.url);
   } 
 
-  uploadFiles(event: Event) {
+  // Returns handles to all of the files for the uploaded images
+  getAllFiles(): File[] {
+    return this.selectedImages
+      .map(image => image.file)
+      .filter(file => file != null) as File[];
+  }
 
+  // Returns handles to all the new files added by the user
+  // These should get added to the database
+  getNewFiles(): File[] {
+    return this.selectedImages
+      .filter(image => image.file != null && image.userUploaded)
+      .map(image => image.file) as File[];
+  }
+
+  // Returns handles to all the existing files in the database. These do not
+  // need to get sent again to the database
+  getExistingFiles(): File[] {
+    return this.selectedImages
+      .filter(image => image.file != null && image.fromDatabase)
+      .map(image => image.file) as File[];
+  }
+
+  // Returns handles to all the exisitng files that should be removed from the
+  // database.
+  getExistingFilesToRemove(): File[] {
+    return this.selectedImages
+      .filter(image => image.file != null && image.shouldRemove)
+      .map(image => image.file) as File[];
+  }
+
+  addPhotos(event: Event) {
+    var target: HTMLInputElement = event.target as HTMLInputElement;
+
+    var files: FileList = target.files as FileList;
+
+    for(var i = 0; i < files.length; i++) {
+      var file: File = files.item(i) as File;
+
+      var reader = new FileReader();
+      reader.onloadend = (event: any) => {
+        this.selectedImages.push(SelectedImage.fromUser(file, event.target.result));
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removePhoto(event: Event) {
+    var target = event.target as HTMLButtonElement;
+
+    var idx = Number(target.dataset['idx']);
+
+    if(this.selectedImages[idx].userUploaded) {
+      this.selectedImages.splice(idx, 1);
+    }
+    else if (this.selectedImages[idx].fromDatabase) {
+      this.selectedImages[idx].shouldRemove = true;
+    }
   }
 }
 
