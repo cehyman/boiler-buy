@@ -47,6 +47,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-app
+          path: .
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -55,4 +56,4 @@ jobs:
           app-name: 'BoilerBuy-Frontend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2B1AC0210A0E48AB9D929ED01FBC0CE4 }}
-          package: ./dist/boiler-buy-web
+
