@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-seller-review',
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SellerReviewComponent implements OnInit {
   reviewDescription:string = ""
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute,  private router: Router) { }
   reviewCount:number = 0
   reviewAvg:number = 0
   reviews:string[] = []
@@ -73,5 +73,6 @@ export class SellerReviewComponent implements OnInit {
       console.log(data)
     })
     alert("Review Sent")
+    this.router.navigate(['/products/search'])
   }
 }
