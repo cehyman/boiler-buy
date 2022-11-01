@@ -59,6 +59,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
             image = request.data.get('image'),
+            brand = request.data.get('brand')
         )
         print('product id: ', product.id)
 
@@ -97,6 +98,15 @@ class ProductViewSet(viewsets.ModelViewSet):
                 typeSplit = type.split(",")
                 data = data.filter(productType__in=typeSplit).values()
             # print(request.GET.get('productType'))
+        if (request.GET.get('brand') != None and request.GET.get('brand') != ""):
+            print(request.GET.get('brand'))
+            print("here3.6")
+            if (request.GET.get('brand') != ""):
+                print("here3.7")
+                type = request.GET.get('brand')
+                print(type)
+                typeSplit = type.split(",")
+                data = data.filter(brand__in=typeSplit).values()
         if (request.GET.get('minPrice') != None):
             print("here4")
             minPrice = request.GET.get('minPrice')
@@ -105,10 +115,9 @@ class ProductViewSet(viewsets.ModelViewSet):
             print("here5")
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
-
         for prod in data:
+            print(prod.get("id"))
             shop = Shop.objects.filter(products=prod.get("id")).values()
-
             if (shop.count() > 0):
                 shopID = shop.get().get("id")
                 print('product id:', prod.get('id'))
@@ -120,8 +129,52 @@ class ProductViewSet(viewsets.ModelViewSet):
                 # products that don't have a shop yet
                 prod['sellerRating'] = 0
                 prod['sellerRatingCount'] = 0
-
+            # print("pogpog")
+            # if (prod.get("id") == 100):
+            #     shop = Shop.objects.filter(products=prod.get("id")).values()
+            #     if (shop.count() > 0):
+            #         shopID = shop.get().get("id")
+            #         print('product id:', prod.get('id'))
+            #         print('shopID:', shopID)
+            #         account = Account.objects.filter(shop=shopID).values().get()
+            #         prod['sellerRating'] = account.get("sellerRating")
+            #         prod['sellerRatingCount'] = account.get("sellerRatingCount")
+            #     else:
+            #         # products that don't have a shop yet
+            #         prod['sellerRating'] = 0
+            #         prod['sellerRatingCount'] = 0
+        # print(data)
+        # if (request.GET.get('minSellerRating') != None):
+        #     minSellerRating = request.GET.get('minSellerRating')
+        #     print(minSellerRating)
+        #     data = data.filter(sellerRating__gte=minSellerRating).values()
+        # if (request.GET.get('maxSellerRating') != None):
+        #     maxSellerRating = request.GET.get('maxSellerRating')
+        #     print(maxSellerRating)
+        #     data = data.filter(sellerRating__lte=maxSellerRating).values()
         return JsonResponse(list(data), safe=False)
+    def retrieve(self, request, pk=None):
+        print(request)
+        req = str(request)
+        reqSplit = req.split("/")
+        print(reqSplit)
+        data = Product.objects.values()
+        for prod in data:
+            print(type(prod.get("id")))
+            print(type(reqSplit[len(reqSplit)-2]))
+            if (prod.get("id") == int(reqSplit[len(reqSplit)-2])):
+                shop = Shop.objects.filter(products=prod.get("id")).values()
+                if (shop.count() > 0):
+                    shopID = shop.get().get("id")
+                    # print('product id:', prod.get('id'))
+                    # print('shopID:', shopID)
+                    account = Account.objects.filter(shop=shopID).values().get()
+                    # print(prod)
+                    # print(type(account))
+                    # print(account)
+                    prod.update(account)
+                    return JsonResponse(prod, safe=False)
+        
 
 
 class ShopViewSet(viewsets.ModelViewSet):
