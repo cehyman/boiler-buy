@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'change-password', component: ChangePasswordComponent},
   { path: 'edit/:id', component: EditProductComponent},
   { path: 'change-username', component: ChangeUsernameComponent},
-  { path: 'sellerReview', component: SellerReviewComponent},
+  { path: 'sellerReview/:id', component: SellerReviewComponent},
   {path: 'login', component: LoginComponent},
   {path: 'products/:id', component: ProductDetailsComponent}
 ];

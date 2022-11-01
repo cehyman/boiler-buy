@@ -115,20 +115,28 @@ class ProductViewSet(viewsets.ModelViewSet):
             print("here5")
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
-        # for prod in data:
-        #     shop = Shop.objects.filter(products=prod.get("id")).values()
-
-        #     if (shop.count() > 0):
-        #         shopID = shop.get().get("id")
-        #         print('product id:', prod.get('id'))
-        #         print('shopID:', shopID)
-        #         account = Account.objects.filter(shop=shopID).values().get()
-        #         prod['sellerRating'] = account.get("sellerRating")
-        #         prod['sellerRatingCount'] = account.get("sellerRatingCount")
-        #     else:
-        #         # products that don't have a shop yet
-        #         prod['sellerRating'] = 0
-        #         prod['sellerRatingCount'] = 0
+        for prod in data:
+            # print(prod.get("id"))
+            # shop = Shop.objects.filter(products=prod.get("id")).values()
+            # if (shop.count() > 0):
+            #     shopID = shop.get().get("id")
+            #     print('product id:', prod.get('id'))
+            #     print('shopID:', shopID)
+            #     account = Account.objects.filter(shop=shopID).values().get()
+            #     prod['sellerRating'] = account.get("sellerRating")
+            #     prod['sellerRatingCount'] = account.get("sellerRatingCount")
+            # else:
+            #     # products that don't have a shop yet
+            #     prod['sellerRating'] = 0
+            #     prod['sellerRatingCount'] = 0
+            # print("pogpog")
+            if (prod.get("id") == 100):
+                shop = Shop.objects.filter(products=prod.get("id")).values()
+                if (shop.count() > 0):
+                    shopID = shop.get().get("id")
+                    print('product id:', prod.get('id'))
+                    print('shopID:', shopID)
+                    account = Account.objects.filter(shop=shopID).values().get()
         # print(data)
         # if (request.GET.get('minSellerRating') != None):
         #     minSellerRating = request.GET.get('minSellerRating')
@@ -139,6 +147,24 @@ class ProductViewSet(viewsets.ModelViewSet):
         #     print(maxSellerRating)
         #     data = data.filter(sellerRating__lte=maxSellerRating).values()
         return JsonResponse(list(data), safe=False)
+    def retrieve(self, request, pk=None):
+        print("lol")
+        data = Product.objects.values()
+        for prod in data:
+            if (prod.get("id") == 100):
+                shop = Shop.objects.filter(products=prod.get("id")).values()
+                if (shop.count() > 0):
+                    shopID = shop.get().get("id")
+                    print('product id:', prod.get('id'))
+                    print('shopID:', shopID)
+                    account = Account.objects.filter(shop=shopID).values().get()
+                    print(prod)
+                    print(type(account))
+                    print(account)
+                    prod.update(account)
+                break
+        return JsonResponse(prod, safe=False)
+        
 
 
 class ShopViewSet(viewsets.ModelViewSet):

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -18,19 +19,20 @@ export class ProductDetailsComponent implements OnInit {
   canShip: boolean = false;
   type: string = '';
   brand: string = '';
+  id: number = -1;
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient) {
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) {
   }
 
   ngOnInit(): void {
     var urlStr = this.activatedRoute.snapshot.url.toString();
-    var id: number = Number(urlStr.split(',')[1]);
-    if(isNaN(id)) {
-      alert(`Invalid URL "${urlStr}": "${id}"`);
+    this.id = Number(urlStr.split(',')[1]);
+    if(isNaN(this.id)) {
+      alert(`Invalid URL "${urlStr}": "${this.id}"`);
       return;
     }
-    console.log(id)
-    var request = this.http.get('http://localhost:8000/api/products/' + id, {observe: "body"})
+    console.log(this.id)
+    var request = this.http.get('http://localhost:8000/api/products/' + this.id, {observe: "body"})
     let i = 0
     request.subscribe((data: any) => {
       // console.log(data)
@@ -57,8 +59,8 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
-  // loadProductDetails() {
-  //   // console.log(this.name)
-  // }
+  buy() {
+    this.router.navigate(['/sellerReview/' + this.id])
+  }
 
 }
