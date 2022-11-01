@@ -5,7 +5,7 @@
             id="fileSelectionInput"
             multiple
             accept="image/*"
-            (change)="addPhotos($event)"
+            (change)="uploadPhotos($event)"
             style="display: none"
             required>
         <button onclick="fileSelectionInput.click()">Upload a Picture</button>
@@ -14,6 +14,8 @@
     <div *ngFor="let url of getPreviewUrls(); let i = index">
         <img src={{url}} class="preview"/>
 
-        <button (click)="removePhoto($event)" [attr.data-idx]="i">x</button>
+        <div *ngIf="!hideX">
+            <button (click)="removePhoto($event)" [attr.data-idx]="i">x</button>
+        </div>
     </div>
 </div>

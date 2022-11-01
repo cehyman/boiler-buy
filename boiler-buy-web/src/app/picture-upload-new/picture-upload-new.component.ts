@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit, Optional, Input } from '@angular/core';
 
 @Component({
   selector: 'app-picture-upload-new',
@@ -7,10 +7,11 @@ import { Component, OnInit, Optional } from '@angular/core';
 })
 export class PictureUploadNewComponent implements OnInit {
   // Configuration for the component
-  maxImages: number | null    = null;
-  hideX: boolean              = false;
+  @Input() maxImages: number    = 100;
+  @Input() hideX: boolean       = false;
   
   selectedImages: SelectedImage[] = [];
+  numImages: number = 0;
 
   constructor() { }
 
@@ -55,32 +56,41 @@ export class PictureUploadNewComponent implements OnInit {
       .map(image => image.file) as File[];
   }
 
-  addPhotos(event: Event) {
+  // Event to upload images by the user. This returns the number of images
+  // uploaded. 
+  uploadPhotos(event: Event): number {
     var target: HTMLInputElement = event.target as HTMLInputElement;
 
     var files: FileList = target.files as FileList;
 
-    for(var i = 0; i < files.length; i++) {
+    var startNum = this.numImages;
+
+    for(var i = 0; i < files.length && this.numImages < this.maxImages; i++) {
       var file: File = files.item(i) as File;
 
       var reader = new FileReader();
       reader.onloadend = (event: any) => {
         this.selectedImages.push(SelectedImage.fromUser(file, event.target.result));
+        this.numImages++;
       };
       reader.readAsDataURL(file);
     }
+
+    return this.numImages - startNum;
   }
 
-  removePhoto(event: Event) {
+  protected removePhoto(event: Event) {
     var target = event.target as HTMLButtonElement;
 
     var idx = Number(target.dataset['idx']);
 
     if(this.selectedImages[idx].userUploaded) {
       this.selectedImages.splice(idx, 1);
+      this.numImages--;
     }
     else if (this.selectedImages[idx].fromDatabase) {
       this.selectedImages[idx].shouldRemove = true;
+      this.numImages--;
     }
   }
 }
