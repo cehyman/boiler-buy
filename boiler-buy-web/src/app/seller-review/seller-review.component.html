@@ -1,0 +1,28 @@
+<div class="header">
+    <h1>Seller Review Page</h1>
+</div>
+<div class="register">
+    <form>
+        <div class="ratingContainer">
+            <label>Select a rating: </label>
+            <select #ratings (change)="onSelected(ratings.value)">
+                <option default>1.0</option>
+                <option>1.5</option>
+                <option>2.0</option>
+                <option>2.5</option>
+                <option>3.0</option>
+                <option>3.5</option>
+                <option>4.0</option>
+                <option>4.5</option>
+                <option>5.0</option>
+            </select>
+        
+        </div>
+        <div class="reviewContainer">
+            <label for="Review"><b>Review Description</b></label><br>
+            <textarea [(ngModel)]="reviewDescription" id="w3review" name="w3review" rows="4" cols="50"></textarea>
+            <button (click)="submitReview()" type="submit" class="submitBtn">Submit</button>
+        </div>
+        
+    </form>
+</div>

@@ -38,18 +38,19 @@ class ProductImage(models.Model):
     image = models.ImageField(null=True, blank=False, upload_to=uploadTo)
 
     
-class Account(models.Model):
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
-    email = models.CharField(max_length=50, primary_key=True)
-    shop = models.ForeignKey("Shop", on_delete=models.CASCADE, null=True)
-    sellerRating = models.FloatField(default=0)
-    sellerRatingCount = models.IntegerField(default=0)
-
-    def __str__(self):
-        return str(self.username)
-
 class Shop(models.Model):
     description = models.CharField(max_length=250, default='')
     isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
+
+class Account(models.Model):
+    username = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)
+    email = models.CharField(max_length=50, primary_key=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, db_column="shop_id")
+    sellerRating = models.FloatField(default=0)
+    sellerRatingCount = models.IntegerField(default=0)
+    sellerReviews = ArrayField(models.CharField(max_length=500), default=list)
+
+    def __str__(self):
+        return str(self.username)
