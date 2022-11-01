@@ -116,33 +116,33 @@ class ProductViewSet(viewsets.ModelViewSet):
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
         for prod in data:
-            # print(prod.get("id"))
-            # shop = Shop.objects.filter(products=prod.get("id")).values()
-            # if (shop.count() > 0):
-            #     shopID = shop.get().get("id")
-            #     print('product id:', prod.get('id'))
-            #     print('shopID:', shopID)
-            #     account = Account.objects.filter(shop=shopID).values().get()
-            #     prod['sellerRating'] = account.get("sellerRating")
-            #     prod['sellerRatingCount'] = account.get("sellerRatingCount")
-            # else:
-            #     # products that don't have a shop yet
-            #     prod['sellerRating'] = 0
-            #     prod['sellerRatingCount'] = 0
+            print(prod.get("id"))
+            shop = Shop.objects.filter(products=prod.get("id")).values()
+            if (shop.count() > 0):
+                shopID = shop.get().get("id")
+                print('product id:', prod.get('id'))
+                print('shopID:', shopID)
+                account = Account.objects.filter(shop=shopID).values().get()
+                prod['sellerRating'] = account.get("sellerRating")
+                prod['sellerRatingCount'] = account.get("sellerRatingCount")
+            else:
+                # products that don't have a shop yet
+                prod['sellerRating'] = 0
+                prod['sellerRatingCount'] = 0
             # print("pogpog")
-            if (prod.get("id") == 100):
-                shop = Shop.objects.filter(products=prod.get("id")).values()
-                if (shop.count() > 0):
-                    shopID = shop.get().get("id")
-                    print('product id:', prod.get('id'))
-                    print('shopID:', shopID)
-                    account = Account.objects.filter(shop=shopID).values().get()
-                    prod['sellerRating'] = account.get("sellerRating")
-                    prod['sellerRatingCount'] = account.get("sellerRatingCount")
-                else:
-                    # products that don't have a shop yet
-                    prod['sellerRating'] = 0
-                    prod['sellerRatingCount'] = 0
+            # if (prod.get("id") == 100):
+            #     shop = Shop.objects.filter(products=prod.get("id")).values()
+            #     if (shop.count() > 0):
+            #         shopID = shop.get().get("id")
+            #         print('product id:', prod.get('id'))
+            #         print('shopID:', shopID)
+            #         account = Account.objects.filter(shop=shopID).values().get()
+            #         prod['sellerRating'] = account.get("sellerRating")
+            #         prod['sellerRatingCount'] = account.get("sellerRatingCount")
+            #     else:
+            #         # products that don't have a shop yet
+            #         prod['sellerRating'] = 0
+            #         prod['sellerRatingCount'] = 0
         # print(data)
         # if (request.GET.get('minSellerRating') != None):
         #     minSellerRating = request.GET.get('minSellerRating')
