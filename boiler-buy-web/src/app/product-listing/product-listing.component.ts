@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../product-types';
 import { ProductService } from '../product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-listing',
@@ -14,7 +15,7 @@ export class ProductListingComponent implements OnInit {
   fullStars: Array<boolean>;
   emptyStars: Array<boolean>;
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private router: Router) {
     this.fullStars = new Array();
     this.emptyStars = new Array();
   }
@@ -38,5 +39,9 @@ export class ProductListingComponent implements OnInit {
     }
 
   }
-
+  viewDetails() {
+    // console.log("redirect")
+    console.log(this.object.id)
+    this.router.navigate(['/products/' + this.object.id])
+  }
 }

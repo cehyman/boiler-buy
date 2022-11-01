@@ -19,6 +19,7 @@ export class EditProductComponent implements OnInit {
   canMeet: boolean = true;
   canShip: boolean = false;
   type: string = 'Electronics';
+  brand: string = 'Acer';
 
   prodId: number = -1;
 
@@ -55,6 +56,9 @@ export class EditProductComponent implements OnInit {
       this.canMeet = data.canMeet;
       this.canShip = data.canShip;
       this.type = data.productType;
+      this.brand = data.brand;
+
+      console.log(this.brand)
 
       this.price = this.dollarsCentsToString(data.priceDollars, data.priceCents);
 
@@ -62,9 +66,12 @@ export class EditProductComponent implements OnInit {
         this.shipPrice = this.dollarsCentsToString(data.shippingDollars, data.shippingCents);
       else
         this.shipPrice = '';
-
-      var image: string = data.image;
-      this.picUpload.loadFromDatabase(id, image);
+      
+      var imageUrl = new URL(data.image);
+      if(imageUrl.pathname != "/media/undefined") {
+        var image: string = data.image;
+        this.picUpload.loadFromDatabase(id, image);
+      }
     });
   }
 
@@ -137,6 +144,7 @@ export class EditProductComponent implements OnInit {
     formData.append("canShip", `${this.canShip}`);
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("image", file);
+    formData.append("brand", this.brand);
 
     var request = this.http.put<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {

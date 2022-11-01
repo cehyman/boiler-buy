@@ -27,6 +27,7 @@ export class CreateComponent implements OnInit {
   canMeet: boolean = true;
   canShip: boolean = false;
   type: string = 'Electronics';
+  brand: string = 'Acer';
 
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
@@ -114,8 +115,9 @@ export class CreateComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("image", file);
     formData.append("username", this.curruser);
+    formData.append("brand", this.brand);
 
-    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
+    var request = this.http.post<any>("http://localhost:8000/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");
