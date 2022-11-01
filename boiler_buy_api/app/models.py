@@ -27,16 +27,22 @@ class Product(models.Model):
     isSold = models.BooleanField(default=False, blank=True)
     canShip = models.BooleanField()
     canMeet = models.BooleanField()
-    
+    brand = models.CharField(max_length=128, default="")
     image = models.FileField(null=True, blank=True, upload_to='products/', )
     
+class Shop(models.Model):
+    description = models.CharField(max_length=250, default='')
+    isVisible = models.BooleanField(default=False)
+    products = models.ManyToManyField("Product")
+
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
     email = models.CharField(max_length=50, primary_key=True)
-    shop = models.ForeignKey("Shop", on_delete=models.CASCADE, null=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, db_column="shop_id")
     sellerRating = models.FloatField(default=0)
     sellerRatingCount = models.IntegerField(default=0)
+    sellerReviews = ArrayField(models.CharField(max_length=500), default=list)
 
     def __str__(self):
         return str(self.username)

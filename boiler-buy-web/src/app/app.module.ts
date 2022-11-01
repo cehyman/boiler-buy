@@ -64,6 +64,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { LoginComponent } from './login/login.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
+import { ChangeUsernameComponent } from './change-username/change-username.component';
+import { SellerReviewComponent } from './seller-review/seller-review.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -78,10 +81,14 @@ import { PurchaseHistoryComponent } from './purchase-history/purchase-history.co
     ProductListingComponent,
     RegisterComponent,
     ChangePasswordComponent,
+    EditProductComponent,
+    ChangeUsernameComponent,
+    SellerReviewComponent,
     LoginComponent,
     EditProductComponent,
     PurchaseHistoryComponent,
-    PurchaseConfirmationDialog
+    PurchaseConfirmationDialog,
+    ProductDetailsComponent,
   ],
   imports: [
     FormsModule,

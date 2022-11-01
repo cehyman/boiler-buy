@@ -36,6 +36,12 @@
                 <option value="Food">Food</option>
             </select><br>
 
+            <label for="brand"><b>Brand:</b></label>
+            <select name="brand" [(ngModel)]="brand">
+                <option value="Acer">Acer</option>
+                <option value="Lenovo">Lenovo</option>
+            </select><br>
+            
             <input type="checkbox" [checked]="canMeet" (change)="canMeet = !canMeet">Willing to meet up<br>
 
             <input type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship<br>

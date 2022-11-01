@@ -1,6 +1,8 @@
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AppComponent } from '../app.component';
+import { Globals } from '../globals';
 import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 
 @Component({
@@ -9,6 +11,14 @@ import { PictureUploadComponent } from '../picture-upload/picture-upload.compone
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
+  public globals: Globals = new Globals;
+
+  private appcomp: AppComponent = new AppComponent();
+
+  curruser:string = ''
+  currpass:string = ''
+  curremail:string = ''
+
   name: string = '';
   price: string = '';
   shipPrice: string = '';
@@ -17,6 +27,7 @@ export class CreateComponent implements OnInit {
   canMeet: boolean = true;
   canShip: boolean = false;
   type: string = 'Electronics';
+  brand: string = 'Acer';
 
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
@@ -24,6 +35,18 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("Starting value of gloabl username is %s", this.globals.username)
+    console.log("But value of saved username in session saver is $s",this.appcomp.getUsername())
+    this.globals.username = <string> this.appcomp.getUsername()
+
+    if (this.appcomp.getUsername()) {
+      this.curruser = <string> this.appcomp.getUsername()
+    } else {
+      this.curruser = "Username"
+    }
+
+    this.currpass = <string> this.appcomp.getPassword()
+    this.curremail = <string> this.appcomp.getEmail()
   }  
 
   onBlurPrice(event: FocusEvent) {
@@ -91,8 +114,10 @@ export class CreateComponent implements OnInit {
     formData.append("canShip", `${this.canShip}`);
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("image", file);
+    formData.append("username", this.curruser);
+    formData.append("brand", this.brand);
 
-    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
+    var request = this.http.post<any>("http://localhost:8000/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

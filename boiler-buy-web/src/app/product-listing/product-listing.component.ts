@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AppComponent } from '../app.component';
 import { Globals } from '../globals';
 import { Product } from '../product-types';
+import { ProductService } from '../product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-listing',
@@ -20,7 +22,7 @@ export class ProductListingComponent implements OnInit {
   emptyStars: Array<boolean>;
   curruser:string = ''
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private router: Router) {
     this.fullStars = new Array();
     this.emptyStars = new Array();
   }
@@ -52,7 +54,11 @@ export class ProductListingComponent implements OnInit {
     }
     console.log("current username:",this.curruser)
   }
-
+  viewDetails() {
+    // console.log("redirect")
+    console.log(this.object.id)
+    this.router.navigate(['/products/' + this.object.id])
+  }
   openDialog(): void {
     if (this.curruser != 'Username') {
       const dialogRef = this.dialog.open(PurchaseConfirmationDialog, {
