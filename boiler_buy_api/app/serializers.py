@@ -1,7 +1,7 @@
-from dataclasses import fields
+from dataclasses import field, fields
 from rest_framework import serializers
 
-from .models import Listing, Product, Account, Shop
+from .models import Listing, Product, Account, Shop, PurchaseHistory
 
 
 class ListingSerializer(serializers.ModelSerializer):
@@ -18,9 +18,14 @@ class ProductSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
-        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount']#, 'purchases']
+        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount']
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model: Shop
         fields = ['description', 'isVisible', 'products']
+
+class PurchaseHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model: PurchaseHistory
+        fields = ['email', 'purchaseTime', 'name', 'sellerEmail', 'description', 'totalPriceDollars', 'totalPriceCents', 'image']

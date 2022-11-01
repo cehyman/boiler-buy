@@ -37,7 +37,6 @@ class Account(models.Model):
     shop = models.ForeignKey("Shop", on_delete=models.CASCADE, null=True)
     sellerRating = models.FloatField(default=0)
     sellerRatingCount = models.IntegerField(default=0)
-    # purchases = models.ManyToManyField("Product")
 
     def __str__(self):
         return str(self.username)
@@ -46,3 +45,13 @@ class Shop(models.Model):
     description = models.CharField(max_length=250, default='')
     isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
+
+class PurchaseHistory(models.Model):
+    email = models.CharField(max_length=50)
+    purchaseTime = models.DateTimeField(auto_now=False, auto_now_add=True)
+    name = models.CharField(max_length=50)
+    sellerEmail = models.CharField(max_length=50)
+    description = models.CharField(max_length=250)
+    totalPriceDollars = models.PositiveIntegerField()
+    totalPriceCents = models.PositiveSmallIntegerField()
+    image = models.FileField(null=True, blank=True, upload_to='products/', )

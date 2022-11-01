@@ -83,3 +83,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
+
+class PurchaseHistoryViewSet(viewsets.ModelViewSet):
+    queryset = PurchaseHistory.objects.all()
+    serializer_class = PurchaseHistorySerializer
