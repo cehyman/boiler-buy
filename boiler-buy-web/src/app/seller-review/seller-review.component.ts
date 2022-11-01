@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-seller-review',
@@ -8,18 +9,37 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SellerReviewComponent implements OnInit {
   reviewDescription:string = ""
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { }
   reviewCount:number = 0
   reviewAvg:number = 0
   reviews:string[] = []
+  email:string = ""
+  id: number = -1
+  user:string = ""
   ngOnInit(): void {
-    var accountURL = "http://localhost:8000/api/accounts/".concat("jchen@purdue.edu").concat("/");
+    // var accountURL = "http://localhost:8000/api/accounts/".concat("jchen@purdue.edu").concat("/");
+    // var request = this.http.get(accountURL, {observe:'response'});
+    // request.subscribe((data: any) => {
+    //   console.log(data)
+    //   this.reviewCount = data["body"]["sellerRatingCount"]
+    //   this.reviewAvg = data["body"]["sellerRating"]
+    //   this.reviews = data["body"]["sellerReviews"]
+    // })
+    var urlStr = this.activatedRoute.snapshot.url.toString();
+    this.id = Number(urlStr.split(',')[1]);
+    if(isNaN(this.id)) {
+      alert(`Invalid URL "${urlStr}": "${this.id}"`);
+      return;
+    }
+    var accountURL = "http://localhost:8000/api/products/"+this.id+"/";
     var request = this.http.get(accountURL, {observe:'response'});
     request.subscribe((data: any) => {
       console.log(data)
       this.reviewCount = data["body"]["sellerRatingCount"]
       this.reviewAvg = data["body"]["sellerRating"]
       this.reviews = data["body"]["sellerReviews"]
+      this.email = data["body"]["email"]
+      this.user = data["body"]["username"]
     })
   }
   selectedRating = '1.0';
@@ -47,7 +67,7 @@ export class SellerReviewComponent implements OnInit {
       "sellerRatingCount": this.reviewCount,
       "sellerRating": this.reviewAvg
     };
-    var accountURL = "http://localhost:8000/api/accounts/".concat("jchen@purdue.edu").concat("/");
+    var accountURL = "http://localhost:8000/api/accounts/".concat(this.email).concat("/");
     var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
     patchRequest.subscribe((data: any) => {
       console.log(data)
