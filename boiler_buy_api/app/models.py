@@ -35,6 +35,10 @@ class Shop(models.Model):
     isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
 
+class Wishlist(models.Model):
+    description = models.CharField(max_length=250, default='')
+    products = models.ManyToManyField("Product")
+
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
@@ -43,6 +47,7 @@ class Account(models.Model):
     sellerRating = models.FloatField(default=0)
     sellerRatingCount = models.IntegerField(default=0)
     sellerReviews = ArrayField(models.CharField(max_length=500), default=list)
+    wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, null=True, db_column="wishlist_id")
 
     def __str__(self):
         return str(self.username)

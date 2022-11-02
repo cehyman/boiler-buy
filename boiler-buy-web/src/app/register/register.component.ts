@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit{
   constructor(private router: Router, private http: HttpClient) {}
  
   ngOnInit() {
-    console.log("Starting value of gloabl username is %s", this.globals.username)
+    console.log("Starting value of global username is %s", this.globals.username)
     var request = this.http.get('http://localhost:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {

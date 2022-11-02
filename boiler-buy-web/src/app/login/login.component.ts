@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
 
   accountUsername:string = '';
   accountPassword:string = '';
+  accountEmail:string = '';
   curUsers:any = []
 
   login() {
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
         }
         else {
           found = true;
+          this.accountEmail = this.curUsers[0][i]['email']
         }
         break;
       }
@@ -56,6 +58,8 @@ export class LoginComponent implements OnInit {
 
     this.appcomp.saveUsername(this.accountUsername)
     this.appcomp.savePassword(this.accountPassword)
+    this.appcomp.saveEmail(this.accountEmail)
+    
 
     this.router.navigate(['/profile'])
     

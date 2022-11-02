@@ -9,23 +9,21 @@ label{
 
 .reviewContainer {
     display: flex;
+    width: 50%;
+    margin:auto;
     flex-direction: column;
 }
 
-input[type=text] {
-  width: 50%;
-  height: 100%;
-  padding: 15px;
-  margin: 5px 0 10px 0;
-  display: inline-block;
-  border: solid;
-  background: #FFF8DC;
+.ratingContainer {
+  text-align: center;
 }
 
-input[type=text]:focus {
-  background-color: #F0F8FF;
+.submitBtn {
+  width: 5%;
+  margin:auto;
+  display:flex;
 }
 
-.registerBtn:hover {
+.submitBtn:hover {
   opacity:0.8;
 }
