@@ -157,14 +157,20 @@ export class EditProductComponent implements OnInit {
       console.log("Request sent!");
     });
 
+    // Add any images that were not already in the database, but rather added
+    // by the user. If there are none, we can skip this request. This needs to
+    // be a seperate request because the normal patch method doesn't add new
+    // images for some reason.
     var files: File[] = this.picUpload.getNewFiles();
     if(files.length > 0) {
+      // Add each of the files to the form data
       let imageFormData = new FormData();
       for (var i = 0; i < files.length; i++) {
         var file: File = files[i];
         imageFormData.append("images", file, file.name);
       }
 
+      // Send the request
       let imageRequest = this.http.patch<any>(
         `api/products/${this.prodId}/addImages/`, 
         imageFormData, 
@@ -175,15 +181,22 @@ export class EditProductComponent implements OnInit {
       });
     }
 
+    // Remove any files that were in the database and now need to be removed.
+    // If none exist, we don't need to bother with anything. If they do, 
+    // we need to send a new request to the removeImages action on the product.
+    // This needs to be a seperate request since the normal patch method doesn't
+    // let us update the image list
     var filesToRemove: File[] = this.picUpload.getExistingFilesToRemove();
     if(filesToRemove.length > 0) {
+      // Go through the list of files to remove and add them to the form data
       let imageFormData = new FormData();
       for (var i = 0; i < filesToRemove.length; i++) {
         var file: File = filesToRemove[i];
-        let name = file.name.replace(/\/media\//, '');
+        let name = file.name.replace(/\/media\//, ''); // Remove the /media/
         imageFormData.append("images", name);
       }
 
+      // Send the request
       let imageRequest = this.http.patch<any>(
         `api/products/${this.prodId}/removeImages/`, 
         imageFormData, 

@@ -96,6 +96,9 @@ class ProductViewSet(viewsets.ModelViewSet):
         print(f"{nameList}")
         return JsonResponse(nameList, safe=False)
     
+    # Allows images to be added to this product field. This is called with a path of the form:
+    # /products/<id>/addImages
+    # And the data of the request will be a list of files to add to this product. 
     @action(detail=True, methods=['patch'])
     def addImages(self, request, pk):
         product = Product.objects.get(pk=pk)
@@ -106,21 +109,22 @@ class ProductViewSet(viewsets.ModelViewSet):
             ProductImage.objects.create(image=image, product=product)
             
         return JsonResponse({'observe': 'response'})
-            
+           
+    # Allows images to be added to this product field. This is called with a path of the form:
+    # /products/<id>/removeImages
+    # And the data of the request will be a list of file names to remove from the database.
     @action(detail=True, methods=['patch'])
     def removeImages(self, request, pk):
-        print(f"Removing images")
         product = Product.objects.get(pk=pk)
-        productImages = product.images.all()
         formImages = request.data.getlist('images')
-                            
-        print(f"{request}")
-        print(f"images to remove: {formImages}")    
-                        
+        
+        # For each of the images submitted to delete, check if the file exists
+        # in the database. If id does, delete the instance.
         for imageToRemove in formImages:
-            for image in productImages:
-                if image.image.name == imageToRemove:
-                    image.delete()
+            for instance in product.images.all():
+                if instance.image.name == imageToRemove:
+                    instance.delete()
+                    break
                             
         return JsonResponse({'observe': 'response'})
 
