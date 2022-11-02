@@ -177,8 +177,6 @@ class ProductViewSet(viewsets.ModelViewSet):
                     # print(account)
                     prod.update(account)
                     return JsonResponse(prod, safe=False)
-        
-
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
@@ -187,3 +185,5 @@ class ShopViewSet(viewsets.ModelViewSet):
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
+
+    # put request to see if a product is in table
