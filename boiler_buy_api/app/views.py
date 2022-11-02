@@ -186,4 +186,21 @@ class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
 
-    # put request to see if a product is in table
+    #add to wishlist products
+    def create(self, request): 
+        # user isn't logged in, hopefully nobody wants this username
+        if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
+            return JsonResponse({'error': 'User is not logged in'}, status=401)
+        
+        print('data:', request.data)
+
+        # product_id = request.data.get('productID')
+        product = Product.objects.get(id=request.data.get('productID'))
+
+        user = Account.objects.get(username=request.data.get('username'))
+        wishlist = Wishlist.objects.get(id=user.wishlist_id)
+        print('wishlist id: ', wishlist)
+
+        wishlist.products.add(product.id)
+
+        return JsonResponse({'observe': 'response'})

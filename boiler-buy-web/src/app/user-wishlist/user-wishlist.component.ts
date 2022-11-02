@@ -49,7 +49,7 @@ export class UserWishlistComponent implements OnInit {
       for (i = 0; i < this.products.length; i++) {
         console.log("product id: " + this.products[i])
 
-        //create a product type and add to productList
+        //create a product type and add to productList in order to display on screen
         var req2 = this.http.get('http://localhost:8000/api/products/' + this.products[i], {responseType: 'json'}) as Observable<Product>
         req2.subscribe((data:any) => {
           console.log(data)
