@@ -95,6 +95,7 @@ export class ChangeUsernameComponent implements OnInit {
         alert("Changed username")
 
         this.appcomp.saveUsername(this.newUsername)
+        this.router.navigate(['/profile'])
     }
     // if (match) {
       // var body = {

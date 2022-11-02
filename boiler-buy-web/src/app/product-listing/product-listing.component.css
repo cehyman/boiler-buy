@@ -8,6 +8,11 @@
     flex-direction: column;
 }
 
+.viewBtn {
+    align-items: left;
+    width: 10%;
+}
+
 .icon-text {
     display: flex;
     align-items: center;

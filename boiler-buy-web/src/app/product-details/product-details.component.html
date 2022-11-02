@@ -1,16 +1,23 @@
 <h1 id="header">{{this.name}}</h1>
 <div>
     <div class="container">
-        <label id="price">Price (USD): {{this.price}}</label><br>
-        <label id="shippingPrice">Shipping Price (USD): {{this.shipPrice}}</label><br>
-        <label id="stock">Number left in stock: {{this.stock}}</label><br>
-        <label id="canMeet">Meetup: {{this.canMeet}}</label><br>
-        <label id="canMeet">Ship: {{this.canShip}}</label><br>
-        <label id="type">Category: {{this.type}}</label><br>
-        <label id="brand">Brand: {{this.brand}}</label>
+        <div class="imageContainer">
+            <p>for image</p>
+        </div>
+        <div class="infoContainer">
+            <label id="info">Product Information:</label><br><br>
+            <label id="price">Price (USD): {{this.price}}</label><br>
+            <label id="shippingPrice">Shipping Price (USD): {{this.shipPrice}}</label><br>
+            <label id="stock">Number left in stock: {{this.stock}}</label><br>
+            <label id="canMeet">Meetup: {{this.canMeet}}</label><br>
+            <label id="canMeet">Ship: {{this.canShip}}</label><br>
+            <label id="type">Category: {{this.type}}</label><br>
+            <label id="brand">Brand: {{this.brand}}</label>
+        </div>
     </div>
     <div class="descriptionContainer">
-        <textarea rows="10" cols="100">{{this.description}}</textarea>
+        <label>Description:</label>
+        <textarea rows="10" cols="50" readonly>{{this.description}}</textarea>
     </div>
-    <button (click)="buy()" type="submit" class="buyBtn">Buy</button>
+    <br><button (click)="buy()" type="submit" class="buyBtn">Buy</button>
 </div>
