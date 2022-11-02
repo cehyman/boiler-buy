@@ -57,8 +57,9 @@
             </div>
 
             <label><b>Upload Pictures</b></label><br>
-            <app-picture-upload #picUpload></app-picture-upload>
+            <app-picture-upload-new #picUpload [maxImages]="10"></app-picture-upload-new>
             <br><br>
+
 
             <button (click)="submit()" type="submit">Update Product</button>
         </div>

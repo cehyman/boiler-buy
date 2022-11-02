@@ -95,7 +95,36 @@ class ProductViewSet(viewsets.ModelViewSet):
         
         print(f"{nameList}")
         return JsonResponse(nameList, safe=False)
+    
+    @action(detail=True, methods=['patch'])
+    def addImages(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        
+        # Add all the images and connect them to this product
+        formImages = request.data.getlist('images')
+        for image in formImages:
+            ProductImage.objects.create(image=image, product=product)
+            
+        return JsonResponse({'observe': 'response'})
+            
+    @action(detail=True, methods=['patch'])
+    def removeImages(self, request, pk):
+        print(f"Removing images")
+        product = Product.objects.get(pk=pk)
+        productImages = product.images.all()
+        formImages = request.data.getlist('images')
+                            
+        print(f"{request}")
+        print(f"images to remove: {formImages}")    
+                        
+        for imageToRemove in formImages:
+            for image in productImages:
+                if image.image.name == imageToRemove:
+                    image.delete()
+                            
+        return JsonResponse({'observe': 'response'})
 
+            
     # override default list (because we want to filter before we send the response)
     def list(self, request):
         data = Product.objects.values()

@@ -2,7 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
+import { PictureUploadNewComponent } from '../picture-upload-new/picture-upload-new.component';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class EditProductComponent implements OnInit {
 
   prodId: number = -1;
 
-  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
+  @ViewChild('picUpload') picUpload !: PictureUploadNewComponent;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -78,7 +78,7 @@ export class EditProductComponent implements OnInit {
     var imageRequest = this.http.get<any>(`api/products/${id}/retrieveImages`, {observe: "body"});
     imageRequest.subscribe((data: any) => {
       for (const name of data) {
-        this.picUpload.loadFromDatabase(this.prodId, name);
+        this.picUpload.loadFromDatabase(name);
       }
     })
   }
@@ -131,7 +131,6 @@ export class EditProductComponent implements OnInit {
   }
 
   submit() {
-    var file = this.picUpload.getFiles()[0];
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     
     var shipDollars = 0, shipCents = 0;
@@ -151,12 +150,49 @@ export class EditProductComponent implements OnInit {
     formData.append("description", this.description);
     formData.append("canShip", `${this.canShip}`);
     formData.append("canMeet", `${this.canMeet}`);
-    formData.append("image", file);
     formData.append("brand", this.brand);
 
-    var request = this.http.put<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
+    var request = this.http.patch<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {
       console.log("Request sent!");
-    })
+    });
+
+    var files: File[] = this.picUpload.getNewFiles();
+    if(files.length > 0) {
+      let imageFormData = new FormData();
+      for (var i = 0; i < files.length; i++) {
+        var file: File = files[i];
+        imageFormData.append("images", file, file.name);
+      }
+
+      let imageRequest = this.http.patch<any>(
+        `api/products/${this.prodId}/addImages/`, 
+        imageFormData, 
+        {observe: "response"}
+      );
+      imageRequest.subscribe((data: any) => {
+        console.log("Sent image!");
+      });
+    }
+
+    var filesToRemove: File[] = this.picUpload.getExistingFilesToRemove();
+    if(filesToRemove.length > 0) {
+      let imageFormData = new FormData();
+      for (var i = 0; i < filesToRemove.length; i++) {
+        var file: File = filesToRemove[i];
+        let name = file.name.replace(/\/media\//, '');
+        imageFormData.append("images", name);
+      }
+
+      let imageRequest = this.http.patch<any>(
+        `api/products/${this.prodId}/removeImages/`, 
+        imageFormData, 
+        {observe: "response"}
+      );
+      imageRequest.subscribe((data: any) => {
+        console.log("Removed image!");
+      });
+    }
+
   }
 }

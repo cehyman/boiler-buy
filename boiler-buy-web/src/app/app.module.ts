@@ -85,7 +85,8 @@ import { PictureUploadNewComponent } from './picture-upload-new/picture-upload-n
     ChangeUsernameComponent,
     SellerReviewComponent,
     LoginComponent,
-    EditProductComponent
+    EditProductComponent,
+    PictureUploadNewComponent
   ],
   imports: [
     FormsModule,

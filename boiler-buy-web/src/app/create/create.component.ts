@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { Globals } from '../globals';
-import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
+import { PictureUploadNewComponent } from '../picture-upload-new/picture-upload-new.component';
 
 @Component({
   selector: 'app-create',
@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit {
   type: string = 'Electronics';
   brand: string = 'Acer';
 
-  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
+  @ViewChild('picUpload') picUpload !: PictureUploadNewComponent;
 
   constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
   }
@@ -90,7 +90,7 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
-    var files: File[] = this.picUpload.getFiles();
+    var files: File[] = this.picUpload.getNewFiles();
     
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     

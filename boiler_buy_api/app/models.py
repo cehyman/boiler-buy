@@ -37,7 +37,6 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(null=True, blank=False, upload_to=uploadTo)
 
-    
 class Shop(models.Model):
     description = models.CharField(max_length=250, default='')
     isVisible = models.BooleanField(default=False)

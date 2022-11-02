@@ -1,4 +1,5 @@
 import { Component, OnInit, Optional, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-picture-upload-new',
@@ -13,7 +14,7 @@ export class PictureUploadNewComponent implements OnInit {
   selectedImages: SelectedImage[] = [];
   numImages: number = 0;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +22,7 @@ export class PictureUploadNewComponent implements OnInit {
   // Returns all the preview URLS for the uploaded images
   getPreviewUrls(): (URL | null)[] {
     return this.selectedImages
-      .filter(image => image.url !== null)
+      .filter(image => image.url !== null && image.shouldRemove === false)
       .map(image => image.url);
   } 
 
@@ -65,13 +66,12 @@ export class PictureUploadNewComponent implements OnInit {
 
     var startNum = this.numImages;
 
-    for(var i = 0; i < files.length && this.numImages < this.maxImages; i++) {
+    for(var i = 0; i < files.length && this.numImages < this.maxImages; i++, this.numImages++) {
       var file: File = files.item(i) as File;
 
       var reader = new FileReader();
       reader.onloadend = (event: any) => {
         this.selectedImages.push(SelectedImage.fromUser(file, event.target.result));
-        this.numImages++;
       };
       reader.readAsDataURL(file);
     }
@@ -79,18 +79,30 @@ export class PictureUploadNewComponent implements OnInit {
     return this.numImages - startNum;
   }
 
+  loadFromDatabase(url: URL) {
+    console.log(`Loading image ${url}`);
+
+    var request = this.http.get<any>(url.toString(), {responseType: 'blob' as 'json'});
+
+    request.subscribe((response: any) => {
+      this.selectedImages.push(SelectedImage.fromDatabase(
+        new File([response], url.toString()),
+        url
+      ));
+    });
+  }
+
   protected removePhoto(event: Event) {
     var target = event.target as HTMLButtonElement;
 
     var idx = Number(target.dataset['idx']);
+    this.numImages--;
 
     if(this.selectedImages[idx].userUploaded) {
       this.selectedImages.splice(idx, 1);
-      this.numImages--;
     }
     else if (this.selectedImages[idx].fromDatabase) {
       this.selectedImages[idx].shouldRemove = true;
-      this.numImages--;
     }
   }
 }
