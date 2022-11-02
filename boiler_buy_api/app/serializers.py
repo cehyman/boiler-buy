@@ -27,5 +27,5 @@ class ShopSerializer(serializers.ModelSerializer):
 
 class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Wishlist
+        model = Wishlist
         fields = ['description', 'products']
