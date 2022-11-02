@@ -3,9 +3,11 @@
     <div class="name_seller_rating">
         <!-- Rating: {{object.sellerRatingCount}} -->
         <h2>{{object.name}}</h2>
-        <button (click)="viewDetails()" type="submit" class="viewBtn">View Details</button>
-        <button (click)="addToWishlist()" type="submit" class="addWishListButton">Add To Wishlist</button>
-        <button (click)="removeFromWishlist()" type="submit" class="removeFromWishListButton">Remove From Wishlist</button>
+        <div class="groupbtn">
+            <button (click)="viewDetails()" type="submit" class="viewBtn">View Details</button>
+            <button (click)="addToWishlist()" type="submit" class="viewBtn">Add To Wishlist</button>
+            <button (click)="removeFromWishlist()" type="submit" class="viewBtn">Remove From Wishlist</button>
+        </div>
         <!-- seller name here -->
         <div class="icon-text">
             <span>Seller Rating:</span>
