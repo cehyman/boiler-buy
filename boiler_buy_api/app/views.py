@@ -8,6 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import render
 from rest_framework.decorators import api_view
+from rest_framework.decorators import action
 
 import json
 
@@ -45,7 +46,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         # user isn't logged in, hopefully nobody wants this username
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'User is not logged in'}, status=401)
-        
 
         print('data:', request.data)
         # add the product to the database (and get the product's id)
@@ -60,7 +60,6 @@ class ProductViewSet(viewsets.ModelViewSet):
             description = request.data.get('description'),
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
-            image = request.data.get('image'),
             brand = request.data.get('brand')
         )
         print('product id: ', product.id)
@@ -74,10 +73,64 @@ class ProductViewSet(viewsets.ModelViewSet):
         # connect the product to the shop by adding it to the shops list of products
         shop.products.add(product.id)
         
+        # Add all the images and connect them to this product
+        formImages = request.data.getlist('images')
+        for image in formImages:
+            ProductImage.objects.create(image=image, product=product)
+        
         # generic non-error response
         return JsonResponse({'observe': 'response'})
 
+    # Allows the images for this product to be retrieved. This is called with a path of the form:
+    # /products/<id>/retrieveImages
+    # This is a seperate function so that the entirety of the retrieve function doesn't need
+    # written
+    @action(detail=True, methods=['get'])
+    def retrieveImages(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        images = product.images.all()
+        
+        nameList = list([])
+        
+        for image in images:
+            nameList.append(image.image.url)
+        
+        print(f"{nameList}")
+        return JsonResponse(nameList, safe=False)
+    
+    # Allows images to be added to this product field. This is called with a path of the form:
+    # /products/<id>/addImages
+    # And the data of the request will be a list of files to add to this product. 
+    @action(detail=True, methods=['patch'])
+    def addImages(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        
+        # Add all the images and connect them to this product
+        formImages = request.data.getlist('images')
+        for image in formImages:
+            ProductImage.objects.create(image=image, product=product)
+            
+        return JsonResponse({'observe': 'response'})
+           
+    # Allows images to be added to this product field. This is called with a path of the form:
+    # /products/<id>/removeImages
+    # And the data of the request will be a list of file names to remove from the database.
+    @action(detail=True, methods=['patch'])
+    def removeImages(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        formImages = request.data.getlist('images')
+        
+        # For each of the images submitted to delete, check if the file exists
+        # in the database. If id does, delete the instance.
+        for imageToRemove in formImages:
+            for instance in product.images.all():
+                if instance.image.name == imageToRemove:
+                    instance.delete()
+                    break
+                            
+        return JsonResponse({'observe': 'response'})
 
+            
     # override default list (because we want to filter before we send the response)
     def list(self, request):
         minSellerFilter = False
@@ -202,6 +255,9 @@ class ProductViewSet(viewsets.ModelViewSet):
                     return JsonResponse(prod, safe=False)
         
 
+class ProductImageViewSet(viewsets.ModelViewSet):
+    queryset = ProductImage.objects.all()
+    serializer_class = ProductImageSerializer
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
