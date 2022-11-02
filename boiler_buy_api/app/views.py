@@ -262,6 +262,10 @@ class ProductImageViewSet(viewsets.ModelViewSet):
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
+    
+class ShopHistoryViewSet(viewsets.ModelViewSet):
+    queryset = ShopHistory.objects.all()
+    serializer_class = ShopSerializer
 
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()

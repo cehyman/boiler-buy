@@ -1,4 +1,5 @@
 from email.policy import default
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.postgres.fields import *
 from django.contrib.postgres.fields import ArrayField
@@ -46,6 +47,11 @@ class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')
     products = models.ManyToManyField("Product")
 
+class ShopHistory(models.Model):
+    action = models.CharField(max_length=32, default='')
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
+
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
@@ -58,3 +64,4 @@ class Account(models.Model):
 
     def __str__(self):
         return str(self.username)
+    

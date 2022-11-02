@@ -2,8 +2,7 @@ from dataclasses import fields
 from importlib.metadata import files
 from rest_framework import serializers
 
-from .models import Listing, Product, Account, Shop, Wishlist, ProductImage
-from .models import Listing, Product, Account, ProductImage, Shop
+from .models import *
 
 
 class ListingSerializer(serializers.ModelSerializer):
@@ -31,6 +30,11 @@ class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
         fields = ['description', 'isVisible', 'products']
+
+class ShopHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopHistory
+        fields = ['shop', 'product', 'action']
 
 class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
