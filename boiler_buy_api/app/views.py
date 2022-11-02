@@ -80,6 +80,10 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     # override default list (because we want to filter before we send the response)
     def list(self, request):
+        minSellerFilter = False
+        maxSellerFilter = False
+        minSeller = 0
+        maxSeller = 0
         data = Product.objects.values()
         if (request.GET.__contains__('name')):
             # search by name
@@ -117,20 +121,46 @@ class ProductViewSet(viewsets.ModelViewSet):
             print("here5")
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
+        if (request.GET.get('minSellerRating') != None):
+            minSellerRating = request.GET.get('minSellerRating')
+            minSeller = minSellerRating
+            minSellerFilter = True
+            
+        if (request.GET.get('maxSellerRating') != None):
+            maxSellerRating = request.GET.get('maxSellerRating')
+            maxSeller = maxSellerRating
+            maxSellerFilter = True
+        print(minSeller)
+        print(minSellerFilter)
+        print(maxSeller)
+        print(maxSellerFilter)
+        temp = []
+        # print(data)
         for prod in data:
-            print(prod.get("id"))
+            # print(prod.get("id"))
             shop = Shop.objects.filter(products=prod.get("id")).values()
             if (shop.count() > 0):
                 shopID = shop.get().get("id")
-                print('product id:', prod.get('id'))
-                print('shopID:', shopID)
+                # print('product id:', prod.get('id'))
+                # print('shopID:', shopID)
                 account = Account.objects.filter(shop=shopID).values().get()
                 prod['sellerRating'] = account.get("sellerRating")
                 prod['sellerRatingCount'] = account.get("sellerRatingCount")
+                if (minSellerFilter == True and maxSellerFilter == True):
+                    if (prod['sellerRating'] >= float(minSeller) and prod['sellerRating'] <= float(maxSeller)):
+                        temp.append(prod)
+                elif (minSellerFilter == True and maxSellerFilter == False):
+                    if (prod['sellerRating'] >= float(minSeller)):
+                        temp.append(prod)
+                elif (minSellerFilter == False and maxSellerFilter == True):
+                    if (prod['sellerRating'] <= float(maxSeller)):
+                        temp.append(prod)
             else:
                 # products that don't have a shop yet
                 prod['sellerRating'] = 0
                 prod['sellerRatingCount'] = 0
+        if (minSellerFilter == True or maxSellerFilter == True):
+            data = temp
             # print("pogpog")
             # if (prod.get("id") == 100):
             #     shop = Shop.objects.filter(products=prod.get("id")).values()
@@ -146,14 +176,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             #         prod['sellerRating'] = 0
             #         prod['sellerRatingCount'] = 0
         # print(data)
-        # if (request.GET.get('minSellerRating') != None):
-        #     minSellerRating = request.GET.get('minSellerRating')
-        #     print(minSellerRating)
-        #     data = data.filter(sellerRating__gte=minSellerRating).values()
-        # if (request.GET.get('maxSellerRating') != None):
-        #     maxSellerRating = request.GET.get('maxSellerRating')
-        #     print(maxSellerRating)
-        #     data = data.filter(sellerRating__lte=maxSellerRating).values()
+        # print(data)
         return JsonResponse(list(data), safe=False)
 
     def retrieve(self, request, pk=None):
