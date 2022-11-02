@@ -67,6 +67,8 @@ import { PurchaseHistoryComponent } from './purchase-history/purchase-history.co
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
+import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     EditProductComponent,
     PurchaseHistoryComponent,
     PurchaseConfirmationDialog,
-    ProductDetailsComponent,
+    UserWishlistComponent,
+    PictureCarouselComponent
   ],
   imports: [
     FormsModule,

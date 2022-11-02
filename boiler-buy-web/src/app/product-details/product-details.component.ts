@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
+import { PictureCarouselComponent } from '../picture-carousel/picture-carousel.component';
 
 @Component({
   selector: 'app-product-details',
@@ -22,7 +23,10 @@ export class ProductDetailsComponent implements OnInit {
   brand: string = '';
   id: number = -1;
 
+  @ViewChild('carousel') carousel !: PictureCarouselComponent;
+
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router, private productService: ProductService) {
+
   }
 
   ngOnInit(): void {
@@ -57,7 +61,16 @@ export class ProductDetailsComponent implements OnInit {
       this.type = data['productType'];
       this.brand = data['brand'];
       // this.loadProductDetails()
-    })
+    });
+
+    this.loadImages();
+  }
+
+  loadImages() {
+    let request = this.http.get<any>(`api/products/${this.id}/retrieveImages`, {observe: "body"});
+    request.subscribe((data: any) => {
+      this.carousel.addUrls(data);
+    });
   }
 
   buy() {

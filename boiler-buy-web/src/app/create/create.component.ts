@@ -90,7 +90,7 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
-    var file = this.picUpload.getFiles()[0];
+    var files: File[] = this.picUpload.getNewFiles();
     
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     
@@ -113,11 +113,16 @@ export class CreateComponent implements OnInit {
     formData.append("description", this.description);
     formData.append("canShip", `${this.canShip}`);
     formData.append("canMeet", `${this.canMeet}`);
-    formData.append("image", file);
     formData.append("username", this.curruser);
     formData.append("brand", this.brand);
 
-    var request = this.http.post<any>("http://localhost:8000/api/products/", formData, {observe: "response"});
+    for (var i = 0; i < files.length; i++) {
+      console.log("found an image");
+      var file: File = files[i];
+      formData.append("images", file, file.name);
+    }
+
+    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

@@ -1,8 +1,8 @@
 from dataclasses import field, fields
+from importlib.metadata import files
 from rest_framework import serializers
 
 from .models import *
-
 
 class ListingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,10 +15,15 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
             'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand']
 
+class ProductImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['image', 'product']
+
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
-        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews']
+        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews', 'wishlist']
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,3 +39,8 @@ class ViewHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model: ViewHistory
         fields = ['email', 'productID', 'lastViewed']
+
+class WishlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wishlist
+        fields = ['description', 'products']

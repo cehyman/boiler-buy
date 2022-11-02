@@ -5,20 +5,17 @@
             id="fileSelectionInput"
             multiple
             accept="image/*"
-            (change)="addFiles($event)"
+            (change)="uploadPhotos($event)"
             style="display: none"
             required>
         <button onclick="fileSelectionInput.click()">Upload a Picture</button>
     </form>
 
-    <!-- Angular go brrrr -->
-    <div *ngFor="let file of selectedFiles; let i = index">
-        <!-- {{ file.name }} -->
-        <img src={{previewUrls[i]}} class="preview"/>
+    <div *ngFor="let url of getPreviewUrls(); let i = index">
+        <img src={{url}} class="preview"/>
 
-        <!-- This button has an index attribute which is used to remove -->
-        <!-- the items from the lists in the typescript class-->
-        <button (click)="removePhoto($event)" [attr.data-idx]="i">x</button>
+        <div *ngIf="!hideX">
+            <button (click)="removePhoto($event)" [attr.data-idx]="i">x</button>
+        </div>
     </div>
-
 </div>
