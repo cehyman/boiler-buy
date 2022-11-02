@@ -61,7 +61,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   buy() {
-    this.productService.purchaseProduct(this.id).subscribe(
+    this.productService.purchaseOne(this.id).subscribe(
       data => {
         console.log(data.message);
         alert("Purchase Successful!");

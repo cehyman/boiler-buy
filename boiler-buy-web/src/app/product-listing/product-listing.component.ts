@@ -54,11 +54,13 @@ export class ProductListingComponent implements OnInit {
     }
     console.log("current username:",this.curruser)
   }
+
   viewDetails() {
     // console.log("redirect")
     console.log(this.object.id)
     this.router.navigate(['/products/' + this.object.id])
   }
+
   openDialog(): void {
     if (this.curruser != 'Username') {
       const dialogRef = this.dialog.open(PurchaseConfirmationDialog, {
@@ -66,17 +68,18 @@ export class ProductListingComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.purchase();
+        console.log(result);
+        if (result != 0) {
+          this.purchase(result);
         }
       });
     }
   }
 
-  purchase(): void {
+  purchase(numToPurchase: number): void {
     console.log('buying', this.object.name);
     //need to add item to user's purchases
-    this.productService.purchaseProduct(this.object.id).subscribe(
+    this.productService.purchaseMany(this.object.id, numToPurchase).subscribe(
       data => {
         console.log(data.message);
         alert("Purchase Successful!");
@@ -98,5 +101,6 @@ export class ProductListingComponent implements OnInit {
   templateUrl: 'purchase-confirmation-dialog.html',
 })
 export class PurchaseConfirmationDialog {
+  numToBuy: number = 1;
   constructor(public dialogRef: MatDialogRef<PurchaseConfirmationDialog>) {}
 }

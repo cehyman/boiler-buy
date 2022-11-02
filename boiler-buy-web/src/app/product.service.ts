@@ -37,11 +37,15 @@ export class ProductService {
     return this.http.get(url.toString(), {responseType: 'json'}) as Observable<ProductList>;
   }
 
-  purchaseProduct(productID: number): Observable<any> {
+  purchaseOne(productID: number): Observable<any> {
+    return this.purchaseMany(productID, 1);
+  }
+
+  purchaseMany(productID: number, quantity: number): Observable<any> {
     var body = {
       "username": this.appcomp.getUsername(),
       "productID": productID,
-      "quantity": 1
+      "quantity": quantity
     }
     var request = this.http.post('http://localhost:8000/api/purchaseHistory/', body);
     return request;

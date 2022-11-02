@@ -1,10 +1,13 @@
 <div style="background-color: rgb(206, 202, 202);">
     <h1 mat-dialog-title>Confirm</h1>
     <div mat-dialog-content>
-    Would you like to purchase this item?
+        Select a quantity and confirm your purchase.
     </div>
+
+    <input type="number" min="0" matinput [(ngModel)]= "numToBuy">
+    
     <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="false">Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+    <button *ngIf="numToBuy > 0" mat-button [mat-dialog-close]="numToBuy" cdkFocusInitial>Confirm</button>
     </div>
 </div>
