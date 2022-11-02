@@ -68,6 +68,7 @@ import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
+import { SiteMenuComponent } from './site-menu/site-menu.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { PictureCarouselComponent } from './picture-carousel/picture-carousel.co
     EditProductComponent,
     ProductDetailsComponent,
     UserWishlistComponent,
-    PictureCarouselComponent
+    PictureCarouselComponent,
+    SiteMenuComponent
   ],
   imports: [
     FormsModule,
@@ -137,6 +139,7 @@ import { PictureCarouselComponent } from './picture-carousel/picture-carousel.co
     MatNativeDateModule,
   ],
   providers: [CurrencyPipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }
