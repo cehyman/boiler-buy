@@ -66,6 +66,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     SellerReviewComponent,
     LoginComponent,
     EditProductComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    UserWishlistComponent
   ],
   imports: [
     FormsModule,
