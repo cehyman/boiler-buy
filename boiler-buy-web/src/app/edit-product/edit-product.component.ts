@@ -2,7 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PictureUploadNewComponent } from '../picture-upload-new/picture-upload-new.component';
+import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class EditProductComponent implements OnInit {
 
   prodId: number = -1;
 
-  @ViewChild('picUpload') picUpload !: PictureUploadNewComponent;
+  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -68,11 +68,6 @@ export class EditProductComponent implements OnInit {
         this.shipPrice = '';
       
       console.log(`data: ${data}`)
-      // var imageUrl = new URL(data.images);
-      // if(imageUrl.pathname != "/media/undefined") {
-      //   var image: string = data.image;
-      //   this.picUpload.loadFromDatabase(id, image);
-      // }
     });
 
     var imageRequest = this.http.get<any>(`api/products/${id}/retrieveImages`, {observe: "body"});

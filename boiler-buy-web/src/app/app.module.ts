@@ -66,7 +66,6 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { PictureUploadNewComponent } from './picture-upload-new/picture-upload-new.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +85,6 @@ import { PictureUploadNewComponent } from './picture-upload-new/picture-upload-n
     SellerReviewComponent,
     LoginComponent,
     EditProductComponent,
-    PictureUploadNewComponent
   ],
   imports: [
     FormsModule,

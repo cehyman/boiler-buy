@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { Globals } from '../globals';
-import { PictureUploadNewComponent } from '../picture-upload-new/picture-upload-new.component';
+import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 
 @Component({
   selector: 'app-create',
@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit {
   type: string = 'Electronics';
   brand: string = 'Acer';
 
-  @ViewChild('picUpload') picUpload !: PictureUploadNewComponent;
+  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
   constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
   }
