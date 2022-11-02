@@ -1,7 +1,7 @@
 from dataclasses import fields
 from rest_framework import serializers
 
-from .models import Listing, Product, Account, Shop, Wistlist
+from .models import Listing, Product, Account, Shop, Wishlist
 
 
 class ListingSerializer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class ShopSerializer(serializers.ModelSerializer):
         model = Shop
         fields = ['description', 'isVisible', 'products']
 
-class WistlistSerializer(serializers.ModelSerializer):
+class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Wistlist
-        fields = ['products']
+        model: Wishlist
+        fields = ['description', 'products']
