@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-details',
@@ -21,7 +22,7 @@ export class ProductDetailsComponent implements OnInit {
   brand: string = '';
   id: number = -1;
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router, private productService: ProductService) {
   }
 
   ngOnInit(): void {
@@ -60,7 +61,17 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   buy() {
-    this.router.navigate(['/sellerReview/' + this.id])
+    this.productService.purchaseProduct(this.id).subscribe(
+      data => {
+        console.log(data.message);
+        alert("Purchase Successful!");
+        this.router.navigate(['/sellerReview/' + this.id]);
+      },
+      error => {
+        console.log('purchase failed:', error.error);
+        alert("Purchase Failed, try again.")
+        this.stock = error.error.remainingStock;
+      }
+    )
   }
-
 }

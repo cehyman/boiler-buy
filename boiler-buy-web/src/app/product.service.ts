@@ -2,12 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
+import { AppComponent } from './app.component';
+import { Globals } from './globals';
 import { FilterSearchInput, ProductList } from './product-types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+
+  public globals: Globals = new Globals;
+  private appcomp: AppComponent = new AppComponent();
 
   constructor(private http: HttpClient) {}
 
@@ -30,6 +35,16 @@ export class ProductService {
     console.log(url.toString());
     
     return this.http.get(url.toString(), {responseType: 'json'}) as Observable<ProductList>;
+  }
+
+  purchaseProduct(productID: number): Observable<any> {
+    var body = {
+      "username": this.appcomp.getUsername(),
+      "productID": productID,
+      "quantity": 1
+    }
+    var request = this.http.post('http://localhost:8000/api/purchaseHistory/', body);
+    return request;
   }
 
 }

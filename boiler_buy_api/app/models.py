@@ -1,4 +1,5 @@
 from email.policy import default
+from statistics import mode
 from django.db import models
 from django.contrib.postgres.fields import *
 from django.contrib.postgres.fields import ArrayField
@@ -47,17 +48,17 @@ class Account(models.Model):
     def __str__(self):
         return str(self.username)
 
-class Shop(models.Model):
-    description = models.CharField(max_length=250, default='')
-    isVisible = models.BooleanField(default=False)
-    products = models.ManyToManyField("Product")
-
 class PurchaseHistory(models.Model):
-    email = models.CharField(max_length=50)
-    purchaseTime = models.DateTimeField(auto_now=False, auto_now_add=True)
+    buyerEmail = models.ForeignKey("Account", on_delete=models.CASCADE, related_name='pHistories')
+    purchaseTime = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=50)
-    sellerEmail = models.CharField(max_length=50)
+    sellerEmail = models.ForeignKey("Account", null=True, on_delete=models.SET_NULL)
     description = models.CharField(max_length=250)
     totalPriceDollars = models.PositiveIntegerField()
     totalPriceCents = models.PositiveSmallIntegerField()
     image = models.FileField(null=True, blank=True, upload_to='products/', )
+
+class ViewHistory(models.Model):
+    email = models.ForeignKey("Account", on_delete=models.CASCADE)
+    productID = models.ForeignKey("Product", null=True, on_delete=models.SET_NULL)
+    lastViewed = models.DateTimeField(auto_now=True)

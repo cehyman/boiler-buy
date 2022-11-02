@@ -1,7 +1,7 @@
 from dataclasses import field, fields
 from rest_framework import serializers
 
-from .models import Listing, Product, Account, Shop, PurchaseHistory
+from .models import *
 
 
 class ListingSerializer(serializers.ModelSerializer):
@@ -28,4 +28,9 @@ class ShopSerializer(serializers.ModelSerializer):
 class PurchaseHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model: PurchaseHistory
-        fields = ['email', 'purchaseTime', 'name', 'sellerEmail', 'description', 'totalPriceDollars', 'totalPriceCents', 'image']
+        fields = ['buyerEmail', 'purchaseTime', 'name', 'sellerEmail', 'description', 'totalPriceDollars', 'totalPriceCents', 'image']
+
+class ViewHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model: ViewHistory
+        fields = ['email', 'productID', 'lastViewed']

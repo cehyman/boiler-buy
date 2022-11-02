@@ -1,4 +1,5 @@
 from itertools import product
+from math import prod
 from rest_framework import viewsets
 
 from .models import *
@@ -153,6 +154,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         #     print(maxSellerRating)
         #     data = data.filter(sellerRating__lte=maxSellerRating).values()
         return JsonResponse(list(data), safe=False)
+
     def retrieve(self, request, pk=None):
         print(request)
         req = str(request)
@@ -184,3 +186,46 @@ class ShopViewSet(viewsets.ModelViewSet):
 class PurchaseHistoryViewSet(viewsets.ModelViewSet):
     queryset = PurchaseHistory.objects.all()
     serializer_class = PurchaseHistorySerializer
+
+    def create(self, request):
+        product = Product.objects.get(pk=request.data.get('productID'))
+
+        # check if there is still product left
+        if (product.stockCount < request.data.get('quantity')):
+            return JsonResponse({'error': 'Purchase quantity is greater than product quantity.', 'remainingStock': product.stockCount}, status=400)
+        
+        # decrease the amount in stock
+        product.stockCount -= request.data.get('quantity')
+        product.save()
+
+        # get buyer
+        buyer = Account.objects.get(username=request.data.get('username'))
+
+        # get seller
+        shop = Shop.objects.get(products=product.id)
+        shopID = shop.id
+        seller = Account.objects.get(shop=shopID)
+
+        # get total prices
+        totalPriceDollars = 0
+        totalPriceCents = product.priceCents + product.shippingCents
+        if (totalPriceCents >= 100):
+            totalPriceDollars = 1
+            totalPriceCents -= 100
+
+        totalPriceDollars += product.priceDollars + product.shippingDollars
+
+        newPurchaseHistory = PurchaseHistory.objects.create(
+            buyerEmail = buyer,
+            name = product.name,
+            sellerEmail = seller,
+            description = product.description,
+            totalPriceDollars = totalPriceDollars,
+            totalPriceCents = totalPriceCents,
+            image = product.image,
+        )
+        return JsonResponse({'message': 'Product was purchased'}, status=201)
+
+class ViewHistoryViewSet(viewsets.ModelViewSet):
+    queryset = ViewHistory.objects.all()
+    serializer_class = ViewHistorySerializer

@@ -22,7 +22,7 @@ export class ProductListingComponent implements OnInit {
   emptyStars: Array<boolean>;
   curruser:string = ''
 
-  constructor(public dialog: MatDialog, private router: Router) {
+  constructor(public dialog: MatDialog, private router: Router, private productService: ProductService) {
     this.fullStars = new Array();
     this.emptyStars = new Array();
   }
@@ -76,8 +76,16 @@ export class ProductListingComponent implements OnInit {
   purchase(): void {
     console.log('buying', this.object.name);
     //need to add item to user's purchases
-
-    //need to decrease count for product in database and make it invisible
+    this.productService.purchaseProduct(this.object.id).subscribe(
+      data => {
+      console.log(data.message);
+      alert("Purchase Successful!");
+    },
+    error => {
+      console.log('purchase failed:', error.error);
+      alert("Purchase Failed, try again.")
+    })
+    
   }
 
 }

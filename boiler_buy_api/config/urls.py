@@ -38,6 +38,8 @@ router.register(r'listings', views.ListingViewSet)
 router.register(r'products', views.ProductViewSet)
 router.register(r'accounts', views.AccountViewSet)
 router.register(r'shops', views.ShopViewSet)
+router.register(r'purchaseHistory', views.PurchaseHistoryViewSet)
+router.register(r'viewHistory', views.ViewHistoryViewSet)
 
 urlpatterns = [
     re_path(r'^$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
