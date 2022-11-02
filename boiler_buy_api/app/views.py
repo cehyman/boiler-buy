@@ -62,7 +62,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             image = request.data.get('image'),
             brand = request.data.get('brand')
         )
-        print('product id: ', product.id)
+        print('creating product with product id', product.id)
 
         # get user object of the user adding this product
         user = Account.objects.get(username=request.data.get('username'))
@@ -79,16 +79,13 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     # override default list (because we want to filter before we send the response)
     def list(self, request):
-        data = Product.objects.values()
+        data = Product.objects.filter(stockCount__gt=0).values()
         if (request.GET.__contains__('name')):
             # search by name
             print("here")
             name = request.GET.get('name')
-            data = Product.objects.filter(name__icontains=name).values()
-        else:
-            # get all products
-            print("here2")
-            data = Product.objects.all().values()
+            data = data.filter(name__icontains=name)
+        
         if (request.GET.get('productType') != None and request.GET.get('productType') != ""):
             print(request.GET.get('productType'))
             print("here3")

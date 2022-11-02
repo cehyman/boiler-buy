@@ -78,14 +78,17 @@ export class ProductListingComponent implements OnInit {
     //need to add item to user's purchases
     this.productService.purchaseProduct(this.object.id).subscribe(
       data => {
-      console.log(data.message);
-      alert("Purchase Successful!");
-    },
-    error => {
-      console.log('purchase failed:', error.error);
-      alert("Purchase Failed, try again.")
-    })
-    
+        console.log(data.message);
+        alert("Purchase Successful!");
+      },
+      error => {
+        console.log('purchase failed:', error.error);
+        alert("Purchase Failed, try again.");
+      },
+      () => {
+        location.reload();
+      }
+    )
   }
 
 }
