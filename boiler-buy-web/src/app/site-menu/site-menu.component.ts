@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-site-menu',
   templateUrl: './site-menu.component.html',
@@ -13,3 +14,4 @@ export class SiteMenuComponent implements OnInit {
   }
 
 }
+
