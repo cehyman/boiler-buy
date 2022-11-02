@@ -7,6 +7,7 @@ from .serializers import *
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import render
+from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 
 import json
@@ -194,13 +195,27 @@ class WishlistViewSet(viewsets.ModelViewSet):
         
         print('data:', request.data)
 
+
         # product_id = request.data.get('productID')
-        product = Product.objects.get(id=request.data.get('productID'))
+        if (request.data.get('request') == 'add'):
+            product = Product.objects.get(id=request.data.get('productID'))
 
-        user = Account.objects.get(username=request.data.get('username'))
-        wishlist = Wishlist.objects.get(id=user.wishlist_id)
-        print('wishlist id: ', wishlist)
+            user = Account.objects.get(username=request.data.get('username'))
+            wishlist = Wishlist.objects.get(id=user.wishlist_id)
+            print('wishlist id: ', wishlist)
 
-        wishlist.products.add(product.id)
+            wishlist.products.add(product.id)
+
+            return JsonResponse({'observe': 'response'})
+        else:
+            print("here")
+            product = Product.objects.get(id=request.data.get('productID'))
+
+            user = Account.objects.get(username=request.data.get('username'))
+            wishlist = Wishlist.objects.get(id=user.wishlist_id)
+            print('wishlist id: ', wishlist)
+
+            wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
+        #return redirect('http://localhost:8000/api/wishlist/' + str(user.wishlist_id))

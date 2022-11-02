@@ -92,13 +92,52 @@ export class ProductListingComponent implements OnInit {
       var formData = new FormData()
       formData.append("productID", `${this.object.id}`)
       formData.append("username", this.curruser)
+      formData.append("request", "add")
 
       var request = this.http.post<any>("http://localhost:8000/api/wishlist/", formData, {observe: "response"});
       request.subscribe((data:any) => {
-      console.log(data)
+        console.log(data)
+
+        alert("Added to wishlist")
       })
     }
   }
 
-  
+  removeFromWishlist() {
+    console.log(this.object.id)
+    let exists = 0
+
+    //check if product is already on list
+    let i = 0
+    for (i = 0; i < this.products.length; i++) {
+      if (this.object.id == this.products[i]) {
+        exists = 1
+      }
+    }
+
+    if (exists == 0) {
+      alert("Not in wishlist")
+    }
+
+    if (exists == 1) {
+      var formData = new FormData()
+      formData.append("productID", `${this.object.id}`)
+      formData.append("username", this.curruser)
+      formData.append("request", "remove")
+
+      var request = this.http.post<any>("http://localhost:8000/api/wishlist/", formData, {observe: "response"});
+
+      request.subscribe((data:any) => {
+        console.log(data)
+
+        alert("Removed from wishlist")
+        
+        // force page refresh
+        window.location.reload();
+      })
+    }
+
+  }
+
+
 }
