@@ -8,6 +8,7 @@ from .serializers import *
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import render
+from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
 
@@ -312,3 +313,36 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
+
+    #add to wishlist products
+    def create(self, request): 
+        # user isn't logged in, hopefully nobody wants this username
+        if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
+            return JsonResponse({'error': 'User is not logged in'}, status=401)
+        
+        print('data:', request.data)
+
+
+        # product_id = request.data.get('productID')
+        if (request.data.get('request') == 'add'):
+            product = Product.objects.get(id=request.data.get('productID'))
+
+            user = Account.objects.get(username=request.data.get('username'))
+            wishlist = Wishlist.objects.get(id=user.wishlist_id)
+            print('wishlist id: ', wishlist)
+
+            wishlist.products.add(product.id)
+
+            return JsonResponse({'observe': 'response'})
+        else:
+            print("here")
+            product = Product.objects.get(id=request.data.get('productID'))
+
+            user = Account.objects.get(username=request.data.get('username'))
+            wishlist = Wishlist.objects.get(id=user.wishlist_id)
+            print('wishlist id: ', wishlist)
+
+            wishlist.products.remove(product)
+
+        return JsonResponse({'observe': 'response'})
+        #return redirect('http://localhost:8000/api/wishlist/' + str(user.wishlist_id))

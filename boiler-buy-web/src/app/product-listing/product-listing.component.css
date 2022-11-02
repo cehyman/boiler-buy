@@ -9,9 +9,12 @@
 }
 
 .viewBtn {
-    align-items: left;
-    width: 10%;
+    align-items: center;
+    display: inline-block;
+    width: 25%;
+    margin: 10px;
 }
+
 
 .icon-text {
     display: flex;

@@ -27,6 +27,7 @@ const routes: Routes = [
   {path: 'products/:id', component: ProductDetailsComponent},
   { path: 'profile/purchase-history', component: PurchaseHistoryComponent }
   { path: 'wishlist', component: UserWishlistComponent}
+
 ];
 
 @NgModule({
