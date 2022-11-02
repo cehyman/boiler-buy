@@ -1,0 +1,25 @@
+.image {
+    max-width: 100%;   
+}
+
+.carousel-container {
+    position: relative;
+    z-index: 100;
+}
+
+.carousel-container #prev-button {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(0%, -50%);
+    text-align: center;
+    z-index: 95;
+}
+.carousel-container #next-button {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-100%, -50%);
+    text-align: center;
+    z-index: 95;
+}

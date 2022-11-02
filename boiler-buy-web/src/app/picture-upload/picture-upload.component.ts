@@ -1,104 +1,136 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ReadVarExpr, ThisReceiver } from '@angular/compiler';
 
-
-/**
- * This component handles the photo-upload selection from the user.
- * 
- * The user clicks the "Upload a Picture" button, and then they can select 
- * pictures from their device's storage. When they click open, the files are
- * added to a list and the file data is turned into a preview image.
- */
 @Component({
-  selector: 'app-picture-upload',
+  selector: 'app-picture-upload-new',
   templateUrl: './picture-upload.component.html',
   styleUrls: ['./picture-upload.component.css']
 })
 export class PictureUploadComponent implements OnInit {
-  protected selectedFiles: File[] = [];
-  protected previewUrls: any[] = [];
+  // Configuration for the component
+  @Input() maxImages: number    = 100;
+  @Input() hideX: boolean       = false;
+  
+  selectedImages: SelectedImage[] = [];
+  numImages: number = 0;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
 
-  // Adds the selected files from the file input into the selected file list
-  // This automatically converts the FileList object from the input element
-  // into a list of File objects for convienence. The files are not converted
-  addFiles(event: Event) {
-    var target: HTMLInputElement | null = event.target as HTMLInputElement;
+  // Returns all the preview URLS for the uploaded images
+  getPreviewUrls(): (URL | null)[] {
+    return this.selectedImages
+      .filter(image => image.url !== null && image.shouldRemove === false)
+      .map(image => image.url);
+  } 
 
-    if(target === null)
-      return;
-    
-    var files: FileList | null = target.files;
-    if(files === null)
-      return;
+  // Returns handles to all of the files for the uploaded images
+  getAllFiles(): File[] {
+    return this.selectedImages
+      .map(image => image.file)
+      .filter(file => file != null) as File[];
+  }
 
-    for (var i = 0; i < files.length; i++) {
-      var file = files.item(i);
-      if(file === null)
-        continue;
+  // Returns handles to all the new files added by the user
+  // These should get added to the database
+  getNewFiles(): File[] {
+    return this.selectedImages
+      .filter(image => image.file != null && image.userUploaded)
+      .map(image => image.file) as File[];
+  }
 
-      console.log(`Adding file ${file.name}`);
+  // Returns handles to all the existing files in the database. These do not
+  // need to get sent again to the database
+  getExistingFiles(): File[] {
+    return this.selectedImages
+      .filter(image => image.file != null && image.fromDatabase)
+      .map(image => image.file) as File[];
+  }
 
-      // Add the file object to a list so we have the name and oter info.
-      this.selectedFiles.push(file);
+  // Returns handles to all the exisitng files that should be removed from the
+  // database.
+  getExistingFilesToRemove(): File[] {
+    return this.selectedImages
+      .filter(image => image.file != null && image.shouldRemove)
+      .map(image => image.file) as File[];
+  }
 
-      // Convert the file of the image into a preview
+  // Event to upload images by the user. This returns the number of images
+  // uploaded. 
+  uploadPhotos(event: Event): number {
+    var target: HTMLInputElement = event.target as HTMLInputElement;
 
-      // Reader for converting the file into an image preview. This needs to be
-      // local to this loop rather than being created early because it takes 
-      // time for the file to be converted, and trying to convert one on the 
-      // same reader will cause issues if we didn't wait for it to finish.
+    var files: FileList = target.files as FileList;
+
+    var startNum = this.numImages;
+
+    for(var i = 0; i < files.length && this.numImages < this.maxImages; i++, this.numImages++) {
+      var file: File = files.item(i) as File;
+
       var reader = new FileReader();
       reader.onloadend = (event: any) => {
-        this.previewUrls.push(event.target.result);
-      }
+        this.selectedImages.push(SelectedImage.fromUser(file, event.target.result));
+      };
       reader.readAsDataURL(file);
     }
+
+    return this.numImages - startNum;
   }
 
-  loadFromDatabase(id: number, fileName: string) {
-    console.log(`Loading images for ad ${id} from the database`);
-    console.log(`Image to load: ${fileName}`);
+  loadFromDatabase(url: URL) {
+    console.log(`Loading image ${url}`);
 
-    const options = {
-      observe: 'body'
-    };
-    var request = this.http.get<any>(fileName, {
-      responseType: 'blob' as 'json', //wtf
-    });
+    var request = this.http.get<any>(url.toString(), {responseType: 'blob' as 'json'});
 
     request.subscribe((response: any) => {
-      console.log(`response: ${typeof(response)} = ${response}`)
-
-      let reader = new FileReader();
-      this.selectedFiles.push(new File([response], fileName));
-      this.previewUrls.push(fileName);
+      this.selectedImages.push(SelectedImage.fromDatabase(
+        new File([response], url.toString()),
+        url
+      ));
     });
   }
 
-  // This is called by one of the X buttons for the photos. The X button has a
-  // custom data attribute that contains the index in the list that it is, and
-  // this is used to remove the item from the list
-  removePhoto(event: Event) {
+  protected removePhoto(event: Event) {
     var target = event.target as HTMLButtonElement;
 
-    if(target == null)
-      return;
-
-    // Grab the index of the button from its custom data attribute
     var idx = Number(target.dataset['idx']);
-    console.log(`removing ${idx}`);
+    this.numImages--;
 
-    this.selectedFiles.splice(idx, 1);
-    this.previewUrls.splice(idx, 1);
+    if(this.selectedImages[idx].userUploaded) {
+      this.selectedImages.splice(idx, 1);
+    }
+    else if (this.selectedImages[idx].fromDatabase) {
+      this.selectedImages[idx].shouldRemove = true;
+    }
+  }
+}
+
+class SelectedImage {
+  public file:         File | null = null;     // The actual file handle
+  public url:          URL | null = null;      // The URL for this photo
+  public userUploaded: boolean = false;  // Was this uploaded by the user through the UI?
+  public fromDatabase: boolean = false;  // Was this fetched from the database?
+  public shouldRemove: boolean = false;  // Should this be removed from the database?
+
+  static fromDatabase(file: File, url: URL): SelectedImage {
+    var selectedImage = new SelectedImage();
+
+    selectedImage.file = file;
+    selectedImage.url = url;
+    selectedImage.fromDatabase = true;
+
+    return selectedImage;
   }
 
-  getFiles(): File[] {
-    return this.selectedFiles;
+  static fromUser(file: File, url: URL) {
+    var selectedImage = new SelectedImage();
+
+    selectedImage.file = file;
+    selectedImage.url = url;
+    selectedImage.userUploaded = true;
+
+    return selectedImage;
   }
 }

@@ -28,8 +28,15 @@ class Product(models.Model):
     canShip = models.BooleanField()
     canMeet = models.BooleanField()
     brand = models.CharField(max_length=128, default="")
-    image = models.FileField(null=True, blank=True, upload_to='products/', )
+    image = models.FileField(null=True, blank=True, upload_to='products/')
+
+class ProductImage(models.Model):
+    def uploadTo(self, filename):
+        return f"products/{self.product.id}/{filename}"
     
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(null=True, blank=False, upload_to=uploadTo)
+
 class Shop(models.Model):
     description = models.CharField(max_length=250, default='')
     isVisible = models.BooleanField(default=False)
