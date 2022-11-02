@@ -1,0 +1,47 @@
+
+h1{
+    text-align: center;
+}
+
+label{
+    text-align: center;
+}
+
+.container {
+    margin:auto;
+    width: 50%;
+}
+
+.imageContainer {
+    margin: auto;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.infoContainer {
+    margin: auto;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.buyBtn {
+    margin:auto;
+    display:flex;
+}
+
+.descriptionContainer {
+    display: flex;
+    width: 50%;
+    margin:auto;
+    flex-direction: column;
+}
+
+.submitBtn {
+  width: 5%;
+  margin:auto;
+  display:flex;
+}
+
+.submitBtn:hover {
+  opacity:0.8;
+}
