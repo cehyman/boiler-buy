@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'sellerReview/:id', component: SellerReviewComponent},
   { path: 'login', component: LoginComponent},
   { path: 'products/:id', component: ProductDetailsComponent},
-  { path: 'wishlist', component: UserWishlistComponent}
+  { path: 'wishlist/:id', component: UserWishlistComponent}
 ];
 
 @NgModule({
