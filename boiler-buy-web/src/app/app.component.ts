@@ -46,4 +46,6 @@ export class AppComponent {
   removeEmail() {
     sessionStorage.removeItem('email')
   }
+  
+
 }
