@@ -48,10 +48,12 @@ class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')
     products = models.ManyToManyField("Product")
 
-class ShopHistory(models.Model):
-    action = models.CharField(max_length=32, default='')
+class ShopHistoryItem(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
+    action = models.CharField(max_length=32, default='')
+    date = models.DateTimeField()
+    quantity = models.IntegerField(null=True, blank=True)
 
 class Account(models.Model):
     username = models.CharField(max_length=30)

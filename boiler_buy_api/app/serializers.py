@@ -30,10 +30,10 @@ class ShopSerializer(serializers.ModelSerializer):
         model: Shop
         fields = ['description', 'isVisible', 'products']
 
-class ShopHistorySerializer(serializers.ModelSerializer):
+class ShopHistoryItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopHistory
-        fields = ['shop', 'product', 'action']
+        fields = ['shop', 'product', 'action', 'date', 'quantity']
 
 class PurchaseHistorySerializer(serializers.ModelSerializer):
     class Meta:
