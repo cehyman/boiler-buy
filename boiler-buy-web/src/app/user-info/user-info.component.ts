@@ -30,6 +30,11 @@ export class UserInfoComponent implements OnInit {
   currpass:string = ''
   curremail:string = ''
 
+  reviewDescription:string = ""
+  reviewCount:number = 0
+  reviewAvg:number = 0
+  reviews:string[] = []
+
   wishlist_id:number = 0
   products: any = [];
 
@@ -52,6 +57,18 @@ export class UserInfoComponent implements OnInit {
     this.curremail = <string> this.appcomp.getEmail()
 
     this.getUserWishlist()
+
+    var accountURL = "http://localhost:8000/api/accounts/"+this.appcomp.getEmail()+"/";
+    var request = this.http.get(accountURL, {observe:'response'});
+    request.subscribe((data: any) => {
+      console.log(data)
+      this.reviewCount = data["body"]["sellerRatingCount"]
+      this.reviewAvg = data["body"]["sellerRating"]
+      this.reviews = data["body"]["sellerReviews"]
+      this.curremail = data["body"]["email"]
+      this.curruser = data["body"]["username"]  
+    })
+   
   }
 
   deleteAccount(email:string) {
