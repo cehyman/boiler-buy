@@ -1,9 +1,14 @@
+<app-site-menu></app-site-menu>
 <div class="card">
     <!-- image here -->
     <div class="name_seller_rating">
         <!-- Rating: {{object.sellerRatingCount}} -->
         <h2>{{object.name}}</h2>
-        <button (click)="viewDetails()" type="submit" class="viewBtn">View Details</button>
+        <div class="groupbtn">
+            <button (click)="viewDetails()" type="submit" class="viewBtn">View Details</button>
+            <button (click)="addToWishlist()" type="submit" class="viewBtn">Add To Wishlist</button>
+            <button (click)="removeFromWishlist()" type="submit" class="viewBtn">Remove From Wishlist</button>
+        </div>
         <!-- seller name here -->
         <div class="icon-text">
             <span>Seller Rating:</span>
@@ -23,6 +28,10 @@
             </div>
         </div>
         
+    </div>
+    
+    <div style="display: flex; justify-content: right;">
+        <button mat-raised-button color="primary" (click)="openDialog()">{{(curruser != 'Username') ? 'Purchase' : 'Log In to Purchase'}}</button>
     </div>
     
     

@@ -1,4 +1,5 @@
 from itertools import product
+from math import prod
 from rest_framework import viewsets
 
 from .models import *
@@ -7,6 +8,7 @@ from .serializers import *
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.shortcuts import render
+from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
 
@@ -62,7 +64,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             canMeet = bool(request.data.get('canMeet')),
             brand = request.data.get('brand')
         )
-        print('product id: ', product.id)
+        print('creating product with product id', product.id)
 
         # get user object of the user adding this product
         user = Account.objects.get(username=request.data.get('username'))
@@ -133,20 +135,18 @@ class ProductViewSet(viewsets.ModelViewSet):
             
     # override default list (because we want to filter before we send the response)
     def list(self, request):
+
+        data = Product.objects.filter(stockCount__gt=0).values()
         minSellerFilter = False
         maxSellerFilter = False
         minSeller = 0
         maxSeller = 0
-        data = Product.objects.values()
         if (request.GET.__contains__('name')):
             # search by name
             print("here")
             name = request.GET.get('name')
-            data = Product.objects.filter(name__icontains=name).values()
-        else:
-            # get all products
-            print("here2")
-            data = Product.objects.all().values()
+            data = data.filter(name__icontains=name)
+        
         if (request.GET.get('productType') != None and request.GET.get('productType') != ""):
             print(request.GET.get('productType'))
             print("here3")
@@ -267,6 +267,86 @@ class ShopHistoryViewSet(viewsets.ModelViewSet):
     queryset = ShopHistory.objects.all()
     serializer_class = ShopSerializer
 
+class PurchaseHistoryViewSet(viewsets.ModelViewSet):
+    queryset = PurchaseHistory.objects.all()
+    serializer_class = PurchaseHistorySerializer
+
+    def create(self, request):
+        product = Product.objects.get(pk=request.data.get('productID'))
+
+        # check if there is still product left
+        if (product.stockCount < request.data.get('quantity')):
+            return JsonResponse({'error': 'Purchase quantity is greater than product quantity.', 'remainingStock': product.stockCount}, status=400)
+        
+        # decrease the amount in stock
+        product.stockCount -= request.data.get('quantity')
+        product.save()
+
+        # get buyer
+        buyer = Account.objects.get(username=request.data.get('username'))
+
+        # get seller
+        shop = Shop.objects.get(products=product.id)
+        shopID = shop.id
+        seller = Account.objects.get(shop=shopID)
+
+        # get total prices
+        totalPriceDollars = 0
+        totalPriceCents = product.priceCents + product.shippingCents
+        if (totalPriceCents >= 100):
+            totalPriceDollars = 1
+            totalPriceCents -= 100
+
+        totalPriceDollars += product.priceDollars + product.shippingDollars
+
+        newPurchaseHistory = PurchaseHistory.objects.create(
+            buyerEmail = buyer,
+            name = product.name,
+            sellerEmail = seller,
+            description = product.description,
+            totalPriceDollars = totalPriceDollars,
+            totalPriceCents = totalPriceCents,
+            image = product.image,
+        )
+        return JsonResponse({'message': 'Product was purchased'}, status=201)
+
+class ViewHistoryViewSet(viewsets.ModelViewSet):
+    queryset = ViewHistory.objects.all()
+    serializer_class = ViewHistorySerializer
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
+
+    #add to wishlist products
+    def create(self, request): 
+        # user isn't logged in, hopefully nobody wants this username
+        if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
+            return JsonResponse({'error': 'User is not logged in'}, status=401)
+        
+        print('data:', request.data)
+
+
+        # product_id = request.data.get('productID')
+        if (request.data.get('request') == 'add'):
+            product = Product.objects.get(id=request.data.get('productID'))
+
+            user = Account.objects.get(username=request.data.get('username'))
+            wishlist = Wishlist.objects.get(id=user.wishlist_id)
+            print('wishlist id: ', wishlist)
+
+            wishlist.products.add(product.id)
+
+            return JsonResponse({'observe': 'response'})
+        else:
+            print("here")
+            product = Product.objects.get(id=request.data.get('productID'))
+
+            user = Account.objects.get(username=request.data.get('username'))
+            wishlist = Wishlist.objects.get(id=user.wishlist_id)
+            print('wishlist id: ', wishlist)
+
+            wishlist.products.remove(product)
+
+        return JsonResponse({'observe': 'response'})
+        #return redirect('http://localhost:8000/api/wishlist/' + str(user.wishlist_id))
