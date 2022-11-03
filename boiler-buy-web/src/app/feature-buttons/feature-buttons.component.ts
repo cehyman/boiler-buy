@@ -41,4 +41,8 @@ export class FeatureButtonsComponent implements OnInit {
     this.router.navigate(['/wishlist/' + this.wishlistID])
   }
 
+  routePurchaseHistory() {
+    this.router.navigate(['/profile/purchase-history'])
+  }
+
 }
