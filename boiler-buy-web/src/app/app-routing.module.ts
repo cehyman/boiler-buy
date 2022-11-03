@@ -12,6 +12,7 @@ import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { LoginComponent } from './login/login.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
+import { UserShopComponent } from './user-shop/user-shop.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent},
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'sellerReview/:id', component: SellerReviewComponent},
   { path: 'login', component: LoginComponent},
   { path: 'products/:id', component: ProductDetailsComponent},
-  { path: 'wishlist/:id', component: UserWishlistComponent}
+  { path: 'wishlist/:id', component: UserWishlistComponent},
+  { path: 'shop/:id', component: UserShopComponent}
 ];
 
 @NgModule({

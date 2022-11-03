@@ -3,3 +3,8 @@
 	border-radius: 50%;
 	padding: 7px;
 }
+
+.change-profile-pic {
+	display: flex;
+	align-items: center;
+}
