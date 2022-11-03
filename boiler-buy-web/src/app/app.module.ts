@@ -91,7 +91,8 @@ import { PictureCarouselComponent } from './picture-carousel/picture-carousel.co
     PurchaseHistoryComponent,
     PurchaseConfirmationDialog,
     UserWishlistComponent,
-    PictureCarouselComponent
+    PictureCarouselComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     FormsModule,

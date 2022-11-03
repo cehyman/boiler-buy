@@ -6,7 +6,6 @@ import { Product } from '../product-types';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-product-listing',
@@ -27,7 +26,6 @@ export class ProductListingComponent implements OnInit {
   halfStar: boolean = false;
   fullStars: Array<boolean>;
   emptyStars: Array<boolean>;
-  curruser:string = ''
 
   constructor(private productService: ProductService, private router: Router, private http: HttpClient, public dialog: MatDialog) {
     this.fullStars = new Array();
