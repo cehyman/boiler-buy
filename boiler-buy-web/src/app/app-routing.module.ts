@@ -23,8 +23,8 @@ const routes: Routes = [
   { path: 'edit/:id', component: EditProductComponent},
   { path: 'change-username', component: ChangeUsernameComponent},
   { path: 'sellerReview/:id', component: SellerReviewComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'products/:id', component: ProductDetailsComponent},
+  { path: 'login', component: LoginComponent},
+  { path: 'products/:id', component: ProductDetailsComponent},
   { path: 'profile/purchase-history', component: PurchaseHistoryComponent },
   { path: 'wishlist/:id', component: UserWishlistComponent},
 

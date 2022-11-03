@@ -295,15 +295,18 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
 
         totalPriceDollars += product.priceDollars + product.shippingDollars
 
-        newPurchaseHistory = PurchaseHistory.objects.create(
-            buyerEmail = buyer,
-            name = product.name,
-            sellerEmail = seller,
-            description = product.description,
-            totalPriceDollars = totalPriceDollars,
-            totalPriceCents = totalPriceCents,
-            image = product.image,
-        )
+        #TODO: either change the db to include a quantity, or adjust the front end to account for this
+        for i in range(request.data.get('quantity')):
+            newPurchaseHistory = PurchaseHistory.objects.create(
+                buyerEmail = buyer,
+                name = product.name,
+                sellerEmail = seller,
+                description = product.description,
+                totalPriceDollars = totalPriceDollars,
+                totalPriceCents = totalPriceCents,
+                image = product.image,
+            )
+
         return JsonResponse({'message': 'Product was purchased'}, status=201)
 
 class ViewHistoryViewSet(viewsets.ModelViewSet):

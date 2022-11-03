@@ -27,17 +27,17 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Shop
+        model = Shop
         fields = ['description', 'isVisible', 'products']
 
 class PurchaseHistorySerializer(serializers.ModelSerializer):
     class Meta:
-        model: PurchaseHistory
+        model = PurchaseHistory
         fields = ['buyerEmail', 'purchaseTime', 'name', 'sellerEmail', 'description', 'totalPriceDollars', 'totalPriceCents', 'image']
 
 class ViewHistorySerializer(serializers.ModelSerializer):
     class Meta:
-        model: ViewHistory
+        model = ViewHistory
         fields = ['email', 'productID', 'lastViewed']
 
 class WishlistSerializer(serializers.ModelSerializer):
