@@ -60,22 +60,7 @@ export class ProductListingComponent implements OnInit {
     console.log("current username:",this.curruser)
     //get user wishlist id
     this.curremail = <string> this.appcomp.getEmail()
-
-    var request = this.http.get<any>('http://localhost:8000/api/accounts/'.concat(this.curremail).concat("/"))
-    console.log(this.curremail)
-    request.subscribe(data => {
-      let wishlistLink = data['wishlist']
-      let urlSp = wishlistLink.split('/')
-      this.wishlist_id = Number(urlSp[urlSp.length - 2])
-      console.log("id: " + this.wishlist_id)
-
-      //get the user's wishlist product array
-      var request = this.http.get<any>('http://localhost:8000/api/wishlist/' + this.wishlist_id, {observe: "body"})
-      request.subscribe(data => {
-      console.log(data)
-      this.products = data.products
-      })
-    })
+    this.curruser = <string> this.appcomp.getUsername()
   }
 
   viewDetails() {
@@ -118,6 +103,7 @@ export class ProductListingComponent implements OnInit {
   }
   
   addToWishlist() {
+    this.products = JSON.parse(<string> this.appcomp.getWishlistProductArray())
     console.log(this.object.id)
     let added = 0
 
@@ -143,11 +129,14 @@ export class ProductListingComponent implements OnInit {
         console.log(data)
 
         alert("Added to wishlist")
+
+        this.getUserWishlist() 
       })
     }
   }
 
   removeFromWishlist() {
+    this.products = JSON.parse(<string> this.appcomp.getWishlistProductArray())
     console.log(this.object.id)
     let exists = 0
 
@@ -175,6 +164,7 @@ export class ProductListingComponent implements OnInit {
         console.log(data)
 
         alert("Removed from wishlist")
+        this.getUserWishlist() 
         
         // force page refresh
         window.location.reload();
@@ -183,6 +173,25 @@ export class ProductListingComponent implements OnInit {
 
   }
 
+  getUserWishlist() {
+    var request = this.http.get<any>('http://localhost:8000/api/accounts/'.concat(this.curremail).concat("/"))
+    console.log(this.curremail)
+    request.subscribe(data => {
+      let wishlistLink = data['wishlist']
+      let urlSp = wishlistLink.split('/')
+      this.wishlist_id = Number(urlSp[urlSp.length - 2])
+      console.log("id: " + this.wishlist_id)
+
+      //get the user's wishlist product array
+      var request = this.http.get<any>('http://localhost:8000/api/wishlist/' + this.wishlist_id, {observe: "body"})
+      request.subscribe(data => {
+      console.log(data)
+      this.products = data.products
+
+      this.appcomp.saveWishlistProductArray(this.products)
+      })
+    })
+  } 
 }
 
 @Component({
