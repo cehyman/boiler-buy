@@ -53,7 +53,7 @@ import { FeatureButtonsComponent } from './feature-buttons/feature-buttons.compo
 import { AppRoutingModule } from './app-routing.module';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductListingComponent } from './product-listing/product-listing.component';
+import { ProductListingComponent, PurchaseConfirmationDialog } from './product-listing/product-listing.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -63,11 +63,14 @@ import { PictureUploadComponent } from './picture-upload/picture-upload.componen
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginComponent } from './login/login.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
+import { SiteMenuComponent } from './site-menu/site-menu.component';
+import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.component';
 
 @NgModule({
   declarations: [
@@ -87,9 +90,13 @@ import { PictureCarouselComponent } from './picture-carousel/picture-carousel.co
     SellerReviewComponent,
     LoginComponent,
     EditProductComponent,
-    ProductDetailsComponent,
+    PurchaseHistoryComponent,
+    PurchaseConfirmationDialog,
     UserWishlistComponent,
-    PictureCarouselComponent
+    PictureCarouselComponent,
+    ProductDetailsComponent,
+    SiteMenuComponent,
+    DarkModeToggleComponent,
   ],
   imports: [
     FormsModule,
@@ -137,6 +144,7 @@ import { PictureCarouselComponent } from './picture-carousel/picture-carousel.co
     MatNativeDateModule,
   ],
   providers: [CurrencyPipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

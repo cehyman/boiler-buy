@@ -1,3 +1,4 @@
+<app-site-menu></app-site-menu>
 <div class="card">
     <!-- image here -->
     <div class="name_seller_rating">
@@ -27,6 +28,10 @@
             </div>
         </div>
         
+    </div>
+    
+    <div style="display: flex; justify-content: right;">
+        <button mat-raised-button color="primary" (click)="openDialog()">{{(curruser != 'Username') ? 'Purchase' : 'Log In to Purchase'}}</button>
     </div>
     
     

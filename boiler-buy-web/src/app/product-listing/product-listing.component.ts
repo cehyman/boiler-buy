@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AppComponent } from '../app.component';
+import { Globals } from '../globals';
 import { Product } from '../product-types';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AppComponent } from '../app.component';
-import { UserInfoComponent } from '../user-info/user-info.component';
 
 @Component({
   selector: 'app-product-listing',
@@ -14,17 +15,19 @@ import { UserInfoComponent } from '../user-info/user-info.component';
 export class ProductListingComponent implements OnInit {
   @Input() object: Product = {id: 0, name: "", priceDollars: 0, sellerRating: 0, sellerRatingCount: 0} as Product;
 
+  public globals: Globals = new Globals;
   products:any = []
   wishlist_id:number = 0
   curremail:string = ''
   curruser:string = ''
+  
   private appcomp: AppComponent = new AppComponent();
 
   halfStar: boolean = false;
   fullStars: Array<boolean>;
   emptyStars: Array<boolean>;
 
-  constructor(private productService: ProductService, private router: Router, private http: HttpClient) {
+  constructor(private productService: ProductService, private router: Router, private http: HttpClient, public dialog: MatDialog) {
     this.fullStars = new Array();
     this.emptyStars = new Array();
   }
@@ -35,18 +38,26 @@ export class ProductListingComponent implements OnInit {
       this.fullStars.push(true);
       starsLeft--;
     }
-    console.log('stars left after full stars: ', starsLeft)
+    // console.log('stars left after full stars: ', starsLeft)
     let diff = this.object.sellerRating - Math.floor(this.object.sellerRating);
     if (diff >= 0.5) {
       this.halfStar = true;
       starsLeft--;
     }
-    console.log('stars left after checking half star: ', starsLeft)
+    // console.log('stars left after checking half star: ', starsLeft)
     
     for(let i = 0; i < starsLeft; i++) {
       this.emptyStars.push(true);
     }
 
+    this.globals.username = <string> this.appcomp.getUsername()
+
+    if (this.appcomp.getUsername()) {
+      this.curruser = <string> this.appcomp.getUsername()
+    } else {
+      this.curruser = "Username"
+    }
+    console.log("current username:",this.curruser)
     //get user wishlist id
     this.curremail = <string> this.appcomp.getEmail()
     this.curruser = <string> this.appcomp.getUsername()
@@ -58,6 +69,39 @@ export class ProductListingComponent implements OnInit {
     this.router.navigate(['/products/' + this.object.id])
   }
 
+  openDialog(): void {
+    if (this.curruser != 'Username') {
+      const dialogRef = this.dialog.open(PurchaseConfirmationDialog, {
+        width: '250px',
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        if (result != 0) {
+          this.purchase(result);
+        }
+      });
+    }
+  }
+
+  purchase(numToPurchase: number): void {
+    console.log('buying', this.object.name);
+    //need to add item to user's purchases
+    this.productService.purchaseMany(this.object.id, numToPurchase).subscribe(
+      data => {
+        console.log(data.message);
+        alert("Purchase Successful!");
+      },
+      error => {
+        console.log('purchase failed:', error.error);
+        alert("Purchase Failed, try again.");
+      },
+      () => {
+        location.reload();
+      }
+    )
+  }
+  
   addToWishlist() {
     this.products = JSON.parse(<string> this.appcomp.getWishlistProductArray())
     console.log(this.object.id)
@@ -150,4 +194,11 @@ export class ProductListingComponent implements OnInit {
   } 
 
 
+@Component({
+  selector: 'purchase-confirmation-dialog',
+  templateUrl: 'purchase-confirmation-dialog.html',
+})
+export class PurchaseConfirmationDialog {
+  numToBuy: number = 1;
+  constructor(public dialogRef: MatDialogRef<PurchaseConfirmationDialog>) {}
 }
