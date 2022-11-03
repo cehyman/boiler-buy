@@ -80,8 +80,11 @@ export class ProductListingComponent implements OnInit {
 
   viewDetails() {
     // console.log("redirect")
-    console.log(this.object.id)
-    this.router.navigate(['/products/' + this.object.id])
+    this.productService.addProductToViewHistory(this.object.id).subscribe(() => {
+      console.log("added "+ this.object.id + " to view history");
+      this.router.navigate(['/products/' + this.object.id])
+    })
+    
   }
 
   openDialog(): void {
@@ -91,8 +94,9 @@ export class ProductListingComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        this.productService.addProductToViewHistory(this.object.id);
         console.log(result);
-        if (result != 0) {
+        if (result != undefined && result != 0) {
           this.purchase(result);
         }
       });

@@ -310,6 +310,25 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
     queryset = ViewHistory.objects.all()
     serializer_class = ViewHistorySerializer
 
+    def create(self, request):
+        # see if the user already has a view for this productID
+
+        product = Product.objects.get(pk=request.data.get('productID'))
+
+        # get buyer
+        buyer = Account.objects.get(username=request.data.get('username'))
+
+        p, created = ViewHistory.objects.get_or_create(
+            email = buyer,
+            productID = product,
+        )
+
+        print("p: ", p)
+        print("Created new view: ", created)
+        p.save()
+
+        return JsonResponse({'message': 'Product was viewed'}, status=201)
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer
