@@ -68,6 +68,8 @@ import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
+import { SiteMenuComponent } from './site-menu/site-menu.component';
+import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,9 @@ import { PictureCarouselComponent } from './picture-carousel/picture-carousel.co
     EditProductComponent,
     ProductDetailsComponent,
     UserWishlistComponent,
-    PictureCarouselComponent
+    PictureCarouselComponent,
+    SiteMenuComponent,
+    DarkModeToggleComponent
   ],
   imports: [
     FormsModule,
@@ -137,6 +141,7 @@ import { PictureCarouselComponent } from './picture-carousel/picture-carousel.co
     MatNativeDateModule,
   ],
   providers: [CurrencyPipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }
