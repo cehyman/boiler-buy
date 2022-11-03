@@ -38,6 +38,32 @@ class AccountViewSet(viewsets.ModelViewSet):
         print('username: ', account)
         return JsonResponse({'observe': 'response'})
 
+    # Test to retrieve image /accounts/<email>/retrieveImages
+    @action(detail=True, methods=['get'])
+    def retrieveImages(self, request, pk):
+        account = Account.objects.get(pk=pk)
+        image = account.images.all()
+        
+        nameList = list([])
+        nameList.append(image.image.url)
+        
+        print(f"{nameList}")
+        return JsonResponse(nameList, safe=False)
+
+    # Test to add images to /accounts/<email>/addImages
+    @action(detail=True, methods=['patch'])
+    def addImages(self, request, pk):
+        account = Account.objects.get(pk=pk)
+        
+        # Add all the images and connect them to this product
+        # image = request.data.getlist('images')
+        
+        serializer = AccountSerializer(account, data=request.data, partial=True) # set partial=True to update a data partially
+        if serializer.is_valid():
+            serializer.save()
+            
+        return JsonResponse({'observe': 'response'})
+
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

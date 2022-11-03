@@ -69,6 +69,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
 import { UserShopComponent } from './user-shop/user-shop.component';
+import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { UserShopComponent } from './user-shop/user-shop.component';
     ProductDetailsComponent,
     UserWishlistComponent,
     PictureCarouselComponent,
-    UserShopComponent
+    UserShopComponent,
+    ChangeProfilePicComponent
   ],
   imports: [
     FormsModule,
