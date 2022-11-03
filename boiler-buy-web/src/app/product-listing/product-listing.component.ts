@@ -192,7 +192,7 @@ export class ProductListingComponent implements OnInit {
       })
     })
   } 
-
+}
 
 @Component({
   selector: 'purchase-confirmation-dialog',
