@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'products/:id', component: ProductDetailsComponent},
   { path: 'profile/purchase-history', component: PurchaseHistoryComponent },
-  { path: 'wishlist', component: UserWishlistComponent},
+  { path: 'wishlist/:id', component: UserWishlistComponent},
 
 ];
 
