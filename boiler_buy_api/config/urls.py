@@ -38,6 +38,8 @@ router.register(r'listings', views.ListingViewSet)
 router.register(r'products', views.ProductViewSet)
 router.register(r'accounts', views.AccountViewSet)
 router.register(r'shops', views.ShopViewSet)
+router.register(r'purchaseHistory', views.PurchaseHistoryViewSet)
+router.register(r'viewHistory', views.ViewHistoryViewSet)
 router.register(r'wishlist', views.WishlistViewSet)
 
 urlpatterns = [

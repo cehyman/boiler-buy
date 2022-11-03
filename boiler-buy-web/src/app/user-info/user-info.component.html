@@ -22,6 +22,21 @@
             value={{curremail}} readonly>
     </div>
 
+    <br>
+    <div>
+        <label class="form-control-label" for="input-purdue-email">Seller Rating: </label>
+        <label class="form-control-label" for="input-username">{{reviewAvg}}</label>
+    </div>
+    <br>
+    
+    <div>
+        <label class="form-control-label" for="input-purdue-email">Seller Reviews: </label>
+        <li *ngFor="let review of reviews">
+            <label class="form-control-label" for="input-purdue-email">{{review}} </label>
+        </li>
+    </div>
+    <br>
+
     <div>
         <button routerLink="/change-username" class="change-username-button">Change Username</button>
         <button routerLink="/change-password" class="change-password-button">Change Password</button>

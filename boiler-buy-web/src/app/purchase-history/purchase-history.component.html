@@ -1,0 +1,14 @@
+<app-site-menu></app-site-menu>
+<div class="card" *ngFor="let product of purchases; let i = index" >
+    <div class="name_seller_rating">
+        <h2>{{product.name}}</h2>
+        <p>Purchased on {{product.purchaseTime.toLocaleString()}}</p>
+        <!-- <div class="groupbtn">
+            <button (click)="viewDetails()" type="submit" class="viewBtn">View Details</button>
+        </div> -->
+        <!-- seller name here -->
+        
+        <p>Agreed price: ${{product.totalPriceDollars}}.{{(product.totalPriceCents < 10) ? '0' : ''}}{{product.totalPriceCents}}</p>
+        
+    </div>
+</div>

@@ -10,6 +10,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
 import { LoginComponent } from './login/login.component';
+import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 
@@ -24,7 +25,9 @@ const routes: Routes = [
   { path: 'sellerReview/:id', component: SellerReviewComponent},
   { path: 'login', component: LoginComponent},
   { path: 'products/:id', component: ProductDetailsComponent},
-  { path: 'wishlist/:id', component: UserWishlistComponent}
+  { path: 'profile/purchase-history', component: PurchaseHistoryComponent },
+  { path: 'wishlist/:id', component: UserWishlistComponent},
+
 ];
 
 @NgModule({
