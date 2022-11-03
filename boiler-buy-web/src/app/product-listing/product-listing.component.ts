@@ -94,7 +94,9 @@ export class ProductListingComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        this.productService.addProductToViewHistory(this.object.id);
+        this.productService.addProductToViewHistory(this.object.id).subscribe(() => {
+          console.log("added "+ this.object.id + " to view history");
+        });
         console.log(result);
         if (result != undefined && result != 0) {
           this.purchase(result);
