@@ -1,0 +1,24 @@
+.extra-menu{
+    flex: 1 1 auto;
+    z-index: 10;
+}
+
+.dm-toggle {
+    font-size: small;
+}
+
+.menu-spacer {
+    padding-right:10px;
+}
+
+
+.menu-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 4px;
+}
+
+.site-menu {
+    background-color: #777;
+}
+  
