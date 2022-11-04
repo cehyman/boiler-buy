@@ -2,10 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top:-10vh;
+    margin-top:-9vh;
     text-align: center;
 }
 
 .chats-button{
+    margin:1vw;
+}
+.view-current-ads-button{
     margin:1vw;
 }
