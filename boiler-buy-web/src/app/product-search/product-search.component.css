@@ -1,8 +1,26 @@
-.topnav {
+.sticky {
+    position: fixed;
+    top: 0;
     overflow: hidden;
-    background-color: #e9e9e9;
-    display: flex;
-    align-items: center;
+    z-index: 10;
+}
+
+.mat-drawer {
+    position: fixed !important;
+    top: 50px;
+}
+
+.sticky-sidenav {
+    position: fixed;
+    top: 0;
+    right: auto;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.icon {
+    width: auto;
+    padding: 5px;
 }
 
 .main-content {
@@ -17,38 +35,24 @@
     flex: 80%;
 }
 
-.search-container {
-    padding-bottom: 10px;
-}
-
-/*links:*/
-.topnav a {
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
 .search-bar {
-    padding: 14px 14px 14px 14px;
+    padding-top: 14px;
+    padding-bottom: 14px;
     font-size: 17px;
     border: none;
+    display: flex;
+    width: 100%;
+    background-color: lightgray;
 }
 
-.search-button {
-    padding: 6px 10px;
-    margin-top: 8px;
-    margin-right: 16px;
-    background: #e9e9e9;
+.search-bar-container {
+    padding-top: 14px;
+    padding-bottom: 14px;
     font-size: 17px;
     border: none;
-    cursor: pointer;
+    display: flex;
+    width: 100%;
+    background-color: lightgray;
 }
 
 .progress-spinner {
@@ -62,10 +66,6 @@
     right: 0;
     
     margin: auto;
-}
-  
-.search-button:hover {
-    background: #ddd;
 }
 
 /* When the screen is less than 600px wide, stack the links and the search field vertically instead of horizontally */
