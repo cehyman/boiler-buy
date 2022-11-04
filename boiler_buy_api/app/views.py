@@ -332,6 +332,34 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
 
         return JsonResponse({'message': 'Product was viewed'}, status=201)
 
+    def list(self, request, *args, **kwargs):
+        toSend = super().list(request, *args, **kwargs)
+        print(toSend.data)
+        dic = json.loads(json.dumps(toSend.data))
+
+        toSend.data = []
+
+        for prod in dic:
+            print(prod.get('productID'))
+
+            # get product from the products db
+            matchingProduct = Product.objects.get(id=prod.get('productID'))
+
+            #update toSend.data
+            toSend.data.append({
+                "email": prod.get('email'),
+                "lastViewed": prod.get('lastViewed'),
+                "product": {
+                    "id": prod.get('productID'),
+                    "name": matchingProduct.name,
+                }
+            })
+            
+
+        # toSend.data = [{"email": "tTest@purdue.edu", "lastViewed": "die", "product": {"id":"testtestYEET"}}]
+        
+        return toSend
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer

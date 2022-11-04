@@ -71,6 +71,7 @@ import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
 import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.component';
+import { RecentlyViewedItemsComponent } from './recently-viewed-items/recently-viewed-items.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.com
     ProductDetailsComponent,
     SiteMenuComponent,
     DarkModeToggleComponent,
+    RecentlyViewedItemsComponent,
   ],
   imports: [
     FormsModule,
