@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.accountUsername.length == 0 || this.accountPassword.length == 0) {
-      alert("All fields must be fieled out.")
+      alert("All fields must be filled out.")
       return;
     }
     let i = 0
