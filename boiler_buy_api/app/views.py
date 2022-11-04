@@ -340,6 +340,30 @@ class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
     
+    @action(detail=True, methods=['get'])
+    def history(self, request, pk):
+        shop = Shop.objects.get(pk=pk)
+        
+        history = ShopHistory.objects.filter(shop=shop)
+        
+        response = []
+        
+        for item in history:
+            response.append(self.historyItemToDict(item))
+        
+        return JsonResponse(response, safe=False)
+    
+    def historyItemToDict(self, item):
+        return {
+            "shopId": item.shop.id,
+            "produtId": item.productId,
+            "productName": item.productName,
+            "action": item.action,
+            "dateTime": item.dateTime,
+            "profit": item.profit,
+            "buyerName": item.buyerName
+        }
+    
 class ShopHistoryViewSet(viewsets.ModelViewSet):
     queryset = ShopHistory.objects.all()
     serializer_class = ShopHistorySerializer
