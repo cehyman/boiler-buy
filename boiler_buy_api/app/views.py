@@ -347,7 +347,6 @@ class ShopViewSet(viewsets.ModelViewSet):
         history = ShopHistory.objects.filter(shop=shop)
         
         response = []
-        
         for item in history:
             response.append(self.historyItemToDict(item))
         
@@ -356,12 +355,12 @@ class ShopViewSet(viewsets.ModelViewSet):
     def historyItemToDict(self, item):
         return {
             "shopId": item.shop.id,
-            "produtId": item.productId,
+            "productId": item.productId,
             "productName": item.productName,
             "action": item.action,
             "dateTime": item.dateTime,
-            "profit": item.profit,
-            "buyerName": item.buyerName
+            "profit": item.profit if item.product else None,
+            "buyerName": item.buyerName,
         }
     
 class ShopHistoryViewSet(viewsets.ModelViewSet):

@@ -1,0 +1,28 @@
+<div class="item-container" [ngSwitch]="item.action">
+    <div *ngSwitchCase="'create'">
+        <h1>Product Listed:</h1>
+        You created an ad titled 
+            
+            <span *ngIf="item.product !== null; else noProduct">
+                <a href="/products/{{item.productId}}/">{{item.productName}}</a>
+            </span>
+            <ng-template #noProduct>
+                {{item.productName}}
+            </ng-template>
+    </div>
+    <div *ngSwitchCase="'sold'">
+        <h1>Product Sold:</h1>
+    </div>
+    <div *ngSwitchCase="'edit'">
+        <h1>Product Edited:</h1>
+    </div>
+    <div *ngSwitchDefault>
+        <h1>Invalid History Item</h1>
+        <p>
+            We're not sure what went wrong, but you have taken an unexpected
+            action with your store. Stop breaking out website!
+        </p>
+    </div>
+</div>
+<h4>Date:</h4> 
+<span>{{dateTimeString()}}</span>

@@ -1,0 +1,27 @@
+<div class="history-container">
+    <div *ngIf="items.length == 0; else historyFound">
+        <h3>Empty History</h3>
+        <p>
+            You do not have any history in your shop!
+        </p>
+    </div>
+    <ng-template #historyFound>
+        <table mat-table  [dataSource]="items">
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date/Time</th>
+                <td mat-cell *matCellDef="let item">{{dateTimeString(item.dateTime)}}</td> 
+            </ng-container>
+
+            <ng-contrainer matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef>Description</th>
+                <td mat-cell *matCellDef="let item">
+                    <span [innerHtml]="itemDescription(item)"></span>
+                </td> 
+
+            </ng-contrainer>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
+        </table>
+    </ng-template>
+</div>

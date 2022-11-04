@@ -33,6 +33,7 @@ export class UserShopComponent implements OnInit {
     this.curruser = <string> this.appcomp.getUsername()
 
     var urlStr = this.activatedRoute.snapshot.url.toString();
+    console.log(urlStr);
     this.shop_id = Number(urlStr.split(',')[1]);
 
     if(isNaN(this.shop_id)) {
