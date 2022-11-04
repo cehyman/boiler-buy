@@ -49,11 +49,12 @@
     <br>
 
     <div class="search-bar-container" #stickyMenu [class.sticky]="sticky">
+
         <button class="icon" mat-icon-button color="primary" (click)="drawer.toggle()">
             <mat-icon>filter_list</mat-icon>
         </button>
 
-        <input class="search-bar" type="text" matInput placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
+        <input class="search-bar" matInput (keyup.enter)="buttonSearchClick()" placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
 
         <button class="icon" mat-icon-button color="primary" (click)="buttonSearchClick()" style="position: fixed; right: 0;">
             <mat-icon>search</mat-icon>
