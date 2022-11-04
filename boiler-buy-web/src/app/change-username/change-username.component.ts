@@ -33,7 +33,7 @@ export class ChangeUsernameComponent implements OnInit {
     this.oldUsername = this.appcomp.getUsername() || ""
     console.log(this.oldUsername)
     // this.oldUsername = "pog"
-    var request = this.http.get('http://localhost:8000/api/accounts/')
+    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
     request.subscribe((data: any) => {
       this.curUsers.push(data);
     })

@@ -17,7 +17,7 @@ export class PurchaseHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     //request for a users purchase history
-    var request = this.http.get('http://localhost:8000/api/purchaseHistory');
+    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/purchaseHistory');
 
     request.subscribe((data:any) => {
       console.log(data);

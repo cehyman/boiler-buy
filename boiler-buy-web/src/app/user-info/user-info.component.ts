@@ -58,7 +58,7 @@ export class UserInfoComponent implements OnInit {
 
     this.getUserWishlist()
 
-    var accountURL = "http://localhost:8000/api/accounts/"+this.appcomp.getEmail()+"/";
+    var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/"+this.appcomp.getEmail()+"/";
     var request = this.http.get(accountURL, {observe:'response'});
     request.subscribe((data: any) => {
       console.log(data)

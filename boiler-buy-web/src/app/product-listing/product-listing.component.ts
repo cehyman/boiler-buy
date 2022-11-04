@@ -124,7 +124,7 @@ export class ProductListingComponent implements OnInit {
       formData.append("username", this.curruser)
       formData.append("request", "add")
 
-      var request = this.http.post<any>("http://localhost:8000/api/wishlist/", formData, {observe: "response"});
+      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/wishlist/", formData, {observe: "response"});
       request.subscribe((data:any) => {
         console.log(data)
 

@@ -22,7 +22,7 @@ export class FeatureButtonsComponent implements OnInit {
     //get the wishlist id number from account db
     this.curremail = <string> this.appcomp.getEmail()
 
-    var request = this.http.get<any>('http://localhost:8000/api/accounts/'.concat(this.curremail).concat("/"))
+    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.curremail).concat("/"))
     console.log(this.curremail)
     request.subscribe(data => {
       this.wishlistLink = data['wishlist']

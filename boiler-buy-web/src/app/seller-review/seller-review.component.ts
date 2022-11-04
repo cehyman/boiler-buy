@@ -31,7 +31,7 @@ export class SellerReviewComponent implements OnInit {
       alert(`Invalid URL "${urlStr}": "${this.id}"`);
       return;
     }
-    var accountURL = "http://localhost:8000/api/products/"+this.id+"/";
+    var accountURL = "https://boilerbuy-api.azurewebsites.net/api/products/"+this.id+"/";
     var request = this.http.get(accountURL, {observe:'response'});
     request.subscribe((data: any) => {
       console.log(data)
