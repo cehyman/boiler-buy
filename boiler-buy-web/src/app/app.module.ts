@@ -70,7 +70,6 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
-import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.component';
 import { RecentlyViewedItemsComponent } from './recently-viewed-items/recently-viewed-items.component';
 
 @NgModule({
@@ -97,7 +96,6 @@ import { RecentlyViewedItemsComponent } from './recently-viewed-items/recently-v
     PictureCarouselComponent,
     ProductDetailsComponent,
     SiteMenuComponent,
-    DarkModeToggleComponent,
     RecentlyViewedItemsComponent,
   ],
   imports: [
