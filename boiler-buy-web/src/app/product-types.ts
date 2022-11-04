@@ -29,6 +29,12 @@ export interface PurchaseInfo {
 
 export interface ProductList extends Array<Product> { }
 
+export interface RecentlyViewedItem {
+    email: string,
+    lastViewed: Date,
+    product: Product,
+}
+
 export interface FilterSearchInput {
     name: string | null,
     productType: string[] | null,
