@@ -45,7 +45,20 @@ export class EditProductComponent implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    console.log("Starting value of gloabl username is %s", this.globals.username)
+    console.log("But value of saved username in session saver is $s",this.appcomp.getUsername())
+    this.globals.username = <string> this.appcomp.getUsername()
+    
+    if (this.appcomp.getUsername()) {
+      this.curruser = <string> this.appcomp.getUsername()
+    } else {
+      this.curruser = "Username"
+    }
+
+    this.currpass = <string> this.appcomp.getPassword()
+    this.curremail = <string> this.appcomp.getEmail()
+
     // Get the product ID of the product we need to edit
     var urlStr = this.activatedRoute.snapshot.url.toString();
     var id: number = Number(urlStr.split(',')[1]);
@@ -59,18 +72,7 @@ export class EditProductComponent implements OnInit {
   }
 
   loadProduct(id: number) {
-    console.log("Starting value of gloabl username is %s", this.globals.username)
-    console.log("But value of saved username in session saver is $s",this.appcomp.getUsername())
-    this.globals.username = <string> this.appcomp.getUsername()
-    
-    if (this.appcomp.getUsername()) {
-      this.curruser = <string> this.appcomp.getUsername()
-    } else {
-      this.curruser = "Username"
-    }
-
-    this.currpass = <string> this.appcomp.getPassword()
-    this.curremail = <string> this.appcomp.getEmail()
+   
     console.log(`Loading product with id "${id}"`);
     
     var request = this.http.get<any>(`api/products/${id}`, {observe: "body"});

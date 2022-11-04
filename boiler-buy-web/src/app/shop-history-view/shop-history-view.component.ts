@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { of } from 'rxjs';
+import { AppComponent } from '../app.component';
+import { Globals } from '../globals';
 
 @Component({
   selector: 'app-shop-history-view',
@@ -9,10 +11,20 @@ import { of } from 'rxjs';
   styleUrls: ['./shop-history-view.component.css']
 })
 export class ShopHistoryViewComponent implements OnInit {
-  id: number = 0;
   items: any[] = [];
 
   columnsToDisplay = ['date', 'description'];
+
+  public globals: Globals = new Globals;
+
+  private appcomp: AppComponent = new AppComponent();
+
+  curruser:string = ''
+  currpass:string = ''
+  curremail:string = ''
+
+  id: number = 0;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -20,20 +32,35 @@ export class ShopHistoryViewComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    // It was this easy to do. It was worse for the edit screen ;_;
-    this.activatedRoute.params.subscribe(params => {
-      this.id = params['id']
-    });
-    console.log(`this.id = ${this.id}`);
+    
+    console.log("Starting value of gloabl username is %s", this.globals.username)
+    console.log("But value of saved username in session saver is $s",this.appcomp.getUsername())
+    this.globals.username = <string> this.appcomp.getUsername()
+    
+    if (this.appcomp.getUsername()) {
+      this.curruser = <string> this.appcomp.getUsername()
+    } else {
+      this.curruser = "Username"
+    }
 
-    this.http.get(`/api/shops/${this.id}/history`, {observe: 'body'})
-    .subscribe((response: any) =>{
-      console.log(response);
-      
-      for (let i = response.length - 1; i > 0; i--) {
-        this.items.push(response[i]);
-      }
-    })
+    this.currpass = <string> this.appcomp.getPassword()
+    this.curremail = <string> this.appcomp.getEmail()
+    
+    let request = this.http.get(`/api/accounts/${this.curremail}/`, {observe: "body"});
+    request.subscribe((result: any) => {
+      console.log(`shop = ${result.shop}`);
+
+      let shopId = result.shop.split('/')[5];
+      console.log(`${shopId}`);
+
+       this.http.get(`/api/shops/${shopId}/history/`, {observe: 'body'})
+      .subscribe((response: any) =>{
+        console.log(response);
+        for (let i = response.length - 1; i > 0; i--) {
+          this.items.push(response[i]);
+        }
+      });
+    });
   }
 
   

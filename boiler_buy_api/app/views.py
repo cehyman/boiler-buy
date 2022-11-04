@@ -39,6 +39,15 @@ class AccountViewSet(viewsets.ModelViewSet):
         print('newWishlist: ', newWishlist.id)
         print('username: ', account)
         return JsonResponse({'observe': 'response'})
+    
+    @action(detail=True, methods=['get'])
+    def getFromUsername(self, request, pk):
+        print(f"pk = {pk}")
+        
+        account = Account.objects.get(username=pk)
+        
+        return JsonResponse(account, safe=False)
+        
 
     # Test to retrieve image /accounts/<email>/retrieveImages
     @action(detail=True, methods=['get'])
