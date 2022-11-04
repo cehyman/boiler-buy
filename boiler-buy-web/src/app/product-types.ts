@@ -14,6 +14,7 @@ export interface Product {
     canMeet: boolean,
     sellerRating: number,
     sellerRatingCount: number,
+    stockCount: number,
 }
 
 export interface PurchaseInfo {
