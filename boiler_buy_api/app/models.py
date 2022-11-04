@@ -1,5 +1,6 @@
 from email.policy import default
 from statistics import mode
+from datetime import datetime
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.postgres.fields import *
@@ -48,11 +49,11 @@ class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')
     products = models.ManyToManyField("Product")
 
-class ShopHistoryItem(models.Model):
+class ShopHistory(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
     action = models.CharField(max_length=32, default='')
-    date = models.DateTimeField()
+    dateTime = models.DateTimeField(default=datetime.fromtimestamp(0))
     quantity = models.IntegerField(null=True, blank=True)
 
 class Account(models.Model):

@@ -3,5 +3,6 @@
         "redoc",
         "whitenoise",
         "yasg"
-    ]
+    ],
+    "pros.showInstallOnStartup": false
 }

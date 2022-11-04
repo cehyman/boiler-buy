@@ -13,6 +13,7 @@ from rest_framework.decorators import api_view
 from rest_framework.decorators import action
 
 import json
+import datetime
 
 #create your views here
 class ListingViewSet(viewsets.ModelViewSet):
@@ -79,9 +80,39 @@ class ProductViewSet(viewsets.ModelViewSet):
         formImages = request.data.getlist('images')
         for image in formImages:
             ProductImage.objects.create(image=image, product=product)
+            
+        # Add the creation of this product to the user's history
+        shopHistory = ShopHistory.objects.create(
+            shop=shop,
+            product=product,
+            action="create",
+            dateTime=datetime.datetime.now(),
+            quantity=product.stockCount
+        )
         
         # generic non-error response
         return JsonResponse({'observe': 'response'})
+
+    def partial_update(self, request, *args, **kwargs):
+        result =  super(ProductViewSet, self).partial_update(request, *args, **kwargs)
+        
+        username = request.data.get('username')
+        print(f"username = ${username}")
+        
+        product = Product.objects.get(id=kwargs['pk'])
+        user = Account.objects.get(username=request.data.get('username'))
+        shop = Shop.objects.get(id=user.shop_id)
+        
+        # Add the creation of this product to the user's history
+        shopHistory = ShopHistory.objects.create(
+            shop=shop,
+            product=product,
+            action="edit",
+            dateTime=datetime.datetime.now(),
+            quantity=product.stockCount
+        )
+        
+        return result
 
     # Allows the images for this product to be retrieved. This is called with a path of the form:
     # /products/<id>/retrieveImages
@@ -265,7 +296,7 @@ class ShopViewSet(viewsets.ModelViewSet):
     
 class ShopHistoryViewSet(viewsets.ModelViewSet):
     queryset = ShopHistory.objects.all()
-    serializer_class = ShopSerializer
+    serializer_class = ShopHistorySerializer
 
 class PurchaseHistoryViewSet(viewsets.ModelViewSet):
     queryset = PurchaseHistory.objects.all()
