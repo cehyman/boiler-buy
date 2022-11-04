@@ -3,7 +3,7 @@
 <div class = "profile-card">
 
     <div class="profile-pic">
-        <img class="round" src="https://api-private.atlassian.com/users/1a39e945ae51e44675e6c70f682173c4/avatar" alt="user" /> 
+        <img class="round" src="{{imageURL}}" alt="user" />
     </div>
 
     <div>
@@ -40,6 +40,7 @@
     <div>
         <button routerLink="/change-username" class="change-username-button">Change Username</button>
         <button routerLink="/change-password" class="change-password-button">Change Password</button>
+        <button routerLink="/change-profile-pic" class="change-button">Change Profile Pic</button>
         <button (click)="logoutAccount()" class="logout-acc-button">Logout</button>
         <button (click)="deleteAccount(curremail)" class="delete-acc-button">Delete Account</button>
     </div>
