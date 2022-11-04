@@ -158,7 +158,7 @@ export class ProductListingComponent implements OnInit {
       formData.append("username", this.curruser)
       formData.append("request", "remove")
 
-      var request = this.http.post<any>("http://localhost:8000/api/wishlist/", formData, {observe: "response"});
+      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/wishlist/", formData, {observe: "response"});
 
       request.subscribe((data:any) => {
         console.log(data)
@@ -174,7 +174,7 @@ export class ProductListingComponent implements OnInit {
   }
 
   getUserWishlist() {
-    var request = this.http.get<any>('http://localhost:8000/api/accounts/'.concat(this.curremail).concat("/"))
+    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.curremail).concat("/"))
     console.log(this.curremail)
     request.subscribe(data => {
       let wishlistLink = data['wishlist']
@@ -183,7 +183,7 @@ export class ProductListingComponent implements OnInit {
       console.log("id: " + this.wishlist_id)
 
       //get the user's wishlist product array
-      var request = this.http.get<any>('http://localhost:8000/api/wishlist/' + this.wishlist_id, {observe: "body"})
+      var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/wishlist/' + this.wishlist_id, {observe: "body"})
       request.subscribe(data => {
       console.log(data)
       this.products = data.products

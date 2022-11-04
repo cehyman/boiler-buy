@@ -17,11 +17,11 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProductList(): Observable<ProductList> {
-    return this.http.get('http://localhost:8000/api/products/', {responseType: 'json'}) as Observable<ProductList>;
+    return this.http.get('https://boilerbuy-api.azurewebsites.net/api/products/', {responseType: 'json'}) as Observable<ProductList>;
   }
 
   filterSearch(params: FilterSearchInput): Observable<ProductList> {
-    const url = new URL('http://localhost:8000/api/products/');
+    const url = new URL('https://boilerbuy-api.azurewebsites.net/api/products/');
 
     if (params.name != null && params.name != '') url.searchParams.set('name', params.name);
     if (params.productType != null) url.searchParams.set('productType', params.productType.toString());
@@ -47,7 +47,7 @@ export class ProductService {
       "productID": productID,
       "quantity": quantity
     }
-    var request = this.http.post('http://localhost:8000/api/purchaseHistory/', body);
+    var request = this.http.post('https://boilerbuy-api.azurewebsites.net/api/purchaseHistory/', body);
     return request;
   }
 

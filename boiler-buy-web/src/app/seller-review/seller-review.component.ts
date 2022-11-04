@@ -67,7 +67,7 @@ export class SellerReviewComponent implements OnInit {
       "sellerRatingCount": this.reviewCount,
       "sellerRating": this.reviewAvg
     };
-    var accountURL = "http://localhost:8000/api/accounts/".concat(this.email).concat("/");
+    var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/".concat(this.email).concat("/");
     var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
     patchRequest.subscribe((data: any) => {
       console.log(data)
