@@ -1,5 +1,14 @@
 .round {
-	border: 1px solid #03BFCB;
+	border: 1px solid #777;
 	border-radius: 50%;
-	padding: 7px;
+	max-width: 50%;
+	height: auto;
+}
+
+.username{
+	margin-bottom:2vh;
+}
+
+.change-password-button{
+	margin:1vw;
 }

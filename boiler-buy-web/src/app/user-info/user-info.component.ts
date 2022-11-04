@@ -100,7 +100,7 @@ export class UserInfoComponent implements OnInit {
     this.appcomp.removeEmail()
 
     //route back to /register
-    this.router.navigate(['/register'])
+    this.router.navigate(['/login'])
   }
 
   getUserWishlist() {

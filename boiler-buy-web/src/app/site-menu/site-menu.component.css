@@ -21,4 +21,8 @@
 .site-menu {
     background-color: #777;
 }
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #2d3436 !important;
+}
   

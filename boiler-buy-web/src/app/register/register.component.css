@@ -10,16 +10,24 @@ label{
 
 .inputContainer {
     margin: auto;
-    width: 50%;
+    width: 30%;
     border: 3px solid black;
+    border-radius: 25px;
     padding: 10px;
 }
 
+.loginContainer {
+  margin: auto;
+  width:30%;
+}
+
+
 input[type=text] {
-  width: 50%;
+  width: 90%;
   padding: 15px;
   margin: 5px 0 10px 0;
   display: inline-block;
+  border-radius: 25px;
   border: solid;
   background: #FFF8DC;
 }
@@ -30,4 +38,10 @@ input[type=text]:focus {
 
 .registerBtn:hover {
   opacity:0.8;
+}
+
+.registerBtn {
+  display: block;
+  margin: auto;
+  width: 30%;
 }

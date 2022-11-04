@@ -1,5 +1,6 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <div class="header">
-    <h1>Login Page</h1>
+    <h1>Welcome to Boiler Buy!</h1>
 </div>
 <div class="register">
     <form>
@@ -10,11 +11,11 @@
             <label for="pass"><b>Password</b></label><br>
             <input [(ngModel)]="accountPassword" type="text" placeholder="Enter Password" name="pass" id="pass" required><br>
 
-            <button (click)="login()" type="submit" class="registerBtn">Login</button>
+            <a mat-raised-button (click)="login()" type="submit" class="loginBtn">Login</a>
         </div>
         
-        <div class="loginContainer">
-            <p>New to Boiler Buy? <a href="http://localhost:4200/register">Register</a>.</p>
+        <div class="registerContainer">
+            <p>New to Boiler Buy? <a href="http://localhost:4200/register">Register Here</a></p>
         </div>
     </form>
 </div>
