@@ -105,7 +105,7 @@ export class UserInfoComponent implements OnInit {
     this.appcomp.removeWishlistProductArray()
 
     //route back to /register
-    this.router.navigate(['/register'])
+    this.router.navigate(['/login'])
   }
 
   getUserWishlist() {
