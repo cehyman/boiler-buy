@@ -124,15 +124,9 @@ class ProductViewSet(viewsets.ModelViewSet):
         formImages = request.data.getlist('images')
         for image in formImages:
             ProductImage.objects.create(image=image, product=product)
-            
-        # Add the creation of this product to the user's history
-        shopHistory = ShopHistory.objects.create(
-            shop=shop,
-            product=product,
-            action="create",
-            dateTime=datetime.datetime.now(),
-            quantity=product.stockCount
-        )
+        
+        # Update the shop history
+        ShopHistoryViewSet.newCreate(shop, product)
         
         # generic non-error response
         return JsonResponse({'observe': 'response'})
@@ -148,13 +142,21 @@ class ProductViewSet(viewsets.ModelViewSet):
         shop = Shop.objects.get(id=user.shop_id)
         
         # Add the creation of this product to the user's history
-        shopHistory = ShopHistory.objects.create(
-            shop=shop,
-            product=product,
-            action="edit",
-            dateTime=datetime.datetime.now(),
-            quantity=product.stockCount
-        )
+        ShopHistory.newEdit(shop, product)
+        
+        return result
+    
+    def delete(self, request, *args, **kwargs):
+        result = super(ProductViewSet, self).delete(request, *args, **kwargs)
+        
+        username = request.data.get('username')
+        print(f"username = ${username}")
+        
+        product = Product.objects.get(id=kwargs['pk'])
+        user = Account.objects.get(username=request.data.get('username'))
+        shop = Shop.objects.get(id=user.shop_id)
+        
+        ShopHistoryViewSet.newDelete(shop, product)
         
         return result
 
@@ -341,6 +343,54 @@ class ShopViewSet(viewsets.ModelViewSet):
 class ShopHistoryViewSet(viewsets.ModelViewSet):
     queryset = ShopHistory.objects.all()
     serializer_class = ShopHistorySerializer
+    
+    @staticmethod
+    def newCreate(shop, product): # Add the creation of this product to the user's history
+        print(f"productname = {product.name}")
+        
+        ShopHistory.objects.create(
+            shop=shop,
+            product=product,
+            action="create",
+            quantity=product.stockCount,
+            productId = product.id,
+            productName = product.name,
+        )
+        
+    @staticmethod
+    def newDelete(shop, product):
+        ShopHistory.objects.create(
+            shop=shop,
+            product=product,
+            action="delete",
+            productId = product.id,
+            productName = product.name,
+        )
+    
+    @staticmethod
+    def newSold(shop, product, buyer, profit):
+        ShopHistory.objects.create(
+            shop=shop,
+            product=product,
+            action="sold",
+            productId = product.id,
+            productName = product.name,
+            buyerName = buyer.username,
+            profit= float(profit[0]) + float(profit[1]) / 100
+        )
+        
+    @staticmethod
+    def newEdit(shop, product):
+        ShopHistory.objects.create(
+            shop=shop,
+            product=product,
+            action="edit",
+            quantity=product.stockCount,
+            productId = product.id,
+            productName = product.name,
+        )
+        
+        
 
 class PurchaseHistoryViewSet(viewsets.ModelViewSet):
     queryset = PurchaseHistory.objects.all()
@@ -385,6 +435,9 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
                 totalPriceCents = totalPriceCents,
                 image = product.image,
             )
+        
+        # Add the sell to the sellers history
+        ShopHistoryViewSet.newSold(shop, product, buyer, (totalPriceDollars, totalPriceCents))
 
         return JsonResponse({'message': 'Product was purchased'}, status=201)
 

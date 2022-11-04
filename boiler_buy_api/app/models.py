@@ -49,13 +49,6 @@ class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')
     products = models.ManyToManyField("Product")
 
-class ShopHistory(models.Model):
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
-    action = models.CharField(max_length=32, default='')
-    dateTime = models.DateTimeField(default=datetime.fromtimestamp(0))
-    quantity = models.IntegerField(null=True, blank=True)
-
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
@@ -70,6 +63,21 @@ class Account(models.Model):
     def __str__(self):
         return str(self.username)
     
+class ShopHistory(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
+    action = models.CharField(max_length=32, default='')
+    dateTime = models.DateTimeField(auto_now=True)
+    
+    quantity = models.IntegerField(null=True, blank=True)
+    buyer = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    profit = models.FloatField(null=True, blank=True, default=None)
+    
+    # These fields are redundancy against deleted products/accounts/etc.
+    productId = models.IntegerField(default=1, blank=False)
+    productName = models.CharField(max_length=50)
+    buyerName = models.CharField(max_length=30, default='')
+
 
 class PurchaseHistory(models.Model):
     buyerEmail = models.ForeignKey("Account", on_delete=models.CASCADE, related_name='pHistories')
