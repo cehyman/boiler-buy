@@ -29,6 +29,7 @@ export class UserInfoComponent implements OnInit {
   curruser:string = ''
   currpass:string = ''
   curremail:string = ''
+  imagePath:string = ''
   imageURL!: URL; 
 
   constructor(private router: Router, private http: HttpClient) {}
@@ -97,7 +98,7 @@ export class UserInfoComponent implements OnInit {
         //display the image in database
         var req2 = this.http.get<any>(`api/accounts/${this.curremail}/retrieveImages`, {observe: "body"})
         req2.subscribe((data: any) => {
-          this.imageURL = new URL(data)
+          this.imageURL = data
         })
       }
     })

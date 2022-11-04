@@ -1,4 +1,6 @@
+from http.client import responses
 from itertools import product
+from urllib import response
 from rest_framework import viewsets
 
 from .models import *
@@ -40,29 +42,47 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     # Test to retrieve image /accounts/<email>/retrieveImages
     @action(detail=True, methods=['get'])
-    def retrieveImages(self, request, pk):
-        account = Account.objects.get(pk=pk)
-        image = account.images.all()
+    def retrieveImages(self, request, email):
+        account = Account.objects.get(email=email)
+        account_image = account.image
+
+        print(account_image)
+        print(account_image.url)
         
-        nameList = list([])
-        nameList.append(image.image.url)
+        # nameList = list([])
+        # nameList.append(image.image.url)
         
-        print(f"{nameList}")
-        return JsonResponse(nameList, safe=False)
+        # print(f"{nameList}")
+        return JsonResponse(account_image.url, safe=False)
 
     # Test to add images to /accounts/<email>/addImages
     @action(detail=True, methods=['patch'])
-    def addImages(self, request, pk):
-        account = Account.objects.get(pk=pk)
+    def addImages(self, request, email):
+        print(request.data)
+        account = Account.objects.get(email=email)
         
         # Add all the images and connect them to this product
-        # image = request.data.getlist('images')
-        
-        serializer = AccountSerializer(account, data=request.data, partial=True) # set partial=True to update a data partially
-        if serializer.is_valid():
-            serializer.save()
+        #formImages = request.data.getlist('images')
+        # account.image = image
+
+        print(request.data.get('image'))
+  
+        serializer = AccountSerializer(account, data=request.data, partial=True, context={'request': request}) # set partial=True to update a data partially
+        # if serializer.is_valid():
+        #     serializer.save()
             
-        return JsonResponse({'observe': 'response'})
+        # print(serializer.data)
+        # return JsonResponse({'observe': 'response'})
+
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                print(serializer.data)
+            except ValueError:
+                return JsonResponse({"detail": "Serializer is not valid"}, status=400)
+            return JsonResponse({"detail": "Updated."})
+        else:
+            return JsonResponse(serializer.errors)
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()

@@ -35,15 +35,18 @@ export class ChangeProfilePicComponent implements OnInit {
     } else {
       var formData = new FormData()
 
+      // formData.append("email", this.curremail);
+
       //should only be one or none
       for (var i = 0; i < files.length; i++) {
         console.log("found an image");
         var file: File = files[i];
-        formData.append("images", file, file.name);
+        formData.append("image", file);
       }
 
       //patch request
       var request = this.http.patch<any>(`/api/accounts/${this.curremail}/addImages/`, formData, {observe: "response"});
+      // var request = this.http.patch<any>(`/api/accounts/addImages/`, formData, {observe: "response"});
 
       request.subscribe((data: any) => {
         console.log(data)
