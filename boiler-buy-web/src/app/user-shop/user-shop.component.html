@@ -1,5 +1,5 @@
 <app-site-menu></app-site-menu>
 <h1>{{this.curruser}}'s Shop</h1>
 
-<app-product-listing *ngFor="let product of productList; let i = index" [object]="product"></app-product-listing>
+<app-product-listing *ngFor="let product of productList; let i = index" [object]="product" [showButton]="false"></app-product-listing>
 
