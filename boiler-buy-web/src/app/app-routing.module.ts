@@ -15,6 +15,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login' , pathMatch: 'full' },
   { path: 'register', component: RegisterComponent},
   { path: 'create', component: CreateComponent},
   { path: 'products/search', component: ProductSearchComponent},

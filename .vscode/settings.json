@@ -1,8 +1,11 @@
 {
     "cSpell.words": [
+        "devkit",
         "redoc",
         "topnav",
         "whitenoise",
         "yasg"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/dfbdd60e-3a0d-4243-865c-f05f491e9a56/AppServices/subscriptions/dfbdd60e-3a0d-4243-865c-f05f491e9a56/resourceGroups/boiler-buy_rg/providers/Microsoft.Web/sites/Boiler-Buy-Frontend",
+    "appService.deploySubpath": "boiler-buy-web/dist/boiler-buy-web"
 }
