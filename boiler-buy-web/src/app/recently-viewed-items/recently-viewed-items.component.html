@@ -1,0 +1,10 @@
+<div>
+    Recently viewed items:
+    <div class="card" *ngFor="let item of items; let i = index" >
+        <div *ngIf="i < 5" class="name_seller_rating">
+            <button style="margin-bottom: 10px;" mat-raised-button color="secondary" (click)="viewDetails(item.product.id)">
+                {{item.product.name}}
+            </button>
+        </div>
+    </div>
+</div>

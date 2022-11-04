@@ -357,6 +357,53 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
     queryset = ViewHistory.objects.all()
     serializer_class = ViewHistorySerializer
 
+    def create(self, request):
+        # see if the user already has a view for this productID
+
+        product = Product.objects.get(pk=request.data.get('productID'))
+
+        # get buyer
+        buyer = Account.objects.get(username=request.data.get('username'))
+
+        p, created = ViewHistory.objects.get_or_create(
+            email = buyer,
+            productID = product,
+        )
+
+        print("p: ", p)
+        print("Created new view: ", created)
+        p.save()
+
+        return JsonResponse({'message': 'Product was viewed'}, status=201)
+
+    def list(self, request, *args, **kwargs):
+        toSend = super().list(request, *args, **kwargs)
+        print(toSend.data)
+        dic = json.loads(json.dumps(toSend.data))
+
+        toSend.data = []
+
+        for prod in dic:
+            print(prod.get('productID'))
+
+            # get product from the products db
+            matchingProduct = Product.objects.get(id=prod.get('productID'))
+
+            #update toSend.data
+            toSend.data.append({
+                "email": prod.get('email'),
+                "lastViewed": prod.get('lastViewed'),
+                "product": {
+                    "id": prod.get('productID'),
+                    "name": matchingProduct.name,
+                }
+            })
+            
+
+        # toSend.data = [{"email": "tTest@purdue.edu", "lastViewed": "die", "product": {"id":"testtestYEET"}}]
+        
+        return toSend
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer

@@ -70,6 +70,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
+import { RecentlyViewedItemsComponent } from './recently-viewed-items/recently-viewed-items.component';
 import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 
@@ -97,6 +98,7 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
     PictureCarouselComponent,
     ProductDetailsComponent,
     SiteMenuComponent,
+    RecentlyViewedItemsComponent,
     UserShopComponent,
     ChangeProfilePicComponent
   ],
