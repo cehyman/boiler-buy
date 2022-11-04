@@ -4,17 +4,17 @@
     <mat-drawer #drawer mode="side">
         <div class="filter-section" >
             <mat-card>
-                <mat-card-content #stickyMenu >
+                <mat-card-content #stickyMenu>
                     <h2>Filters</h2>
                     <section>
                         <mat-checkbox>Min. Price: </mat-checkbox>
-                        <input [(ngModel)] = "filters.minPrice" matInput type="number"><br>
+                        <input [(ngModel)] = "filters.minPrice" matInput type="number" style="float: right;"><br>
                         <mat-checkbox>Max. Price: </mat-checkbox>
-                        <input [(ngModel)] = "filters.maxPrice" matInput type="number"><br>
+                        <input [(ngModel)] = "filters.maxPrice" matInput type="number" style="float: right;"><br>
                         <mat-checkbox>Min. Seller Rating: </mat-checkbox>
-                        <input [(ngModel)] = "filters.minSellerRating" matInput type="number"><br>
+                        <input [(ngModel)] = "filters.minSellerRating" matInput type="number" style="float: right;"><br>
                         <mat-checkbox>Max. Seller Rating: </mat-checkbox>
-                        <input [(ngModel)] = "filters.maxSellerRating" matInput type="number">
+                        <input [(ngModel)] = "filters.maxSellerRating" matInput type="number" style="float: right;">
                         <div class="form-group">
                             <label for="types">Types:</label>
                             <div *ngFor="let type of types; let i = index">
