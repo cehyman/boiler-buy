@@ -1,5 +1,4 @@
 <!-- Shift + Option + F for auto format -->
-
 <!-- TODO: Link user info with backend -->
 <div class = "profile-card">
 
@@ -22,6 +21,21 @@
         <input type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="xxxx@purdue.edu"
             value={{curremail}} readonly>
     </div>
+
+    <br>
+    <div>
+        <label class="form-control-label" for="input-purdue-email">Seller Rating: </label>
+        <label class="form-control-label" for="input-username">{{reviewAvg}}</label>
+    </div>
+    <br>
+    
+    <div>
+        <label class="form-control-label" for="input-purdue-email">Seller Reviews: </label>
+        <li *ngFor="let review of reviews">
+            <label class="form-control-label" for="input-purdue-email">{{review}} </label>
+        </li>
+    </div>
+    <br>
 
     <div>
         <button routerLink="/change-username" class="change-username-button">Change Username</button>

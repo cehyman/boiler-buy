@@ -1,4 +1,8 @@
 
+<app-site-menu></app-site-menu>
+
+
 <h1>{{this.curruser}}'s Wishlist</h1>
 
 <app-product-listing *ngFor="let product of productList; let i = index" [object]="product"></app-product-listing>
+

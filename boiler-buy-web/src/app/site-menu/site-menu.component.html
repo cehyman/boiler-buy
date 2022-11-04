@@ -1,0 +1,24 @@
+<mat-toolbar class="site-menu">
+  <mat-toolbar-row>
+    <h2>Boiler Buy</h2>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="'/products/search'"> Products </a>
+      <a mat-button [routerLink]="'/create'"> Create Listing </a>
+    </div>
+    
+    <span class="extra-menu"></span>
+    <div class="menu-button-container">
+      <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+    </div>
+    <mat-menu class="extra-menu" #menu="matMenu">
+      <button mat-menu-item [routerLink]="'/profile'"> Profile </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item color="primary" (click)="$event.stopPropagation();">
+          <mat-checkbox color="primary" [checked]="darkMode$ | async" (change)="onToggle()"> Dark Mode</mat-checkbox>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item [routerLink]="'/login'"> Logout </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>

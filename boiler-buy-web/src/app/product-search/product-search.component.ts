@@ -34,7 +34,7 @@ export class ProductSearchComponent implements OnInit {
   getProductList() {
     this.loading = true;
     this.productService.getProductList().subscribe((productList) => {
-      console.log(productList);
+      // console.log(productList);
       this.products = productList;
       this.loading = false;
     });
@@ -44,7 +44,7 @@ export class ProductSearchComponent implements OnInit {
     this.loading = true;
     this.products = [];
     this.productService.filterSearch(this.filters).subscribe((productList) => {
-      console.log(productList);
+      // console.log(productList);
       this.products = productList;
       this.loading = false;
     })
@@ -55,7 +55,7 @@ export class ProductSearchComponent implements OnInit {
     var temp =  this.types
       .filter(type => type.checked)
       .map(type => type.value)
-    console.log(temp)
+    // console.log(temp)
     this.filters.productType = temp
     var temp2 = this.brands.filter(brand => brand.checked).map(brand => brand.value)
     this.filters.brand = temp2
@@ -65,7 +65,7 @@ export class ProductSearchComponent implements OnInit {
     this.loading = true;
     this.products = [];
     this.productService.filterSearch(this.filters).subscribe((productList) => {
-      console.log(productList);
+      // console.log(productList);
       this.products = productList;
       this.loading = false;
     })

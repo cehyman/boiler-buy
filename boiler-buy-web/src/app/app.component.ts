@@ -23,6 +23,14 @@ export class AppComponent {
     sessionStorage.setItem('email', email)
   }
 
+  saveWishlistID(wishlist_id: string) {
+    sessionStorage.setItem('wishlist_id', wishlist_id)
+  }
+
+  saveWishlistProductArray(products_array: any) {
+    sessionStorage.setItem('wishlist products', JSON.stringify(products_array))
+  }
+
   getUsername() {
     return sessionStorage.getItem('username')
   }
@@ -35,6 +43,14 @@ export class AppComponent {
     return sessionStorage.getItem('email')
   }
 
+  getWishlistID() {
+    return sessionStorage.getItem('wishlist_id')
+  }
+
+  getWishlistProductArray() {
+    return sessionStorage.getItem('wishlist products')
+  }
+
   removeUsername() {
     sessionStorage.removeItem('username')
   }
@@ -45,5 +61,13 @@ export class AppComponent {
 
   removeEmail() {
     sessionStorage.removeItem('email')
+  }
+
+  removeWishlistID() {
+    sessionStorage.removeItem('wishlist_id')
+  }
+
+  removeWishlistProductArray() {
+    sessionStorage.removeItem('wishlist products')
   }
 }
