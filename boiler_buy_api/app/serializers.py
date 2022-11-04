@@ -13,7 +13,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
-            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand']
+            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand', 'allowOutOfStock']
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,7 +34,7 @@ class ShopHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopHistory
         fields = ['shop', 'product', 'action', 'dateTime', 'quantity', 'buyer',
-                  'profit', 'productId', 'productName', 'buyerName'
+                  'profit', 'productId', 'productName', 'buyerName', 'numberSold'
                   ]
 
 class PurchaseHistorySerializer(serializers.ModelSerializer):

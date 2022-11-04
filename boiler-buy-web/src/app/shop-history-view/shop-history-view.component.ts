@@ -25,7 +25,6 @@ export class ShopHistoryViewComponent implements OnInit {
 
   id: number = 0;
 
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpClient,

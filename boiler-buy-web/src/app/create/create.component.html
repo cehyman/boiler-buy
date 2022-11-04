@@ -43,8 +43,12 @@
             
             <input type="checkbox" [checked]="canMeet" (change)="canMeet = !canMeet">Willing to meet up<br>
 
-            <input type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship<br>
+            <input type="checkbox" [checked]="allowOutOfStock" (change)="allowOutOfStock = !allowOutOfStock">
+            Display "Out of Stock" instead of deleting the product
+            <br>
             
+            <input type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship<br>
+
             <!-- We only want the user to set a shipping price if they are willing to ship-->
             <div *ngIf="canShip == true">
                 <label for="shipPrice"><b>Shipping Price</b></label><br>

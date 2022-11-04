@@ -30,6 +30,7 @@ export class EditProductComponent implements OnInit {
   stock: number = 1;
   canMeet: boolean = true;
   canShip: boolean = false;
+  allowOutOfStock: boolean = false;
   type: string = 'Electronics';
   brand: string = 'Acer';
 
@@ -85,6 +86,7 @@ export class EditProductComponent implements OnInit {
       this.canShip = data.canShip;
       this.type = data.productType;
       this.brand = data.brand;
+      this.allowOutOfStock = data.allowOutOfStock;
 
       console.log(this.brand)
 
@@ -175,6 +177,7 @@ export class EditProductComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("brand", this.brand);
     formData.append("username", this.curruser);
+    formData.append("allowOutOfStock", JSON.stringify(this.allowOutOfStock));
 
     var request = this.http.patch<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {

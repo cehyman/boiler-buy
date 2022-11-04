@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
+from django.db.models import Q
 
 import json
 import datetime
@@ -116,7 +117,8 @@ class ProductViewSet(viewsets.ModelViewSet):
             description = request.data.get('description'),
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
-            brand = request.data.get('brand')
+            brand = request.data.get('brand'),
+            allowOutOfStock = bool(request.data.get('allowOutOfStock')),
         )
         print('creating product with product id', product.id)
 
@@ -222,7 +224,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     # override default list (because we want to filter before we send the response)
     def list(self, request):
 
-        data = Product.objects.filter(stockCount__gt=0).values()
+        data = Product.objects.filter(Q(stockCount__gt=0) | Q(allowOutOfStock=True)).values()
         minSellerFilter = False
         maxSellerFilter = False
         minSeller = 0
@@ -400,15 +402,17 @@ class ShopHistoryViewSet(viewsets.ModelViewSet):
         )
     
     @staticmethod
-    def newSold(shop, product, buyer, profit):
+    def newSold(shop, product, buyer, profit, numberSold):
         ShopHistory.objects.create(
             shop=shop,
             product=product,
             action="sold",
+            quantity = product.stockCount,
             productId = product.id,
             productName = product.name,
             buyerName = buyer.username,
-            profit= float(profit[0]) + float(profit[1]) / 100
+            profit= float(profit[0]) + float(profit[1]) / 100,
+            numberSold=numberSold
         )
         
     @staticmethod
@@ -436,8 +440,10 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
             return JsonResponse({'error': 'Purchase quantity is greater than product quantity.', 'remainingStock': product.stockCount}, status=400)
         
         # decrease the amount in stock
+        print(f"Stock count: {product.stockCount}")
         product.stockCount -= request.data.get('quantity')
         product.save()
+        print(f"Stock count: {product.stockCount}")
 
         # get buyer
         buyer = Account.objects.get(username=request.data.get('username'))
@@ -469,7 +475,7 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
             )
         
         # Add the sell to the sellers history
-        ShopHistoryViewSet.newSold(shop, product, buyer, (totalPriceDollars, totalPriceCents))
+        ShopHistoryViewSet.newSold(shop, product, buyer, (totalPriceDollars, totalPriceCents), request.data.get('quantity'))
 
         return JsonResponse({'message': 'Product was purchased'}, status=201)
 

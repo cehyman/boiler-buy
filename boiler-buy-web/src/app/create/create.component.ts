@@ -26,6 +26,7 @@ export class CreateComponent implements OnInit {
   stock: number = 1;
   canMeet: boolean = true;
   canShip: boolean = false;
+  allowOutOfStock: boolean = false;
   type: string = 'Electronics';
   brand: string = 'Acer';
 
@@ -115,6 +116,7 @@ export class CreateComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("username", this.curruser);
     formData.append("brand", this.brand);
+    formData.append("allowOutOfStock", JSON.stringify(this.allowOutOfStock));
 
     for (var i = 0; i < files.length; i++) {
       console.log("found an image");

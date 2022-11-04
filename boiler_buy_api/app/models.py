@@ -32,6 +32,7 @@ class Product(models.Model):
     canMeet = models.BooleanField()
     brand = models.CharField(max_length=128, default="")
     image = models.FileField(null=True, blank=True, upload_to='products/')
+    allowOutOfStock = models.BooleanField(default=False)
 
 class ProductImage(models.Model):
     def uploadTo(self, filename):
@@ -70,6 +71,7 @@ class ShopHistory(models.Model):
     dateTime = models.DateTimeField(auto_now=True)
     
     quantity = models.IntegerField(null=True, blank=True)
+    numberSold = models.IntegerField(null=True, blank=True)
     buyer = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     profit = models.FloatField(null=True, blank=True, default=None)
     
