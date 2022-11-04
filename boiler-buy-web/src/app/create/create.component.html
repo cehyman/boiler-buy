@@ -1,65 +1,83 @@
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <app-site-menu></app-site-menu>
-
+<div class="header">
+    <h1>Create Listing</h1>
+</div>
 <div class="create">
     <form class="create-form">
         <div class="inputContainer">
-            <label for="name"><b>Product Name</b></label><br>
-            <input [(ngModel)]="name" type="text" name="name" required><br>
+            <mat-form-field class="productInputBox" appearance="fill">
+                <mat-label>Product Name</mat-label>
+                <input matInput [(ngModel)]="name" type="text" name="name" required>
+            </mat-form-field><br>
 
-            <label for="price"><b>Price</b></label><br>
-            <input [(ngModel)]="price" 
+            <mat-form-field class="productInputBox" appearance="fill">
+                <mat-label>Price</mat-label>
+                <input matInput [(ngModel)]="price" 
                 name="price"
                 placeholder="$0.00" 
                 (blur)="onBlurPrice($event)" 
-                required><br>
+                required>
+            </mat-form-field><br>
 
-            <label for="stock"><b>Amount in stock</b></label><br>
-            <input [(ngModel)]="stock"
+            <mat-form-field class="productInputBox" appearance="fill">
+                <mat-label>Amount in stock</mat-label>
+                <input matInput [(ngModel)]="stock"
                 name="stock"
                 type="number"
                 placeholder="1"
-                required><br>
-
-            <label for="description"><b>Description</b></label><br>
-            <textarea [(ngModel)]="description"
-                rows="8"
-                cols="40"
-                type="text" 
-                name="description" 
                 required>
-            </textarea><br>
+            </mat-form-field><br>
 
-            <label for="type"><b>Product Type</b></label><br>
-            <select name="type" [(ngModel)]="type">
-                <option value="Electronics">Electronics</option>
-                <option value="Food">Food</option>
-            </select><br>
+            <mat-form-field class="productInputDescription" appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea matInput [(ngModel)]="description"
+                    rows="8"
+                    cols="40"
+                    type="text" 
+                    name="description" 
+                    required>
+                </textarea>
+            </mat-form-field><br>
 
-            <label for="brand"><b>Brand:</b></label>
-            <select name="brand" [(ngModel)]="brand">
-                <option value="Acer">Acer</option>
-                <option value="Lenovo">Lenovo</option>
-            </select><br>
-            
-            <input type="checkbox" [checked]="canMeet" (change)="canMeet = !canMeet">Willing to meet up<br>
+            <mat-form-field class="productInputList" appearance="fill">
+                <mat-label>Product Type</mat-label>
+                <mat-select class="productInputListSelect" name="type" [(ngModel)]="type" >
+                    <mat-option value="Food">Food</mat-option>
+                    <mat-option value="Electronic">Electronic</mat-option>
+                  </mat-select>
+            </mat-form-field><br>
 
-            <input type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship<br>
-            
-            <!-- We only want the user to set a shipping price if they are willing to ship-->
-            <div *ngIf="canShip == true">
-                <label for="shipPrice"><b>Shipping Price</b></label><br>
-                <input [(ngModel)]="shipPrice" 
-                    name="shipPrice"
-                    placeholder="$0.00" 
-                    (blur)="onBlurShipPrice($event)" 
-                    required><br>
+            <mat-form-field class="productInputList" appearance="fill">
+                <mat-label>Brand</mat-label>
+                <mat-select class="productInputListSelect" name="brand" [(ngModel)]="brand" >
+                    <mat-option value="Acer">Acer</mat-option>
+                    <mat-option value="Lenovo">Lenovo</mat-option>
+                  </mat-select>
+            </mat-form-field><br>
+
+            <div class="productInputCheckbox" appearance="fill">
+                <mat-label><b>Pickup / Delivery</b></mat-label><br><br>
+                <mat-checkbox  [checked]="canMeet" (change)="canMeet = !canMeet">Willing to meet up</mat-checkbox><br>
+                <mat-checkbox  type="checkbox" [checked]="canShip" (change)="canShip = !canShip">Willing to ship</mat-checkbox>
+                <mat-form-field class="productInputShipping" appearance="fill" *ngIf="canShip == true">
+                    <mat-label for="shipPrice"><b>Shipping Price</b></mat-label><br>
+                    <input matInput [(ngModel)]="shipPrice"
+                        name="shipPrice"
+                        placeholder="$0.00" 
+                        (blur)="onBlurShipPrice($event)" 
+                        required><br>
+                </mat-form-field>
             </div>
 
-            <label><b>Upload Pictures</b></label><br>
-            <app-picture-upload-new #picUpload [maxImages]="10"></app-picture-upload-new>
-            <br><br>
+            <div class="productUploadPicBox" appearance="fill">
+                <div class="ploadPic" class="UploadPic">
+                    <mat-label><b>Upload Pictures</b></mat-label><br><br>
+                    <app-picture-upload-new #picUpload [maxImages]="10"></app-picture-upload-new>
+                </div>
+            </div>
 
-            <a mat-raised-button color="primary" (click)="submit()" type="submit">Create Listing</a>
+            <a mat-raised-button class="submitButton" color="accent" (click)="submit()" type="submit">Create Listing</a>
         </div>
     </form>
 </div>

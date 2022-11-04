@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { DarkModeService } from 'angular-dark-mode';
 import { Observable } from 'rxjs';
@@ -16,12 +17,14 @@ export class SiteMenuComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient, private darkModeService: DarkModeService) {}
   private appComp: AppComponent = new AppComponent();
+  @Output() public sidenavToggle = new EventEmitter();
 
   currUser:string = ''
   currPass:string = ''
   currEmail:string = ''
   wishlistLink:string = ''
   wishlistID:number = 0
+
 
   ngOnInit(): void {
     if (this.appComp.getUsername()) {
@@ -37,6 +40,7 @@ export class SiteMenuComponent implements OnInit {
   onToggle(): void {
     this.darkModeService.toggle();
   }
+
 
   logoutAccount() {
     //removing information from sessionStorage

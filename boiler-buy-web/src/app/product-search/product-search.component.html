@@ -2,10 +2,12 @@
 <div class="topnav">
     <div class="search-container">
         <form action="">
-            <input class="search-bar" type="text" matInput placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
-            <button class="search-button" color="primary" (click)="buttonSearchClick()">
-                <mat-icon>search</mat-icon>
-            </button>
+            <div>
+                <input class="search-bar" type="text" matInput placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
+                <button class="search-button" color="primary" (click)="buttonSearchClick()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
         </form>
     </div>
 </div>

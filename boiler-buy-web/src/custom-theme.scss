@@ -3,8 +3,8 @@
 @include mat.core();
 
 // Define a light theme
-$light-primary: mat.define-palette(mat.$cyan-palette);
-$light-accent: mat.define-palette(mat.$grey-palette);
+$light-primary: mat.define-palette(mat.$indigo-palette);
+$light-accent: mat.define-palette(mat.$blue-grey-palette);
 $light-theme: mat.define-light-theme((
  color: (
    primary: $light-primary,
@@ -41,3 +41,11 @@ $dark-theme: mat.define-dark-theme((
   @include mat.core-color($light-theme);
   @include mat.button-color($dark-theme);
  }
+
+.mat-select-panel {
+  background: rgb(169, 168, 168);;
+}
+
+.mat-select-panel:not([class*=mat-elevation-z]) {
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+}

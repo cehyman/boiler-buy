@@ -140,7 +140,8 @@ import { SiteMenuComponent } from './site-menu/site-menu.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatNativeDateModule,
+    MatNativeDateModule
+    
   ],
   providers: [CurrencyPipe],
   bootstrap: [AppComponent],
