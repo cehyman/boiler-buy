@@ -6,6 +6,7 @@ import { Product } from '../product-types';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-listing',
@@ -14,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductListingComponent implements OnInit {
   @Input() object: Product = {id: 0, name: "", priceDollars: 0, sellerRating: 0, sellerRatingCount: 0} as Product;
+  @Input() showButton: boolean = true;
 
   public globals: Globals = new Globals;
   products:any = []

@@ -1,7 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 import { Globals } from '../globals';
 import { AppComponent } from '../app.component';
@@ -38,7 +40,9 @@ export class EditProductComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private currencyPipe: CurrencyPipe, 
-    private http: HttpClient
+    private http: HttpClient,
+    public dialog: MatDialog,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -225,5 +229,44 @@ export class EditProductComponent implements OnInit {
       });
     }
 
+  }
+
+  confirmDelete() {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
+      width: '75wh',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result', result);
+      if (result != undefined && result) {
+        this.deleteAd();
+      }
+    });
+  }
+
+  deleteAd() {
+    console.log('placeholder for deleting the ad');
+    //send delete request
+    this.http.delete(`/api/products/${this.prodId}/`).subscribe((response) => {
+      alert('Product deleted successfully.');
+      this.router.navigate(['/profile/'])
+    }, (error) => {
+      console.log(error);
+      alert('There was an error. Refresh and try again.');
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'confirm-delete-dialog.html',
+})
+export class ConfirmDeleteDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDeleteDialog>,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
