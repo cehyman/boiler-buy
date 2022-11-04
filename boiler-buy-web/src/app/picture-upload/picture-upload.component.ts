@@ -67,9 +67,9 @@ export class PictureUploadComponent implements OnInit {
     var startNum = this.numImages;
 
     for(var i = 0; i < files.length && this.numImages < this.maxImages; i++, this.numImages++) {
-      var file: File = files.item(i) as File;
+      let file: File = files.item(i) as File;
 
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.onloadend = (event: any) => {
         this.selectedImages.push(SelectedImage.fromUser(file, event.target.result));
       };

@@ -91,7 +91,6 @@ export class CreateComponent implements OnInit {
   }
 
   submit() {
-    var files: File[] = this.picUpload.getNewFiles();
     
     let [priceDollars, priceCents] = this.currencyToDollarsCents(this.price);
     
@@ -118,8 +117,9 @@ export class CreateComponent implements OnInit {
     formData.append("brand", this.brand);
     formData.append("allowOutOfStock", JSON.stringify(this.allowOutOfStock));
 
+    var files: File[] = this.picUpload.getNewFiles();
     for (var i = 0; i < files.length; i++) {
-      console.log("found an image");
+      console.log(`found an image: ${files[i].name}`);
       var file: File = files[i];
       formData.append("images", file, file.name);
     }
@@ -127,7 +127,7 @@ export class CreateComponent implements OnInit {
     var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
-      console.log("Request sent!");
-    })
+      alert("Product Created!");
+    });
   }
 }
