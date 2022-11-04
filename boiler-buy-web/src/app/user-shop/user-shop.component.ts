@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
+import { ConfirmDeleteDialog } from '../edit-product/edit-product.component';
 import { Product } from '../product-types';
 
 @Component({
@@ -19,7 +21,12 @@ export class UserShopComponent implements OnInit {
   productList: Product[] = []
   curruser:string = ''
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router,
+    public dialog: MatDialog,
+    ) {
   }
 
   ngOnInit(): void {
@@ -55,6 +62,32 @@ export class UserShopComponent implements OnInit {
         })
       }
     })
+  }
+
+  confirmDelete(productId: number) {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
+      width: '75wh',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result', result);
+      if (result != undefined && result) {
+        this.deleteAd(productId);
+      }
+    });
+  }
+
+  deleteAd(productId: number) {
+    console.log('placeholder for deleting the ad');
+    //send delete request
+    this.http.delete(`/api/products/${productId}/`).subscribe((response) => {
+      alert('Product deleted successfully.');
+      //refresh this page
+      document.location.reload();
+    }, (error) => {
+      console.log(error);
+      alert('There was an error. Refresh and try again.');
+    });
   }
 
 }

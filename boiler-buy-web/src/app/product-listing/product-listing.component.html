@@ -30,7 +30,7 @@
     </div>
     
     <div style="display: flex; justify-content: right;">
-        <button mat-raised-button color="primary" (click)="openDialog()">{{(curruser != 'Username') ? 'Purchase' : 'Log In to Purchase'}}</button>
+        <button *ngIf="showButton" mat-raised-button color="primary" (click)="openDialog()">{{(curruser != 'Username') ? 'Purchase' : 'Log In to Purchase'}}</button>
     </div>
     
     
