@@ -40,6 +40,50 @@ class AccountViewSet(viewsets.ModelViewSet):
         print('username: ', account)
         return JsonResponse({'observe': 'response'})
 
+    # Test to retrieve image /accounts/<email>/retrieveImages
+    @action(detail=True, methods=['get'])
+    def retrieveImages(self, request, email):
+        account = Account.objects.get(email=email)
+        account_image = account.image
+
+        print(account_image)
+        print(account_image.url)
+        
+        # nameList = list([])
+        # nameList.append(image.image.url)
+        
+        # print(f"{nameList}")
+        return JsonResponse(account_image.url, safe=False)
+
+    # Test to add images to /accounts/<email>/addImages
+    @action(detail=True, methods=['patch'])
+    def addImages(self, request, email):
+        print(request.data)
+        account = Account.objects.get(email=email)
+        
+        # Add all the images and connect them to this product
+        #formImages = request.data.getlist('images')
+        # account.image = image
+
+        print(request.data.get('image'))
+  
+        serializer = AccountSerializer(account, data=request.data, partial=True, context={'request': request}) # set partial=True to update a data partially
+        # if serializer.is_valid():
+        #     serializer.save()
+            
+        # print(serializer.data)
+        # return JsonResponse({'observe': 'response'})
+
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                print(serializer.data)
+            except ValueError:
+                return JsonResponse({"detail": "Serializer is not valid"}, status=400)
+            return JsonResponse({"detail": "Updated."})
+        else:
+            return JsonResponse(serializer.errors)
+
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -330,20 +374,70 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
 
         totalPriceDollars += product.priceDollars + product.shippingDollars
 
-        newPurchaseHistory = PurchaseHistory.objects.create(
-            buyerEmail = buyer,
-            name = product.name,
-            sellerEmail = seller,
-            description = product.description,
-            totalPriceDollars = totalPriceDollars,
-            totalPriceCents = totalPriceCents,
-            image = product.image,
-        )
+        #TODO: either change the db to include a quantity, or adjust the front end to account for this
+        for i in range(request.data.get('quantity')):
+            newPurchaseHistory = PurchaseHistory.objects.create(
+                buyerEmail = buyer,
+                name = product.name,
+                sellerEmail = seller,
+                description = product.description,
+                totalPriceDollars = totalPriceDollars,
+                totalPriceCents = totalPriceCents,
+                image = product.image,
+            )
+
         return JsonResponse({'message': 'Product was purchased'}, status=201)
 
 class ViewHistoryViewSet(viewsets.ModelViewSet):
     queryset = ViewHistory.objects.all()
     serializer_class = ViewHistorySerializer
+
+    def create(self, request):
+        # see if the user already has a view for this productID
+
+        product = Product.objects.get(pk=request.data.get('productID'))
+
+        # get buyer
+        buyer = Account.objects.get(username=request.data.get('username'))
+
+        p, created = ViewHistory.objects.get_or_create(
+            email = buyer,
+            productID = product,
+        )
+
+        print("p: ", p)
+        print("Created new view: ", created)
+        p.save()
+
+        return JsonResponse({'message': 'Product was viewed'}, status=201)
+
+    def list(self, request, *args, **kwargs):
+        toSend = super().list(request, *args, **kwargs)
+        print(toSend.data)
+        dic = json.loads(json.dumps(toSend.data))
+
+        toSend.data = []
+
+        for prod in dic:
+            print(prod.get('productID'))
+
+            # get product from the products db
+            matchingProduct = Product.objects.get(id=prod.get('productID'))
+
+            #update toSend.data
+            toSend.data.append({
+                "email": prod.get('email'),
+                "lastViewed": prod.get('lastViewed'),
+                "product": {
+                    "id": prod.get('productID'),
+                    "name": matchingProduct.name,
+                }
+            })
+            
+
+        # toSend.data = [{"email": "tTest@purdue.edu", "lastViewed": "die", "product": {"id":"testtestYEET"}}]
+        
+        return toSend
 
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()

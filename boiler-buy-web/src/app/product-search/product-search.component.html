@@ -55,9 +55,10 @@
             </mat-card-content>
         </mat-card>
     </div>
+    
     <div class="product-listings-container">
         <!-- progress spinner if the user hits search -->
-        <mat-card *ngIf="loading === true">
+        <mat-card class="progress-spinner" *ngIf="loading === true">
             <mat-card-content>
                 <mat-progress-spinner
                     class="spinner"

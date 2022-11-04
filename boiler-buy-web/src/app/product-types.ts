@@ -16,7 +16,24 @@ export interface Product {
     sellerRatingCount: number,
 }
 
+export interface PurchaseInfo {
+    name: string,
+    description: string,
+    totalPriceDollars: number,
+    totalPriceCents: number,
+    buyerEmail: string,
+    sellerEmail: string,
+    purchaseTime: Date,
+    //TODO: images
+}
+
 export interface ProductList extends Array<Product> { }
+
+export interface RecentlyViewedItem {
+    email: string,
+    lastViewed: Date,
+    product: Product,
+}
 
 export interface FilterSearchInput {
     name: string | null,

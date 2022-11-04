@@ -29,6 +29,15 @@ export class UserInfoComponent implements OnInit {
   curruser:string = ''
   currpass:string = ''
   curremail:string = ''
+  imageURL!: URL; 
+
+  reviewDescription:string = ""
+  reviewCount:number = 0
+  reviewAvg:number = 0
+  reviews:string[] = []
+
+  wishlist_id:number = 0
+  products: any = [];
 
   constructor(private router: Router, private http: HttpClient) {}
   
@@ -47,6 +56,22 @@ export class UserInfoComponent implements OnInit {
 
     this.currpass = <string> this.appcomp.getPassword()
     this.curremail = <string> this.appcomp.getEmail()
+
+    this.displayProfilePic()
+
+    this.getUserWishlist()
+
+    var accountURL = "http://localhost:8000/api/accounts/"+this.appcomp.getEmail()+"/";
+    var request = this.http.get(accountURL, {observe:'response'});
+    request.subscribe((data: any) => {
+      console.log(data)
+      this.reviewCount = data["body"]["sellerRatingCount"]
+      this.reviewAvg = data["body"]["sellerRating"]
+      this.reviews = data["body"]["sellerReviews"]
+      this.curremail = data["body"]["email"]
+      this.curruser = data["body"]["username"]  
+    })
+   
   }
 
   deleteAccount(email:string) {
@@ -76,8 +101,51 @@ export class UserInfoComponent implements OnInit {
     this.appcomp.removeUsername()
     this.appcomp.removePassword()
     this.appcomp.removeEmail()
+    this.appcomp.removeWishlistID()
+    this.appcomp.removeWishlistProductArray()
 
     //route back to /register
     this.router.navigate(['/register'])
+  }
+
+  getUserWishlist() {
+    var request = this.http.get<any>('http://localhost:8000/api/accounts/'.concat(this.curremail).concat("/"))
+    console.log(this.curremail)
+    request.subscribe(data => {
+      let wishlistLink = data['wishlist']
+      let urlSp = wishlistLink.split('/')
+      this.wishlist_id = Number(urlSp[urlSp.length - 2])
+      console.log("id: " + this.wishlist_id)
+
+      //get the user's wishlist product array
+      var request = this.http.get<any>('http://localhost:8000/api/wishlist/' + this.wishlist_id, {observe: "body"})
+      request.subscribe(data => {
+      console.log(data)
+      this.products = data.products
+
+      this.appcomp.saveWishlistID(String(this.wishlist_id))
+      this.appcomp.saveWishlistProductArray(this.products)
+      })
+    })
+  } 
+
+  displayProfilePic() {
+    var request = this.http.get<any>(`api/accounts/${this.curremail}/`, {observe: "body"})
+
+    request.subscribe(data => {
+      console.log(data)
+
+      let image = data['image']
+      if (image == null) {
+        this.imageURL = new URL("https://api-private.atlassian.com/users/1a39e945ae51e44675e6c70f682173c4/avatar")
+      } else {
+        //display the image in database
+        var req2 = this.http.get<any>(`api/accounts/${this.curremail}/retrieveImages`, {observe: "body"})
+        req2.subscribe((data: any) => {
+          this.imageURL = data
+        })
+      }
+    })
+
   }
 }
