@@ -42,12 +42,22 @@ export class ProductService {
   }
 
   purchaseMany(productID: number, quantity: number): Observable<any> {
+    this.addProductToViewHistory(productID);
     var body = {
       "username": this.appcomp.getUsername(),
       "productID": productID,
       "quantity": quantity
     }
     var request = this.http.post('https://boilerbuy-api.azurewebsites.net/api/purchaseHistory/', body);
+    return request;
+  }
+
+  addProductToViewHistory(productID: number): Observable<any> {
+    var body = {
+      "username": this.appcomp.getUsername(),
+      "productID": productID
+    }
+    var request = this.http.post('http://localhost:8000/api/viewHistory/', body);
     return request;
   }
 

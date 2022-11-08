@@ -6,6 +6,7 @@ import { Product } from '../product-types';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-listing',
@@ -14,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductListingComponent implements OnInit {
   @Input() object: Product = {id: 0, name: "", priceDollars: 0, sellerRating: 0, sellerRatingCount: 0} as Product;
+  @Input() showButton: boolean = true;
 
   public globals: Globals = new Globals;
   products:any = []
@@ -65,8 +67,11 @@ export class ProductListingComponent implements OnInit {
 
   viewDetails() {
     // console.log("redirect")
-    console.log(this.object.id)
-    this.router.navigate(['/products/' + this.object.id])
+    this.productService.addProductToViewHistory(this.object.id).subscribe(() => {
+      console.log("added "+ this.object.id + " to view history");
+      this.router.navigate(['/products/' + this.object.id])
+    })
+    
   }
 
   openDialog(): void {
@@ -76,8 +81,11 @@ export class ProductListingComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        this.productService.addProductToViewHistory(this.object.id).subscribe(() => {
+          console.log("added "+ this.object.id + " to view history");
+        });
         console.log(result);
-        if (result != 0) {
+        if (result != undefined && result != 0) {
           this.purchase(result);
         }
       });

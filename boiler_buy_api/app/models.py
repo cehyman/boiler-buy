@@ -56,6 +56,7 @@ class Account(models.Model):
     sellerRatingCount = models.IntegerField(default=0)
     sellerReviews = ArrayField(models.CharField(max_length=500), default=list)
     wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, null=True, db_column="wishlist_id")
+    image = models.ImageField(null=True, blank=False, upload_to='accounts/')
 
     def __str__(self):
         return str(self.username)

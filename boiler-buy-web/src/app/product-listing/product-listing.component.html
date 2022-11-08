@@ -29,27 +29,9 @@
         >Remove From Wishlist</a
       >
     </div>
-    <!-- seller name here -->
-    <div class="rating">
-      <span>Seller Rating:</span>
-      <div class="icon-text" *ngIf="object.sellerRatingCount == 0">
-        <!-- gray stars -->
-        <mat-icon style="color: gray">star</mat-icon>
-        <mat-icon style="color: gray">star</mat-icon>
-        <mat-icon style="color: gray">star_half</mat-icon>
-        <mat-icon style="color: gray">star_border</mat-icon>
-        <mat-icon style="color: gray">star_border</mat-icon>
-      </div>
-      <div class="icon-text" *ngIf="object.sellerRatingCount > 0">
-        <!-- yellow stars -->
-        <mat-icon *ngFor="let fullStar of fullStars" style="color: gold"
-          >star</mat-icon
-        >
-        <mat-icon *ngIf="halfStar" style="color: gold">star_half</mat-icon>
-        <mat-icon *ngFor="let emptyStar of emptyStars" style="color: gold"
-          >star_border</mat-icon
-        >
-      </div>
+    
+    <div style="display: flex; justify-content: right;">
+        <button *ngIf="showButton" mat-raised-button color="primary" (click)="openDialog()">{{(curruser != 'Username') ? 'Purchase' : 'Log In to Purchase'}}</button>
     </div>
   </div>
 

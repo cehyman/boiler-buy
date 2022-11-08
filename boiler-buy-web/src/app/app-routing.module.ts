@@ -13,6 +13,8 @@ import { LoginComponent } from './login/login.component';
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
+import { UserShopComponent } from './user-shop/user-shop.component';
+import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full' },
@@ -28,7 +30,8 @@ const routes: Routes = [
   { path: 'products/:id', component: ProductDetailsComponent},
   { path: 'profile/purchase-history', component: PurchaseHistoryComponent },
   { path: 'wishlist/:id', component: UserWishlistComponent},
-
+  { path: 'shop/:id', component: UserShopComponent},
+  { path: 'change-profile-pic', component: ChangeProfilePicComponent}
 ];
 
 @NgModule({

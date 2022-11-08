@@ -13,8 +13,8 @@ export class FeatureButtonsComponent implements OnInit {
   private appcomp: AppComponent = new AppComponent();
 
   curremail:string = ''
-  wishlistLink:string = ''
   wishlistID:number = 0
+  shopID:number = 0
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -25,15 +25,17 @@ export class FeatureButtonsComponent implements OnInit {
     var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.curremail).concat("/"))
     console.log(this.curremail)
     request.subscribe(data => {
-      this.wishlistLink = data['wishlist']
-      // console.log("from data " + data.wishlist)
-      // console.log("from var " + this.wishlistLink)
+      console.log(data)
+      let wishlistLink = data['wishlist']
+      let shopLink = data['shop']
 
-      let urlSp = this.wishlistLink.split('/')
-      // console.log("from id " + id)
-      // console.log(id[id.length - 2])
-      this.wishlistID = Number(urlSp[urlSp.length - 2])
+      let wishUrl = wishlistLink.split('/')
+      let shopUrl = shopLink.split('/')
+
+      this.wishlistID = Number(wishUrl[wishUrl.length-2])
+      this.shopID = Number(shopUrl[shopUrl.length-2])
       console.log("id: " + this.wishlistID)
+      console.log("shopid: " + this.shopID)
     })
   }
 
@@ -45,4 +47,7 @@ export class FeatureButtonsComponent implements OnInit {
     this.router.navigate(['/profile/purchase-history'])
   }
 
+  routeUserShop() {
+    this.router.navigate(['/shop/' + this.shopID])
+  }
 }
