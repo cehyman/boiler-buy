@@ -3,10 +3,10 @@
     <h2>Boiler Buy</h2>
     <span class="menu-spacer"></span>
     <div>
-      <a mat-button [routerLink]="'/products/search'"> Shop </a>
+      <!-- <a mat-button [routerLink]="'/products/search'"> Shop </a> -->
       <a mat-button [routerLink]="'/create'"> Create Listing </a>
       <a mat-button (click)="routeUserWishlist()"> Wishlist</a>
-      <a mat-button (click)="routePurchaseHistory()"> Purchase History</a>
+      <!-- <a mat-button (click)="routePurchaseHistory()"> Purchase History</a> -->
     </div>
     
     <span class="extra-menu"></span>
@@ -36,14 +36,14 @@
     <mat-menu class="extra-menu" #mobileMenu="matMenu">
       <button mat-menu-item [routerLink]="'/profile'"><mat-icon>account_circle</mat-icon>Profile</button>
       <mat-divider></mat-divider>
-      <button mat-menu-item [routerLink]="'/products/search'"><mat-icon>shopping_cart</mat-icon>Shop</button>
-      <mat-divider></mat-divider>
+      <!-- <button mat-menu-item [routerLink]="'/products/search'"><mat-icon>shopping_cart</mat-icon>Shop</button>
+      <mat-divider></mat-divider> -->
       <button mat-menu-item [routerLink]="'/create'"><mat-icon>create</mat-icon>Create Listing</button>
       <mat-divider></mat-divider>
       <button mat-menu-item (click)="routeUserWishlist()"><mat-icon>list</mat-icon>Wishlist</button>
       <mat-divider></mat-divider>
-      <button mat-menu-item (click)="routePurchaseHistory()"><mat-icon>history</mat-icon>Purchase History</button>
-      <mat-divider></mat-divider>
+      <!-- <button mat-menu-item (click)="routePurchaseHistory()"><mat-icon>history</mat-icon>Purchase History</button>
+      <mat-divider></mat-divider> -->
       <button class="darkmodeBtn" mat-menu-item (click)="$event.stopPropagation();">
           <mat-checkbox [checked]="darkMode$ | async" (change)="onToggle()"> Dark Mode</mat-checkbox>
       </button>

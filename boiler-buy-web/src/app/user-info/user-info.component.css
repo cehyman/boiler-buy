@@ -12,3 +12,10 @@
 .change-password-button{
 	margin:1vw;
 }
+
+.profile-card {
+	background-color: rgb(146, 144, 144);
+	border-radius:.5vw;
+    margin:5vw;
+	padding:3vw;
+}
