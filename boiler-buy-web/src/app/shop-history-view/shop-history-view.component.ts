@@ -86,7 +86,7 @@ export class ShopHistoryViewComponent implements OnInit {
       default: 
         return `
         We're not sure what went wrong, but you have taken an unexpected
-        action with your store. Stop breaking out website!
+        action with your store. Stop breaking our website!
         `;
     }
   }
