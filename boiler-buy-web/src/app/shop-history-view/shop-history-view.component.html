@@ -9,7 +9,7 @@
         </p>
     </div>
     <ng-template #historyFound>
-        <table mat-table  [dataSource]="items">
+        <table mat-table  [dataSource]="items" class="mat-elevation-z8">
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef>Date/Time</th>
                 <td mat-cell *matCellDef="let item">{{dateTimeString(item.dateTime)}}</td> 
