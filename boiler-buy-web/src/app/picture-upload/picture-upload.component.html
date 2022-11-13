@@ -7,7 +7,7 @@
             (change)="uploadPhotos($event)"
             style="display: none"
             required>
-        <button onclick="fileSelectionInput.click()">Upload a Picture</button>
+        <a mat-raised-button color="accent" onclick="fileSelectionInput.click()">Upload a Picture</a>
     </form>
 
     <div *ngFor="let url of getPreviewUrls(); let i = index">

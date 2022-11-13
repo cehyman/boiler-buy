@@ -18,6 +18,7 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login' , pathMatch: 'full' },
   { path: 'register', component: RegisterComponent},
   { path: 'create', component: CreateComponent},
   { path: 'products/search', component: ProductSearchComponent},

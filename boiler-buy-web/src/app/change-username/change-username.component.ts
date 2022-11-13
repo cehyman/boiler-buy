@@ -33,7 +33,7 @@ export class ChangeUsernameComponent implements OnInit {
     this.oldUsername = this.appcomp.getUsername() || ""
     console.log(this.oldUsername)
     // this.oldUsername = "pog"
-    var request = this.http.get('http://localhost:8000/api/accounts/')
+    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
     request.subscribe((data: any) => {
       this.curUsers.push(data);
     })
@@ -85,7 +85,7 @@ export class ChangeUsernameComponent implements OnInit {
           username: this.newUsername
         };
         console.log(this.email)
-        var accountURL = "http://localhost:8000/api/accounts/".concat(this.email).concat("/");
+        var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/".concat(this.email).concat("/");
         console.log(accountURL)
         var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
     
