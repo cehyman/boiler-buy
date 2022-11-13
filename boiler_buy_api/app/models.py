@@ -1,5 +1,7 @@
 from email.policy import default
 from statistics import mode
+from datetime import datetime
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.postgres.fields import *
 from django.contrib.postgres.fields import ArrayField
@@ -60,6 +62,22 @@ class Account(models.Model):
 
     def __str__(self):
         return str(self.username)
+    
+class ShopHistory(models.Model):
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
+    action = models.CharField(max_length=32, default='')
+    dateTime = models.DateTimeField(auto_now=True)
+    
+    quantity = models.IntegerField(null=True, blank=True)
+    buyer = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    profit = models.FloatField(null=True, blank=True, default=None)
+    
+    # These fields are redundancy against deleted products/accounts/etc.
+    productId = models.IntegerField(default=1, blank=False)
+    productName = models.CharField(max_length=50)
+    buyerName = models.CharField(max_length=30, default='')
+
 
 class PurchaseHistory(models.Model):
     buyerEmail = models.ForeignKey("Account", on_delete=models.CASCADE, related_name='pHistories')
