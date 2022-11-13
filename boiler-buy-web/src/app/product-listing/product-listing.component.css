@@ -16,8 +16,23 @@
     margin: 10px;
 }
 
+.rating {
+    display: flex;
+    align-items: center;
+    margin-left:1vw;
+}
 
 .icon-text {
     display: flex;
     align-items: center;
+}
+
+.purchase {
+    display: flex; 
+    justify-content: right;
+    margin: 1vw;
+}
+
+h2 {
+    margin-left:1vw;
 }

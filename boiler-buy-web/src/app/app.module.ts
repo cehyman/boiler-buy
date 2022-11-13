@@ -73,6 +73,7 @@ import { SiteMenuComponent } from './site-menu/site-menu.component';
 import { RecentlyViewedItemsComponent } from './recently-viewed-items/recently-viewed-items.component';
 import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
+import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
     UserShopComponent,
     ConfirmDeleteDialog,
     ChangeProfilePicComponent,
+    ShopHistoryViewComponent,
   ],
   imports: [
     FormsModule,
@@ -146,7 +148,8 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatNativeDateModule,
+    MatNativeDateModule
+    
   ],
   providers: [CurrencyPipe],
   bootstrap: [AppComponent],

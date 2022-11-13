@@ -1,0 +1,18 @@
+.features {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:-9vh;
+    text-align: center;
+    background-color: rgb(146, 144, 144);
+    width: 50vw;
+    border-radius:.5vw;
+    padding:3vw;
+}
+
+.chats-button{
+    margin:1vw;
+}
+.view-current-ads-button{
+    margin:1vw;
+}

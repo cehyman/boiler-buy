@@ -5,6 +5,13 @@
     z-index: 10;
 }
 
+.topnav{
+    overflow: hidden;
+    background-color: rgb(146, 144, 144);
+    display: flex;
+    align-items: center;
+}
+
 .mat-drawer {
     position: fixed !important;
     top: 50px;
@@ -53,6 +60,17 @@
     display: flex;
     width: 100%;
     background-color: lightgray;
+}
+
+.search-button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    margin-left: 4px;
+    background-color: rgb(146, 144, 144);
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
 }
 
 .progress-spinner {

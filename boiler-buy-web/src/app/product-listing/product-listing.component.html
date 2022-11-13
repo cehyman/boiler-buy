@@ -1,32 +1,33 @@
 <div class="card">
-    <!-- image here -->
-    <div class="name_seller_rating">
-        <!-- Rating: {{object.sellerRatingCount}} -->
-        <h2>{{object.name}}</h2>
-        <div class="groupbtn">
-            <button mat-raised-button (click)="viewDetails()" type="submit" class="viewBtn">View Details</button>
-            <button mat-raised-button (click)="addToWishlist()" type="submit" class="viewBtn">Add To Wishlist</button>
-            <button mat-raised-button (click)="removeFromWishlist()" type="submit" class="viewBtn">Remove From Wishlist</button>
-        </div>
-        <!-- seller name here -->
-        <div class="icon-text">
-            <span>Seller Rating:</span>
-            <div class="icon-text" *ngIf="object.sellerRatingCount == 0">
-                <!-- gray stars -->
-                <mat-icon style="color: gray;">star</mat-icon>
-                <mat-icon style="color: gray;">star</mat-icon>
-                <mat-icon style="color: gray;">star_half</mat-icon>
-                <mat-icon style="color: gray;">star_border</mat-icon>
-                <mat-icon style="color: gray;">star_border</mat-icon>
-            </div>
-            <div class="icon-text" *ngIf="object.sellerRatingCount > 0">
-                <!-- yellow stars -->
-                <mat-icon *ngFor="let fullStar of fullStars" style="color: gold;">star</mat-icon>
-                <mat-icon *ngIf="halfStar" style="color: gold;">star_half</mat-icon>
-                <mat-icon *ngFor="let emptyStar of emptyStars" style="color: gold;">star_border</mat-icon>
-            </div>
-        </div>
-        
+  <!-- image here -->
+  <div class="name_seller_rating">
+    <!-- Rating: {{object.sellerRatingCount}} -->
+    <h2>{{ object.name }}</h2>
+    <div class="groupbtn">
+      <a
+        mat-raised-button
+        color="accent"
+        (click)="viewDetails()"
+        type="submit"
+        class="viewBtn"
+        >View Details</a
+      >
+      <a
+        mat-raised-button
+        color="accent"
+        (click)="addToWishlist()"
+        type="submit"
+        class="viewBtn"
+        >Add To Wishlist</a
+      >
+      <a
+        mat-raised-button
+        color="accent"
+        (click)="removeFromWishlist()"
+        type="submit"
+        class="viewBtn"
+        >Remove From Wishlist</a
+      >
     </div>
     
     <div style="display: flex; justify-content: right;">
@@ -35,6 +36,11 @@
             {{(curruser != 'Username') ? 'Purchase': 'Log In to Purchase'}}
         </button>
     </div>
-    
-    
+  </div>
+
+  <div class="purchase">
+    <button mat-raised-button  (click)="openDialog()">
+      {{ curruser != "Username" ? "Purchase" : "Log In to Purchase" }}
+    </button>
+  </div>
 </div>

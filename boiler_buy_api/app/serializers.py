@@ -30,6 +30,13 @@ class ShopSerializer(serializers.ModelSerializer):
         model = Shop
         fields = ['description', 'isVisible', 'products']
 
+class ShopHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopHistory
+        fields = ['shop', 'product', 'action', 'dateTime', 'quantity', 'buyer',
+                  'profit', 'productId', 'productName', 'buyerName'
+                  ]
+
 class PurchaseHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = PurchaseHistory

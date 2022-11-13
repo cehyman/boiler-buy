@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    var request = this.http.get('http://localhost:8000/api/accounts/')
+    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.accountUsername.length == 0 || this.accountPassword.length == 0) {
-      alert("All fields must be fieled out.")
+      alert("All fields must be filled out.")
       return;
     }
     let i = 0
