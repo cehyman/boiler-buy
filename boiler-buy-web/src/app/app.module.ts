@@ -148,7 +148,8 @@ import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatNativeDateModule,
+    MatNativeDateModule
+    
   ],
   providers: [CurrencyPipe],
   bootstrap: [AppComponent],

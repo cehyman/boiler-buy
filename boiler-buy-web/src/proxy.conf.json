@@ -1,10 +1,10 @@
 {
   "/api/": {
-    "target": "http://localhost:8000/",
-    "secure": false
+    "target": "https://boilerbuy-api.azurewebsites.net",
+    "secure": true
   },
   "/media/": {
-    "target": "http://localhost:8000/",
-    "secure": false
+    "target": "https://boilerbuy-api.azurewebsites.net",
+    "secure": true
   }
 } 

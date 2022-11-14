@@ -1,24 +1,76 @@
-.extra-menu{
-    flex: 1 1 auto;
-    z-index: 10;
+@media screen and (min-width: 650px) {
+    .extra-menu{
+        flex: 1 1 auto;
+        z-index: 10;
+    }
+
+    .dm-toggle {
+        font-size: small;
+    }
+
+    .menu-spacer {
+        padding-right:10px;
+    }
+
+
+    .menu-button-container {
+        display: flex;
+        justify-content: center;
+        margin: 4px;
+    }
+    .darkmodeBtn {
+        margin-left:4px;
+    }
+
+    .site-menu-desktop {
+        background-color: #777;
+    }
+
+    ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+        background-color: #2d3436 !important;
+    }
+    .site-menu-mobile{
+        display: none;
+    }
 }
 
-.dm-toggle {
-    font-size: small;
+@media screen and (max-width: 649px) {
+    .extra-menu{
+        flex: 1 1 auto;
+        z-index: 10;
+    }
+
+    .dm-toggle {
+        font-size: small;
+    }
+
+    .menu-spacer {
+        padding-right:10px;
+    }
+
+
+    .menu-button-container {
+        display: flex;
+        justify-content: center;
+        margin: 4px;
+        margin-left:-2vw;
+    }
+
+    .site-menu-mobile {
+        background-color: #777;
+    }
+
+    ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+        background-color: #2d3436 !important;
+    }
+
+    .darkmodeBtn {
+        margin-left:4px;
+    }
+
+    .site-menu-desktop{
+        display: none;
+    }
 }
 
-.menu-spacer {
-    padding-right:10px;
-}
-
-
-.menu-button-container {
-    display: flex;
-    justify-content: center;
-    margin: 4px;
-}
-
-.site-menu {
-    background-color: #777;
-}
   

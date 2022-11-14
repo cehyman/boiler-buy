@@ -1,13 +1,11 @@
 <app-site-menu></app-site-menu>
 <div class="topnav">
-    <a routerLink="/home/">Home</a>
-
     <div class="search-container">
         <form action="">
-            <input class="search-bar" type="text" matInput placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
-            <button class="search-button" color="primary" (click)="buttonSearchClick()">
-                <mat-icon>search</mat-icon>
-            </button>
+                <input class="search-bar" type="text" matInput placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
+                <button class="search-button" color="primary" (click)="buttonSearchClick()">
+                    <mat-icon>search</mat-icon>
+                </button>
         </form>
     </div>
 </div>
