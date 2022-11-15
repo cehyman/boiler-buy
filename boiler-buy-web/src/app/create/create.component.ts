@@ -115,6 +115,7 @@ export class CreateComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("username", this.curruser);
     formData.append("brand", this.brand);
+    formData.append("allowOutOfStock", `${false}`)
 
     for (var i = 0; i < files.length; i++) {
       console.log("found an image");
