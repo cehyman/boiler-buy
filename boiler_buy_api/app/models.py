@@ -91,6 +91,6 @@ class PurchaseHistory(models.Model):
 
 class ViewHistory(models.Model):
     email = models.ForeignKey("Account", on_delete=models.CASCADE)
-    productID = models.ForeignKey("Product", null=True, on_delete=models.SET_NULL)
+    productID = models.ForeignKey("Product", null=True, on_delete=models.CASCADE)
     lastViewed = models.DateTimeField(auto_now=True)
 

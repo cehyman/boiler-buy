@@ -31,13 +31,10 @@
     </div>
     
     <div style="display: flex; justify-content: right;">
-        <button *ngIf="showButton" mat-raised-button color="primary" (click)="openDialog()">{{(curruser != 'Username') ? 'Purchase' : 'Log In to Purchase'}}</button>
+        <button *ngIf="showButton" mat-raised-button color="primary" (click)="openDialog()">
+            (${{object.priceDollars}}.{{(object.priceCents < 10) ? '0' : ''}}{{object.priceCents}})
+            {{(curruser != 'Username') ? 'Purchase': 'Log In to Purchase'}}
+        </button>
     </div>
-  </div>
-
-  <div class="purchase">
-    <button mat-raised-button  (click)="openDialog()">
-      {{ curruser != "Username" ? "Purchase" : "Log In to Purchase" }}
-    </button>
   </div>
 </div>

@@ -1,6 +1,7 @@
 .card {
     border-style: solid;
     border-width: 1px;
+    padding: 10px;
 }
 
 .name_seller_rating {
