@@ -29,6 +29,12 @@ export class CreateComponent implements OnInit {
   type: string = 'Electronics';
   brand: string = 'Acer';
 
+  locationList = [
+    {name:'WALC', value:'WALC', checked:false},
+    {name:'Corec', value:'Corec', checked:false},
+    {name:'Lawson', value:'Lawson', checked:false},
+  ]
+
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
   constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
@@ -102,6 +108,10 @@ export class CreateComponent implements OnInit {
       [shipDollars, shipCents] = this.currencyToDollarsCents(this.shipPrice);
     }
 
+    var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
+    var loc = temp2
+    console.log(loc)
+
     var formData = new FormData();
     formData.append("productType", this.type);
     formData.append("priceDollars", `${priceDollars}`);
@@ -115,6 +125,7 @@ export class CreateComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("username", this.curruser);
     formData.append("brand", this.brand);
+    formData.append("locations", JSON.stringify(temp2));
 
     for (var i = 0; i < files.length; i++) {
       console.log("found an image");
@@ -122,7 +133,7 @@ export class CreateComponent implements OnInit {
       formData.append("images", file, file.name);
     }
 
-    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
+    var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/products", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");
