@@ -57,6 +57,19 @@
                     required><br>
             </div>
 
+            <div class="form-group">
+                <label for="locations">Locations:</label>
+                <div *ngFor="let location of locationList; let i = index">
+                    <label>
+                        <input type="checkbox"
+                               name="location"
+                               value="{{location.value}}"
+                               [(ngModel)]="location.checked"/>
+                        {{location.name}}
+                    </label>
+                </div>
+            </div>
+
             <label><b>Upload Pictures</b></label><br>
             <app-picture-upload-new #picUpload [maxImages]="10"></app-picture-upload-new>
             <br><br>

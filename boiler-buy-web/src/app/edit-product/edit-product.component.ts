@@ -33,6 +33,12 @@ export class EditProductComponent implements OnInit {
   type: string = 'Electronics';
   brand: string = 'Acer';
 
+  locationList = [
+    {name:'WALC', value:'WALC', checked:false},
+    {name:'Corec', value:'Corec', checked:false},
+    {name:'Lawson', value:'Lawson', checked:false},
+  ]
+
   prodId: number = -1;
 
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
@@ -72,9 +78,8 @@ export class EditProductComponent implements OnInit {
   }
 
   loadProduct(id: number) {
-   
     console.log(`Loading product with id "${id}"`);
-    
+    var temp = []
     var request = this.http.get<any>(`api/products/${id}`, {observe: "body"});
     request.subscribe((data: any) => {
       // Set the fields that can be set out of the box
@@ -85,6 +90,21 @@ export class EditProductComponent implements OnInit {
       this.canShip = data.canShip;
       this.type = data.productType;
       this.brand = data.brand;
+      temp = data.locations
+      // this.locationList[0]["checked"] = true
+      // console.log(this.locationList)
+      // for (var i = 0; i < this.locationList.length; i++) {
+      //   for (var j = 0; j < temp.length; j++) {
+      //     console.log(this.locationList[i]["name"])
+      //     console.log(temp[j])
+      //     if (this.locationList[i]["name"] == temp[j]) {
+      //       // this.locationList[i]["checked"] = true
+      //       console.log("found")
+      //       break;
+      //     }
+      //   }
+      //   // console.log(this.locationList[i]['name'])
+      // }
 
       console.log(this.brand)
 
@@ -175,8 +195,13 @@ export class EditProductComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("brand", this.brand);
     formData.append("username", this.curruser);
+    var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
+    var loc = temp2
+    for (var i = 0; i < loc.length; i++) {
+      formData.append("locations", loc[i])
+    }
 
-    var request = this.http.patch<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
+    var request = this.http.patch<any>(`http://localhost:8000/api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {
       console.log("Request sent!");
     });

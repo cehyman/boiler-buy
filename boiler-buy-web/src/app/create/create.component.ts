@@ -126,8 +126,11 @@ export class CreateComponent implements OnInit {
     formData.append("canShip", `${this.canShip}`);
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("username", this.curruser);
-    formData.append("brand", this.brand);  
-    formData.append("locations", JSON.stringify(location))
+    formData.append("brand", this.brand);
+    for (var i = 0; i < loc.length; i++) {
+      formData.append("locations", loc[i])
+    }  
+
     formData.append("allowOutOfStock", `${false}`)
 
     for (var i = 0; i < files.length; i++) {
@@ -136,7 +139,7 @@ export class CreateComponent implements OnInit {
       formData.append("images", file, file.name);
     }
 
-    var request = this.http.post<any>("localhost:8000/api/products/", formData, {observe: "response"});
+    var request = this.http.post<any>("http://localhost:8000/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

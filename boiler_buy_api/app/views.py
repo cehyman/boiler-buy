@@ -153,7 +153,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         shop = Shop.objects.get(id=user.shop_id)
         
         # Add the creation of this product to the user's history
-        ShopHistory.newEdit(shop, product)
+        # ShopHistory.newEdit(shop, product)
         
         return result
     
