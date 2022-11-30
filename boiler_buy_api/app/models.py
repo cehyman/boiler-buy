@@ -32,6 +32,7 @@ class Product(models.Model):
     canMeet = models.BooleanField()
     brand = models.CharField(max_length=128, default="")
     image = models.FileField(null=True, blank=True, upload_to='products/')
+    locations = ArrayField(models.CharField(max_length=200), default=list)
 
 class ProductImage(models.Model):
     def uploadTo(self, filename):
