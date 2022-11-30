@@ -111,6 +111,8 @@ export class CreateComponent implements OnInit {
     var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
     var loc = temp2
     console.log(loc)
+    // var temp = JSON.stringify(temp2)
+    // console.log(temp)
 
     var formData = new FormData();
     formData.append("productType", this.type);
@@ -124,8 +126,8 @@ export class CreateComponent implements OnInit {
     formData.append("canShip", `${this.canShip}`);
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("username", this.curruser);
-    formData.append("brand", this.brand);
-    formData.append("locations", JSON.stringify(temp2));
+    formData.append("brand", this.brand);  
+    formData.append("locations", JSON.stringify(location))
     formData.append("allowOutOfStock", `${false}`)
 
     for (var i = 0; i < files.length; i++) {
@@ -134,7 +136,7 @@ export class CreateComponent implements OnInit {
       formData.append("images", file, file.name);
     }
 
-    var request = this.http.post<any>("localhost:8000/api/products", formData, {observe: "response"});
+    var request = this.http.post<any>("localhost:8000/api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");
