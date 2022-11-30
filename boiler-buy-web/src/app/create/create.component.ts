@@ -126,6 +126,7 @@ export class CreateComponent implements OnInit {
     formData.append("username", this.curruser);
     formData.append("brand", this.brand);
     formData.append("locations", JSON.stringify(temp2));
+    formData.append("allowOutOfStock", `${false}`)
 
     for (var i = 0; i < files.length; i++) {
       console.log("found an image");
@@ -133,7 +134,7 @@ export class CreateComponent implements OnInit {
       formData.append("images", file, file.name);
     }
 
-    var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/products", formData, {observe: "response"});
+    var request = this.http.post<any>("localhost:8000/api/products", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

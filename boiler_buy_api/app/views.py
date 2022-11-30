@@ -116,7 +116,8 @@ class ProductViewSet(viewsets.ModelViewSet):
             description = request.data.get('description'),
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
-            brand = request.data.get('brand')
+            brand = request.data.get('brand'),
+            allowOutOfStock = bool(request.data.get('allowOutOfStock'))
         )
         print('creating product with product id', product.id)
 
