@@ -17,6 +17,7 @@ import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full' },
@@ -35,7 +36,8 @@ const routes: Routes = [
   { path: 'shop/:id', component: UserShopComponent},
   { path: 'change-profile-pic', component: ChangeProfilePicComponent},
   { path: 'shop/:id/history', component: ShopHistoryViewComponent},
-  { path: 'retrieve-username', component: RetrieveUsernameComponent}
+  { path: 'retrieve-username', component: RetrieveUsernameComponent},
+  { path: 'verify/account/:id', component: VerifyAccountComponent}
 ];
 
 @NgModule({

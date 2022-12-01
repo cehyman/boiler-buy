@@ -60,9 +60,14 @@ class AccountViewSet(viewsets.ModelViewSet):
             fail_silently=False
         )
     
-    @action(detail=True, methods='patch')
-    def verify(self, request, pk):
-        raise NotImplementedError
+    @action(detail=True, methods=['patch'])
+    def verify(self, request, email):
+        print(f"email = {email}")
+        account = Account.objects.get(email=email)
+        account.verified = True
+        account.save()
+        
+        return JsonResponse({"success": True })
         
     
     @action(detail=True, methods=['get'])
