@@ -8,7 +8,6 @@ import { Globals } from '../globals';
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
-  public globals: Globals = new Globals;
   private appcomp: AppComponent = new AppComponent();
   
   constructor( private router: Router) {}
@@ -17,7 +16,7 @@ export class LoginGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-    if(this.appcomp.getUsername() == 'placeholder') { 
+    if(this.appcomp.getUsername() == null) { 
       console.log("User not logged in. Redirecting to main page");
       
       // not logged in so redirect to login page with the return url
@@ -25,6 +24,7 @@ export class LoginGuard implements CanActivate {
       return false;
     }
     else {
+      console.log(`User logged in: ${this.appcomp.getUsername()}. Continuing to page`)
       return true;
     }
   }

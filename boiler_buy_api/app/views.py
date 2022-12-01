@@ -68,6 +68,11 @@ class AccountViewSet(viewsets.ModelViewSet):
         account.save()
         
         return JsonResponse({"success": True })
+    
+    @action(detail=True, methods=['get'])
+    def verified(self, request, email):
+        account = Account.objects.get(email=email)
+        return JsonResponse({'verified': account.verified})
         
     
     @action(detail=True, methods=['get'])
