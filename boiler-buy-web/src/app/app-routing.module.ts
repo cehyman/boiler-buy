@@ -18,26 +18,27 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { LoginGuard } from './AuthGuards/login.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login' , pathMatch: 'full' },
+  { path: '', redirectTo: 'login' , pathMatch: 'full'},
   { path: 'register', component: RegisterComponent},
-  { path: 'create', component: CreateComponent},
-  { path: 'products/search', component: ProductSearchComponent},
-  { path: 'profile', component: ProfileComponent },
-  { path: 'change-password', component: ChangePasswordComponent},
-  { path: 'edit/:id', component: EditProductComponent},
-  { path: 'change-username', component: ChangeUsernameComponent},
-  { path: 'sellerReview/:id', component: SellerReviewComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'products/:id', component: ProductDetailsComponent},
-  { path: 'profile/purchase-history', component: PurchaseHistoryComponent },
-  { path: 'wishlist/:id', component: UserWishlistComponent},
-  { path: 'shop/:id', component: UserShopComponent},
-  { path: 'change-profile-pic', component: ChangeProfilePicComponent},
-  { path: 'shop/:id/history', component: ShopHistoryViewComponent},
-  { path: 'retrieve-username', component: RetrieveUsernameComponent},
-  { path: 'verify/account/:id', component: VerifyAccountComponent}
+  { path: 'create', component: CreateComponent,                             canActivate: [LoginGuard]},
+  { path: 'products/search', component: ProductSearchComponent,             canActivate: [LoginGuard]},
+  { path: 'profile', component: ProfileComponent,                           canActivate: [LoginGuard]},
+  { path: 'change-password', component: ChangePasswordComponent,            canActivate: [LoginGuard]},
+  { path: 'edit/:id', component: EditProductComponent,                      canActivate: [LoginGuard]},
+  { path: 'change-username', component: ChangeUsernameComponent,            canActivate: [LoginGuard]},
+  { path: 'sellerReview/:id', component: SellerReviewComponent,             canActivate: [LoginGuard]},
+  { path: 'products/:id', component: ProductDetailsComponent,               canActivate: [LoginGuard]},
+  { path: 'profile/purchase-history', component: PurchaseHistoryComponent,  canActivate: [LoginGuard]},
+  { path: 'wishlist/:id', component: UserWishlistComponent,                 canActivate: [LoginGuard]},
+  { path: 'shop/:id', component: UserShopComponent,                         canActivate: [LoginGuard]},
+  { path: 'change-profile-pic', component: ChangeProfilePicComponent,       canActivate: [LoginGuard]},
+  { path: 'shop/:id/history', component: ShopHistoryViewComponent,          canActivate: [LoginGuard]},
+  { path: 'retrieve-username', component: RetrieveUsernameComponent,        canActivate: [LoginGuard]},
+  { path: 'verify/account/:id', component: VerifyAccountComponent,          canActivate: [LoginGuard]},
 ];
 
 @NgModule({
