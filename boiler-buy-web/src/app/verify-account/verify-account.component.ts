@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-verify-account',
@@ -9,10 +10,13 @@ import { Component, OnInit } from '@angular/core';
 export class VerifyAccountComponent implements OnInit {
   successful: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private activatedRoute: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
-    let email = "vtest1@purdue.edu"
+    // Path should be verify/account/{email}
+    let email = this.activatedRoute.snapshot.url.toString().split(',')[2];
+    console.log(`email: ${email}`);
 
     let request = this.http.patch(
       `api/accounts/${email}/verify/`,
@@ -23,7 +27,6 @@ export class VerifyAccountComponent implements OnInit {
     request.subscribe((response: any) => {
       this.successful = (response.success == true)
     });
-
   }
 
 }
