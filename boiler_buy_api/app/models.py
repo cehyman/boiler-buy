@@ -35,6 +35,7 @@ class Product(models.Model):
     locations = ArrayField(models.CharField(max_length=200), default=list)
     tags = ArrayField(models.CharField(max_length=50), default=list)
     allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)
+    
 
 class ProductImage(models.Model):
     def uploadTo(self, filename):

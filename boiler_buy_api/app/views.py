@@ -11,9 +11,11 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
+from django.core.mail import send_mail
+
+from django.core.mail import send_mail
 
 import json
-import datetime
 
 #create your views here
 class ListingViewSet(viewsets.ModelViewSet):
@@ -34,11 +36,34 @@ class AccountViewSet(viewsets.ModelViewSet):
         newWishlist = Wishlist.objects.create(description=request.data.get('username'))
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
         shop=newShop, wishlist=newWishlist)
+        
+        AccountViewSet._sendVerificationEmail(account)
 
         print('newShop: ', newShop.id)
         print('newWishlist: ', newWishlist.id)
         print('username: ', account)
         return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendVerificationEmail(account):
+        send_mail(
+            'Please Verify Your Account',
+            f"""
+            Welcome to Boiler Buy!
+            Before you can start buying from boilers, please verify your account
+            using the link below:
+            
+            localhost:4200/verify/account/{account.email}
+            """,
+            "no-reply@boilerbuy.com",
+            ['rnstump@purdue.edu'],
+            fail_silently=False
+        )
+    
+    @action(detail=True, methods='patch')
+    def verify(self, request, pk):
+        raise NotImplementedError
+        
     
     @action(detail=True, methods=['get'])
     def getFromUsername(self, request, pk):
@@ -48,7 +73,6 @@ class AccountViewSet(viewsets.ModelViewSet):
         
         return JsonResponse(account, safe=False)
         
-
     # Test to retrieve image /accounts/<email>/retrieveImages
     @action(detail=True, methods=['get'])
     def retrieveImages(self, request, email):
