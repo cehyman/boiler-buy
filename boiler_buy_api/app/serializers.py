@@ -13,7 +13,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
-            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand']
+            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand', 'locations']
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
