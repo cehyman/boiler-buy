@@ -33,6 +33,7 @@ class Product(models.Model):
     brand = models.CharField(max_length=128, default="")
     image = models.FileField(null=True, blank=True, upload_to='products/')
     locations = ArrayField(models.CharField(max_length=200), default=list)
+    tags = ArrayField(models.CharField(max_length=50), default=list)
     allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)
 
 class ProductImage(models.Model):
@@ -62,6 +63,7 @@ class Account(models.Model):
     wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, null=True, db_column="wishlist_id")
     image = models.ImageField(null=True, blank=False, upload_to='accounts/')
     verified = models.BooleanField(null=False, blank=True, default=False)
+    savedTags = ArrayField(models.CharField(max_length=50), default=list)
 
     def __str__(self):
         return str(self.username)

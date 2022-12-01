@@ -23,6 +23,7 @@ export class ProductDetailsComponent implements OnInit {
   brand: string = '';
   id: number = -1;
   locations: string[] = []
+  tags: string[] = []
 
   @ViewChild('carousel') carousel !: PictureCarouselComponent;
 
@@ -62,6 +63,7 @@ export class ProductDetailsComponent implements OnInit {
       this.type = data['productType'];
       this.brand = data['brand'];
       this.locations = data['locations'];
+      this.tags = data['tags']
       console.log(data['locations'])
       console.log(this.locations)
       var locLabel = document.getElementById("locationLabel")
@@ -100,5 +102,9 @@ export class ProductDetailsComponent implements OnInit {
         this.stock = error.error.remainingStock;
       }
     )
+  }
+
+  saveTag(id: string) {
+    console.log(id)
   }
 }

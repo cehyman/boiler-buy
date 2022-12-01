@@ -33,6 +33,12 @@ export class EditProductComponent implements OnInit {
   type: string = 'Electronics';
   brand: string = 'Acer';
 
+  tagList = [
+    {name:'Old', value:'Old', checked:false},
+    {name:'New', value:'New', checked:false},
+    {name:'Phone', value:'Phone', checked:false},
+  ]
+
   locationList = [
     {name:'WALC', value:'WALC', checked:false},
     {name:'Corec', value:'Corec', checked:false},
@@ -199,6 +205,16 @@ export class EditProductComponent implements OnInit {
     var loc = temp2
     for (var i = 0; i < loc.length; i++) {
       formData.append("locations", loc[i])
+    }
+    var temp3 = this.tagList.filter(tag => tag.checked).map(tag => tag.value)
+    var tg = temp3
+    if (tg.length == 0) {
+      console.log("here")
+      formData.append("tags", JSON.stringify(null))
+    } else {
+      for (var i = 0; i < tg.length; i++) {
+        formData.append("tags", tg[i])
+      }
     }
 
     var request = this.http.patch<any>(`http://localhost:8000/api/products/${this.prodId}/`, formData, {observe: "response"});
