@@ -21,7 +21,7 @@ export class RetrieveUsernameComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
+    var request = this.http.get('api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       // console.log(data)

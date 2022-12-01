@@ -139,7 +139,7 @@ export class CreateComponent implements OnInit {
       formData.append("images", file, file.name);
     }
 
-    var request = this.http.post<any>("http://localhost:8000/api/products/", formData, {observe: "response"});
+    var request = this.http.post<any>("api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

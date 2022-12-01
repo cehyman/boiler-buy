@@ -1,9 +1,9 @@
 {
-  "/api/": {
+  "/api": {
     "target": "https://boilerbuy-api.azurewebsites.net",
     "secure": true
   },
-  "/media/": {
+  "/media": {
     "target": "https://boilerbuy-api.azurewebsites.net",
     "secure": true
   }

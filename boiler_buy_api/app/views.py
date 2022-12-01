@@ -561,4 +561,3 @@ class WishlistViewSet(viewsets.ModelViewSet):
             wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
-        #return redirect('http://localhost:8000/api/wishlist/' + str(user.wishlist_id))
