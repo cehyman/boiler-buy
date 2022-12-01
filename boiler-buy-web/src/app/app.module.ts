@@ -74,6 +74,7 @@ import { RecentlyViewedItemsComponent } from './recently-viewed-items/recently-v
 import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
+import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.
     ConfirmDeleteDialog,
     ChangeProfilePicComponent,
     ShopHistoryViewComponent,
+    RetrieveUsernameComponent,
   ],
   imports: [
     FormsModule,

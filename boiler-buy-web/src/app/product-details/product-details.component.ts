@@ -22,6 +22,7 @@ export class ProductDetailsComponent implements OnInit {
   type: string = '';
   brand: string = '';
   id: number = -1;
+  locations: string[] = []
 
   @ViewChild('carousel') carousel !: PictureCarouselComponent;
 
@@ -37,10 +38,10 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
     console.log(this.id)
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/products/' + this.id, {observe: "body"})
+    var request = this.http.get('http://localhost:8000/api/products/' + this.id, {observe: "body"})
     let i = 0
     request.subscribe((data: any) => {
-      // console.log(data)
+      console.log(data)
       this.name = data['name'];
       if (data["priceCents"] < 10) {
         var temp = "0" + data["priceCents"]
@@ -60,9 +61,22 @@ export class ProductDetailsComponent implements OnInit {
       this.canShip = data['canShip'];
       this.type = data['productType'];
       this.brand = data['brand'];
+      this.locations = data['locations'];
+      console.log(data['locations'])
+      console.log(this.locations)
+      var locLabel = document.getElementById("locationLabel")
+      for (var i = 0; i < this.locations.length; i++) {
+          if (locLabel != null) {
+            console.log(this.locations[i])
+            if (i == this.locations.length-1) {
+              locLabel.innerHTML += this.locations[i]
+            } else {
+              locLabel.innerHTML += this.locations[i] + ", "
+            }
+          }
+        };
       // this.loadProductDetails()
     });
-
     this.loadImages();
   }
 
