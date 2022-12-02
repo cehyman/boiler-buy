@@ -21,7 +21,7 @@ export class RetrieveUsernameComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
+    var request = this.http.get('api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       // console.log(data)
@@ -59,6 +59,17 @@ export class RetrieveUsernameComponent implements OnInit {
       console.log("Email Sent")
       //Email Logic
       console.log(tempUsername)
+      console.log(this.accountEmail)
+      var body = {
+        username: tempUsername,
+        email: this.accountEmail
+      };
+  
+      var request = this.http.post<any>("api/retrieveUsername/", body, {observe: 'response'});
+  
+      request.subscribe((data: any) => {
+        console.log(data)
+      })
     }
   }
 

@@ -75,6 +75,7 @@ import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username
     ChangeProfilePicComponent,
     ShopHistoryViewComponent,
     RetrieveUsernameComponent,
+    VerifyAccountComponent,
   ],
   imports: [
     FormsModule,

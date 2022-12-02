@@ -33,7 +33,7 @@ export class ChangeUsernameComponent implements OnInit {
     this.oldUsername = this.appcomp.getUsername() || ""
     console.log(this.oldUsername)
     // this.oldUsername = "pog"
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
+    var request = this.http.get('api/accounts/')
     request.subscribe((data: any) => {
       this.curUsers.push(data);
     })
@@ -85,7 +85,7 @@ export class ChangeUsernameComponent implements OnInit {
           username: this.newUsername
         };
         console.log(this.email)
-        var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/".concat(this.email).concat("/");
+        var accountURL = "api/accounts/".concat(this.email).concat("/");
         console.log(accountURL)
         var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
     
@@ -97,24 +97,6 @@ export class ChangeUsernameComponent implements OnInit {
         this.appcomp.saveUsername(this.newUsername)
         this.router.navigate(['/profile'])
     }
-    // if (match) {
-      // var body = {
-      //   username: this.newUsername
-      // };
-      // var accountURL = "http://localhost:8000/api/accounts/".concat(email).concat("/");
-      // var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
-  
-      // patchRequest.subscribe((data: any) => {
-      //   console.log(data)
-      // })
-    // }
-    // this.curUsers[0][i]['password'] = this.newPassword;
-    // this.appcomp.saveUsername(this.userName);
-    // this.appcomp.savePassword(this.newPassword);
-    // this.appcomp.saveEmail(this.email);
-    // this.changePasswordService.updatePassword(this.newPassword, this.email);
-
-    // this.router.navigate(['/profile'])
   }
 
 }

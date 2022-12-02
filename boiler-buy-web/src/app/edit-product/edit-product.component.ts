@@ -217,7 +217,7 @@ export class EditProductComponent implements OnInit {
       }
     }
 
-    var request = this.http.patch<any>(`http://localhost:8000/api/products/${this.prodId}/`, formData, {observe: "response"});
+    var request = this.http.patch<any>(`api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {
       console.log("Request sent!");
     });

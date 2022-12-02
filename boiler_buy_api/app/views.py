@@ -11,14 +11,45 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
+from django.core.mail import send_mail
+
+from django.core.mail import send_mail
 
 import json
-import datetime
 
 #create your views here
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
+
+class RetrieveUsernameViewSet(viewsets.ModelViewSet):
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
+    lookup_field = "email"
+    lookup_value_regex = "[^/]+"
+
+    def create(self, request):
+        print(request.data.get('username'))
+        print(request.data.get('email'))
+        account = [request.data.get('username'), request.data.get('email')]
+        print(account)
+        RetrieveUsernameViewSet._sendUsernameEmail(account)
+        return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendUsernameEmail(account):
+        send_mail(
+            'Here is your username!',
+            f"""
+            {account[0]}
+            Make sure to write down your username
+            so you do not forget!
+            
+            """,
+            "no-reply@boilerbuy.com",
+            [account[1]],
+            fail_silently=False
+        )
 
 class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
@@ -27,6 +58,9 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
+        print('THIS IS THE REQUEST: ', request)
+        print('REQUEST BODY: ', request.data)
+        print('REQUEST ENDS HERE')
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
 
@@ -34,11 +68,44 @@ class AccountViewSet(viewsets.ModelViewSet):
         newWishlist = Wishlist.objects.create(description=request.data.get('username'))
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
         shop=newShop, wishlist=newWishlist)
+        
+        AccountViewSet._sendVerificationEmail(account)
 
         print('newShop: ', newShop.id)
         print('newWishlist: ', newWishlist.id)
         print('username: ', account)
         return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendVerificationEmail(account):
+        send_mail(
+            'Please Verify Your Account',
+            f"""
+            Welcome to Boiler Buy!
+            Before you can start buying from boilers, please verify your account
+            using the link below:
+            
+            localhost:4200/verify/account/{account.email}
+            """,
+            "no-reply@boilerbuy.com",
+            [account.email],
+            fail_silently=False
+        )
+    
+    @action(detail=True, methods=['patch'])
+    def verify(self, request, email):
+        print(f"email = {email}")
+        account = Account.objects.get(email=email)
+        account.verified = True
+        account.save()
+        
+        return JsonResponse({"success": True })
+    
+    @action(detail=True, methods=['get'])
+    def verified(self, request, email):
+        account = Account.objects.get(email=email)
+        return JsonResponse({'verified': account.verified})
+        
     
     @action(detail=True, methods=['get'])
     def getFromUsername(self, request, pk):
@@ -48,7 +115,6 @@ class AccountViewSet(viewsets.ModelViewSet):
         
         return JsonResponse(account, safe=False)
         
-
     # Test to retrieve image /accounts/<email>/retrieveImages
     @action(detail=True, methods=['get'])
     def retrieveImages(self, request, email):
@@ -562,4 +628,3 @@ class WishlistViewSet(viewsets.ModelViewSet):
             wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
-        #return redirect('http://localhost:8000/api/wishlist/' + str(user.wishlist_id))
