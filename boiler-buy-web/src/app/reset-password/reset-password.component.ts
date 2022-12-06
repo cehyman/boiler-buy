@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-reset-password',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -20,6 +21,14 @@ export class ResetPasswordComponent implements OnInit {
     // email sent!
 
     // redirect to special-reset-password
+
+    let request = this.http.patch(
+      `api/accounts/${this.accountEmail}/sendResetPassword/`,
+      {observe: 'response'}
+    );
+    request.subscribe((response: any) => {
+      console.log(response)
+    });
   }
 
 }

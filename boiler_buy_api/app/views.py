@@ -96,15 +96,15 @@ class AccountViewSet(viewsets.ModelViewSet):
     
     # Test to send email /accounts/<email>/sendResetPassword
     @action(detail=True, methods=['get'])
-    def sendResetPassword(self, request):
+    def sendResetPassword(self, request, email):
+        print(email)
         send_mail(
             'Please reset your Boiler Buy password',
             f"""
             Welcome to Boiler Buy!
-            Please reset your password
-            using the link below:
+            Please reset your password using the link below:
             
-            localhost:4200/accounts/yourEmail/special-reset-password
+            localhost:4200/accounts/{email}/special-reset-password
             """,
             "no-reply@boilerbuy.com",
             ['spabbise@purdue.edu'],
