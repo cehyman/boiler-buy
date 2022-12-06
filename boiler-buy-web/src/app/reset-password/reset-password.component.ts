@@ -12,4 +12,14 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  accountEmail:String = "";
+
+  reset() {
+    // check if email exists 
+
+    // email sent!
+
+    // redirect to special-reset-password
+  }
+
 }

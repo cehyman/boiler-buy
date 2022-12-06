@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
+from django.core.mail import send_mail
 
 import json
 import datetime
@@ -92,6 +93,24 @@ class AccountViewSet(viewsets.ModelViewSet):
             return JsonResponse({"detail": "Updated."})
         else:
             return JsonResponse(serializer.errors)
+    
+    # Test to send email /accounts/<email>/sendResetPassword
+    @action(detail=True, methods=['get'])
+    def sendResetPassword(self, request):
+        send_mail(
+            'Please reset your Boiler Buy password',
+            f"""
+            Welcome to Boiler Buy!
+            Please reset your password
+            using the link below:
+            
+            localhost:4200/accounts/yourEmail/special-reset-password
+            """,
+            "no-reply@boilerbuy.com",
+            ['spabbise@purdue.edu'],
+            fail_silently=False
+        )
+        return JsonResponse({"detail":"Sent."})
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()

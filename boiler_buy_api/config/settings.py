@@ -19,6 +19,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Settings needed to allow for email verifications
+EMAIL_HOST = 'smtpout.secureserver.net'
+EMAIL_HOST_USER = 'no-reply@boilerbuy.com'
+EMAIL_HOST_PASSWORD = 'sQhefA2GiNCnuGn'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
