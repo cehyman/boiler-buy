@@ -28,7 +28,8 @@ export class UserWishlistComponent implements OnInit {
     this.curruser = <string> this.appcomp.getUsername()
 
     var urlStr = this.activatedRoute.snapshot.url.toString();
-    this.wishlist_id = Number(urlStr.split(',')[1]);
+    this.wishlist_id = <number><unknown>this.appcomp.getWishlistID();
+    //this.wishlist_id = Number(urlStr.split(',')[1]);
 
     if(isNaN(this.wishlist_id)) {
       alert(`Invalid URL "${urlStr}": "${this.wishlist_id}"`);
@@ -45,6 +46,10 @@ export class UserWishlistComponent implements OnInit {
 
       this.products = data.products
 
+      if (this.products.length == 0) {
+
+      }
+
       let i = 0
       for (i = 0; i < this.products.length; i++) {
         console.log("product id: " + this.products[i])
@@ -57,6 +62,10 @@ export class UserWishlistComponent implements OnInit {
         })
       }
     })
+  }
+
+  displayNoItems() {
+    
   }
 
 }

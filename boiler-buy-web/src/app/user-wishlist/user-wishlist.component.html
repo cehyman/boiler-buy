@@ -4,5 +4,12 @@
 
 <h1>{{this.curruser}}'s Wishlist</h1>
 
-<app-product-listing *ngFor="let product of productList; let i = index" [object]="product"></app-product-listing>
+<div class="noItemsMsg" *ngIf="productList.length == 0; else productsFound">
+    <p>
+        No items in wishlist!
+    </p>
+</div>
 
+<ng-template #productsFound>
+    <app-product-listing *ngFor="let product of productList; let i = index" [object]="product"></app-product-listing>
+</ng-template>  
