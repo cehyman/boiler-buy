@@ -23,12 +23,19 @@ class ProductImageSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
-        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews', 'wishlist']
+        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews', 'wishlist', 'image']
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
         fields = ['description', 'isVisible', 'products']
+
+class ShopHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShopHistory
+        fields = ['shop', 'product', 'action', 'dateTime', 'quantity', 'buyer',
+                  'profit', 'productId', 'productName', 'buyerName'
+                  ]
 
 class PurchaseHistorySerializer(serializers.ModelSerializer):
     class Meta:

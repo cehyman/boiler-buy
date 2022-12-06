@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { Product, FilterSearchInput } from '../product-types';
@@ -24,11 +24,22 @@ export class ProductSearchComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';
   loading: boolean = true;
+  sticky: boolean = false;
+  menuPosition: any;
 
-  constructor(private productService: ProductService) { }
+  @ViewChild('stickyMenu') menuElement: ElementRef<HTMLInputElement> = {} as ElementRef;
+  
+
+  constructor(private productService: ProductService) {
+    
+  }
 
   ngOnInit(): void {
     this.getProductList();
+  }
+
+  ngAfterViewInit() {
+    this.menuPosition = this.menuElement.nativeElement.offsetTop;
   }
 
   getProductList() {
@@ -69,6 +80,16 @@ export class ProductSearchComponent implements OnInit {
       this.products = productList;
       this.loading = false;
     })
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  handleScroll() {
+    const windowScroll = window.pageYOffset;
+    if (windowScroll >= this.menuPosition -15) {
+      this.sticky = true;
+    } else {
+      this.sticky = false;
+    }
   }
 
 }

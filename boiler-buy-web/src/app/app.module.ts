@@ -62,7 +62,7 @@ import { CurrencyPipe } from '@angular/common';
 import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginComponent } from './login/login.component';
-import { EditProductComponent } from './edit-product/edit-product.component';
+import { ConfirmDeleteDialog, EditProductComponent } from './edit-product/edit-product.component';
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { ChangeUsernameComponent } from './change-username/change-username.component';
 import { SellerReviewComponent } from './seller-review/seller-review.component';
@@ -70,7 +70,10 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { PictureCarouselComponent } from './picture-carousel/picture-carousel.component';
 import { SiteMenuComponent } from './site-menu/site-menu.component';
-import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.component';
+import { RecentlyViewedItemsComponent } from './recently-viewed-items/recently-viewed-items.component';
+import { UserShopComponent } from './user-shop/user-shop.component';
+import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
+import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +99,11 @@ import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.com
     PictureCarouselComponent,
     ProductDetailsComponent,
     SiteMenuComponent,
-    DarkModeToggleComponent,
+    RecentlyViewedItemsComponent,
+    UserShopComponent,
+    ConfirmDeleteDialog,
+    ChangeProfilePicComponent,
+    ShopHistoryViewComponent,
   ],
   imports: [
     FormsModule,
@@ -141,7 +148,8 @@ import { DarkModeToggleComponent } from './dark-mode-toggle/dark-mode-toggle.com
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatNativeDateModule,
+    MatNativeDateModule
+    
   ],
   providers: [CurrencyPipe],
   bootstrap: [AppComponent],

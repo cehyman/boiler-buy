@@ -6,6 +6,7 @@ import { Product } from '../product-types';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-product-listing',
@@ -14,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductListingComponent implements OnInit {
   @Input() object: Product = {id: 0, name: "", priceDollars: 0, sellerRating: 0, sellerRatingCount: 0} as Product;
+  @Input() showButton: boolean = true;
 
   public globals: Globals = new Globals;
   products:any = []
@@ -65,8 +67,11 @@ export class ProductListingComponent implements OnInit {
 
   viewDetails() {
     // console.log("redirect")
-    console.log(this.object.id)
-    this.router.navigate(['/products/' + this.object.id])
+    this.productService.addProductToViewHistory(this.object.id).subscribe(() => {
+      console.log("added "+ this.object.id + " to view history");
+      this.router.navigate(['/products/' + this.object.id])
+    })
+    
   }
 
   openDialog(): void {
@@ -76,8 +81,11 @@ export class ProductListingComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        this.productService.addProductToViewHistory(this.object.id).subscribe(() => {
+          console.log("added "+ this.object.id + " to view history");
+        });
         console.log(result);
-        if (result != 0) {
+        if (result != undefined && result != 0) {
           this.purchase(result);
         }
       });
@@ -124,7 +132,7 @@ export class ProductListingComponent implements OnInit {
       formData.append("username", this.curruser)
       formData.append("request", "add")
 
-      var request = this.http.post<any>("http://localhost:8000/api/wishlist/", formData, {observe: "response"});
+      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/wishlist/", formData, {observe: "response"});
       request.subscribe((data:any) => {
         console.log(data)
 
@@ -158,7 +166,7 @@ export class ProductListingComponent implements OnInit {
       formData.append("username", this.curruser)
       formData.append("request", "remove")
 
-      var request = this.http.post<any>("http://localhost:8000/api/wishlist/", formData, {observe: "response"});
+      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/wishlist/", formData, {observe: "response"});
 
       request.subscribe((data:any) => {
         console.log(data)
@@ -174,7 +182,7 @@ export class ProductListingComponent implements OnInit {
   }
 
   getUserWishlist() {
-    var request = this.http.get<any>('http://localhost:8000/api/accounts/'.concat(this.curremail).concat("/"))
+    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.curremail).concat("/"))
     console.log(this.curremail)
     request.subscribe(data => {
       let wishlistLink = data['wishlist']
@@ -183,7 +191,7 @@ export class ProductListingComponent implements OnInit {
       console.log("id: " + this.wishlist_id)
 
       //get the user's wishlist product array
-      var request = this.http.get<any>('http://localhost:8000/api/wishlist/' + this.wishlist_id, {observe: "body"})
+      var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/wishlist/' + this.wishlist_id, {observe: "body"})
       request.subscribe(data => {
       console.log(data)
       this.products = data.products

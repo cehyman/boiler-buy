@@ -1,8 +1,12 @@
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
+import { Globals } from '../globals';
+import { AppComponent } from '../app.component';
 
 
 @Component({
@@ -11,6 +15,14 @@ import { PictureUploadComponent } from '../picture-upload/picture-upload.compone
   styleUrls: ['./edit-product.component.css']
 })
 export class EditProductComponent implements OnInit {
+  public globals: Globals = new Globals;
+
+  private appcomp: AppComponent = new AppComponent();
+
+  curruser:string = ''
+  currpass:string = ''
+  curremail:string = ''
+
   name: string = '';
   price: string = '';
   shipPrice: string = '';
@@ -28,10 +40,25 @@ export class EditProductComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private currencyPipe: CurrencyPipe, 
-    private http: HttpClient
+    private http: HttpClient,
+    public dialog: MatDialog,
+    private router: Router,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    console.log("Starting value of gloabl username is %s", this.globals.username)
+    console.log("But value of saved username in session saver is $s",this.appcomp.getUsername())
+    this.globals.username = <string> this.appcomp.getUsername()
+    
+    if (this.appcomp.getUsername()) {
+      this.curruser = <string> this.appcomp.getUsername()
+    } else {
+      this.curruser = "Username"
+    }
+
+    this.currpass = <string> this.appcomp.getPassword()
+    this.curremail = <string> this.appcomp.getEmail()
+
     // Get the product ID of the product we need to edit
     var urlStr = this.activatedRoute.snapshot.url.toString();
     var id: number = Number(urlStr.split(',')[1]);
@@ -45,6 +72,7 @@ export class EditProductComponent implements OnInit {
   }
 
   loadProduct(id: number) {
+   
     console.log(`Loading product with id "${id}"`);
     
     var request = this.http.get<any>(`api/products/${id}`, {observe: "body"});
@@ -146,6 +174,7 @@ export class EditProductComponent implements OnInit {
     formData.append("canShip", `${this.canShip}`);
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("brand", this.brand);
+    formData.append("username", this.curruser);
 
     var request = this.http.patch<any>(`/api/products/${this.prodId}/`, formData, {observe: "response"});
     request.subscribe((data: any) => {
@@ -202,5 +231,44 @@ export class EditProductComponent implements OnInit {
       });
     }
 
+  }
+
+  confirmDelete() {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialog, {
+      width: '75wh',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result', result);
+      if (result != undefined && result) {
+        this.deleteAd();
+      }
+    });
+  }
+
+  deleteAd() {
+    console.log('placeholder for deleting the ad');
+    //send delete request
+    this.http.delete(`/api/products/${this.prodId}/`).subscribe((response) => {
+      alert('Product deleted successfully.');
+      this.router.navigate(['/profile/'])
+    }, (error) => {
+      console.log(error);
+      alert('There was an error. Refresh and try again.');
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'confirm-delete-dialog.html',
+})
+export class ConfirmDeleteDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDeleteDialog>,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

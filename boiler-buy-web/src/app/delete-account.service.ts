@@ -5,10 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DeleteAccountService {
-  //URL:string = "https://localhost:8000/api/accounts/"
 
   deleteUser(email:string) {
-    var accountURL = "http://localhost:8000/api/accounts/".concat(email).concat("/");
+    var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/".concat(email).concat("/");
     return this.http.delete(accountURL)
   }
 

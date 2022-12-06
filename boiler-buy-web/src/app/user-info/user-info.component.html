@@ -3,21 +3,21 @@
 <div class = "profile-card">
 
     <div class="profile-pic">
-        <img class="round" src="https://api-private.atlassian.com/users/1a39e945ae51e44675e6c70f682173c4/avatar" alt="user" /> 
+        <img class="round" src="{{imageURL}}" alt="user" />
     </div>
 
-    <div>
+    <div class="username">
         <label class="form-control-label" for="input-username">{{curruser}}</label>
     </div> 
-
+    
     <div>
-        <label class="form-control-label" for="input-password">Password</label>
+        <label class="form-control-label" for="input-password">Password: </label>
         <input type="text" id="input-password" class="form-control form-control-alternative" placeholder="Password"
             value={{currpass}} readonly>
     </div>
 
     <div>
-        <label class="form-control-label" for="input-purdue-email">Email</label>
+        <label class="form-control-label" for="input-purdue-email">Email: </label>
         <input type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="xxxx@purdue.edu"
             value={{curremail}} readonly>
     </div>
@@ -38,9 +38,8 @@
     <br>
 
     <div>
-        <button routerLink="/change-username" class="change-username-button">Change Username</button>
-        <button routerLink="/change-password" class="change-password-button">Change Password</button>
-        <button (click)="logoutAccount()" class="logout-acc-button">Logout</button>
-        <button (click)="deleteAccount(curremail)" class="delete-acc-button">Delete Account</button>
+        <a mat-raised-button color="accent" routerLink="/change-username" class="change-username-button">Change Username</a>
+        <a mat-raised-button color="accent" routerLink="/change-password" class="change-password-button">Change Password</a>
+        <a mat-raised-button color="warn" (click)="deleteAccount(curremail)" class="delete-acc-button">Delete Account</a>
     </div>
 </div>
