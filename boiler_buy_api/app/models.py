@@ -32,6 +32,8 @@ class Product(models.Model):
     canMeet = models.BooleanField()
     brand = models.CharField(max_length=128, default="")
     image = models.FileField(null=True, blank=True, upload_to='products/')
+    locations = ArrayField(models.CharField(max_length=200), default=list)
+    allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)
 
 class ProductImage(models.Model):
     def uploadTo(self, filename):
@@ -59,6 +61,7 @@ class Account(models.Model):
     sellerReviews = ArrayField(models.CharField(max_length=500), default=list)
     wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, null=True, db_column="wishlist_id")
     image = models.ImageField(null=True, blank=False, upload_to='accounts/')
+    verified = models.BooleanField(null=False, blank=True, default=False)
 
     def __str__(self):
         return str(self.username)

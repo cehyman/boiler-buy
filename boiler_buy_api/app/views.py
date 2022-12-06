@@ -116,7 +116,9 @@ class ProductViewSet(viewsets.ModelViewSet):
             description = request.data.get('description'),
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
-            brand = request.data.get('brand')
+            brand = request.data.get('brand'),
+            locations = request.data.getlist('locations'),
+            allowOutOfStock = bool(request.data.get('allowOutOfStock'))
         )
         print('creating product with product id', product.id)
 
@@ -151,7 +153,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         shop = Shop.objects.get(id=user.shop_id)
         
         # Add the creation of this product to the user's history
-        ShopHistory.newEdit(shop, product)
+        # ShopHistory.newEdit(shop, product)
         
         return result
     
@@ -559,4 +561,3 @@ class WishlistViewSet(viewsets.ModelViewSet):
             wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
-        #return redirect('http://localhost:8000/api/wishlist/' + str(user.wishlist_id))

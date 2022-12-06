@@ -16,6 +16,7 @@ import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
+import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full' },
@@ -33,7 +34,8 @@ const routes: Routes = [
   { path: 'wishlist/:id', component: UserWishlistComponent},
   { path: 'shop/:id', component: UserShopComponent},
   { path: 'change-profile-pic', component: ChangeProfilePicComponent},
-  { path: 'shop/:id/history', component: ShopHistoryViewComponent}
+  { path: 'shop/:id/history', component: ShopHistoryViewComponent},
+  { path: 'retrieve-username', component: RetrieveUsernameComponent}
 ];
 
 @NgModule({

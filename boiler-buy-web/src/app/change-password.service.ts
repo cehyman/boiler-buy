@@ -13,7 +13,7 @@ export class ChangePasswordService {
         var body = {
           password: newPassword
         };
-        var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/".concat(email).concat("/");
+        var accountURL = "api/accounts/".concat(email).concat("/");
         var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
     
         patchRequest.subscribe((data: any) => {
