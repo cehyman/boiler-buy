@@ -53,8 +53,10 @@ export class RetrieveUsernameComponent implements OnInit {
     }
     if (!emailFound) {
       console.log("Invalid Email")
+      alert("Invalid Email")
     } else if (emailFound && !passCorrect) {
       console.log("Incorrect password!")
+      alert("Incorrect Password")
     } else {
       console.log("Email Sent")
       //Email Logic
@@ -69,6 +71,8 @@ export class RetrieveUsernameComponent implements OnInit {
   
       request.subscribe((data: any) => {
         console.log(data)
+        alert("Email Sent!")
+        this.router.navigate(['/login'])
       })
     }
   }
