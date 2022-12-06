@@ -133,7 +133,7 @@ export class ProductDetailsComponent implements OnInit {
 
   saveTag(id: string) {
     console.log(id)
-    let request = this.http.get<any>('http://localhost:8000/api/accounts/'+this.curruser+'/', {observe: "body"});
+    let request = this.http.get<any>('api/accounts/'+this.curruser+'/', {observe: "body"});
     request.subscribe((data: any) => {
       console.log(data)
       this.userTags = data["savedTags"]
