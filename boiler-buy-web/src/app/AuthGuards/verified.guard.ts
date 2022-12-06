@@ -21,8 +21,6 @@ export class VerifiedGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-    return true;
-
     let email = this.appcomp.getEmail();
     
     let request = this.http.get(
@@ -41,8 +39,8 @@ export class VerifiedGuard implements CanActivate {
       return true;
     }
     else {
-      console.log("User not verified. Redirecting to login");
-      this.router.navigate(['/login']);
+      console.log("User not verified. Redirecting to unverified page");
+      this.router.navigate(['not-verified']);
       return false;
     }
   }

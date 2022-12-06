@@ -76,6 +76,7 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { NotVerifiedComponent } from './not-verified/not-verified.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { VerifyAccountComponent } from './verify-account/verify-account.componen
     ShopHistoryViewComponent,
     RetrieveUsernameComponent,
     VerifyAccountComponent,
+    NotVerifiedComponent,
   ],
   imports: [
     FormsModule,

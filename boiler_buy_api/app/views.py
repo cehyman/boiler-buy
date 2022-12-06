@@ -61,6 +61,12 @@ class AccountViewSet(viewsets.ModelViewSet):
         )
     
     @action(detail=True, methods=['patch'])
+    def sendVerificationEmail(self, request, email):
+        account = Account.objects.get(email=email)
+        AccountViewSet._sendVerificationEmail(account)
+        return JsonResponse({"success": True })
+    
+    @action(detail=True, methods=['patch'])
     def verify(self, request, email):
         print(f"email = {email}")
         account = Account.objects.get(email=email)

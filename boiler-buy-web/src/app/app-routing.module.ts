@@ -20,12 +20,14 @@ import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { LoginGuard } from './AuthGuards/login.guard';
 import { VerifiedGuard } from './AuthGuards/verified.guard';
+import { NotVerifiedComponent } from './not-verified/not-verified.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full'},
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'verify/account/:id', component: VerifyAccountComponent,          canActivate: [LoginGuard]},
+  { path: 'verify/:id', component: VerifyAccountComponent,          canActivate: [LoginGuard]},
+  { path: 'not-verified', component: NotVerifiedComponent,        canActivate: [LoginGuard]},
   { path: 'create', component: CreateComponent,                             canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'products/search', component: ProductSearchComponent,             canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'profile', component: ProfileComponent,                           canActivate: [LoginGuard, VerifiedGuard]},
