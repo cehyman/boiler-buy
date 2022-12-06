@@ -17,21 +17,13 @@ export class SellerReviewComponent implements OnInit {
   id: number = -1
   user:string = ""
   ngOnInit(): void {
-    // var accountURL = "http://localhost:8000/api/accounts/".concat("jchen@purdue.edu").concat("/");
-    // var request = this.http.get(accountURL, {observe:'response'});
-    // request.subscribe((data: any) => {
-    //   console.log(data)
-    //   this.reviewCount = data["body"]["sellerRatingCount"]
-    //   this.reviewAvg = data["body"]["sellerRating"]
-    //   this.reviews = data["body"]["sellerReviews"]
-    // })
     var urlStr = this.activatedRoute.snapshot.url.toString();
     this.id = Number(urlStr.split(',')[1]);
     if(isNaN(this.id)) {
       alert(`Invalid URL "${urlStr}": "${this.id}"`);
       return;
     }
-    var accountURL = "https://boilerbuy-api.azurewebsites.net/api/products/"+this.id+"/";
+    var accountURL = "api/products/"+this.id+"/";
     var request = this.http.get(accountURL, {observe:'response'});
     request.subscribe((data: any) => {
       console.log(data)
@@ -67,7 +59,7 @@ export class SellerReviewComponent implements OnInit {
       "sellerRatingCount": this.reviewCount,
       "sellerRating": this.reviewAvg
     };
-    var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/".concat(this.email).concat("/");
+    var accountURL = "api/accounts/".concat(this.email).concat("/");
     var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
     patchRequest.subscribe((data: any) => {
       console.log(data)

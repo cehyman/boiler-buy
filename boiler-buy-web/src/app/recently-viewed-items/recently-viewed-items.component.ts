@@ -19,7 +19,7 @@ export class RecentlyViewedItemsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var request = this.http.get('http://localhost:8000/api/viewHistory');
+    var request = this.http.get('api/viewHistory');
 
     request.subscribe((data:any) => {
       console.log(data);

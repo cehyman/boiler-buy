@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
+    var request = this.http.get('api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);
