@@ -53,12 +53,27 @@ export class RetrieveUsernameComponent implements OnInit {
     }
     if (!emailFound) {
       console.log("Invalid Email")
+      alert("Invalid Email")
     } else if (emailFound && !passCorrect) {
       console.log("Incorrect password!")
+      alert("Incorrect Password")
     } else {
       console.log("Email Sent")
       //Email Logic
       console.log(tempUsername)
+      console.log(this.accountEmail)
+      var body = {
+        username: tempUsername,
+        email: this.accountEmail
+      };
+  
+      var request = this.http.post<any>("api/retrieveUsername/", body, {observe: 'response'});
+  
+      request.subscribe((data: any) => {
+        console.log(data)
+        alert("Email Sent!")
+        this.router.navigate(['/login'])
+      })
     }
   }
 
