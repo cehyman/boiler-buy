@@ -23,7 +23,7 @@ export class CreateGroupAdComponent implements OnInit {
   products: any = []
   productList: Product[] = []
 
-  testList: GroupAdInput[] = []
+  groupAdList: GroupAdInput[] = []
 
   name: string = '';
 
@@ -46,7 +46,7 @@ export class CreateGroupAdComponent implements OnInit {
 
   submit() {
 
-    var filterAds = this.testList.filter(test => test.checked).map(test => test.product_id)
+    var filterAds = this.groupAdList.filter(ad => ad.checked).map(ad => ad.product_id)
     //console.log(filterAds)
 
     var formData = new FormData();
@@ -88,7 +88,7 @@ export class CreateGroupAdComponent implements OnInit {
           //this.productList.push(data)
 
           let test_item = {name: data['name'], product_id: data['id'], checked:false}
-          this.testList.push(test_item)
+          this.groupAdList.push(test_item)
           console.log(test_item)
         })
       }
