@@ -33,7 +33,7 @@ export class ChangePasswordComponent implements OnInit {
       this.router.navigate(['/login'])
     }
     this.userName = this.appcomp.getUsername() || ""
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
+    var request = this.http.get('http://127.0.0.1:8000/api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       this.curUsers.push(data);

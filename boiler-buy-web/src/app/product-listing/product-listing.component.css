@@ -1,11 +1,14 @@
 .card {
-    border-style: solid;
+    border: 2px solid darkgrey;;
     border-width: 1px;
+    border-radius: 25px;
     padding: 10px;
+    margin: 2%;
 }
 
 .name_seller_rating {
     display: flex;
+
     flex-direction: column;
 }
 
@@ -30,7 +33,7 @@
 .purchase {
     display: flex; 
     justify-content: right;
-    margin: 1vw;
+    margin: 1%;
 }
 
 h2 {

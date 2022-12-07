@@ -1,29 +1,42 @@
 <app-site-menu></app-site-menu>
-<mat-drawer-container autosize>
+<mat-drawer-container autosize> 
 
-    <mat-drawer #drawer mode="side">
-        <div class="filter-section" >
+    <div class="search-bar-container" #stickyMenu [class.sticky]="sticky">
+        <button class="filter-button" mat-icon-button color="primary" (click)="drawer.toggle()">
+            <mat-icon>filter_list</mat-icon>
+        </button>
+
+        <input class="search-bar" matInput (keyup.enter)="buttonSearchClick()" placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
+
+        <button class="search-button" mat-icon-button color="primary" (click)="buttonSearchClick()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+    
+    <mat-drawer #drawer mode="side" >
+        <div class="filter-section">
             <mat-card>
-                <mat-card-content #stickyMenu>
+                <mat-card-content >
                     <h2>Filters</h2>
                     <section>
                         <mat-checkbox>Min. Price: </mat-checkbox>
-                        <input [(ngModel)] = "filters.minPrice" matInput type="number" style="float: right;"><br>
+                        <input [(ngModel)] = "filters.minPrice" matInput type="number" style="float: right; width:35%; margin-right:32%"><br>
                         <mat-checkbox>Max. Price: </mat-checkbox>
-                        <input [(ngModel)] = "filters.maxPrice" matInput type="number" style="float: right;"><br>
+                        <input [(ngModel)] = "filters.maxPrice" matInput type="number" style="float: right; width:35%; margin-right:32%"><br>
                         <mat-checkbox>Min. Seller Rating: </mat-checkbox>
-                        <input [(ngModel)] = "filters.minSellerRating" matInput type="number" style="float: right;"><br>
+                        <input [(ngModel)] = "filters.minSellerRating" matInput type="number" style="float: right; width:35%; margin-right:18%"><br>
                         <mat-checkbox>Max. Seller Rating: </mat-checkbox>
-                        <input [(ngModel)] = "filters.maxSellerRating" matInput type="number" style="float: right;">
+                        <input [(ngModel)] = "filters.maxSellerRating" matInput type="number" style="float: right; width:35%; margin-right:18%">
                         <div class="form-group">
                             <label for="types">Types:</label>
                             <div *ngFor="let type of types; let i = index">
                                 <label>
-                                    <input type="checkbox"
+                                    <mat-checkbox
                                            name="types"
                                            value="{{type.value}}"
-                                           [(ngModel)]="type.checked"/>
+                                           [(ngModel)]="type.checked">
                                     {{type.name}}
+                                </mat-checkbox>
                                 </label>
                             </div>
                         </div>
@@ -31,11 +44,12 @@
                             <label for="brands">Brands:</label>
                             <div *ngFor="let brand of brands; let i = index">
                                 <label>
-                                    <input type="checkbox"
+                                    <mat-checkbox
                                            name="brands"
                                            value="{{brand.value}}"
-                                           [(ngModel)]="brand.checked"/>
+                                           [(ngModel)]="brand.checked">
                                     {{brand.name}}
+                                    </mat-checkbox>
                                 </label>
                             </div>
                         </div>
@@ -48,18 +62,7 @@
 
     <br>
 
-    <div class="search-bar-container" #stickyMenu [class.sticky]="sticky">
 
-        <button class="icon" mat-icon-button color="primary" (click)="drawer.toggle()">
-            <mat-icon>filter_list</mat-icon>
-        </button>
-
-        <input class="search-bar" matInput (keyup.enter)="buttonSearchClick()" placeholder="Search Products" name="search" [(ngModel)]= "filters.name">
-
-        <button class="icon" mat-icon-button color="primary" (click)="buttonSearchClick()" style="position: fixed; right: 0;">
-            <mat-icon>search</mat-icon>
-        </button>
-    </div>
 
     <br>
     

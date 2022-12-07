@@ -48,7 +48,7 @@ export class ProductService {
       "productID": productID,
       "quantity": quantity
     }
-    var request = this.http.post('https://boilerbuy-api.azurewebsites.net/api/purchaseHistory/', body);
+    var request = this.http.post('http://127.0.0.1:8000/api/purchaseHistory/', body);
     return request;
   }
 

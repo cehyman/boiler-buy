@@ -54,7 +54,7 @@ export class SiteMenuComponent implements OnInit {
   }
 
   routeUserWishlist() {
-    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.currEmail).concat("/"))
+    var request = this.http.get<any>('http://127.0.0.1:8000/api/accounts/'.concat(this.currEmail).concat("/"))
     console.log(this.currEmail)
     request.subscribe(data => {
       this.wishlistLink = data['wishlist']

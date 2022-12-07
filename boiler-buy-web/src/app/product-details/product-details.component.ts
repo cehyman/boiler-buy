@@ -37,7 +37,7 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
     console.log(this.id)
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/products/' + this.id, {observe: "body"})
+    var request = this.http.get('http://127.0.0.1:8000/api/products/' + this.id, {observe: "body"})
     let i = 0
     request.subscribe((data: any) => {
       // console.log(data)

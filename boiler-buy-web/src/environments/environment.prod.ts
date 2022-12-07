@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: "https://boiler-buy-frontend.azurewebsites.net/"
+  baseUrl: " http://127.0.0.1:8000/"
 };

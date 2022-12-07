@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit{
         sellerReviews: []
       };
   
-      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/accounts/", body, {observe: 'response'});
+      var request = this.http.post<any>("http://127.0.0.1:8000/api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)
