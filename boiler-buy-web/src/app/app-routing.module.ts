@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'shop/:id/history', component: ShopHistoryViewComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'retrieve-username', component: RetrieveUsernameComponent},
-  { path: 'special-reset-password', component: SpecialResetPasswordComponent}
+  { path: 'special-reset-password/:id', component: SpecialResetPasswordComponent}
 ];
 
 @NgModule({

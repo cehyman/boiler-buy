@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { ChangePasswordService } from '../change-password.service';
 
@@ -22,12 +22,18 @@ export class SpecialResetPasswordComponent implements OnInit {
 
 
   constructor (
-    private router:Router, 
+    private router:Router,
+    private activatedRoute: ActivatedRoute, 
     private changePasswordService: ChangePasswordService, 
     private http:HttpClient) { }
 
+    private id: string = ""
+
   ngOnInit(): void {
-    this.email = this.appcomp.getEmail() || ""
+    var urlStr = this.activatedRoute.snapshot.url.toString();
+    this.id = urlStr.split(',')[1];
+    console.log(this.id)
+    this.email = this.id
     console.log("The email is ")
     var request = this.http.get('api/accounts/')
     request.subscribe((data: any) => {
@@ -37,7 +43,7 @@ export class SpecialResetPasswordComponent implements OnInit {
 
   updatePasswordInfo() {
     console.log(this.email)
-    if (this.userName.length == 0 || this.newPassword.length == 0) {
+    if (this.repeatPassword.length == 0 || this.newPassword.length == 0) {
       alert("All fields must be filled out.")
       return;
     }
@@ -47,19 +53,6 @@ export class SpecialResetPasswordComponent implements OnInit {
     }
     let i = 0
     console.log(this.curUsers[0].length)
-    // for (i = 0; i < this.curUsers[0].length; i++) {
-    //   console.log(this.userName)
-    //   console.log(this.curUsers[0][i]['username'])
-    //   console.log(this.email == this.curUsers[0][i]['email'])
-    //   console.log(this.curUsers[0][i]['email'])
-    //   console.log(this.curUsers[0][i]['password'])
-    //   if(this.userName == this.curUsers[0][i]['username']) {
-    //     this.email = this.curUsers[0][i]['email']
-    //     break;
-    //   }
-    // }
-    // this.curUsers[0][i]['password'] = this.newPassword;
-    // this.appcomp.saveUsername(this.userName);
     this.appcomp.savePassword(this.newPassword);
     this.appcomp.saveEmail(this.email);
     this.changePasswordService.updatePassword(this.newPassword, this.email); 
