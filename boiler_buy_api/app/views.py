@@ -107,7 +107,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             localhost:4200/accounts/{email}/special-reset-password
             """,
             "no-reply@boilerbuy.com",
-            ['spabbise@purdue.edu'],
+            [email],
             fail_silently=False
         )
         return JsonResponse({"detail":"Sent."})

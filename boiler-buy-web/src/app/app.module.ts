@@ -76,6 +76,7 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ChangeProfilePicComponent,
     ShopHistoryViewComponent,
     RetrieveUsernameComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SpecialResetPasswordComponent
   ],
   imports: [
     FormsModule,

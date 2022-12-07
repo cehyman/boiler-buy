@@ -18,6 +18,7 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full' },
@@ -37,7 +38,8 @@ const routes: Routes = [
   { path: 'change-profile-pic', component: ChangeProfilePicComponent},
   { path: 'shop/:id/history', component: ShopHistoryViewComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
-  { path: 'retrieve-username', component: RetrieveUsernameComponent}
+  { path: 'retrieve-username', component: RetrieveUsernameComponent},
+  { path: 'special-reset-password', component: SpecialResetPasswordComponent}
 ];
 
 @NgModule({
