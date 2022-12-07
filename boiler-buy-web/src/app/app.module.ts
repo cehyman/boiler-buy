@@ -106,6 +106,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ConfirmDeleteDialog,
     ChangeProfilePicComponent,
     ShopHistoryViewComponent,
+    RetrieveUsernameComponent,
+    ResetPasswordComponent
   ],
   imports: [
     FormsModule,

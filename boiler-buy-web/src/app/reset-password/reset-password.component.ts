@@ -22,7 +22,7 @@ export class ResetPasswordComponent implements OnInit {
 
     // redirect to special-reset-password
 
-    let request = this.http.patch(
+    let request = this.http.get(
       `api/accounts/${this.accountEmail}/sendResetPassword/`,
       {observe: 'response'}
     );
