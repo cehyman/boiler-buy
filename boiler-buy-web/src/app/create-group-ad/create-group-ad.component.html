@@ -1,0 +1,31 @@
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<app-site-menu></app-site-menu>
+<div class="header">
+    <h1>Create Group Ad</h1>
+</div>
+<div class="create">
+    <form class="create-form">
+        <div class="inputContainer">
+            <mat-form-field class="groupAdInputBox" appearance="fill">
+                <mat-label>Group Name</mat-label>
+                <input matInput [(ngModel)]="name" type="text" name="name" required>
+            </mat-form-field><br>
+
+            <div class="groupAdInputCheckbox" appearance="fill">
+                <mat-label><b>My Ads</b></mat-label><br><br>
+                <ng-container *ngFor="let item of testList">
+                    <label>
+                        <input type="checkbox"
+                               name="item"
+                               value="{{item.product_id}}"
+                               [(ngModel)]="item.checked"/>
+                        {{item.name}}
+                    </label><br>
+                    <!-- <mat-checkbox> {{item.name}} </mat-checkbox><br> -->
+                </ng-container>
+            </div>
+
+            <a mat-raised-button class="submitButton" color="accent" (click)="submit()" type="submit">Create Group Ad</a>
+        </div>
+    </form>
+</div>

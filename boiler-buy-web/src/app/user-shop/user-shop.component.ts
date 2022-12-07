@@ -91,4 +91,8 @@ export class UserShopComponent implements OnInit {
     });
   }
 
+  routeCreateGroupAd() {
+    this.router.navigate(['/create-group-ad'])
+  }
+
 }

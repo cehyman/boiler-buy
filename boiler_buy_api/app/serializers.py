@@ -20,6 +20,11 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ['image', 'product']
 
+class GroupAdsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupAds
+        fields = ['email', 'name', 'products']
+
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account

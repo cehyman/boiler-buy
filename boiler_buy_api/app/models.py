@@ -51,6 +51,11 @@ class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')
     products = models.ManyToManyField("Product")
 
+class GroupAds(models.Model):
+    email = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    products = models.ManyToManyField("Product")
+
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)

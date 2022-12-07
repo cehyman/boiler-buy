@@ -46,3 +46,9 @@ export interface FilterSearchInput {
     tags: string[] | null
 }
 
+export interface GroupAdInput {
+    name: string,
+    product_id: number,
+    checked: boolean
+}
+

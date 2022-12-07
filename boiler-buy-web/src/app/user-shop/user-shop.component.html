@@ -1,5 +1,9 @@
 <app-site-menu></app-site-menu>
-<h1>{{this.curruser}}'s Shop</h1>
+
+<div class="header">
+    <h1>{{this.curruser}}'s Shop</h1>
+    <button (click)="routeCreateGroupAd()" mat-raised-button color="accent">Create Grouped Ad</button>
+</div>
 
 <div *ngFor="let product of productList; let i = index" style="display: flex;">
     <div style="width: 85%;">

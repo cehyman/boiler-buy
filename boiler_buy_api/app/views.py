@@ -526,6 +526,10 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
         
         return toSend
 
+class GroupAdsViewSet(viewsets.ModelViewSet):
+    queryset = GroupAds.objects.all()
+    serializer_class = GroupAdsSerializer
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer

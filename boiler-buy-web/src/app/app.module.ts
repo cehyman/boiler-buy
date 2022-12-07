@@ -75,6 +75,8 @@ import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
+import { GroupadListingComponent } from './groupad-listing/groupad-listing.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +108,8 @@ import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username
     ChangeProfilePicComponent,
     ShopHistoryViewComponent,
     RetrieveUsernameComponent,
+    CreateGroupAdComponent,
+    GroupadListingComponent,
   ],
   imports: [
     FormsModule,
