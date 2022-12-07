@@ -530,6 +530,11 @@ class GroupAdsViewSet(viewsets.ModelViewSet):
     queryset = GroupAds.objects.all()
     serializer_class = GroupAdsSerializer
 
+    def list(self, request):
+        data = GroupAds.objects.values()
+        return JsonResponse(list(data), safe=False)
+
+
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()
     serializer_class = WishlistSerializer

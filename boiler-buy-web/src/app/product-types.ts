@@ -52,3 +52,13 @@ export interface GroupAdInput {
     checked: boolean
 }
 
+export interface GroupAdObj {
+    id: number
+    name: string,
+    email: string,
+    products: number[]
+}
+
+export interface GroupAdList extends Array<GroupAdObj> { }
+
+

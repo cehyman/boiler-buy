@@ -78,6 +78,7 @@
             </mat-card>
 
             <!-- basically a for loop for each element in the array 'products' -->
+            <app-groupad-listing *ngFor="let ad of groupAds; let i = index" [object]="ad"></app-groupad-listing>
             <app-product-listing *ngFor="let product of products; let i = index" [object]="product"></app-product-listing>
         </div>
     </div>

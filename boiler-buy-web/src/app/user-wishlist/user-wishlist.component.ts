@@ -46,10 +46,6 @@ export class UserWishlistComponent implements OnInit {
 
       this.products = data.products
 
-      if (this.products.length == 0) {
-
-      }
-
       let i = 0
       for (i = 0; i < this.products.length; i++) {
         console.log("product id: " + this.products[i])

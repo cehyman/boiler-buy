@@ -77,6 +77,7 @@ import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
 import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
 import { GroupadListingComponent } from './groupad-listing/groupad-listing.component';
+import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,7 @@ import { GroupadListingComponent } from './groupad-listing/groupad-listing.compo
     RetrieveUsernameComponent,
     CreateGroupAdComponent,
     GroupadListingComponent,
+    GroupadDetailsComponent,
   ],
   imports: [
     FormsModule,
