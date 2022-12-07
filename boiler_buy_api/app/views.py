@@ -25,6 +25,35 @@ class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
 
+class RetrieveUsernameViewSet(viewsets.ModelViewSet):
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
+    lookup_field = "email"
+    lookup_value_regex = "[^/]+"
+
+    def create(self, request):
+        print(request.data.get('username'))
+        print(request.data.get('email'))
+        account = [request.data.get('username'), request.data.get('email')]
+        print(account)
+        RetrieveUsernameViewSet._sendUsernameEmail(account)
+        return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendUsernameEmail(account):
+        send_mail(
+            'Here is your username!',
+            f"""
+            {account[0]}
+            Make sure to write down your username
+            so you do not forget!
+            
+            """,
+            "no-reply@boilerbuy.com",
+            [account[1]],
+            fail_silently=False
+        )
+
 class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
     queryset = Account.objects.all()
@@ -32,6 +61,9 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
+        print('THIS IS THE REQUEST: ', request)
+        print('REQUEST BODY: ', request.data)
+        print('REQUEST ENDS HERE')
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
 
