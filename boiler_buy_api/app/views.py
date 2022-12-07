@@ -62,7 +62,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             'Please Verify Your Account',
             plainMessage,
             'no-reply@boilerbuy.com',
-            ['rnstump@purdue.edu'],
+            [account.email],
             fail_silently=False,
             html_message=htmlMessage
         )
