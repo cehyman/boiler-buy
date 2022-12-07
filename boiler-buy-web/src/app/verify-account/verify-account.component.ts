@@ -18,7 +18,7 @@ export class VerifyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     // Get the email to verify from the path. 
-    let email = this.activatedRoute.snapshot.url.toString().split(',')[2];
+    let email = this.activatedRoute.snapshot.url.toString().split(',')[1];
     console.log(`email: ${email}`);
 
     // Send a request to the backend to verify the email
