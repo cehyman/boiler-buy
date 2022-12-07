@@ -12,6 +12,9 @@ from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+from config.settings import DEBUG
 
 from django.core.mail import send_mail
 
@@ -46,18 +49,22 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     @staticmethod
     def _sendVerificationEmail(account):
+        params = {'link': 
+                    f'localhost:4200/verify/{account.email}' if DEBUG else
+                    f'boiler-buy.azurewebsites.net/verify/{account.email}',
+                  'username': account.username,
+                  'email': account.email
+                 }
+        plainMessage = render_to_string('verify_link.txt', params)
+        htmlMessage = render_to_string('verify_link.html', params)
+        
         send_mail(
             'Please Verify Your Account',
-            f"""
-            Welcome to Boiler Buy!
-            Before you can start buying from boilers, please verify your account
-            using the link below:
-            
-            localhost:4200/verify/account/{account.email}
-            """,
-            "no-reply@boilerbuy.com",
+            plainMessage,
+            'no-reply@boilerbuy.com',
             ['rnstump@purdue.edu'],
-            fail_silently=False
+            fail_silently=False,
+            html_message=htmlMessage
         )
     
     @action(detail=True, methods=['patch'])
