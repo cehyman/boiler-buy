@@ -53,7 +53,7 @@ class WishlistSerializer(serializers.ModelSerializer):
         model = Wishlist
         fields = ['description', 'products']
 
-class ChatMessagesSerializer(serializers.ModelSerializer):
+class ChatMessagesSerializer(serializers.Serializer):
     class Meta:
         model = ChatMessages
         fields = ['sender', 'receiver', 'productID', 'message', 'timestamp']

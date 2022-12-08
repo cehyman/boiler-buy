@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppComponent } from './app.component';
 import { Globals } from './globals';
 import { Observable } from 'rxjs';
-import { ChatMessageItem } from './chat-types';
+import { ChatGroup, ChatMessageItem } from './chat-types';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,25 @@ export class ChatService {
     var request = this.http.post<any>("api/chatMessages/", formData, {observe: "response"});
 
     return request;
+  }
+
+  getUsersChats(data: ChatGroup): Observable<any> {
+    var urlParams = new URLSearchParams();
+    urlParams.set('function', 'getMessageList');
+    urlParams.set('currEmail', data.currEmail);
+    urlParams.set('otherEmail', "" + data.otherEmail);
+    urlParams.set('productID', "" + data.productID);
+
+    return this.http.get("api/chatMessages/?" + urlParams.toString(), {observe:'response'});
+  }
+
+  getMessages(data: ChatGroup): Observable<any> {
+    var urlParams = new URLSearchParams();
+    urlParams.set('function', 'getMessages');
+    urlParams.set('currEmail', data.currEmail);
+    urlParams.set('otherEmail', "" + data.otherEmail);
+    urlParams.set('productID', "" + data.productID);
+
+    return this.http.get("api/chatMessages/?" + urlParams.toString(), {observe:'response'});
   }
 }

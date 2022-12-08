@@ -78,6 +78,7 @@ import { GeneralChatComponent } from './general-chat/general-chat.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
+import { ChatOverviewComponent } from './chat-overview/chat-overview.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +113,7 @@ import { NotVerifiedComponent } from './not-verified/not-verified.component';
     RetrieveUsernameComponent,
     VerifyAccountComponent,
     NotVerifiedComponent,
+    ChatOverviewComponent,
   ],
   imports: [
     FormsModule,

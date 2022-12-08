@@ -1,12 +1,13 @@
 <div style="height: 100%;">
-    <div>
-        <!-- Maybe a header or something here -->
-        <h1>{{id}}</h1>
+    <div class="header">
+        <app-site-menu></app-site-menu>
+        <h1>Product #{{chatInfo.productID}}</h1>
     </div>
 
     <div class="content">
         <!-- Main content -->
         <!-- Put loading wheel here while it loads the conversation -->
+        <!-- Put scroll bar here? -->
 
         <mat-list>
             <div *ngFor="let item of messages; let i = index">

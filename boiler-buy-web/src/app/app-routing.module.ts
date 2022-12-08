@@ -23,6 +23,7 @@ import { LoginGuard } from './AuthGuards/login.guard';
 import { VerifiedGuard } from './AuthGuards/verified.guard';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
 import { VerifyEmailGuard } from './AuthGuards/verify-email.guard';
+import { ChatOverviewComponent } from './chat-overview/chat-overview.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full'},
@@ -45,7 +46,9 @@ const routes: Routes = [
   { path: 'change-profile-pic', component: ChangeProfilePicComponent,       canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'shop/:id/history', component: ShopHistoryViewComponent,          canActivate: [LoginGuard, VerifiedGuard]}, 
   { path: 'chat/:id', component: GeneralChatComponent,                      canActivate: [LoginGuard, VerifiedGuard]},
+  { path: 'chat', component: ChatOverviewComponent,                         canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'retrieve-username', component: RetrieveUsernameComponent,        canActivate: [LoginGuard, VerifiedGuard]},
+  { path: 'chat-window', component: GeneralChatComponent,                         canActivate: [LoginGuard, VerifiedGuard]},
 ];
 
 @NgModule({

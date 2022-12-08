@@ -4,3 +4,9 @@ export interface ChatMessageItem {
     productID: number,
     message: string
 }
+
+export interface ChatGroup {
+    currEmail: string,
+    otherEmail: string | null,
+    productID: number | null,
+}

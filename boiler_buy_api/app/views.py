@@ -659,9 +659,29 @@ class ChatMessagesViewSet(viewsets.ModelViewSet):
         )
         return JsonResponse({'success': True})
 
-    def list(request):
-        print("hi, you tried listing!")
-        data = ChatMessages.objects.all().values()
+    def list(self, request):
+        fun = request.GET.get('function')
+        if (fun == 'getMessageList'):
+            return self.getMessageList(request)
+        elif (fun == 'getMessages'):
+            response = self.getMessages(request)
+            return response
+
+
+    def getMessages(self, request):
+        print(request.GET)
+        currentUser = Account.objects.get(email=request.GET.get('currEmail'))
+        receiver = Account.objects.get(email=request.GET.get('otherEmail'))
+        product = Product.objects.get(id=request.GET.get('productID'))
+        data = ChatMessages.objects.filter(sender=currentUser, receiver=receiver, productID=product).order_by('timestamp').values() | \
+            ChatMessages.objects.filter(sender=receiver, receiver=currentUser, productID=product).order_by('timestamp').values()
+        return JsonResponse(list(data), safe=False)
+
+    def getMessageList(self, request):
+        currentUser = Account.objects.get(email=request.GET.get('currEmail'))
+        data = ChatMessages.objects.filter(sender=currentUser).distinct('sender', 'receiver', 'productID').values() | \
+            ChatMessages.objects.filter(receiver=currentUser).distinct('sender', 'receiver', 'productID').values()
+        
         return JsonResponse(list(data), safe=False)
 
 class SellerProductViewSet(viewsets.ViewSet):
