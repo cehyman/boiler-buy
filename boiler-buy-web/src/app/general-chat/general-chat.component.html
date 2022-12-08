@@ -2,6 +2,8 @@
     <div class="header">
         <app-site-menu></app-site-menu>
         <h1>Product #{{chatInfo.productID}}</h1>
+        <h1 *ngIf="isSeller">You are the seller</h1>
+        <h1 *ngIf="!isSeller">You are the buyer</h1>
     </div>
 
     <div class="content">

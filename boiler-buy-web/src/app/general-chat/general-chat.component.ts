@@ -5,6 +5,7 @@ import { AppComponent } from '../app.component';
 import { ChatMessageItem, ChatGroup } from '../chat-types';
 import { ChatService } from '../chat.service';
 import { Globals } from '../globals';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-general-chat',
@@ -19,11 +20,10 @@ export class GeneralChatComponent implements OnInit {
 
   messages: {name:string, message:string, date:string}[] = [];
   id = -1;
-
-
+  isSeller: boolean = false;
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, 
-    private router: Router, private chatService: ChatService,
+    private router: Router, private chatService: ChatService, private productService: ProductService
     ) { }
 
   ngOnInit(): void {
@@ -32,8 +32,9 @@ export class GeneralChatComponent implements OnInit {
     this.chatInfo.productID = +(this.activatedRoute.snapshot.queryParamMap.get('productID') || "");
 
     //get messages
-    var urlStr = this.activatedRoute.snapshot.url.toString();
-    this.id = Number(urlStr.split(',')[1]);
+    var urlStr = this.activatedRoute.snapshot.queryParamMap;
+    this.id = +(urlStr.get('productID') || -1);
+    console.log('id:' + this.id)
 
     var urlParams = new URLSearchParams();
     urlParams.set('id', "" + this.id)
@@ -51,7 +52,17 @@ export class GeneralChatComponent implements OnInit {
           date: element.timestamp
         })
       });
-    })
+    });
+
+    // determine if the current user is the buyer or the seller
+    this.productService.getProductsSellerEmail(this.id).subscribe((sellerEmail) => {
+      console.log('email: '+ sellerEmail.sellerEmail);
+      if (this.chatInfo.currEmail == sellerEmail.sellerEmail) {
+        this.isSeller = true;
+      } else {
+        this.isSeller = false;
+      }
+    });
   }
 
   sendMessage(message: string) {
