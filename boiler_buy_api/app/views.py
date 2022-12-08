@@ -421,7 +421,6 @@ class ProductViewSet(viewsets.ModelViewSet):
                     # print(account)
                     prod.update(account)
                     return JsonResponse(prod, safe=False)
-        
 
 class ProductImageViewSet(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
@@ -648,13 +647,29 @@ class ChatMessagesViewSet(viewsets.ModelViewSet):
     queryset = ChatMessages.objects.all()
 
     def create(self, request):
-        print('THIS IS THE REQUEST: ', request)
-        print('REQUEST BODY: ', request.data)
-        print('REQUEST ENDS HERE')
-        print(request.data.get('sender'))
-        return JsonResponse({'observe': 'response'})
+        senderObj = Account.objects.get(email=request.data.get('sender'))
+        receiverObj = Account.objects.get(email=request.data.get('receiver'))
+        productObj = Product.objects.get(id=request.data.get('productID'))
 
-    def list(self, request):
+        message = ChatMessages.objects.create(
+            sender=senderObj,
+            receiver=receiverObj,
+            productID=productObj,
+            message=request.data.get('message')
+        )
+        return JsonResponse({'success': True})
+
+    def list(request):
         print("hi, you tried listing!")
         data = ChatMessages.objects.all().values()
         return JsonResponse(list(data), safe=False)
+
+class SellerProductViewSet(viewsets.ViewSet):
+    serializer_class = ProductSerializer
+    queryset = Product.objects.all()
+
+    def list(self, request):
+        prodID = request.GET.get('productID')
+        sellerShop = Shop.objects.filter(products=prodID).values().first()
+        seller = Account.objects.get(shop=sellerShop.get("id"))
+        return JsonResponse({'sellerEmail': seller.email})

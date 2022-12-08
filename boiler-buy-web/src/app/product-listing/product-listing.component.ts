@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AppComponent } from '../app.component';
 import { Globals } from '../globals';
@@ -7,6 +7,9 @@ import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatButton } from '@angular/material/button';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ChatService } from '../chat.service';
+import { ChatMessageItem } from '../chat-types';
 
 @Component({
   selector: 'app-product-listing',
@@ -29,7 +32,9 @@ export class ProductListingComponent implements OnInit {
   fullStars: Array<boolean>;
   emptyStars: Array<boolean>;
 
-  constructor(private productService: ProductService, private router: Router, private http: HttpClient, public dialog: MatDialog) {
+  constructor(private productService: ProductService, private router: Router,
+    private http: HttpClient, public dialog: MatDialog, private chatService: ChatService
+  ) {
     this.fullStars = new Array();
     this.emptyStars = new Array();
   }
@@ -77,7 +82,11 @@ export class ProductListingComponent implements OnInit {
   openDialog(): void {
     if (this.curruser != 'Username') {
       const dialogRef = this.dialog.open(PurchaseConfirmationDialog, {
-        width: '250px',
+        width: '400px',
+        data: {
+          priceDollars: this.object.priceDollars,
+          priceCents: this.object.priceCents,
+        }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -86,29 +95,44 @@ export class ProductListingComponent implements OnInit {
         });
         console.log(result);
         if (result != undefined && result != 0) {
-          this.purchase(result);
+          this.productService.getProductsSellerEmail(this.object.id).subscribe((sellerEmail) => {
+            this.chatService.sendMessage({
+              senderEmail: this.curremail,
+              receiverEmail: sellerEmail.sellerEmail,
+              productID: this.object.id,
+              message: this.curruser + " is requesting " + result.numToBuy + " items for $"
+                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents) + " each."
+            } as ChatMessageItem).subscribe((output) => {
+              console.log(output);
+            }, (error) => {
+              console.log(error);
+            })
+          }, (error) => {
+            console.log(error);
+          })
         }
       });
     }
   }
 
-  purchase(numToPurchase: number): void {
-    console.log('buying', this.object.name);
-    //need to add item to user's purchases
-    this.productService.purchaseMany(this.object.id, numToPurchase).subscribe(
-      data => {
-        console.log(data.message);
-        alert("Purchase Successful!");
-      },
-      error => {
-        console.log('purchase failed:', error.error);
-        alert("Purchase Failed, try again.");
-      },
-      () => {
-        location.reload();
-      }
-    )
-  }
+
+  // purchase(numToPurchase: number): void {
+  //   console.log('buying', this.object.name);
+  //   //need to add item to user's purchases
+  //   this.productService.purchaseMany(this.object.id, numToPurchase).subscribe(
+  //     data => {
+  //       console.log(data.message);
+  //       alert("Purchase Successful!");
+  //     },
+  //     error => {
+  //       console.log('purchase failed:', error.error);
+  //       alert("Purchase Failed, try again.");
+  //     },
+  //     () => {
+  //       location.reload();
+  //     }
+  //   )
+  // }
   
   addToWishlist() {
     this.products = JSON.parse(<string> this.appcomp.getWishlistProductArray())
@@ -208,5 +232,21 @@ export class ProductListingComponent implements OnInit {
 })
 export class PurchaseConfirmationDialog {
   numToBuy: number = 1;
-  constructor(public dialogRef: MatDialogRef<PurchaseConfirmationDialog>) {}
+  askingPriceDollars: number = this.data.priceDollars;
+  askingPriceCents: number = this.data.priceCents;
+
+  constructor(
+    public dialogRef: MatDialogRef<PurchaseConfirmationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+  }
+
+  isConfirmShow(): boolean {
+    return (
+      this.numToBuy > 0 &&
+      this.askingPriceDollars >= 0 &&
+      this.askingPriceCents >= 0 &&
+      this.askingPriceCents < 100
+    );
+  }
 }

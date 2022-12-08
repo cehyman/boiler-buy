@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'shop/:id', component: UserShopComponent,                         canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'change-profile-pic', component: ChangeProfilePicComponent,       canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'shop/:id/history', component: ShopHistoryViewComponent,          canActivate: [LoginGuard, VerifiedGuard]}, 
-  { path: 'chat/:id', component: GeneralChatComponent },
+  { path: 'chat/:id', component: GeneralChatComponent,                      canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'retrieve-username', component: RetrieveUsernameComponent,        canActivate: [LoginGuard, VerifiedGuard]},
 ];
 

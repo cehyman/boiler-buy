@@ -21,20 +21,20 @@ export class ProductService {
   }
 
   filterSearch(params: FilterSearchInput): Observable<ProductList> {
-    const url = new URL('api/products/');
+    const urlParams = new URLSearchParams();
 
-    if (params.name != null && params.name != '') url.searchParams.set('name', params.name);
-    if (params.productType != null) url.searchParams.set('productType', params.productType.toString());
-    if (params.brand != null) url.searchParams.set('brand', params.brand.toString());
-    if (params.minPrice != null) url.searchParams.set('minPrice', params.minPrice.toString());
-    if (params.maxPrice != null) url.searchParams.set('maxPrice', params.maxPrice.toString());
-    if (params.minSellerRating != null) url.searchParams.set('minSellerRating', params.minSellerRating.toString());
-    if (params.maxSellerRating != null) url.searchParams.set('maxSellerRating', params.maxSellerRating.toString());
-    if (params.tags != null) url.searchParams.set('tags', params.tags.toString());
+    if (params.name != null && params.name != '') urlParams.set('name', params.name);
+    if (params.productType != null) urlParams.set('productType', params.productType.toString());
+    if (params.brand != null) urlParams.set('brand', params.brand.toString());
+    if (params.minPrice != null) urlParams.set('minPrice', params.minPrice.toString());
+    if (params.maxPrice != null) urlParams.set('maxPrice', params.maxPrice.toString());
+    if (params.minSellerRating != null) urlParams.set('minSellerRating', params.minSellerRating.toString());
+    if (params.maxSellerRating != null) urlParams.set('maxSellerRating', params.maxSellerRating.toString());
+    if (params.tags != null) urlParams.set('tags', params.tags.toString());
 
-    console.log(url.toString());
+    console.log(urlParams.toString());
     
-    return this.http.get(url.toString(), {responseType: 'json'}) as Observable<ProductList>;
+    return this.http.get('api/products/?' + urlParams.toString(), {responseType: 'json'}) as Observable<ProductList>;
   }
 
   purchaseOne(productID: number): Observable<any> {
@@ -61,4 +61,10 @@ export class ProductService {
     return request;
   }
 
+  getProductsSellerEmail(productID: number): Observable<any> {
+    const urlParams = new URLSearchParams();
+    urlParams.set('productID', "" + productID);
+
+    return this.http.get("api/sellerProduct/?" + urlParams.toString(), {responseType: 'json'}) as Observable<any>;
+  }
 }

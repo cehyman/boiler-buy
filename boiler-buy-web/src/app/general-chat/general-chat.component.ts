@@ -70,6 +70,8 @@ export class GeneralChatComponent implements OnInit {
         console.log("Request sent!");
         //on success, add it to the array for this component so the user can see
         window.scroll(0, document.documentElement.offsetHeight);
+      }, (error) => {
+        alert("There was an error")
       })
       this.messages = this.messages.concat([{"name": this.curruser, "message": message, "date":"now"}]);
       window.scroll(0, document.documentElement.offsetHeight);
