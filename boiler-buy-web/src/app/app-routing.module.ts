@@ -24,6 +24,8 @@ import { LoginGuard } from './AuthGuards/login.guard';
 import { VerifiedGuard } from './AuthGuards/verified.guard';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
 import { VerifyEmailGuard } from './AuthGuards/verify-email.guard';
+import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
+import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full'},
@@ -48,8 +50,9 @@ const routes: Routes = [
   { path: 'retrieve-username', component: RetrieveUsernameComponent,        canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'retrieve-username', component: RetrieveUsernameComponent},
-  { path: 'special-reset-password/:id', component: SpecialResetPasswordComponent}
-
+  { path: 'special-reset-password/:id', component: SpecialResetPasswordComponent},
+  { path: 'create-group-ad', component: CreateGroupAdComponent},
+  { path: 'groupad/:id', component: GroupadDetailsComponent}
 ];
 
 @NgModule({

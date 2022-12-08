@@ -13,6 +13,10 @@
 	margin:1vw;
 }
 
+.change-profile-pic-button{
+	margin-right:1vw;
+}
+
 .profile-card {
 	background-color: rgb(146, 144, 144);
 	border-radius:.5vw;

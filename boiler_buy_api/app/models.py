@@ -55,6 +55,11 @@ class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')
     products = models.ManyToManyField("Product")
 
+class GroupAds(models.Model):
+    email = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    products = models.ManyToManyField("Product")
+
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
@@ -80,7 +85,8 @@ class ShopHistory(models.Model):
     quantity = models.IntegerField(null=True, blank=True)
     buyer = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     profit = models.FloatField(null=True, blank=True, default=None)
-    
+    locations = ArrayField(models.CharField(max_length=200), default=list)
+
     # These fields are redundancy against deleted products/accounts/etc.
     productId = models.IntegerField(default=1, blank=False)
     productName = models.CharField(max_length=50)

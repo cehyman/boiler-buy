@@ -476,6 +476,7 @@ class ShopViewSet(viewsets.ModelViewSet):
             "action": item.action,
             "dateTime": item.dateTime,
             "profit": item.profit if item.product else None,
+            "locations": item.locations,
             "buyerName": item.buyerName,
         }
     
@@ -507,11 +508,12 @@ class ShopHistoryViewSet(viewsets.ModelViewSet):
         )
     
     @staticmethod
-    def newSold(shop, product, buyer, profit):
+    def newSold(shop, product, buyer, profit, locations):
         ShopHistory.objects.create(
             shop=shop,
             product=product,
             action="sold",
+            locations = locations,
             productId = product.id,
             productName = product.name,
             buyerName = buyer.username,
@@ -574,7 +576,7 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
             )
         
         # Add the sell to the sellers history
-        ShopHistoryViewSet.newSold(shop, product, buyer, (totalPriceDollars, totalPriceCents))
+        ShopHistoryViewSet.newSold(shop, product, buyer, (totalPriceDollars, totalPriceCents), request.data.get('locations'))
 
         return JsonResponse({'message': 'Product was purchased'}, status=201)
 
@@ -628,6 +630,15 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
         # toSend.data = [{"email": "tTest@purdue.edu", "lastViewed": "die", "product": {"id":"testtestYEET"}}]
         
         return toSend
+
+class GroupAdsViewSet(viewsets.ModelViewSet):
+    queryset = GroupAds.objects.all()
+    serializer_class = GroupAdsSerializer
+
+    def list(self, request):
+        data = GroupAds.objects.values()
+        return JsonResponse(list(data), safe=False)
+
 
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()

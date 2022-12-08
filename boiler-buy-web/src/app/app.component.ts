@@ -31,6 +31,10 @@ export class AppComponent {
     sessionStorage.setItem('wishlist products', JSON.stringify(products_array))
   }
 
+  saveShopID(shop_id: string) {
+    sessionStorage.setItem('shop_id', shop_id)
+  }
+
   getUsername() {
     return sessionStorage.getItem('username')
   }
@@ -45,6 +49,10 @@ export class AppComponent {
 
   getWishlistID() {
     return sessionStorage.getItem('wishlist_id')
+  }
+
+  getShopID() {
+    return sessionStorage.getItem('shop_id')
   }
 
   getWishlistProductArray() {
@@ -69,5 +77,18 @@ export class AppComponent {
 
   removeWishlistProductArray() {
     sessionStorage.removeItem('wishlist products')
+  }
+
+  removeShopID() {
+    sessionStorage.removeItem('shop_id')
+  }
+
+  removeAllSessionStorage() {
+    this.removeEmail
+    this.removePassword
+    this.removeUsername
+    this.removeWishlistID
+    this.removeWishlistProductArray
+    this.removeShopID
   }
 }

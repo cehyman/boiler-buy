@@ -20,6 +20,11 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ['image', 'product']
 
+class GroupAdsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupAds
+        fields = ['email', 'name', 'products']
+
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
@@ -34,8 +39,8 @@ class ShopSerializer(serializers.ModelSerializer):
 class ShopHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopHistory
-        fields = ['shop', 'action', 'dateTime', 'quantity', 'buyer',
-                  'profit', 'productId', 'productName', 'buyerName'
+        fields = ['shop', 'product', 'action', 'dateTime', 'quantity', 'buyer',
+                  'profit', 'locations', 'productId', 'productName', 'buyerName'
                   ]
 
 class PurchaseHistorySerializer(serializers.ModelSerializer):

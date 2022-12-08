@@ -80,6 +80,9 @@ import { SpecialResetPasswordComponent } from './special-reset-password/special-
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
 import { MyShopComponent } from './my-shop/my-shop.component';
+import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
+import { GroupadListingComponent } from './groupad-listing/groupad-listing.component';
+import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +118,6 @@ import { MyShopComponent } from './my-shop/my-shop.component';
     SpecialResetPasswordComponent,
     VerifyAccountComponent,
     NotVerifiedComponent,
-    MyShopComponent,
   ],
   imports: [
     FormsModule,
