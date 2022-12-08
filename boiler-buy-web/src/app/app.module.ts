@@ -79,6 +79,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
+import { MyShopComponent } from './my-shop/my-shop.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { NotVerifiedComponent } from './not-verified/not-verified.component';
     SpecialResetPasswordComponent,
     VerifyAccountComponent,
     NotVerifiedComponent,
+    MyShopComponent,
   ],
   imports: [
     FormsModule,

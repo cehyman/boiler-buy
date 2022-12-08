@@ -48,6 +48,8 @@ class Shop(models.Model):
     description = models.CharField(max_length=250, default='')
     isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
+    
+    image = models.ImageField(null=True, blank=False, default=None, upload_to="shops/")
 
 class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')

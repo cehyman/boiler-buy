@@ -1,0 +1,22 @@
+<div class="myShop">
+    <h2>My Shop</h2>
+    <form class="myShopForm">
+        <app-picture-upload-new #picUpload [maxImages]="1"></app-picture-upload-new>
+
+        <mat-form-field class="myShopInputDescription" appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput 
+                [(ngModel)]="description"
+                rows="8"
+                cols="40"
+                type="text" 
+                name="description">
+            </textarea>
+        </mat-form-field><br>
+
+        <a mat-raised-button class="submitButton" color="accent" (click)="submit()" type="submit">Update</a>
+    </form>
+    
+    <app-shop-history-view></app-shop-history-view>
+
+</div>
