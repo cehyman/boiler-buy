@@ -62,7 +62,6 @@ export class ProductSearchComponent implements OnInit {
     request.subscribe((data:any) => {
       console.log(data)
       this.groupAds = data
-      this.loading = false
     })
   }
 
