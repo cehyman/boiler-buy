@@ -1,12 +1,11 @@
-
 <app-site-menu></app-site-menu>
 
 
-<h1>{{this.curruser}}'s Wishlist</h1>
+<h1>{{this.name}}</h1>
 
 <div class="noItemsMsg" *ngIf="productList.length == 0; else productsFound">
     <p>
-        No items in wishlist!
+        
     </p>
 </div>
 

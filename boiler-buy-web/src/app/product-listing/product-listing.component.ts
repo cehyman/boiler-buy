@@ -7,6 +7,7 @@ import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatButton } from '@angular/material/button';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-listing',
@@ -19,6 +20,7 @@ export class ProductListingComponent implements OnInit {
 
   public globals: Globals = new Globals;
   products:any = []
+  locations:any = ["Other"]
   wishlist_id:number = 0
   curremail:string = ''
   curruser:string = ''
@@ -95,7 +97,7 @@ export class ProductListingComponent implements OnInit {
   purchase(numToPurchase: number): void {
     console.log('buying', this.object.name);
     //need to add item to user's purchases
-    this.productService.purchaseMany(this.object.id, numToPurchase).subscribe(
+    this.productService.purchaseMany(this.object.id, numToPurchase, this.locations).subscribe(
       data => {
         console.log(data.message);
         alert("Purchase Successful!");
@@ -108,6 +110,16 @@ export class ProductListingComponent implements OnInit {
         location.reload();
       }
     )
+  }
+
+  getLocations() {
+    var request = this.http.get('api/products/' + this.object.id, {responseType: 'json'}) as Observable<Product>
+
+    request.subscribe((data:any) => {
+      //console.log(data)
+      this.locations = data.locations
+      console.log(this.locations)
+    })
   }
   
   addToWishlist() {
@@ -208,5 +220,11 @@ export class ProductListingComponent implements OnInit {
 })
 export class PurchaseConfirmationDialog {
   numToBuy: number = 1;
+  locationList = [
+    {name:'WALC', value:'WALC', checked:false},
+    {name:'Corec', value:'Corec', checked:false},
+    {name:'Lawson', value:'Lawson', checked:false},
+    {name:'Other', value:'Other', checked:false}
+  ]
   constructor(public dialogRef: MatDialogRef<PurchaseConfirmationDialog>) {}
 }

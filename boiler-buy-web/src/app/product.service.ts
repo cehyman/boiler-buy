@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Location, LocationStrategy } from '@angular/common';
+import { Location, } from '@angular/common';
 
 import { Observable } from 'rxjs';
 import { AppComponent } from './app.component';
@@ -18,7 +18,6 @@ export class ProductService {
   constructor(
     private http: HttpClient, 
     private location: Location,
-    private locationStrategy: LocationStrategy,
   ) {}
 
   getProductList(): Observable<ProductList> {
@@ -55,16 +54,17 @@ export class ProductService {
     return this.http.get(url.toString(), {responseType: 'json'}) as Observable<ProductList>;
   }
 
-  purchaseOne(productID: number): Observable<any> {
-    return this.purchaseMany(productID, 1);
+  purchaseOne(productID: number, locations: any[]): Observable<any> {
+    return this.purchaseMany(productID, 1, locations);
   }
 
-  purchaseMany(productID: number, quantity: number): Observable<any> {
+  purchaseMany(productID: number, quantity: number, locations: any[]): Observable<any> {
     this.addProductToViewHistory(productID);
     var body = {
       "username": this.appcomp.getUsername(),
       "productID": productID,
-      "quantity": quantity
+      "quantity": quantity,
+      "locations": locations
     }
     var request = this.http.post('api/purchaseHistory/', body);
     return request;
