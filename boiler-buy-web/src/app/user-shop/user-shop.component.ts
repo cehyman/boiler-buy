@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { ConfirmDeleteDialog } from '../edit-product/edit-product.component';
-import { Product } from '../product-types';
+import { GroupAdList, GroupAdObj, Product } from '../product-types';
 
 @Component({
   selector: 'app-user-shop',
@@ -19,7 +19,9 @@ export class UserShopComponent implements OnInit {
   shop_id:number = 0
   products: any = []
   productList: Product[] = []
+  groupAds: GroupAdObj[] = []
   curruser:string = ''
+  curremail:string = ''
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,6 +33,7 @@ export class UserShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.curruser = <string> this.appcomp.getUsername()
+    this.curremail = <string> this.appcomp.getEmail()
 
     var urlStr = this.activatedRoute.snapshot.url.toString();
     console.log('urlStr: ', urlStr);
@@ -40,6 +43,8 @@ export class UserShopComponent implements OnInit {
       alert(`Invalid URL "${urlStr}": "${this.shop_id}"`);
       return;
     }
+
+    this.getGroupAds()
 
     console.log(this.shop_id)
 
@@ -62,6 +67,17 @@ export class UserShopComponent implements OnInit {
           this.productList.push(data)
         })
       }
+    })
+  }
+
+  getGroupAds() {
+    var request = this.http.get('api/groupAds/', {responseType: 'json'}) as Observable<GroupAdList>
+
+    request.subscribe((data:any) => {
+      console.log(data)
+      this.groupAds = data
+
+      this.groupAds = this.groupAds.filter(ad => ad.email === this.curremail)
     })
   }
 
