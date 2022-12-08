@@ -172,20 +172,21 @@ class AccountViewSet(viewsets.ModelViewSet):
     # Test to send email /accounts/<email>/sendResetPassword
     @action(detail=True, methods=['get'])
     def sendResetPassword(self, request, email):
-        print(email)
+        params = {'link': 
+                f'localhost:4200/special-reset-password/{email}' if DEBUG else
+                f'boiler-buy.azurewebsites.net/special-reset-password/{email}'
+            }
+        plainMessage = render_to_string('reset_password.txt', params)
+        htmlMessage = render_to_string('reset_password.html', params)
+    
         send_mail(
-            'Please reset your Boiler Buy password',
-            f"""
-            Welcome to Boiler Buy!
-            Please reset your password using the link below:
-            
-            localhost:4200/accounts/{email}/special-reset-password
-            """,
-            "no-reply@boilerbuy.com",
+            'Please Verify Your Account',
+            plainMessage,
+            'no-reply@boilerbuy.com',
             [email],
-            fail_silently=False
+            fail_silently=False,
+            html_message=htmlMessage
         )
-        return JsonResponse({"detail":"Sent."})
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
