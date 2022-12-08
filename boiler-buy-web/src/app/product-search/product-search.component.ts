@@ -19,6 +19,11 @@ export class ProductSearchComponent implements OnInit {
     {name:'Acer', value:'Acer', checked:false},
     {name:'Lenovo', value:'Lenovo', checked:false},
   ]
+  tagList = [
+    {name:'Old', value:'Old', checked:false},
+    {name:'New', value:'New', checked:false},
+    {name:'Phone', value:'Phone', checked:false},
+  ]
   filters: FilterSearchInput = {} as FilterSearchInput;
   
   color: ThemePalette = 'primary';
@@ -73,6 +78,11 @@ export class ProductSearchComponent implements OnInit {
     // console.log(this.filters.productType)
     console.log(this.filters.minSellerRating)
     console.log(this.filters.maxSellerRating)
+
+    this.filters.tags = this.tagList.filter(tag => tag.checked).map(tag => tag.value)
+
+    console.log(this.filters.tags);
+
     this.loading = true;
     this.products = [];
     this.productService.filterSearch(this.filters).subscribe((productList) => {

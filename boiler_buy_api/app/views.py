@@ -315,7 +315,6 @@ class ProductViewSet(viewsets.ModelViewSet):
                     break
                             
         return JsonResponse({'observe': 'response'})
-
             
     # override default list (because we want to filter before we send the response)
     def list(self, request):
@@ -350,6 +349,27 @@ class ProductViewSet(viewsets.ModelViewSet):
                 print(type)
                 typeSplit = type.split(",")
                 data = data.filter(brand__in=typeSplit).values()
+        
+        # Filter by tags. If 2+ tags are selected, then the two sets of objects
+        # with those tags are joined together
+        if (request.GET.get('tags') != None and request.GET.get('tags') != ""):  
+            requestTags = request.GET.get('tags').split(',')
+            
+            # Run through the list of tags and keep a list of querysets that
+            # correspond with each tag
+            selectedSets = []
+            for requestTag in requestTags:
+                selectedSets.append(data.filter(tags__contains=[requestTag]))
+            
+            # Combine all of the sets together to form a single query set.
+            combinedSet = selectedSets[0] if len(selectedSets) > 0 else Product.objects.none()
+            for i in range(1, len(selectedSets)):
+                combinedSet = combinedSet.union(selectedSets[i])
+            
+            # Our new query set should be trimmed of all the items that don't contain
+            # any of the tags queried
+            data = combinedSet
+            
         if (request.GET.get('minPrice') != None):
             print("here4")
             minPrice = request.GET.get('minPrice')
@@ -373,6 +393,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         print(maxSellerFilter)
         temp = []
         # print(data)
+        
+        print(f"Before for loop: data={data}")
         for prod in data:
             # print(prod.get("id"))
             shop = Shop.objects.filter(products=prod.get("id")).values()
@@ -398,22 +420,8 @@ class ProductViewSet(viewsets.ModelViewSet):
                 prod['sellerRatingCount'] = 0
         if (minSellerFilter == True or maxSellerFilter == True):
             data = temp
-            # print("pogpog")
-            # if (prod.get("id") == 100):
-            #     shop = Shop.objects.filter(products=prod.get("id")).values()
-            #     if (shop.count() > 0):
-            #         shopID = shop.get().get("id")
-            #         print('product id:', prod.get('id'))
-            #         print('shopID:', shopID)
-            #         account = Account.objects.filter(shop=shopID).values().get()
-            #         prod['sellerRating'] = account.get("sellerRating")
-            #         prod['sellerRatingCount'] = account.get("sellerRatingCount")
-            #     else:
-            #         # products that don't have a shop yet
-            #         prod['sellerRating'] = 0
-            #         prod['sellerRatingCount'] = 0
-        # print(data)
-        # print(data)
+        
+        print(f"Returning response")
         return JsonResponse(list(data), safe=False)
 
     def retrieve(self, request, pk=None):
