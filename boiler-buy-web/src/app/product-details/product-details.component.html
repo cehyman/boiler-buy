@@ -27,6 +27,12 @@
                            [(ngModel)]="location.checked"/>
                     {{location.location}}
                 </label>
+            <div class="form-group">
+                <label for="tags">Tags:</label>
+                <div *ngFor="let tag of tags; let i = index">
+                    <button mat-raised-button id="${tag}" (click)="saveTag(tag)">{{tag}}</button>
+                </div>
+            </div>
             </div>
             
         </div>

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { PictureCarouselComponent } from '../picture-carousel/picture-carousel.component';
+import { AppComponent } from '../app.component';
 import { locationInterface } from '../product-types';
 
 @Component({
@@ -25,6 +26,13 @@ export class ProductDetailsComponent implements OnInit {
   id: number = -1;
   temp: any = []
   locationList: locationInterface[] = []
+  tagsTemp: string[] = []
+  tags: string[] = []
+  userTags: string[] = []
+
+  curruser: string = ''
+
+  private appcomp: AppComponent = new AppComponent();
 
 
   @ViewChild('carousel') carousel !: PictureCarouselComponent;
@@ -41,7 +49,12 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
     console.log(this.id)
-    var request = this.http.get('api/products/' + this.id, {observe: "body"})
+    if (this.appcomp.getEmail()) {
+      this.curruser = <string> this.appcomp.getEmail()
+    } else {
+      this.curruser = "Email"
+    }
+    var request = this.http.get('http://localhost:8000/api/products/' + this.id, {observe: "body"})
     let i = 0
     request.subscribe((data: any) => {
       console.log(data)
@@ -64,6 +77,15 @@ export class ProductDetailsComponent implements OnInit {
       this.canShip = data['canShip'];
       this.type = data['productType'];
       this.brand = data['brand'];
+      this.tagsTemp = data['tags']
+      for (let i = 0; i < this.tagsTemp.length; i++) {
+        if (this.tagsTemp[i] == "null") {
+          this.tagsTemp.splice(i, 1)
+          break;
+        }
+      }
+      this.tags = this.tagsTemp
+      
       this.temp = data['locations'];
       //console.log(this.temp)
 
@@ -97,6 +119,14 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
+  // getUserTagList() {
+  //   let request = this.http.get<any>('http://localhost:8000/api/accounts/'+this.curruser+'/', {observe: "body"});
+  //   request.subscribe((data: any) => {
+  //     console.log(data)
+  //     this.userTags = data["savedTags"]
+  //   });
+  // }
+
   buy() {
 
     var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
@@ -116,5 +146,66 @@ export class ProductDetailsComponent implements OnInit {
         this.stock = error.error.remainingStock;
       }
     )
+  }
+
+  saveTag(id: string) {
+    console.log(id)
+    let request = this.http.get<any>('api/accounts/'+this.curruser+'/', {observe: "body"});
+    request.subscribe((data: any) => {
+      console.log(data)
+      this.userTags = data["savedTags"]
+      console.log(this.userTags)
+      for (let i = 0; i < this.userTags.length; i++) {
+        if (this.userTags[i] == "null") {
+          this.userTags.splice(i, 1)
+          break;
+        }
+      }
+      var hasTag = false
+      for (let i = 0; i < this.userTags.length; i++) {
+        if (this.userTags[i] == id) {
+          this.userTags.splice(i, 1)
+          hasTag = true
+          break;
+        }
+      }
+      if (!hasTag) {
+        this.userTags.push(id)
+      }
+      if (hasTag) {
+        alert("Removed tag " + id + " from your saved tags.")
+      } else {
+        alert("Added tag " + id + " to your saved tags.")
+      }
+      console.log(this.userTags)
+      if (this.userTags.length == 0) {
+        this.userTags.push("null")
+      }
+      var body = {
+        savedTags: this.userTags
+      };
+      var request = this.http.patch<any>(`http://localhost:8000/api/accounts/`+this.curruser+'/', body, {observe: "response"});
+      request.subscribe((data: any) => {
+        console.log("Request sent!");
+      });
+    });
+    // var hasTag = false
+    // for (let i = 0; i < this.userTags.length; i++) {
+    //   if (this.userTags[i] == id) {
+    //     this.userTags.splice(i, 1)
+    //     hasTag = true
+    //     break;
+    //   }
+    // }
+    // if (!hasTag) {
+    //   this.userTags.push(id)
+    // }
+    // var body = {
+    //   savedTags: this.userTags
+    // };
+    // var request = this.http.patch<any>(`http://localhost:8000/api/accounts/`+this.curruser+'/', body, {observe: "response"});
+    // request.subscribe((data: any) => {
+    //   console.log("Request sent!");
+    // });
   }
 }

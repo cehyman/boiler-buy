@@ -39,6 +39,16 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="tags">Tags</label>
+                            <div *ngFor="let tag of tagList; let i = index">
+                                <input type="checkbox"
+                                       name="tags"
+                                       value="{{tag.value}}"
+                                       [(ngModel)]="tag.checked"/>
+                                {{tag.name}}
+                            </div>
+                        </div>
                     </section>
                     <button mat-raised-button (click)="applyFilters()">Apply filters</button>
                 </mat-card-content>

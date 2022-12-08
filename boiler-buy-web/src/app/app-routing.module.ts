@@ -16,20 +16,20 @@ import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { LoginGuard } from './AuthGuards/login.guard';
+import { VerifiedGuard } from './AuthGuards/verified.guard';
+import { NotVerifiedComponent } from './not-verified/not-verified.component';
+import { VerifyEmailGuard } from './AuthGuards/verify-email.guard';
 import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
 import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login' , pathMatch: 'full' },
+  { path: '', redirectTo: 'login' , pathMatch: 'full'},
   { path: 'register', component: RegisterComponent},
-  { path: 'create', component: CreateComponent},
-  { path: 'products/search', component: ProductSearchComponent},
-  { path: 'profile', component: ProfileComponent },
-  { path: 'change-password', component: ChangePasswordComponent},
-  { path: 'edit/:id', component: EditProductComponent},
-  { path: 'change-username', component: ChangeUsernameComponent},
-  { path: 'sellerReview/:id', component: SellerReviewComponent},
   { path: 'login', component: LoginComponent},
   { path: 'products/:id', component: ProductDetailsComponent},
   { path: 'profile/purchase-history', component: PurchaseHistoryComponent },

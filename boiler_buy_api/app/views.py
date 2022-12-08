@@ -11,14 +11,45 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from config.settings import DEBUG
 
 import json
-import datetime
 
 #create your views here
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
+
+class RetrieveUsernameViewSet(viewsets.ModelViewSet):
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
+    lookup_field = "email"
+    lookup_value_regex = "[^/]+"
+
+    def create(self, request):
+        print(request.data.get('username'))
+        print(request.data.get('email'))
+        account = [request.data.get('username'), request.data.get('email')]
+        print(account)
+        RetrieveUsernameViewSet._sendUsernameEmail(account)
+        return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendUsernameEmail(account):
+        send_mail(
+            'Here is your username!',
+            f"""
+            {account[0]}
+            Make sure to write down your username
+            so you do not forget!
+            
+            """,
+            "no-reply@boilerbuy.com",
+            [account[1]],
+            fail_silently=False
+        )
 
 class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
@@ -27,6 +58,9 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
+        print('THIS IS THE REQUEST: ', request)
+        print('REQUEST BODY: ', request.data)
+        print('REQUEST ENDS HERE')
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
 
@@ -34,11 +68,54 @@ class AccountViewSet(viewsets.ModelViewSet):
         newWishlist = Wishlist.objects.create(description=request.data.get('username'))
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
         shop=newShop, wishlist=newWishlist)
+        
+        AccountViewSet._sendVerificationEmail(account)
 
         print('newShop: ', newShop.id)
         print('newWishlist: ', newWishlist.id)
         print('username: ', account)
         return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendVerificationEmail(account):
+        params = {'link': 
+                    f'localhost:4200/verify/{account.email}' if DEBUG else
+                    f'boiler-buy.azurewebsites.net/verify/{account.email}',
+                  'username': account.username,
+                  'email': account.email
+                 }
+        plainMessage = render_to_string('verify_link.txt', params)
+        htmlMessage = render_to_string('verify_link.html', params)
+        
+        send_mail(
+            'Please Verify Your Account',
+            plainMessage,
+            'no-reply@boilerbuy.com',
+            [account.email],
+            fail_silently=False,
+            html_message=htmlMessage
+        )
+    
+    @action(detail=True, methods=['patch'])
+    def sendVerificationEmail(self, request, email):
+        account = Account.objects.get(email=email)
+        AccountViewSet._sendVerificationEmail(account)
+        return JsonResponse({"success": True })
+    
+    @action(detail=True, methods=['patch'])
+    def verify(self, request, email):
+        print(f"email = {email}")
+        account = Account.objects.get(email=email)
+        account.verified = True
+        account.save()
+        
+        return JsonResponse({"success": True })
+    
+    @action(detail=True, methods=['get'])
+    def verified(self, request, email):
+        account = Account.objects.get(email=email)
+        return JsonResponse({'verified': account.verified})
+        
     
     @action(detail=True, methods=['get'])
     def getFromUsername(self, request, pk):
@@ -48,7 +125,6 @@ class AccountViewSet(viewsets.ModelViewSet):
         
         return JsonResponse(account, safe=False)
         
-
     # Test to retrieve image /accounts/<email>/retrieveImages
     @action(detail=True, methods=['get'])
     def retrieveImages(self, request, email):
@@ -92,6 +168,26 @@ class AccountViewSet(viewsets.ModelViewSet):
             return JsonResponse({"detail": "Updated."})
         else:
             return JsonResponse(serializer.errors)
+    
+    # Test to send email /accounts/<email>/sendResetPassword
+    @action(detail=True, methods=['get'])
+    def sendResetPassword(self, request, email):
+        params = {'link': 
+                f'http://localhost:4200/special-reset-password/{email}' if DEBUG else
+                f'http://boiler-buy.azurewebsites.net/special-reset-password/{email}'
+            }
+        plainMessage = render_to_string('reset_password.txt', params)
+        htmlMessage = render_to_string('reset_password.html', params)
+    
+        send_mail(
+            'Please Verify Your Account',
+            plainMessage,
+            'no-reply@boilerbuy.com',
+            [email],
+            fail_silently=False,
+            html_message=htmlMessage
+        )
+        return JsonResponse({"success": True })
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -118,6 +214,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             canMeet = bool(request.data.get('canMeet')),
             brand = request.data.get('brand'),
             locations = request.data.getlist('locations'),
+            tags = request.data.getlist('tags'),
             allowOutOfStock = bool(request.data.get('allowOutOfStock'))
         )
         print('creating product with product id', product.id)
@@ -219,7 +316,6 @@ class ProductViewSet(viewsets.ModelViewSet):
                     break
                             
         return JsonResponse({'observe': 'response'})
-
             
     # override default list (because we want to filter before we send the response)
     def list(self, request):
@@ -254,6 +350,27 @@ class ProductViewSet(viewsets.ModelViewSet):
                 print(type)
                 typeSplit = type.split(",")
                 data = data.filter(brand__in=typeSplit).values()
+        
+        # Filter by tags. If 2+ tags are selected, then the two sets of objects
+        # with those tags are joined together
+        if (request.GET.get('tags') != None and request.GET.get('tags') != ""):  
+            requestTags = request.GET.get('tags').split(',')
+            
+            # Run through the list of tags and keep a list of querysets that
+            # correspond with each tag
+            selectedSets = []
+            for requestTag in requestTags:
+                selectedSets.append(data.filter(tags__contains=[requestTag]))
+            
+            # Combine all of the sets together to form a single query set.
+            combinedSet = selectedSets[0] if len(selectedSets) > 0 else Product.objects.none()
+            for i in range(1, len(selectedSets)):
+                combinedSet = combinedSet.union(selectedSets[i])
+            
+            # Our new query set should be trimmed of all the items that don't contain
+            # any of the tags queried
+            data = combinedSet
+            
         if (request.GET.get('minPrice') != None):
             print("here4")
             minPrice = request.GET.get('minPrice')
@@ -277,6 +394,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         print(maxSellerFilter)
         temp = []
         # print(data)
+        
+        print(f"Before for loop: data={data}")
         for prod in data:
             # print(prod.get("id"))
             shop = Shop.objects.filter(products=prod.get("id")).values()
@@ -302,22 +421,8 @@ class ProductViewSet(viewsets.ModelViewSet):
                 prod['sellerRatingCount'] = 0
         if (minSellerFilter == True or maxSellerFilter == True):
             data = temp
-            # print("pogpog")
-            # if (prod.get("id") == 100):
-            #     shop = Shop.objects.filter(products=prod.get("id")).values()
-            #     if (shop.count() > 0):
-            #         shopID = shop.get().get("id")
-            #         print('product id:', prod.get('id'))
-            #         print('shopID:', shopID)
-            #         account = Account.objects.filter(shop=shopID).values().get()
-            #         prod['sellerRating'] = account.get("sellerRating")
-            #         prod['sellerRatingCount'] = account.get("sellerRatingCount")
-            #     else:
-            #         # products that don't have a shop yet
-            #         prod['sellerRating'] = 0
-            #         prod['sellerRatingCount'] = 0
-        # print(data)
-        # print(data)
+        
+        print(f"Returning response")
         return JsonResponse(list(data), safe=False)
 
     def retrieve(self, request, pk=None):

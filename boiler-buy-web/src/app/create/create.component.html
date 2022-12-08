@@ -83,6 +83,20 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="tags">Tags:</label>
+                <div *ngFor="let tag of tagList; let i = index">
+                    <label>
+                        <input type="checkbox"
+                               name="tag"
+                               value="{{tag.value}}"
+                               [(ngModel)]="tag.checked"/>
+                        {{tag.name}}
+                    </label>
+                </div>
+            </div>
+
+
             <div class="productUploadPicBox" appearance="fill">
                 <div class="ploadPic" class="UploadPic">
                     <mat-label><b>Upload Pictures</b></mat-label><br><br>
