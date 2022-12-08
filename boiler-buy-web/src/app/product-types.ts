@@ -14,6 +14,7 @@ export interface Product {
     canMeet: boolean,
     sellerRating: number,
     sellerRatingCount: number,
+    location: string[]
 }
 
 export interface PurchaseInfo {
@@ -33,6 +34,12 @@ export interface RecentlyViewedItem {
     email: string,
     lastViewed: Date,
     product: Product,
+}
+
+export interface locationInterface {
+    location: string,
+    value: string,
+    checked: boolean
 }
 
 export interface FilterSearchInput {

@@ -80,7 +80,8 @@ class ShopHistory(models.Model):
     quantity = models.IntegerField(null=True, blank=True)
     buyer = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     profit = models.FloatField(null=True, blank=True, default=None)
-    
+    locations = ArrayField(models.CharField(max_length=200), default=list)
+
     # These fields are redundancy against deleted products/accounts/etc.
     productId = models.IntegerField(default=1, blank=False)
     productName = models.CharField(max_length=50)

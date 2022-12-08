@@ -87,9 +87,9 @@ export class CreateGroupAdComponent implements OnInit {
           //console.log(data)
           //this.productList.push(data)
 
-          let test_item = {name: data['name'], product_id: data['id'], checked:false}
-          this.groupAdList.push(test_item)
-          console.log(test_item)
+          let item = {name: data['name'], product_id: data['id'], checked:false}
+          this.groupAdList.push(item)
+          console.log(item)
         })
       }
     })

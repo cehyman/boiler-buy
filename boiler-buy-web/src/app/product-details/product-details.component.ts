@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { PictureCarouselComponent } from '../picture-carousel/picture-carousel.component';
+import { locationInterface } from '../product-types';
 
 @Component({
   selector: 'app-product-details',
@@ -22,7 +23,9 @@ export class ProductDetailsComponent implements OnInit {
   type: string = '';
   brand: string = '';
   id: number = -1;
-  locations: string[] = []
+  temp: any = []
+  locationList: locationInterface[] = []
+
 
   @ViewChild('carousel') carousel !: PictureCarouselComponent;
 
@@ -61,20 +64,27 @@ export class ProductDetailsComponent implements OnInit {
       this.canShip = data['canShip'];
       this.type = data['productType'];
       this.brand = data['brand'];
-      this.locations = data['locations'];
-      console.log(data['locations'])
-      console.log(this.locations)
-      var locLabel = document.getElementById("locationLabel")
-      for (var i = 0; i < this.locations.length; i++) {
-          if (locLabel != null) {
-            console.log(this.locations[i])
-            if (i == this.locations.length-1) {
-              locLabel.innerHTML += this.locations[i]
-            } else {
-              locLabel.innerHTML += this.locations[i] + ", "
-            }
-          }
-        };
+      this.temp = data['locations'];
+      //console.log(this.temp)
+
+      for (var i = 0; i < this.temp.length; i++) {
+        //console.log(this.temp[i])
+        let loc = {location: this.temp[i], value: this.temp[i], checked:false}
+        this.locationList.push(loc)
+      }
+      //console.log(data['locations'])
+      console.log(this.locationList)
+      // var locLabel = document.getElementById("locationLabel")
+      // for (var i = 0; i < this.locations.length; i++) {
+      //     if (locLabel != null) {
+      //       console.log(this.locations[i])
+      //       if (i == this.locations.length-1) {
+      //         locLabel.innerHTML += this.locations[i]
+      //       } else {
+      //         locLabel.innerHTML += this.locations[i] + ", "
+      //       }
+      //     }
+      //   };
       // this.loadProductDetails()
     });
     this.loadImages();
@@ -88,10 +98,16 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   buy() {
-    this.productService.purchaseOne(this.id).subscribe(
+
+    var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
+    for (var i = 0; i < temp2.length; i++) {
+      //formData.append("locations", temp2[i])
+    }
+
+    this.productService.purchaseOne(this.id, this.locationList).subscribe(
       data => {
         console.log(data.message);
-        alert("Purchase Successful!");
+        alert("Purchase Successful! Meeting Seller at " + temp2);
         this.router.navigate(['/sellerReview/' + this.id]);
       },
       error => {
