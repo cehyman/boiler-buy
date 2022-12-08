@@ -75,6 +75,8 @@ import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
 
@@ -108,6 +110,8 @@ import { NotVerifiedComponent } from './not-verified/not-verified.component';
     ChangeProfilePicComponent,
     ShopHistoryViewComponent,
     RetrieveUsernameComponent,
+    ResetPasswordComponent,
+    SpecialResetPasswordComponent,
     VerifyAccountComponent,
     NotVerifiedComponent,
   ],
