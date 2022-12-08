@@ -66,14 +66,15 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "boiler-buy:build",
-            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "boiler-buy-web:build:production"
+              "browserTarget": "boiler-buy-web:build:production",
+              "proxyConfig": "src/proxy_production.conf.json"
             },
             "development": {
-              "browserTarget": "boiler-buy-web:build:development"
+              "browserTarget": "boiler-buy-web:build:development",
+              "proxyConfig": "src/proxy_development.conf.json"
             }
           },
           "defaultConfiguration": "development"

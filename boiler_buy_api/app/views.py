@@ -11,14 +11,48 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
 from rest_framework.decorators import action
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+from config.settings import DEBUG
+
+from django.core.mail import send_mail
 
 import json
-import datetime
 
 #create your views here
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
+
+class RetrieveUsernameViewSet(viewsets.ModelViewSet):
+    serializer_class = AccountSerializer
+    queryset = Account.objects.all()
+    lookup_field = "email"
+    lookup_value_regex = "[^/]+"
+
+    def create(self, request):
+        print(request.data.get('username'))
+        print(request.data.get('email'))
+        account = [request.data.get('username'), request.data.get('email')]
+        print(account)
+        RetrieveUsernameViewSet._sendUsernameEmail(account)
+        return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendUsernameEmail(account):
+        send_mail(
+            'Here is your username!',
+            f"""
+            {account[0]}
+            Make sure to write down your username
+            so you do not forget!
+            
+            """,
+            "no-reply@boilerbuy.com",
+            [account[1]],
+            fail_silently=False
+        )
 
 class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
@@ -27,6 +61,9 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
+        print('THIS IS THE REQUEST: ', request)
+        print('REQUEST BODY: ', request.data)
+        print('REQUEST ENDS HERE')
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
 
@@ -34,11 +71,54 @@ class AccountViewSet(viewsets.ModelViewSet):
         newWishlist = Wishlist.objects.create(description=request.data.get('username'))
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
         shop=newShop, wishlist=newWishlist)
+        
+        AccountViewSet._sendVerificationEmail(account)
 
         print('newShop: ', newShop.id)
         print('newWishlist: ', newWishlist.id)
         print('username: ', account)
         return JsonResponse({'observe': 'response'})
+
+    @staticmethod
+    def _sendVerificationEmail(account):
+        params = {'link': 
+                    f'localhost:4200/verify/{account.email}' if DEBUG else
+                    f'boiler-buy.azurewebsites.net/verify/{account.email}',
+                  'username': account.username,
+                  'email': account.email
+                 }
+        plainMessage = render_to_string('verify_link.txt', params)
+        htmlMessage = render_to_string('verify_link.html', params)
+        
+        send_mail(
+            'Please Verify Your Account',
+            plainMessage,
+            'no-reply@boilerbuy.com',
+            [account.email],
+            fail_silently=False,
+            html_message=htmlMessage
+        )
+    
+    @action(detail=True, methods=['patch'])
+    def sendVerificationEmail(self, request, email):
+        account = Account.objects.get(email=email)
+        AccountViewSet._sendVerificationEmail(account)
+        return JsonResponse({"success": True })
+    
+    @action(detail=True, methods=['patch'])
+    def verify(self, request, email):
+        print(f"email = {email}")
+        account = Account.objects.get(email=email)
+        account.verified = True
+        account.save()
+        
+        return JsonResponse({"success": True })
+    
+    @action(detail=True, methods=['get'])
+    def verified(self, request, email):
+        account = Account.objects.get(email=email)
+        return JsonResponse({'verified': account.verified})
+        
     
     @action(detail=True, methods=['get'])
     def getFromUsername(self, request, pk):
@@ -48,7 +128,6 @@ class AccountViewSet(viewsets.ModelViewSet):
         
         return JsonResponse(account, safe=False)
         
-
     # Test to retrieve image /accounts/<email>/retrieveImages
     @action(detail=True, methods=['get'])
     def retrieveImages(self, request, email):
@@ -116,7 +195,10 @@ class ProductViewSet(viewsets.ModelViewSet):
             description = request.data.get('description'),
             canShip = bool(request.data.get('canShip')),
             canMeet = bool(request.data.get('canMeet')),
-            brand = request.data.get('brand')
+            brand = request.data.get('brand'),
+            locations = request.data.getlist('locations'),
+            tags = request.data.getlist('tags'),
+            allowOutOfStock = bool(request.data.get('allowOutOfStock'))
         )
         print('creating product with product id', product.id)
 
@@ -151,7 +233,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         shop = Shop.objects.get(id=user.shop_id)
         
         # Add the creation of this product to the user's history
-        ShopHistory.newEdit(shop, product)
+        # ShopHistory.newEdit(shop, product)
         
         return result
     
@@ -559,4 +641,3 @@ class WishlistViewSet(viewsets.ModelViewSet):
             wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
-        #return redirect('http://localhost:8000/api/wishlist/' + str(user.wishlist_id))

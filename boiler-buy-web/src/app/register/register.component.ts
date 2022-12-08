@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit{
  
   ngOnInit() {
     console.log("Starting value of global username is %s", this.globals.username)
-    var request = this.http.get('https://boilerbuy-api.azurewebsites.net/api/accounts/')
+    var request = this.http.get('api/accounts/')
     let i = 0
     request.subscribe((data: any) => {
       console.log(data)
@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit{
         sellerReviews: []
       };
   
-      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/accounts/", body, {observe: 'response'});
+      var request = this.http.post<any>("api/accounts/", body, {observe: 'response'});
   
       request.subscribe((data: any) => {
         console.log(data)

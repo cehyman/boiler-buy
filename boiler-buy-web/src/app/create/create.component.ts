@@ -29,6 +29,18 @@ export class CreateComponent implements OnInit {
   type: string = 'Electronics';
   brand: string = 'Acer';
 
+  tagList = [
+    {name:'Old', value:'Old', checked:false},
+    {name:'New', value:'New', checked:false},
+    {name:'Phone', value:'Phone', checked:false},
+  ]
+
+  locationList = [
+    {name:'WALC', value:'WALC', checked:false},
+    {name:'Corec', value:'Corec', checked:false},
+    {name:'Lawson', value:'Lawson', checked:false},
+  ]
+
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
   constructor(private currencyPipe: CurrencyPipe, private http: HttpClient) {
@@ -102,6 +114,14 @@ export class CreateComponent implements OnInit {
       [shipDollars, shipCents] = this.currencyToDollarsCents(this.shipPrice);
     }
 
+    var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
+    var loc = temp2
+    console.log(loc)
+    var temp3 = this.tagList.filter(tag => tag.checked).map(tag => tag.value)
+    var tg = temp3
+    // var temp = JSON.stringify(temp2)
+    // console.log(temp)
+
     var formData = new FormData();
     formData.append("productType", this.type);
     formData.append("priceDollars", `${priceDollars}`);
@@ -115,6 +135,14 @@ export class CreateComponent implements OnInit {
     formData.append("canMeet", `${this.canMeet}`);
     formData.append("username", this.curruser);
     formData.append("brand", this.brand);
+    for (var i = 0; i < loc.length; i++) {
+      formData.append("locations", loc[i])
+    }
+    for (var i = 0; i < tg.length; i++) {
+      formData.append("tags", tg[i])
+    }  
+
+    formData.append("allowOutOfStock", `${false}`)
 
     for (var i = 0; i < files.length; i++) {
       console.log("found an image");
@@ -122,7 +150,7 @@ export class CreateComponent implements OnInit {
       formData.append("images", file, file.name);
     }
 
-    var request = this.http.post<any>("/api/products/", formData, {observe: "response"});
+    var request = this.http.post<any>("api/products/", formData, {observe: "response"});
 
     request.subscribe((data: any) => {
       console.log("Request sent!");

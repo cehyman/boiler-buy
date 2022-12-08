@@ -75,6 +75,9 @@ import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { GeneralChatComponent } from './general-chat/general-chat.component';
+import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { VerifyAccountComponent } from './verify-account/verify-account.component';
+import { NotVerifiedComponent } from './not-verified/not-verified.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +109,9 @@ import { GeneralChatComponent } from './general-chat/general-chat.component';
     ChangeProfilePicComponent,
     ShopHistoryViewComponent,
     GeneralChatComponent,
+    RetrieveUsernameComponent,
+    VerifyAccountComponent,
+    NotVerifiedComponent,
   ],
   imports: [
     FormsModule,
