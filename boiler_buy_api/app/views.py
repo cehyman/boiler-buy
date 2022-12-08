@@ -13,10 +13,7 @@ from rest_framework.decorators import api_view
 from rest_framework.decorators import action
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-
 from config.settings import DEBUG
-
-from django.core.mail import send_mail
 
 import json
 
@@ -171,6 +168,26 @@ class AccountViewSet(viewsets.ModelViewSet):
             return JsonResponse({"detail": "Updated."})
         else:
             return JsonResponse(serializer.errors)
+    
+    # Test to send email /accounts/<email>/sendResetPassword
+    @action(detail=True, methods=['get'])
+    def sendResetPassword(self, request, email):
+        params = {'link': 
+                f'http://localhost:4200/special-reset-password/{email}' if DEBUG else
+                f'http://boiler-buy.azurewebsites.net/special-reset-password/{email}'
+            }
+        plainMessage = render_to_string('reset_password.txt', params)
+        htmlMessage = render_to_string('reset_password.html', params)
+    
+        send_mail(
+            'Please Verify Your Account',
+            plainMessage,
+            'no-reply@boilerbuy.com',
+            [email],
+            fail_silently=False,
+            html_message=htmlMessage
+        )
+        return JsonResponse({"success": True })
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -299,7 +316,6 @@ class ProductViewSet(viewsets.ModelViewSet):
                     break
                             
         return JsonResponse({'observe': 'response'})
-
             
     # override default list (because we want to filter before we send the response)
     def list(self, request):
@@ -334,6 +350,27 @@ class ProductViewSet(viewsets.ModelViewSet):
                 print(type)
                 typeSplit = type.split(",")
                 data = data.filter(brand__in=typeSplit).values()
+        
+        # Filter by tags. If 2+ tags are selected, then the two sets of objects
+        # with those tags are joined together
+        if (request.GET.get('tags') != None and request.GET.get('tags') != ""):  
+            requestTags = request.GET.get('tags').split(',')
+            
+            # Run through the list of tags and keep a list of querysets that
+            # correspond with each tag
+            selectedSets = []
+            for requestTag in requestTags:
+                selectedSets.append(data.filter(tags__contains=[requestTag]))
+            
+            # Combine all of the sets together to form a single query set.
+            combinedSet = selectedSets[0] if len(selectedSets) > 0 else Product.objects.none()
+            for i in range(1, len(selectedSets)):
+                combinedSet = combinedSet.union(selectedSets[i])
+            
+            # Our new query set should be trimmed of all the items that don't contain
+            # any of the tags queried
+            data = combinedSet
+            
         if (request.GET.get('minPrice') != None):
             print("here4")
             minPrice = request.GET.get('minPrice')
@@ -357,6 +394,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         print(maxSellerFilter)
         temp = []
         # print(data)
+        
+        print(f"Before for loop: data={data}")
         for prod in data:
             # print(prod.get("id"))
             shop = Shop.objects.filter(products=prod.get("id")).values()
@@ -382,22 +421,8 @@ class ProductViewSet(viewsets.ModelViewSet):
                 prod['sellerRatingCount'] = 0
         if (minSellerFilter == True or maxSellerFilter == True):
             data = temp
-            # print("pogpog")
-            # if (prod.get("id") == 100):
-            #     shop = Shop.objects.filter(products=prod.get("id")).values()
-            #     if (shop.count() > 0):
-            #         shopID = shop.get().get("id")
-            #         print('product id:', prod.get('id'))
-            #         print('shopID:', shopID)
-            #         account = Account.objects.filter(shop=shopID).values().get()
-            #         prod['sellerRating'] = account.get("sellerRating")
-            #         prod['sellerRatingCount'] = account.get("sellerRatingCount")
-            #     else:
-            #         # products that don't have a shop yet
-            #         prod['sellerRating'] = 0
-            #         prod['sellerRatingCount'] = 0
-        # print(data)
-        # print(data)
+        
+        print(f"Returning response")
         return JsonResponse(list(data), safe=False)
 
     def retrieve(self, request, pk=None):
@@ -450,6 +475,7 @@ class ShopViewSet(viewsets.ModelViewSet):
             "action": item.action,
             "dateTime": item.dateTime,
             "profit": item.profit if item.product else None,
+            "locations": item.locations,
             "buyerName": item.buyerName,
         }
     
@@ -481,11 +507,12 @@ class ShopHistoryViewSet(viewsets.ModelViewSet):
         )
     
     @staticmethod
-    def newSold(shop, product, buyer, profit):
+    def newSold(shop, product, buyer, profit, locations):
         ShopHistory.objects.create(
             shop=shop,
             product=product,
             action="sold",
+            locations = locations,
             productId = product.id,
             productName = product.name,
             buyerName = buyer.username,
@@ -550,7 +577,7 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
             )
         
         # Add the sell to the sellers history
-        ShopHistoryViewSet.newSold(shop, product, buyer, (totalPriceDollars, totalPriceCents))
+        ShopHistoryViewSet.newSold(shop, product, buyer, (totalPriceDollars, totalPriceCents), request.data.get('locations'))
 
         return JsonResponse({'message': 'Product was purchased'}, status=201)
 
@@ -604,6 +631,15 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
         # toSend.data = [{"email": "tTest@purdue.edu", "lastViewed": "die", "product": {"id":"testtestYEET"}}]
         
         return toSend
+
+class GroupAdsViewSet(viewsets.ModelViewSet):
+    queryset = GroupAds.objects.all()
+    serializer_class = GroupAdsSerializer
+
+    def list(self, request):
+        data = GroupAds.objects.values()
+        return JsonResponse(list(data), safe=False)
+
 
 class WishlistViewSet(viewsets.ModelViewSet):
     queryset = Wishlist.objects.all()

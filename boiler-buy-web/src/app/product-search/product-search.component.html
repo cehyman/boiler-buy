@@ -39,6 +39,16 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="tags">Tags</label>
+                            <div *ngFor="let tag of tagList; let i = index">
+                                <input type="checkbox"
+                                       name="tags"
+                                       value="{{tag.value}}"
+                                       [(ngModel)]="tag.checked"/>
+                                {{tag.name}}
+                            </div>
+                        </div>
                     </section>
                     <button mat-raised-button (click)="applyFilters()">Apply filters</button>
                 </mat-card-content>
@@ -78,6 +88,7 @@
             </mat-card>
 
             <!-- basically a for loop for each element in the array 'products' -->
+            <app-groupad-listing *ngFor="let ad of groupAds; let i = index" [object]="ad"></app-groupad-listing>
             <app-product-listing *ngFor="let product of products; let i = index" [object]="product"></app-product-listing>
         </div>
     </div>

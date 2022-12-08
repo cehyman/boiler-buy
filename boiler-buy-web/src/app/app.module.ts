@@ -76,9 +76,14 @@ import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-p
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { GeneralChatComponent } from './general-chat/general-chat.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
 import { ChatOverviewComponent } from './chat-overview/chat-overview.component';
+import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
+import { GroupadListingComponent } from './groupad-listing/groupad-listing.component';
+import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
 
 @NgModule({
   declarations: [
@@ -111,9 +116,14 @@ import { ChatOverviewComponent } from './chat-overview/chat-overview.component';
     ShopHistoryViewComponent,
     GeneralChatComponent,
     RetrieveUsernameComponent,
+    ResetPasswordComponent,
+    SpecialResetPasswordComponent,
     VerifyAccountComponent,
     NotVerifiedComponent,
     ChatOverviewComponent,
+    CreateGroupAdComponent,
+    GroupadListingComponent,
+    GroupadDetailsComponent,
   ],
   imports: [
     FormsModule,

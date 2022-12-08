@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PurchaseConfirmationDialog } from '../product-listing/product-listing.component';
 import { ChatService } from '../chat.service';
 import { ChatMessageItem } from '../chat-types';
+import { locationInterface } from '../product-types';
 
 @Component({
   selector: 'app-product-details',
@@ -27,7 +28,9 @@ export class ProductDetailsComponent implements OnInit {
   type: string = '';
   brand: string = '';
   id: number = -1;
-  locations: string[] = []
+  temp: any = []
+  locationList: locationInterface[] = []
+  locationNameList: string[] = []
   tagsTemp: string[] = []
   tags: string[] = []
   userTags: string[] = []
@@ -35,6 +38,7 @@ export class ProductDetailsComponent implements OnInit {
   curruser: string = ''
 
   private appcomp: AppComponent = new AppComponent();
+
 
   @ViewChild('carousel') carousel !: PictureCarouselComponent;
 
@@ -79,7 +83,6 @@ export class ProductDetailsComponent implements OnInit {
       this.canShip = data['canShip'];
       this.type = data['productType'];
       this.brand = data['brand'];
-      this.locations = data['locations'];
       this.tagsTemp = data['tags']
       for (let i = 0; i < this.tagsTemp.length; i++) {
         if (this.tagsTemp[i] == "null") {
@@ -88,20 +91,17 @@ export class ProductDetailsComponent implements OnInit {
         }
       }
       this.tags = this.tagsTemp
-      console.log(data['locations'])
-      console.log(this.locations)
-      var locLabel = document.getElementById("locationLabel")
-      for (var i = 0; i < this.locations.length; i++) {
-          if (locLabel != null) {
-            console.log(this.locations[i])
-            if (i == this.locations.length-1) {
-              locLabel.innerHTML += this.locations[i]
-            } else {
-              locLabel.innerHTML += this.locations[i] + ", "
-            }
-          }
-        };
-      // this.loadProductDetails()
+
+      this.temp = data['locations'];
+      //console.log(this.temp)
+
+      for (var i = 0; i < this.temp.length; i++) {
+        //console.log(this.temp[i])
+        let loc = {location: this.temp[i], value: this.temp[i], checked:false}
+        this.locationList.push(loc)
+      }
+      //console.log(data['locations'])
+      console.log(this.locationList)
     });
     this.loadImages();
   }
@@ -123,12 +123,19 @@ export class ProductDetailsComponent implements OnInit {
 
 
   openDialog(): void {
+
+    var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
+    // for (var i = 0; i < temp2.length; i++) {
+    //   //formData.append("locations", temp2[i])
+    //   let t = temp2[i]
+    // }
+
     if (this.curruser != 'Username') {
       const dialogRef = this.dialog.open(PurchaseConfirmationDialog, {
         width: '400px',
         data: {
           priceDollars: this.price.substring(0, this.price.indexOf('.')),
-          priceCents: "" + (+this.price.substring(this.price.indexOf('.')+1, this.price.length)),
+          priceCents: "" + (+this.price.substring(this.price.indexOf('.', temp2)+1, this.price.length)),
         }
       });
 
@@ -146,7 +153,8 @@ export class ProductDetailsComponent implements OnInit {
               receiverEmail: sellerEmail.sellerEmail,
               productID: this.id,
               message: this.curruser + " is requesting " + result.numToBuy + " items for $"
-                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents) + " each."
+                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents)
+                + " each, with a meeting point at " + temp2;
             } as ChatMessageItem).subscribe((output) => {
               console.log(output);
               // Redirect to the chat page

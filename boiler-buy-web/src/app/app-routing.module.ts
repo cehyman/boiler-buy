@@ -17,13 +17,17 @@ import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
 import { GeneralChatComponent } from './general-chat/general-chat.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { LoginGuard } from './AuthGuards/login.guard';
 import { VerifiedGuard } from './AuthGuards/verified.guard';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
 import { VerifyEmailGuard } from './AuthGuards/verify-email.guard';
 import { ChatOverviewComponent } from './chat-overview/chat-overview.component';
+import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
+import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' , pathMatch: 'full'},
@@ -49,6 +53,11 @@ const routes: Routes = [
   { path: 'chat', component: ChatOverviewComponent,                         canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'retrieve-username', component: RetrieveUsernameComponent,        canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'chat-window', component: GeneralChatComponent,                         canActivate: [LoginGuard, VerifiedGuard]},
+  { path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'retrieve-username', component: RetrieveUsernameComponent},
+  { path: 'special-reset-password/:id', component: SpecialResetPasswordComponent},
+  { path: 'create-group-ad', component: CreateGroupAdComponent},
+  { path: 'groupad/:id', component: GroupadDetailsComponent}
 ];
 
 @NgModule({

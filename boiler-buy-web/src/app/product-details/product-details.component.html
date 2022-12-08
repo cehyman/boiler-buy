@@ -16,13 +16,27 @@
             <label id="canMeet">Ship: {{this.canShip}}</label><br>
             <label id="type">Category: {{this.type}}</label><br>
             <label id="brand">Brand: {{this.brand}}</label><br>
-            <label id="locationLabel">Locations: </label>
+            <div mat-dialog-content>
+                Select a location:
+            </div>
+            <div *ngFor="let location of locationList; let i = index">
+                <label>
+                    <input type="checkbox"
+                           name="location"
+                           value="{{location.value}}"
+                           [(ngModel)]="location.checked"/>
+                    {{location.location}}
+                </label>
+            </div>
+            
             <div class="form-group">
                 <label for="tags">Tags:</label>
                 <div *ngFor="let tag of tags; let i = index">
                     <button mat-raised-button id="${tag}" (click)="saveTag(tag)">{{tag}}</button>
                 </div>
             </div>
+            
+            
         </div>
     </div>
     <div class="descriptionContainer">
