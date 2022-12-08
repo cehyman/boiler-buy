@@ -22,6 +22,7 @@ export class GeneralChatComponent implements OnInit {
   
   // The other user's information (who the current user is talking to)
   otheremail = "";
+  otheruser = "";
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
@@ -40,16 +41,16 @@ export class GeneralChatComponent implements OnInit {
     var urlStr = this.activatedRoute.snapshot.url.toString();
     this.id = Number(urlStr.split(',')[1]);
 
-    // var accountURL = "api/chatmessages/"+this.id+"/";
-    // var request = this.http.get(accountURL, {observe:'response'});
-    // request.subscribe((data: any) => {
-    //   console.log(data)
+    var messagesURL = "api/chatMessages/"+this.id+"/";
+    var request = this.http.get(messagesURL, {observe:'response'});
+    request.subscribe((data: any) => {
+      console.log(data)
       // this.messages = data["body"]["sellerRatingCount"]
       // this.reviewAvg = data["body"]["sellerRating"]
       // this.reviews = data["body"]["sellerReviews"]
       // this.curremail = data["body"]["email"]
       // this.curruser = data["body"]["username"]  
-    // })
+    })
   }
 
   sendMessage(message: string) {
@@ -62,12 +63,14 @@ export class GeneralChatComponent implements OnInit {
       formData.append("message", message);
       console.log(formData)
 
-      // var request = this.http.post<any>("api/chatmessages/${this.id}/", formData, {observe: "response"});
+      var messagesURL = "api/chatMessages/";//+this.id+"/";
+      var request = this.http.post<any>(messagesURL, formData, {observe: "response"});
 
-      // request.subscribe((data: any) => {
-      //   console.log("Request sent!");
-      //   //on success, add it to the array for this component so the user can see
-      // })
+      request.subscribe((data: any) => {
+        console.log("Request sent!");
+        //on success, add it to the array for this component so the user can see
+        window.scroll(0, document.documentElement.offsetHeight);
+      })
       this.messages = this.messages.concat([{"name": this.curruser, "message": message, "date":"now"}]);
       window.scroll(0, document.documentElement.offsetHeight);
     }

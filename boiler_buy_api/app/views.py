@@ -641,3 +641,20 @@ class WishlistViewSet(viewsets.ModelViewSet):
             wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
+
+
+class ChatMessagesViewSet(viewsets.ModelViewSet):
+    serializer_class = ChatMessages
+    queryset = ChatMessages.objects.all()
+
+    def create(self, request):
+        print('THIS IS THE REQUEST: ', request)
+        print('REQUEST BODY: ', request.data)
+        print('REQUEST ENDS HERE')
+        print(request.data.get('sender'))
+        return JsonResponse({'observe': 'response'})
+
+    def list(self, request):
+        print("hi, you tried listing!")
+        data = ChatMessages.objects.all().values()
+        return JsonResponse(list(data), safe=False)

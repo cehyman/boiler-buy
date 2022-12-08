@@ -100,3 +100,12 @@ class ViewHistory(models.Model):
     productID = models.ForeignKey("Product", null=True, on_delete=models.CASCADE)
     lastViewed = models.DateTimeField(auto_now=True)
 
+class ChatMessages(models.Model):
+    sender = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='senderEmail')
+    receiver = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='receiverEmail')
+    productID = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    message = models.CharField(max_length=256)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.username)
