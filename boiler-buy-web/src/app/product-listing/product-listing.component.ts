@@ -96,6 +96,8 @@ export class ProductListingComponent implements OnInit {
         console.log(result);
         if (result != undefined && result != 0) {
           this.productService.getProductsSellerEmail(this.object.id).subscribe((sellerEmail) => {
+            console.log(sellerEmail.sellerEmail)
+            console.log(this.object.id)
             this.chatService.sendMessage({
               senderEmail: this.curremail,
               receiverEmail: sellerEmail.sellerEmail,
@@ -104,6 +106,18 @@ export class ProductListingComponent implements OnInit {
                 + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents) + " each."
             } as ChatMessageItem).subscribe((output) => {
               console.log(output);
+              // Redirect to the chat page
+              var params = new URLSearchParams();
+              params.set('currEmail', this.curremail);
+              params.set('otherEmail', sellerEmail.sellerEmail);
+              params.set('productID', "" + this.object.id);
+              this.router.navigate(
+                ['/chat-window'], {queryParams: {
+                currEmail: this.curremail,
+                otherEmail: sellerEmail.sellerEmail,
+                productID: this.object.id
+              }})
+              console.log(params.toString())
             }, (error) => {
               console.log(error);
             })

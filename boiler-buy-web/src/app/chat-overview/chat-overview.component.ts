@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ChatGroup } from '../chat-types';
 import { ChatService } from '../chat.service';
+import { Product } from '../product-types';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-chat-overview',
@@ -13,7 +15,7 @@ export class ChatOverviewComponent implements OnInit {
 
   allChats:ChatGroup[] = [];
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService, private productService: ProductService) { }
 
   ngOnInit(): void {
     this.chatService.getUsersChats({
@@ -33,13 +35,11 @@ export class ChatOverviewComponent implements OnInit {
           otherEmail: otherPersonEmail,
           productID: element.productID_id
         };
-        
-        console.log('hi');
+
         if (unique.length == 0) {
           unique = unique.concat(newChatGroup);
         } else {
           unique.forEach((element) => {
-            console.log('comparing' + element + ' to ' + newChatGroup);
             if (this.chatGroupsEqual(element, newChatGroup)) {
               isUnique = false;
             } else {
@@ -49,9 +49,13 @@ export class ChatOverviewComponent implements OnInit {
         }
 
         if (isUnique) {
-          this.allChats = this.allChats.concat([newChatGroup])
+          this.productService.getProductFromID(newChatGroup.productID as number).subscribe((product:Product) => {
+            // Also fetch the product image here
+            console.log(product.name)
+            newChatGroup.productName = product.name;
+            this.allChats = this.allChats.concat([newChatGroup])
+          });
         }
-        
       });
     });
   }

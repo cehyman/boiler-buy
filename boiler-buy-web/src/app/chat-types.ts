@@ -9,4 +9,6 @@ export interface ChatGroup {
     currEmail: string,
     otherEmail: string | null,
     productID: number | null,
+    productName?: string,
+    productImage?: string,
 }

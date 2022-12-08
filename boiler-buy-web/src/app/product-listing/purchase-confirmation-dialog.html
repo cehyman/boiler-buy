@@ -4,7 +4,8 @@
     <p>If you would like to try to negotiate the price, enter a new price below.</p>
     <h4>My asking price:</h4>
     $<input type="number" min="0" matinput [(ngModel)]= "askingPriceDollars">.
-    <input type="number" min="0" max="99" matinput [(ngModel)]= "askingPriceCents">
+    <input type="number" *ngIf="askingPriceCents < 10" min="0" max="99" matinput [(ngModel)]= "'0' + askingPriceCents">
+    <input type="number" *ngIf="askingPriceCents >= 10" min="0" max="99" matinput [(ngModel)]= "askingPriceCents">
 
     <div mat-dialog-content>
         Select a quantity and hit confirm to initiate contact with the seller.
