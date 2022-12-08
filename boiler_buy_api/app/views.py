@@ -173,8 +173,8 @@ class AccountViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def sendResetPassword(self, request, email):
         params = {'link': 
-                f'localhost:4200/special-reset-password/{email}' if DEBUG else
-                f'boiler-buy.azurewebsites.net/special-reset-password/{email}'
+                f'http://localhost:4200/special-reset-password/{email}' if DEBUG else
+                f'http://boiler-buy.azurewebsites.net/special-reset-password/{email}'
             }
         plainMessage = render_to_string('reset_password.txt', params)
         htmlMessage = render_to_string('reset_password.html', params)
@@ -187,6 +187,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             fail_silently=False,
             html_message=htmlMessage
         )
+        return JsonResponse({"success": True })
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
