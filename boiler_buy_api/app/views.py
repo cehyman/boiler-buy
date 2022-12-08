@@ -480,6 +480,12 @@ class ShopViewSet(viewsets.ModelViewSet):
             "buyerName": item.buyerName,
         }
         
+    @action(detail=True, methods=['get'])
+    def featuredProducts(self, request, pk):
+        shop = Shop.objects.get(pk=pk)
+        data = {"featuredProducts": shop.featuredProducts} 
+        return JsonResponse(data)
+        
     @action(detail=True, methods=['patch'])
     def setImage(self, request, pk):
         shop = Shop.objects.get(pk=pk)

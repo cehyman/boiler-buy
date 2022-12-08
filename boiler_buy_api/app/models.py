@@ -34,8 +34,7 @@ class Product(models.Model):
     image = models.FileField(null=True, blank=True, upload_to='products/')
     locations = ArrayField(models.CharField(max_length=200), default=list)
     tags = ArrayField(models.CharField(max_length=50), default=list)
-    allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)
-    
+    allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)    
 
 class ProductImage(models.Model):
     def uploadTo(self, filename):
@@ -48,6 +47,7 @@ class Shop(models.Model):
     description = models.CharField(max_length=250, default='')
     isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
+    featuredProducts = ArrayField(models.PositiveIntegerField(), null=False, blank=True, default=list)
     
     image = models.ImageField(null=True, blank=False, default=None, upload_to="shops/")
 
