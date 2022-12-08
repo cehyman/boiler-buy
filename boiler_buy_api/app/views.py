@@ -13,10 +13,7 @@ from rest_framework.decorators import api_view
 from rest_framework.decorators import action
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-
 from config.settings import DEBUG
-
-from django.core.mail import send_mail
 
 import json
 
@@ -171,6 +168,26 @@ class AccountViewSet(viewsets.ModelViewSet):
             return JsonResponse({"detail": "Updated."})
         else:
             return JsonResponse(serializer.errors)
+    
+    # Test to send email /accounts/<email>/sendResetPassword
+    @action(detail=True, methods=['get'])
+    def sendResetPassword(self, request, email):
+        params = {'link': 
+                f'http://localhost:4200/special-reset-password/{email}' if DEBUG else
+                f'http://boiler-buy.azurewebsites.net/special-reset-password/{email}'
+            }
+        plainMessage = render_to_string('reset_password.txt', params)
+        htmlMessage = render_to_string('reset_password.html', params)
+    
+        send_mail(
+            'Please Verify Your Account',
+            plainMessage,
+            'no-reply@boilerbuy.com',
+            [email],
+            fail_silently=False,
+            html_message=htmlMessage
+        )
+        return JsonResponse({"success": True })
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()

@@ -16,7 +16,9 @@ import { UserWishlistComponent } from './user-wishlist/user-wishlist.component';
 import { UserShopComponent } from './user-shop/user-shop.component';
 import { ChangeProfilePicComponent } from './change-profile-pic/change-profile-pic.component';
 import { ShopHistoryViewComponent } from './shop-history-view/shop-history-view.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RetrieveUsernameComponent } from './retrieve-username/retrieve-username.component';
+import { SpecialResetPasswordComponent } from './special-reset-password/special-reset-password.component';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { LoginGuard } from './AuthGuards/login.guard';
 import { VerifiedGuard } from './AuthGuards/verified.guard';
@@ -44,6 +46,10 @@ const routes: Routes = [
   { path: 'change-profile-pic', component: ChangeProfilePicComponent,       canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'shop/:id/history', component: ShopHistoryViewComponent,          canActivate: [LoginGuard, VerifiedGuard]},
   { path: 'retrieve-username', component: RetrieveUsernameComponent,        canActivate: [LoginGuard, VerifiedGuard]},
+  { path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'retrieve-username', component: RetrieveUsernameComponent},
+  { path: 'special-reset-password/:id', component: SpecialResetPasswordComponent}
+
 ];
 
 @NgModule({
