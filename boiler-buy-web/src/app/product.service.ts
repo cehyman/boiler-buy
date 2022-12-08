@@ -26,7 +26,9 @@ export class ProductService {
   }
 
   filterSearch(params: FilterSearchInput): Observable<ProductList> {
-
+    // We have to fetch the origin from the window since URL objects need to 
+    // have a domain as part of the URL. We use the window object to get this
+    // so that the URL works regardless or where the frontend is hosted
     let urlBase = window.location.origin + '/api/products/';
     console.log(`Constructing search request to ${urlBase}`);
     let url = new URL(urlBase); 

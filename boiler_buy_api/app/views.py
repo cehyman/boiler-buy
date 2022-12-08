@@ -334,21 +334,24 @@ class ProductViewSet(viewsets.ModelViewSet):
                 typeSplit = type.split(",")
                 data = data.filter(brand__in=typeSplit).values()
         
-        if (request.GET.get('tags') != None and request.GET.get('tags') != ""):
+        # Filter by tags. If 2+ tags are selected, then the two sets of objects
+        # with those tags are joined together
+        if (request.GET.get('tags') != None and request.GET.get('tags') != ""):  
             requestTags = request.GET.get('tags').split(',')
-            print(f"Filtering by tags: {requestTags}")
             
+            # Run through the list of tags and keep a list of querysets that
+            # correspond with each tag
             selectedSets = []
             for requestTag in requestTags:
                 selectedSets.append(data.filter(tags__contains=[requestTag]))
-                          
-            print(f"combined length = {len(selectedSets)}")           
-            combinedSet = selectedSets[0] if len(selectedSets) > 0 else Product.objects.none()
             
+            # Combine all of the sets together to form a single query set.
+            combinedSet = selectedSets[0] if len(selectedSets) > 0 else Product.objects.none()
             for i in range(1, len(selectedSets)):
                 combinedSet = combinedSet.union(selectedSets[i])
-                
-            print(f"Combined set = {combinedSet}")
+            
+            # Our new query set should be trimmed of all the items that don't contain
+            # any of the tags queried
             data = combinedSet
             
         if (request.GET.get('minPrice') != None):
