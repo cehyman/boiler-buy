@@ -128,7 +128,7 @@ export class ShopHistoryViewComponent implements OnInit {
       return `not found`;
     }
     else {
-      return `"item.locations"`;
+      return `${item.locations}`;
     } 
   }
 }

@@ -26,6 +26,7 @@ export class ProductDetailsComponent implements OnInit {
   id: number = -1;
   temp: any = []
   locationList: locationInterface[] = []
+  locationNameList: string[] = []
   tagsTemp: string[] = []
   tags: string[] = []
   userTags: string[] = []
@@ -85,7 +86,7 @@ export class ProductDetailsComponent implements OnInit {
         }
       }
       this.tags = this.tagsTemp
-      
+
       this.temp = data['locations'];
       //console.log(this.temp)
 
@@ -96,18 +97,6 @@ export class ProductDetailsComponent implements OnInit {
       }
       //console.log(data['locations'])
       console.log(this.locationList)
-      // var locLabel = document.getElementById("locationLabel")
-      // for (var i = 0; i < this.locations.length; i++) {
-      //     if (locLabel != null) {
-      //       console.log(this.locations[i])
-      //       if (i == this.locations.length-1) {
-      //         locLabel.innerHTML += this.locations[i]
-      //       } else {
-      //         locLabel.innerHTML += this.locations[i] + ", "
-      //       }
-      //     }
-      //   };
-      // this.loadProductDetails()
     });
     this.loadImages();
   }
@@ -130,11 +119,12 @@ export class ProductDetailsComponent implements OnInit {
   buy() {
 
     var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
-    for (var i = 0; i < temp2.length; i++) {
-      //formData.append("locations", temp2[i])
-    }
+    // for (var i = 0; i < temp2.length; i++) {
+    //   //formData.append("locations", temp2[i])
+    //   let t = temp2[i]
+    // }
 
-    this.productService.purchaseOne(this.id, this.locationList).subscribe(
+    this.productService.purchaseOne(this.id, temp2).subscribe(
       data => {
         console.log(data.message);
         alert("Purchase Successful! Meeting Seller at " + temp2);
