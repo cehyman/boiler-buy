@@ -135,7 +135,7 @@ export class ProductDetailsComponent implements OnInit {
         width: '400px',
         data: {
           priceDollars: this.price.substring(0, this.price.indexOf('.')),
-          priceCents: "" + (+this.price.substring(this.price.indexOf('.', temp2)+1, this.price.length)),
+          priceCents: "" + (+this.price.substring(this.price.indexOf('.')+1, this.price.length)),
         }
       });
 
@@ -154,7 +154,7 @@ export class ProductDetailsComponent implements OnInit {
               productID: this.id,
               message: this.curruser + " is requesting " + result.numToBuy + " items for $"
                 + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents)
-                + " each, with a meeting point at " + temp2;
+                + " each, with a meeting point at " + temp2,
             } as ChatMessageItem).subscribe((output) => {
               console.log(output);
               // Redirect to the chat page
