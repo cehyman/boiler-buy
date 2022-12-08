@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { ConfirmDeleteDialog } from '../edit-product/edit-product.component';
+import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 import { GroupAdList, GroupAdObj, Product } from '../product-types';
 
 @Component({
@@ -22,6 +23,11 @@ export class UserShopComponent implements OnInit {
   groupAds: GroupAdObj[] = []
   curruser:string = ''
   curremail:string = ''
+
+  // Things for customization:
+  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
+  background: File | null = null;
+  description: string = "";
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,7 +60,9 @@ export class UserShopComponent implements OnInit {
     request.subscribe(data => {
       console.log(data)
 
-      this.products = data.products
+      this.products = data.products;
+      this.background = data.image;
+      console.log(`image = ${this.background}`)
 
       let i = 0
       for (i = 0; i < this.products.length; i++) {
@@ -68,6 +76,8 @@ export class UserShopComponent implements OnInit {
         })
       }
     })
+
+    this.fetchCustomization();
   }
 
   getGroupAds() {
@@ -109,6 +119,51 @@ export class UserShopComponent implements OnInit {
 
   routeCreateGroupAd() {
     this.router.navigate(['/create-group-ad'])
+  }
+
+  fetchCustomization() {
+    // Fetch the shop id using the user's account.
+    this.curremail = <string> this.appcomp.getEmail()
+    let request = this.http.get(`/api/accounts/${this.curremail}/`, {observe: "body"});
+    request.subscribe((result: any) => {
+      
+      // Now that we know the id of the shop, we can request the description of the 
+      // shop
+      let subRequest = this.http.get(`/api/shops/${this.shop_id}`, {observe: "body"});
+      subRequest.subscribe((result: any) => {
+        this.description = result.description;
+        this.picUpload.loadFromDatabase(result.image);
+      });
+    }); 
+  }
+
+  submitCustomization() {
+    let body = {
+      "description": this.description
+    };
+
+    let request = this.http.patch(`/api/shops/${this.shop_id}/`, body, {observe: "body"});
+    request.subscribe((result: any) => {
+      console.log("Description Updated");
+    });
+
+    let files: File[] = this.picUpload.getNewFiles();
+    if(files.length > 0) {
+      let formData = new FormData();
+      formData.append('image', files[0]);
+
+      let request2 = this.http.patch(`/api/shops/${this.shop_id}/setImage/`, formData, {observe: "response"});
+      request2.subscribe((result: any) => {
+        console.log("Image sent");
+      });
+    }
+    files = this.picUpload.getExistingFilesToRemove();
+    if(files.length > 0) {
+      let request2 = this.http.patch(`/api/shops/${this.shop_id}/clearImage/`, {}, {observe: "response"});
+      request2.subscribe((result: any) => {
+        console.log("Image sent");
+      })
+    }
   }
 
 }

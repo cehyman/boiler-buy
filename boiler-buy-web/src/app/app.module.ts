@@ -118,6 +118,10 @@ import { GroupadDetailsComponent } from './groupad-details/groupad-details.compo
     SpecialResetPasswordComponent,
     VerifyAccountComponent,
     NotVerifiedComponent,
+    MyShopComponent,
+    GroupadListingComponent,
+    GroupadDetailsComponent,
+    CreateGroupAdComponent
   ],
   imports: [
     FormsModule,

@@ -479,6 +479,20 @@ class ShopViewSet(viewsets.ModelViewSet):
             "locations": item.locations,
             "buyerName": item.buyerName,
         }
+        
+    @action(detail=True, methods=['patch'])
+    def setImage(self, request, pk):
+        shop = Shop.objects.get(pk=pk)
+        shop.image = request.data.get('image')
+        shop.save()
+        return JsonResponse({"success": True})
+    
+    @action(detail=True, methods=['patch'])
+    def clearImage(self, request, pk):
+        shop = Shop.objects.get(pk=pk)
+        shop.image = None
+        return JsonResponse({"success": True})
+    
     
 class ShopHistoryViewSet(viewsets.ModelViewSet):
     queryset = ShopHistory.objects.all()

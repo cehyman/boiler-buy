@@ -1,9 +1,26 @@
 <app-site-menu></app-site-menu>
 
 <div class="header">
-    <h1>{{this.curruser}}'s Shop</h1>
+    <h1>{{this.curruser}}'s Shop</h1><br>
     <button (click)="routeCreateGroupAd()" mat-raised-button color="accent">Create Grouped Ad</button>
 </div>
+
+<form class="shopForm">  
+    <div class="flexContainer">
+        <app-picture-upload-new #picUpload [maxImages]="1"></app-picture-upload-new>
+        <mat-form-field class="shopInputDescription" appearance="fill">
+            <mat-label for="description">Description</mat-label>
+            <textarea matInput 
+                [(ngModel)]="description"
+                type="text" 
+                name="description" 
+                required>
+            </textarea>
+        </mat-form-field>
+    </div>
+    
+    <a mat-raised-button class="submitButton" (click)="submitCustomization()" color="accent" type="submit">Update</a>
+</form>
 
 <div *ngFor="let ad of groupAds; let i = index" style="display: flex;">
     <div style="width: 85%;">
