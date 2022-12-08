@@ -1,0 +1,29 @@
+.messagebox-form {
+    /* min-width: 150px;
+    max-width: 500px; */
+    width: auto;
+    padding: 15px;
+}
+
+.messagebox-full-width {
+    width: 100%;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 118px;
+    background-color: lightgrey;
+}
+
+.content {
+    padding: 15px;
+    position: relative;
+}
+
+.content::after {
+    content: '';
+    display: block;
+    height: 118px; /* Set same as footer's height */
+}
