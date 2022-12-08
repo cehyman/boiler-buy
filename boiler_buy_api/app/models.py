@@ -73,7 +73,7 @@ class Account(models.Model):
     
 class ShopHistory(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     action = models.CharField(max_length=32, default='')
     dateTime = models.DateTimeField(auto_now=True)
     
@@ -85,8 +85,8 @@ class ShopHistory(models.Model):
     productId = models.IntegerField(default=1, blank=False)
     productName = models.CharField(max_length=50)
     buyerName = models.CharField(max_length=30, default='')
-
-
+    locations = ArrayField(models.CharField(max_length=200), default=list)
+    
 class PurchaseHistory(models.Model):
     buyerEmail = models.ForeignKey("Account", on_delete=models.CASCADE, related_name='pHistories')
     purchaseTime = models.DateTimeField(auto_now_add=True)

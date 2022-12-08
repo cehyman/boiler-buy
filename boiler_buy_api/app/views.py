@@ -468,22 +468,6 @@ class ShopViewSet(viewsets.ModelViewSet):
         
         return JsonResponse(response, safe=False)
     
-    @action(detail=True, methods=['patch'])
-    def setImage(self, request, pk):
-        shop = Shop.objects.get(pk=pk)
-        images = request.data.getlist('image')
-        shop.image = images[0]
-        shop.save()
-        
-        return JsonResponse({"success": True})
-    
-    @action(detail=True, methods=['patch'])
-    def clearImage(self, request, pk):
-        shop = Shop.objects.get(pk=pk)
-        shop.image = None
-        shop.save()
-        return JsonResponse({"success": True})
-    
     def historyItemToDict(self, item):
         return {
             "shopId": item.shop.id,
@@ -545,8 +529,6 @@ class ShopHistoryViewSet(viewsets.ModelViewSet):
             productName = product.name,
         )
         
-        
-
 class PurchaseHistoryViewSet(viewsets.ModelViewSet):
     queryset = PurchaseHistory.objects.all()
     serializer_class = PurchaseHistorySerializer
