@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AppComponent } from '../app.component';
-import { ChatMessageItem, ChatGroup, ChatGroupPK } from '../chat-types';
+import { ChatMessageItem, ChatGroup, ChatGroupPK, ChatGroupFull } from '../chat-types';
 import { ChatService } from '../chat.service';
 import { Globals } from '../globals';
 import { Product } from '../product-types';
@@ -71,6 +71,31 @@ export class GeneralChatComponent implements OnInit {
       } else {
         this.isSeller = false;
       }
+
+      if (this.isSeller) {
+        //get tracking info
+        this.chatService.getChatGroup({
+          seller: this.chatInfo.currEmail,
+          buyer: this.chatInfo.otherEmail || '',
+          productID: +(this.chatInfo.productID || '')
+        }).subscribe((output) => {
+          var cg = output.body as ChatGroupFull;
+          this.trackingLink = cg.trackingLink;
+          this.trackingNum = cg.trackingNumber;
+        })
+      } else {
+        //get tracking info
+        this.chatService.getChatGroup({
+          seller: this.chatInfo.otherEmail || '',
+          buyer: this.chatInfo.currEmail,
+          productID: +(this.chatInfo.productID || '')
+        }).subscribe((output) => {
+          var cg = output.body as ChatGroupFull;
+          this.trackingLink = cg.trackingLink;
+          this.trackingNum = cg.trackingNumber;
+        })  
+      }
+      
     });
 
     this.productService.getProductFromID(this.id).subscribe((product:Product) => {

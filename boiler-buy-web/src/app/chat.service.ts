@@ -58,11 +58,21 @@ export class ChatService {
     urlParams.set('seller', data.seller);
     urlParams.set('buyer', data.buyer);
     urlParams.set('productID', "" + data.productID);
-
+    
     return this.http.get("api/chatGroup/?" + urlParams.toString(), {observe:'response'});
   }
 
   getChatGroupList(): Observable<any> {
     return this.http.get('api/chatGroup/', {responseType: 'json'}) as Observable<any>;
+  }
+
+  getChatGroup(data: ChatGroupPK) {
+    var urlParams = new URLSearchParams();
+    urlParams.set('seller', data.seller);
+    urlParams.set('buyer', data.buyer);
+    urlParams.set('productID', "" + data.productID);
+    urlParams.set('function', 'getCG');
+
+    return this.http.get("api/chatGroup/?" + urlParams.toString(), {observe:'response'});
   }
 }

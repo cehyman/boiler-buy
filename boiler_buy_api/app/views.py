@@ -744,6 +744,12 @@ class ChatGroupViewSet(viewsets.ViewSet):
             row.save()
             print('row', row)
             return JsonResponse({"try":"todie"})
+        elif (request.GET.get('function') == "getCG"):
+            buyer = Account.objects.get(email=request.GET.get('buyer'))
+            seller = Account.objects.get(email=request.GET.get('seller'))
+            product = Product.objects.get(id=request.GET.get('productID'))
+            data = ChatGroup.objects.values().get(buyer=buyer, seller=seller, product=product)
+            return JsonResponse(data, safe=False)
         else:
             print("else")
             buyer = Account.objects.get(email=request.GET.get('buyer'))
