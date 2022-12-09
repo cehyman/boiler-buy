@@ -22,6 +22,7 @@ export class GeneralChatComponent implements OnInit {
   id = -1;
   isSeller: boolean = false;
 
+  // Store the image path for the current user
   public currImage: string = "";
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, 
@@ -49,6 +50,8 @@ export class GeneralChatComponent implements OnInit {
       console.log(stuff.body);
 
       stuff.body.forEach((element:any) => {
+        // If the given element is the sent by the current user, set the image
+        // we are storing for the current user. This avoids a HTTP request
         if (element.sender_id == this.chatInfo.currEmail) {
           this.currImage = element.senderImage
         }
@@ -83,7 +86,6 @@ export class GeneralChatComponent implements OnInit {
         productID: this.chatInfo.productID,
         message: message
       } as ChatMessageItem).subscribe((success) => {
-
 
         this.messages = this.messages.concat([{"name": this.chatInfo.currEmail, "message": message, "date":"now", image: this.currImage}]);
         window.scroll(0, document.documentElement.offsetHeight);
