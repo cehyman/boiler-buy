@@ -2,7 +2,8 @@ export interface ChatMessageItem {
     senderEmail: string,
     receiverEmail: string,
     productID: number,
-    message: string
+    message: string,
+    image: string,
 }
 
 export interface ChatGroup {
@@ -10,5 +11,6 @@ export interface ChatGroup {
     otherEmail: string | null,
     productID: number | null,
     productName?: string,
-    productImage?: string,
+    currImage: string,
+    otherImage: string,
 }

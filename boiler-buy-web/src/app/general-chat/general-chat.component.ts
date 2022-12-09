@@ -18,9 +18,12 @@ export class GeneralChatComponent implements OnInit {
 
   public chatInfo: ChatGroup = {currEmail: "", otherEmail: "", productID: 0} as ChatGroup;
 
-  messages: {name:string, message:string, date:string}[] = [];
+  messages: {name:string, message:string, date:string, image:string}[] = [];
   id = -1;
   isSeller: boolean = false;
+
+  // Store the image path for the current user
+  public currImage: string = "";
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, 
     private router: Router, private chatService: ChatService, private productService: ProductService
@@ -45,11 +48,19 @@ export class GeneralChatComponent implements OnInit {
       productID: this.chatInfo.productID
     } as ChatGroup).subscribe((stuff) => {
       console.log(stuff.body);
+
       stuff.body.forEach((element:any) => {
+        // If the given element is the sent by the current user, set the image
+        // we are storing for the current user. This avoids a HTTP request
+        if (element.sender_id == this.chatInfo.currEmail) {
+          this.currImage = element.senderImage
+        }
+
         this.messages = this.messages.concat({
           "name": element.sender_id,
           message: element.message,
-          date: element.timestamp
+          date: element.timestamp,
+          image: element.senderImage,
         })
       });
     });
@@ -75,7 +86,8 @@ export class GeneralChatComponent implements OnInit {
         productID: this.chatInfo.productID,
         message: message
       } as ChatMessageItem).subscribe((success) => {
-        this.messages = this.messages.concat([{"name": this.chatInfo.currEmail, "message": message, "date":"now"}]);
+
+        this.messages = this.messages.concat([{"name": this.chatInfo.currEmail, "message": message, "date":"now", image: this.currImage}]);
         window.scroll(0, document.documentElement.offsetHeight);
         console.log(success)
       }, (error) => {

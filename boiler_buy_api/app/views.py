@@ -691,7 +691,9 @@ class ChatMessagesViewSet(viewsets.ModelViewSet):
             sender=senderObj,
             receiver=receiverObj,
             productID=productObj,
-            message=request.data.get('message')
+            message=request.data.get('message'),
+            senderImage = senderObj.image,
+            receiverImage = receiverObj.image,
         )
         return JsonResponse({'success': True})
 
@@ -702,7 +704,6 @@ class ChatMessagesViewSet(viewsets.ModelViewSet):
         elif (fun == 'getMessages'):
             response = self.getMessages(request)
             return response
-
 
     def getMessages(self, request):
         print(request.GET)
