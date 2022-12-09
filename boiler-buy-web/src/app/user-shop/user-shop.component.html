@@ -36,12 +36,17 @@
         <app-product-listing style="width: auto;" [object]="product"
             [showButton]="false"></app-product-listing>
     </div>
-    <div style="padding: 10px; width: 15%;">
-        
+
+    <div class="buttons" style="padding: 10px; width: 15%;">
+        <button (click)="routeEdit(product.id)" mat-raised-button
+        color="primary" style="margin-bottom: 2vh;">Edit Item</button>
+        <br>
+        <button (click)="confirmDelete(product.id)" mat-raised-button
+            color="warn">Delete Item</button>
         <span *ngIf="featuredList.includes(product.id); else notFeatured">
             <button mat-raised-button (click)="removeFeatured(product.id)">Remove Featured</button>
-        </span>
         <ng-template #notFeatured>
+        </span>
             <button mat-raised-button (click)="makeFeatured(product.id)">Make Featured</button>
         </ng-template>
 

@@ -29,7 +29,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
         fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews', 'wishlist', 'image',
-                  'verified', 'savedTags']
+                  'verified', 'savedTags', 'blockedUsers']
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
@@ -66,4 +66,4 @@ class ChatMessagesSerializer(serializers.Serializer):
 class ChatGroupSerializer(serializers.Serializer):
     class Meta:
         model = ChatGroup
-        fields = ['buyer', 'seller', 'product', 'isNegotiating', 'quantity', 'shippingPriceDollars', 'shippingPriceCents', 'finalPriceDollars', 'finalPriceCents', 'isShipping', 'trackingNumber', 'trackingLink']
+        fields = ['buyer', 'seller', 'product', 'isNegotiating', 'quantity', 'shippingPriceDollars', 'shippingPriceCents', 'finalPriceDollars', 'finalPriceCents', 'isShipping', 'trackingNumber', 'trackingLink', 'shippingAddress']

@@ -1,7 +1,5 @@
 
-h1{
-    text-align: center;
-}
+
 
 label{
     text-align: center;
@@ -14,26 +12,50 @@ label{
 
 .imageContainer {
     margin: auto;
+    margin-bottom: 2vh;
     width: 100%;
-    border: 1px solid black;
+    border-radius: 1vw;
+    border: 2px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    z-index: 5;
 }
 
 .infoContainer {
+    text-align: center;
     margin: auto;
+    padding-top: 1vw;
+    padding-bottom: 2vw;
     width: 100%;
-    border: 1px solid black;
+    border-radius: 1vw;
+    border: 2px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .buyBtn {
     margin:auto;
     display:flex;
+    margin-bottom: 10vh;
 }
 
 .descriptionContainer {
+    padding: 1vw;
     display: flex;
     width: 50%;
     margin:auto;
+    margin-top: 3vh;
     flex-direction: column;
+    border-radius: 1vw;
+    border: 2px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.description{
+    margin-top: 1vh;
+    background-color: var(--dividers-color);
+    color: var(--text-color);
+    border-radius: 1vw;
+    border: 2px solid black;
 }
 
 .submitBtn {

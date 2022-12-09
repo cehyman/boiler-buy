@@ -41,7 +41,7 @@
     </div>
     <div class="descriptionContainer">
         <label>Description:</label>
-        <textarea rows="10" cols="50" readonly>{{this.description}}</textarea>
+        <textarea class="description" rows="10" cols="50" readonly>{{this.description}}</textarea>
     </div>
-    <br><button (click)="openDialog()" type="submit" class="buyBtn">Make an Offer</button>
+    <br><button mat-raised-button color="accent" (click)="openDialog()" type="submit" class="buyBtn">Make an Offer</button>
 </div>

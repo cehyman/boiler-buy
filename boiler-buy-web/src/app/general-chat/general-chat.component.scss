@@ -1,0 +1,88 @@
+.messagebox-form {
+    /* min-width: 150px;
+    max-width: 500px; */
+    width: auto;
+    padding: 15px;
+    display: flex;
+    right: 0;
+}
+
+.messagebox-full-width {
+    width: 100%;
+    flex: 70%;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 13vh;
+    padding-bottom: 2vh;
+    background-color: lightgrey;
+}
+.message{
+    padding: 1vh;
+    margin-left: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings{
+   top: 4vh;
+}
+.settings-panel{
+    top: 4vh;
+    position:absolute;
+    z-index: 10;
+    flex: 30%;
+    margin-top: 3vh;
+ }
+
+.tracking{
+    padding:1%;
+}
+
+.content {
+    padding: 15px;
+    position: relative;
+
+}
+
+.content::after {
+    content: '';
+    display: block;
+    height: 118px; /* Set same as footer's height */
+}
+
+.mat-drawer {
+    position: fixed !important;
+    z-index: 10;
+}
+
+.sticky-sidenav {
+    position: fixed;
+    top: 0;
+    right: auto;
+    overflow: hidden;
+    z-index: 10;
+}
+
+  
+.headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+    margin-left: 8px;
+    
+}
+
+img {
+    width: 8em;
+    height:8em;
+    padding: 1px;
+    border-radius: 5px;
+    border: 1px solid black;
+}

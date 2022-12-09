@@ -787,6 +787,13 @@ class ChatGroupViewSet(viewsets.ViewSet):
             row.save()
             #print('row', row)
             return JsonResponse({"try":"todie"})
+        elif (request.GET.get('function') == "update_shipping_address"):
+            print("Upadate shipping address")
+            row = ChatGroup.objects.get(id=request.GET.get('id'))
+            row.shippingAddress = request.GET.get('shippingAddress')
+            row.save()
+            print('row', row)
+            return JsonResponse({"try":"todie"})
         elif (request.GET.get('function') == "getCG"):
             buyer = Account.objects.get(email=request.GET.get('buyer'))
             seller = Account.objects.get(email=request.GET.get('seller'))

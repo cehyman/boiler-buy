@@ -5,15 +5,14 @@
     <div>
       <a mat-button [routerLink]="'/products/search'"> Shop </a>
       <a mat-button [routerLink]="'/create'"> Create Listing </a>
+      <a mat-button (click)="routeUserShop()">My Shop</a>
+      <a mat-button [routerLink]="'/chat'"> Chat </a>
     </div>
 
     <span class="extra-menu"></span>
     <mat-slide-toggle class="themeToggle" [formControl]="toggleTheme">Dark Mode</mat-slide-toggle>
-    <div class="menu-button-container">
-      <button mat-button (click)="routeUserShop()">My Shop</button>
-      <button mat-button [routerLink]="'/profile'">Profile</button>
-        <button mat-button (click)="logoutAccount()">Log Out</button>
-    </div>
+    <button mat-button [routerLink]="'/profile'">Profile</button>
+    <button mat-button (click)="logoutAccount()">Log Out</button>
   </mat-toolbar-row>
 </mat-toolbar>
 

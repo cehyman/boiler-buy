@@ -42,7 +42,11 @@
     border-radius:1vw;
 }
 
-.deleteButton {
+.buttons {
   align-items: center;
+  justify-content: center;
   display: flex;
+  padding: 1vw; 
+  width: 15%;
+  flex-direction: column;
 }

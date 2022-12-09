@@ -4,91 +4,93 @@
         justify-content: center;
         align-items: center;
         text-align: center;
+
+    }
+    .create-form{
+        width: 90%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 25px;
+        border: 2px solid black;
     }
 
-    .header{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-
-    .inputContainer {
-        background-color: #777;
+    .column {
+        float: left;
+        width: 45%;
         padding: 2vw;
-        width: 33vw;
-        border-radius:1vw;
-        margin-bottom: 2vh;
-    }
+      }
 
     .productInputBox {
-        background-color: rgb(146, 144, 144);
         margin-bottom: 2vh;
         width: 33vw;
         height:9vh;
-        border-radius:.5vw;
+        border-radius:2vw;
     }
 
     .productInputDescription {
-        background-color: rgb(146, 144, 144);
         width: 33vw;
-        margin-top: 2vh;
         border-radius:.5vw;
     }
 
     .productInputList{
-        background-color: rgb(146, 144, 144);
         width: 33vw;
-        margin-top: 2vh;
-        border-radius:.5vw;
+        height:9vh;
+        margin-bottom: 2vh;
+        border-radius:2vw;
     }
 
     .productInputListSelect{
-        width: 29vw;
+        width: 33vw;
         margin: 1vw;
         margin-bottom: -5vh;
         border-radius:.5vw;
     }
 
     .productInputCheckbox {
-        width: 29vw;
-        margin-top: 2vh;
+        width: 33vw;
+        margin-top: 3vh;
 
-        padding: 2vw;
+        padding-left: 4vw;
         border-radius:.5vw;
-        background-color: rgb(146, 144, 144);
+
     }
 
+    .tags{
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        width: 33vw;
+        margin-left: 4vw;
+    }
 
     .productInputShipping {
-        background-color: rgb(132, 130, 130);
         margin-top: 1vh;
-        margin-bottom: 2vh;
-        width: 21vw;
+        // padding-left: 1vw;
+        width: 33vw;
         border-radius:.5vw;
     }
 
-    .mat-option-text {
-        background-color: rgb(132, 130, 130);
-    }
+
 
     .mat-checkbox-label{
         text-overflow: ellipsis;
     }
 
     .productUploadPicBox{
-        background-color: rgb(146, 144, 144);
-        margin-top: 2vh;
-        padding: 2vw;
-        width: 29vw;
+        margin-top: 4vh;
+        padding-left: 4vw;
+        width: 33vw;
         text-align: center;
         border-radius:.5vw;
     }
 
     .submitButton{
         width: 29vw;
-        margin-top: 2vh;
+        margin:auto;
         margin-bottom:2vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
 }
 
@@ -109,7 +111,6 @@
     }
 
     .inputContainer {
-        background-color: #777;
         padding: 2vw;
         width: 70vw;
         border-radius:1vw;
@@ -117,7 +118,6 @@
     }
 
     .productInputBox {
-        background-color: rgb(146, 144, 144);
         margin-bottom: 2vh;
         width: 70vw;
         height:9vh;
@@ -125,14 +125,12 @@
     }
 
     .productInputDescription {
-        background-color: rgb(146, 144, 144);
         width: 70vw;
         margin-top: 2vh;
         border-radius:.5vw;
     }
 
     .productInputList{
-        background-color: rgb(146, 144, 144);
         width: 70vw;
         margin-top: 2vh;
         border-radius:.5vw;
@@ -150,24 +148,19 @@
         margin-top: 2vh;
         padding: 2vw;
         border-radius:.5vw;
-        background-color: rgb(146, 144, 144);
     }
 
 
     .productInputShipping {
-        background-color: rgb(132, 130, 130);
         margin-top: 1vh;
         margin-bottom: 2vh;
         width: 66vw;
         border-radius:.5vw;
     }
 
-    .mat-option-text {
-        background-color: rgb(132, 130, 130);
-    }
+
 
     .productUploadPicBox{
-        background-color: rgb(146, 144, 144);
         margin-top: 2vh;
         padding: 2vw;
         width: 66vw;

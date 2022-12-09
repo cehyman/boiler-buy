@@ -121,7 +121,7 @@ $custom-lightgrey: (
 $custom-darkgrey: (
     50 : #eeeeef,
     100 : #d4d5d7,
-    200 : #b7b9bd,
+    200 : #52555e,
     300 : #9a9ca3,
     400 : #85878f,
     500 : #6f727b,
@@ -167,7 +167,7 @@ $custom-darkgrey: (
   $warn: mat-color(map-get($theme, warn));
 
   $base: mat-color($foreground-palette, base);
-  $divider: mat-color($foreground-palette, divider);
+  $divider: mat-color(map-get($theme, primary), 200);
   $dividers: mat-color($foreground-palette, dividers);
   $disabled: mat-color($foreground-palette, disabled);
   $disabled-button: mat-color($foreground-palette, disabled-button);
@@ -203,7 +203,7 @@ $custom-darkgrey: (
   --warn-color: #{$warn};
 
   --base-color: #{$base};
-  --divider-color: #D4D4D4;
+  --divider-color: #{$divider};
   --dividers-color: #{$dividers};
   --disabled-color: #{$disabled};
   --disabled-text-color: #{$disabled-text};
@@ -253,7 +253,7 @@ $light-theme: mat-light-theme(
 
 // Dark Theme
 
-$dark-theme-primary: mat-palette($custom-darkgrey, 900);
+$dark-theme-primary: mat-palette($custom-darkgrey, 700);
 $dark-theme-accent: mat-palette($custom-lightgrey);
 $dark-theme-warn: mat-palette($custom-yellow);
 
@@ -288,6 +288,7 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
   text-align: center;
+  margin-top: 6vh;
 }
 
 h2, h3 {
@@ -318,8 +319,8 @@ button {
 
 input[type=text] {
   display: inline-block;
-  border: solid;
-  border-radius: 10px;
+  // border: solid;
+  // border-radius: 10px;
 }
 
 label {

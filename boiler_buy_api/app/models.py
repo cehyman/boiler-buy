@@ -72,6 +72,8 @@ class Account(models.Model):
     image = models.ImageField(null=True, blank=False, upload_to='accounts/')
     verified = models.BooleanField(null=False, blank=True, default=False)
     savedTags = ArrayField(models.CharField(max_length=50), default=list)
+    blockedUsers = ArrayField(models.CharField(max_length=50), default=list)
+
 
     def __str__(self):
         return str(self.username)
@@ -133,4 +135,5 @@ class ChatGroup(models.Model):
     isShipping = models.BooleanField(default=False)
     trackingNumber = models.CharField(max_length=250)
     trackingLink = models.CharField(max_length=500)
+    shippingAddress = models.CharField(max_length=500, null=False, blank=True, default="")
 

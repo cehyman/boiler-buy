@@ -133,6 +133,10 @@ export class UserShopComponent implements OnInit {
     this.router.navigate(['/create-group-ad'])
   }
 
+  routeEdit(productId: number){
+    this.router.navigate(['/edit/' + productId.toString()])
+  }
+
   makeFeatured(id: number) {
     console.log(`Making product #${id} featured`);
 
