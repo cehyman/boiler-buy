@@ -7,7 +7,7 @@ import { PictureUploadComponent } from '../picture-upload/picture-upload.compone
 @Component({
   selector: 'app-change-profile-pic',
   templateUrl: './change-profile-pic.component.html',
-  styleUrls: ['./change-profile-pic.component.css']
+  styleUrls: ['./change-profile-pic.component.scss']
 })
 export class ChangeProfilePicComponent implements OnInit {
 
@@ -16,14 +16,38 @@ export class ChangeProfilePicComponent implements OnInit {
   curruser:string = ''
   currpass:string = ''
   curremail:string = ''
+  imageURL!: URL; 
 
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
 
   constructor(private router: Router, private http: HttpClient) { }
 
+  
+
   ngOnInit(): void {
     this.curruser = <string> this.appcomp.getUsername()
     this.curremail = <string> this.appcomp.getEmail()
+    this.displayProfilePic()
+  }
+
+  displayProfilePic() {
+    var request = this.http.get<any>(`api/accounts/${this.curremail}/`, {observe: "body"})
+
+    request.subscribe(data => {
+      console.log(data)
+
+      let image = data['image']
+      if (image == null) {
+        this.imageURL = new URL("https://api-private.atlassian.com/users/1a39e945ae51e44675e6c70f682173c4/avatar")
+      } else {
+        //display the image in database
+        var req2 = this.http.get<any>(`api/accounts/${this.curremail}/retrieveImages`, {observe: "body"})
+        req2.subscribe((data: any) => {
+          this.imageURL = data
+        })
+      }
+    })
+
   }
 
   submit() {

@@ -14,7 +14,7 @@ import { locationInterface } from '../product-types';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
 
@@ -148,6 +148,16 @@ export class ProductDetailsComponent implements OnInit {
           this.productService.getProductsSellerEmail(this.id).subscribe((sellerEmail) => {
             console.log(sellerEmail.sellerEmail)
             console.log(this.id)
+
+            //create a chatGroup
+            this.chatService.createChatGroup({
+              currEmail: this.curruser,
+              otherEmail: sellerEmail.sellerEmail,
+              productID: this.id,
+            }).subscribe((output) => {
+              console.log(output);
+            })
+
             this.chatService.sendMessage({
               senderEmail: this.curruser,
               receiverEmail: sellerEmail.sellerEmail,

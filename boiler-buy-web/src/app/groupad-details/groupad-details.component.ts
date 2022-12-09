@@ -7,7 +7,7 @@ import { Product } from '../product-types';
 @Component({
   selector: 'app-groupad-details',
   templateUrl: './groupad-details.component.html',
-  styleUrls: ['./groupad-details.component.css']
+  styleUrls: ['./groupad-details.component.scss']
 })
 export class GroupadDetailsComponent implements OnInit {
 

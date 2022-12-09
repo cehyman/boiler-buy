@@ -62,3 +62,8 @@ class ChatMessagesSerializer(serializers.Serializer):
     class Meta:
         model = ChatMessages
         fields = ['sender', 'receiver', 'productID', 'message', 'timestamp']
+
+class ChatGroupSerializer(serializers.Serializer):
+    class Meta:
+        model = ChatGroup
+        fields = ['buyer', 'seller', 'product', 'isNegotiating', 'quantity', 'shippingPriceDollars', 'shippingPriceCents', 'finalPriceDollars', 'finalPriceCents', 'isShipping', 'trackingNumber', 'trackingLink']

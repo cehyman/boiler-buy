@@ -718,7 +718,9 @@ class ChatMessagesViewSet(viewsets.ModelViewSet):
             sender=senderObj,
             receiver=receiverObj,
             productID=productObj,
-            message=request.data.get('message')
+            message=request.data.get('message'),
+            senderImage = senderObj.image,
+            receiverImage = receiverObj.image,
         )
         return JsonResponse({'success': True})
 
@@ -729,7 +731,6 @@ class ChatMessagesViewSet(viewsets.ModelViewSet):
         elif (fun == 'getMessages'):
             response = self.getMessages(request)
             return response
-
 
     def getMessages(self, request):
         print(request.GET)
@@ -756,3 +757,46 @@ class SellerProductViewSet(viewsets.ViewSet):
         sellerShop = Shop.objects.filter(products=prodID).values().first()
         seller = Account.objects.get(shop=sellerShop.get("id"))
         return JsonResponse({'sellerEmail': seller.email})
+
+class ChatGroupViewSet(viewsets.ViewSet):
+    serializer_class = ChatGroupSerializer
+    queryset = ChatGroup.objects.all()
+
+    def list(self, request):
+        print('request:', request.GET)
+        if (request.GET.get('function') == "update_tracking"):
+            print('update tracking info')
+            row = ChatGroup.objects.get(id=request.GET.get('id'))
+            row.trackingLink = request.GET.get('trackingLink')
+            row.trackingNumber = request.GET.get('trackingNumber')
+            row.save()
+            print('row', row)
+            return JsonResponse({"try":"todie"})
+        elif (request.GET.get('function') == "getCG"):
+            buyer = Account.objects.get(email=request.GET.get('buyer'))
+            seller = Account.objects.get(email=request.GET.get('seller'))
+            product = Product.objects.get(id=request.GET.get('productID'))
+            data = ChatGroup.objects.values().get(buyer=buyer, seller=seller, product=product)
+            return JsonResponse(data, safe=False)
+        else:
+            print("else")
+            buyer = Account.objects.get(email=request.GET.get('buyer'))
+            seller = Account.objects.get(email=request.GET.get('seller'))
+            product = Product.objects.get(id=request.GET.get('productID'))
+            data = ChatGroup.objects.values().get(buyer=buyer, seller=seller, product=product)
+            print('data:', data)
+            return JsonResponse(data.get('id'), safe=False)
+
+    def create(self, request):
+        buyer = Account.objects.get(email=request.data.get('buyer'))
+        seller = Account.objects.get(email=request.data.get('seller'))
+        productObj = Product.objects.get(id=request.data.get('productID'))
+
+        message = ChatGroup.objects.create(
+            buyer=buyer,
+            seller=seller,
+            product=productObj,
+        )
+        return JsonResponse({'success': True})
+
+    

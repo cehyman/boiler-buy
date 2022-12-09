@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-picture-upload-new',
   templateUrl: './picture-upload.component.html',
-  styleUrls: ['./picture-upload.component.css']
+  styleUrls: ['./picture-upload.component.scss']
 })
 export class PictureUploadComponent implements OnInit {
   // Configuration for the component

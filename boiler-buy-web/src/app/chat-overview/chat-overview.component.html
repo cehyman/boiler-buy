@@ -4,7 +4,13 @@
     <mat-card class="example-card">
         <mat-card-header>
             <!-- put a product image here instead -->
-            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+            <span *ngIf="chat.otherImage === null || chat.otherImage === ''; else validImage">
+                <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            </span>
+            <ng-template #validImage>
+                <img mat-card-sm-image src="/media/{{chat.otherImage}}">
+            </ng-template>
+
             <mat-card-title-group style="width: auto;">
                 <mat-card-title>{{chat.otherEmail}}</mat-card-title>
                 <mat-card-subtitle>Product: {{chat.productName}}</mat-card-subtitle>

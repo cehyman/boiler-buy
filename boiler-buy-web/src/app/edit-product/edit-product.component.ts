@@ -2,7 +2,6 @@ import { CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 import { Globals } from '../globals';
@@ -12,7 +11,7 @@ import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
-  styleUrls: ['./edit-product.component.css']
+  styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent implements OnInit {
   public globals: Globals = new Globals;

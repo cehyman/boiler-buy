@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-product-listing',
   templateUrl: './product-listing.component.html',
-  styleUrls: ['./product-listing.component.css'],
+  styleUrls: ['./product-listing.component.scss'],
 })
 export class ProductListingComponent implements OnInit {
   @Input() object: Product = {id: 0, name: "", priceDollars: 0, sellerRating: 0, sellerRatingCount: 0} as Product;
@@ -100,12 +100,23 @@ export class ProductListingComponent implements OnInit {
           this.productService.getProductsSellerEmail(this.object.id).subscribe((sellerEmail) => {
             console.log(sellerEmail.sellerEmail)
             console.log(this.object.id)
+
+            //create a chatGroup
+            this.chatService.createChatGroup({
+              currEmail: this.curremail,
+              otherEmail: sellerEmail.sellerEmail,
+              productID: this.object.id,
+            }).subscribe((output) => {
+              console.log(output);
+            })
+
             this.chatService.sendMessage({
               senderEmail: this.curremail,
               receiverEmail: sellerEmail.sellerEmail,
               productID: this.object.id,
               message: this.curruser + " is requesting " + result.numToBuy + " items for $"
-                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents) + " each."
+                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents)
+                + " each."
             } as ChatMessageItem).subscribe((output) => {
               console.log(output);
               // Redirect to the chat page

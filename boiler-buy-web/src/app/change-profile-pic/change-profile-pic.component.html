@@ -1,7 +1,9 @@
 <!-- <p>Change your Profile Picture</p> -->
+<app-site-menu></app-site-menu>
+<h1><b>Upload New Profile Picture</b></h1>
 
-<label><b>Upload New Profile Picture</b></label><br>
-<app-picture-upload-new #picUpload [maxImages]="1"></app-picture-upload-new>
-<br><br>
-
-<button (click)="submit()" type="submit">Submit</button>
+<div class="inputContainer">
+    <img class="profile-pic" src="{{ imageURL }}"/>
+  <app-picture-upload-new #picUpload [maxImages]="1"></app-picture-upload-new>
+  <button mat-raised-button (click)="submit()" type="submit">Submit</button>
+</div>
