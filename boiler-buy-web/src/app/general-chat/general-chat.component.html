@@ -161,7 +161,7 @@
 
                     <mat-form-field appearance="fill">
                         <mat-label>Tracking Number</mat-label>
-                        <input matInput disabled [(ngModel)]="trackingNum" type="text">
+                        <input matInput disabled [(ngModel)]="trackingNum">
                     </mat-form-field>
                 </mat-expansion-panel>
 
@@ -173,17 +173,17 @@
                             Negotiation Status
                         </mat-panel-title>
                         <mat-panel-description>
-                            Mark as sold, in progress, or cancelled
+                            Request a new price
                         <mat-icon>point_of_sale</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
-                <mat-form-field appearance="fill">
+                <!-- <mat-form-field appearance="fill"> -->
                     <mat-form-field appearance="fill">
-                        <mat-label>Tracking URL</mat-label>
+                        <mat-label>Negotiate</mat-label>
                         <input matInput type="url">
                     </mat-form-field>
-                </mat-form-field>
+                <!-- </mat-form-field> -->
             </mat-expansion-panel>
             <mat-divider></mat-divider>
 
@@ -195,6 +195,8 @@
     <div style="height: 100%;">
         <div class="header">
             <app-site-menu></app-site-menu>
+            <br>
+            <br>
             <button type="button" color="primary" mat-button (click)="drawer.toggle()">
                 <mat-icon>settings</mat-icon>Settings
             </button>
