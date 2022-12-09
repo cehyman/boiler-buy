@@ -27,3 +27,26 @@
     display: block;
     height: 118px; /* Set same as footer's height */
 }
+
+.mat-drawer {
+    position: fixed !important;
+}
+
+.sticky-sidenav {
+    position: fixed;
+    top: 0;
+    right: auto;
+    overflow: hidden;
+    z-index: 10;
+}
+
+  
+.headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+    margin-left: 8px;
+    
+}

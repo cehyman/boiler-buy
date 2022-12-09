@@ -105,7 +105,8 @@ export class ProductListingComponent implements OnInit {
               receiverEmail: sellerEmail.sellerEmail,
               productID: this.object.id,
               message: this.curruser + " is requesting " + result.numToBuy + " items for $"
-                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents) + " each."
+                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents)
+                + " each."
             } as ChatMessageItem).subscribe((output) => {
               console.log(output);
               // Redirect to the chat page

@@ -5,6 +5,7 @@ import { AppComponent } from '../app.component';
 import { ChatMessageItem, ChatGroup } from '../chat-types';
 import { ChatService } from '../chat.service';
 import { Globals } from '../globals';
+import { Product } from '../product-types';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -21,6 +22,12 @@ export class GeneralChatComponent implements OnInit {
   messages: {name:string, message:string, date:string}[] = [];
   id = -1;
   isSeller: boolean = false;
+  canShip: boolean = false;
+
+  // For the actual purchase:
+  pricedPerUnit = true;
+  isShipping = false;
+
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, 
     private router: Router, private chatService: ChatService, private productService: ProductService
@@ -63,6 +70,10 @@ export class GeneralChatComponent implements OnInit {
         this.isSeller = false;
       }
     });
+
+    this.productService.getProductFromID(this.id).subscribe((product:Product) => {
+      this.canShip = product.canShip;
+    })
   }
 
   sendMessage(message: string) {
