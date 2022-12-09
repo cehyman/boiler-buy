@@ -24,13 +24,14 @@
 
                     <mat-form-field appearance="fill">
                         <mat-label>Tracking URL</mat-label>
-                        <input matInput type="url">
+                        <input matInput [(ngModel)]="trackingLink" type="url">
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
                         <mat-label>Tracking Number</mat-label>
-                        <input matInput type="text">
+                        <input matInput [(ngModel)]="trackingNum" type="text">
                     </mat-form-field>
+                    <button mat-button (click)="saveTrackingNumber()">Apply Changes</button>
                 </mat-expansion-panel>
 
                 <mat-divider></mat-divider>

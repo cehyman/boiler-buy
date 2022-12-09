@@ -12,3 +12,9 @@ export interface ChatGroup {
     productName?: string,
     productImage?: string,
 }
+
+export interface ChatGroupPK {
+    buyer: string,
+    seller: string,
+    productID: number,
+}

@@ -100,6 +100,16 @@ export class ProductListingComponent implements OnInit {
           this.productService.getProductsSellerEmail(this.object.id).subscribe((sellerEmail) => {
             console.log(sellerEmail.sellerEmail)
             console.log(this.object.id)
+
+            //create a chatGroup
+            this.chatService.createChatGroup({
+              currEmail: this.curremail,
+              otherEmail: sellerEmail.sellerEmail,
+              productID: this.object.id,
+            }).subscribe((output) => {
+              console.log(output);
+            })
+
             this.chatService.sendMessage({
               senderEmail: this.curremail,
               receiverEmail: sellerEmail.sellerEmail,
