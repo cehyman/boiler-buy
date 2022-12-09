@@ -1,58 +1,52 @@
-<mat-toolbar class="site-menu-desktop">
+<mat-toolbar color="primary" class="site-menu-desktop">
   <mat-toolbar-row>
     <h2>Boiler Buy</h2>
     <span class="menu-spacer"></span>
     <div>
-      <!-- <a mat-button [routerLink]="'/products/search'"> Shop </a> -->
+      <a mat-button [routerLink]="'/products/search'"> Shop </a>
       <a mat-button [routerLink]="'/create'"> Create Listing </a>
       <a mat-button (click)="routeUserWishlist()"> Wishlist</a>
-      <!-- <a mat-button (click)="routePurchaseHistory()"> Purchase History</a> -->
     </div>
-    
+
     <span class="extra-menu"></span>
-    
+    <mat-slide-toggle class="themeToggle" [formControl]="toggleTheme"></mat-slide-toggle>
     <div class="menu-button-container">
-      <button mat-button (click)="routeUserShop()"> My Shop</button>
-      <button mat-button [routerLink]="'/profile'"> Profile </button>
-      <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+      <button mat-button (click)="routeUserShop()">My Shop</button>
+      <button mat-button [routerLink]="'/profile'">Profile</button>
+        <button mat-button (click)="logoutAccount()">Log Out</button>
     </div>
-    <mat-menu class="extra-menu" #menu="matMenu">
-      <button mat-menu-item (click)="$event.stopPropagation();">
-          <mat-checkbox [checked]="darkMode$ | async" (change)="onToggle()"> Dark Mode</mat-checkbox>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item (click)="logoutAccount()"><mat-icon>open_in_new</mat-icon>Logout</button>
-    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-toolbar class="site-menu-mobile">
   <mat-toolbar-row>
     <div class="menu-button-container">
-      <button mat-icon-button [matMenuTriggerFor]="mobileMenu"><mat-icon>menu</mat-icon></button>
+      <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
+        <mat-icon>menu</mat-icon>
+      </button>
     </div>
     <h2>Boiler Buy</h2>
     <mat-menu class="extra-menu" #mobileMenu="matMenu">
-      <button mat-menu-item [routerLink]="'/profile'"><mat-icon>account_circle</mat-icon>Profile</button>
-      <mat-divider></mat-divider>
-      <!-- <button mat-menu-item [routerLink]="'/products/search'"><mat-icon>shopping_cart</mat-icon>Shop</button>
-      <mat-divider></mat-divider> -->
-      <button mat-menu-item [routerLink]="'/create'"><mat-icon>create</mat-icon>Create Listing</button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item (click)="routeUserWishlist()"><mat-icon>list</mat-icon>Wishlist</button>
-      <mat-divider></mat-divider>
-      <!-- <button mat-menu-item (click)="routePurchaseHistory()"><mat-icon>history</mat-icon>Purchase History</button>
-      <mat-divider></mat-divider> -->
-      <button class="darkmodeBtn" mat-menu-item (click)="$event.stopPropagation();">
-          <mat-checkbox [checked]="darkMode$ | async" (change)="onToggle()"> Dark Mode</mat-checkbox>
+      <button mat-menu-item [routerLink]="'/profile'">
+        <mat-icon>account_circle</mat-icon>Profile
       </button>
       <mat-divider></mat-divider>
-      <button mat-menu-item [routerLink]="'/settings'"><mat-icon>settings</mat-icon>Settings</button>
+      <button mat-menu-item [routerLink]="'/create'">
+        <mat-icon>create</mat-icon>Create Listing
+      </button>
       <mat-divider></mat-divider>
-      <button mat-menu-item (click)="logoutAccount()"><mat-icon>open_in_new</mat-icon>Logout</button>
+      <button mat-menu-item (click)="routeUserWishlist()">
+        <mat-icon>list</mat-icon>Wishlist
+      </button>
+      <mat-divider></mat-divider>
+      <mat-divider></mat-divider>
+      <button mat-menu-item [routerLink]="'/settings'">
+        <mat-icon>settings</mat-icon>Settings
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logoutAccount()">
+        <mat-icon>open_in_new</mat-icon>Logout
+      </button>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
-

@@ -7,7 +7,7 @@ import { ChangePasswordService } from '../change-password.service';
 @Component({
   selector: 'app-special-reset-password',
   templateUrl: './special-reset-password.component.html',
-  styleUrls: ['./special-reset-password.component.css']
+  styleUrls: ['./special-reset-password.component.scss']
 })
 export class SpecialResetPasswordComponent implements OnInit {
   private appcomp: AppComponent = new AppComponent();

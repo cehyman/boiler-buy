@@ -18,17 +18,11 @@
         justify-content: center;
         margin: 4px;
     }
-    .darkmodeBtn {
-        margin-left:4px;
-    }
 
     .site-menu-desktop {
         background-color: #777;
     }
 
-    ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
-        background-color: #2d3436 !important;
-    }
     .site-menu-mobile{
         display: none;
     }
@@ -58,14 +52,6 @@
 
     .site-menu-mobile {
         background-color: #777;
-    }
-
-    ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
-        background-color: #2d3436 !important;
-    }
-
-    .darkmodeBtn {
-        margin-left:4px;
     }
 
     .site-menu-desktop{

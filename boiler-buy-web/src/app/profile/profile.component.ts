@@ -6,7 +6,7 @@ import { Globals } from '../globals';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
 
 /* Most of user's information in profile is done in user-info comp */

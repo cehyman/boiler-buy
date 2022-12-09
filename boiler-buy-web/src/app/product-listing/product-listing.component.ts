@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-product-listing',
   templateUrl: './product-listing.component.html',
-  styleUrls: ['./product-listing.component.css'],
+  styleUrls: ['./product-listing.component.scss'],
 })
 export class ProductListingComponent implements OnInit {
   @Input() object: Product = {id: 0, name: "", priceDollars: 0, sellerRating: 0, sellerRatingCount: 0} as Product;
