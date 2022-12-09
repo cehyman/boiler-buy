@@ -45,8 +45,8 @@
             color="warn">Delete Item</button>
         <span *ngIf="featuredList.includes(product.id); else notFeatured">
             <button mat-raised-button (click)="removeFeatured(product.id)">Remove Featured</button>
-        <ng-template #notFeatured>
         </span>
+        <ng-template #notFeatured>
             <button mat-raised-button (click)="makeFeatured(product.id)">Make Featured</button>
         </ng-template>
 
