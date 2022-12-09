@@ -1,7 +1,21 @@
 .header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: left;
+  padding:2vh;
 }
 
+.profile-pic {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  border: 2px solid black;
+  text-align:left;
+  margin-right: 1vw;
+}
+
+.deleteButton {
+  align-items: center;
+  display: flex;
+}

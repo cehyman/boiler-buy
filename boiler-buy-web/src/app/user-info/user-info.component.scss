@@ -1,32 +1,38 @@
 .round {
-	border: 1px solid #777;
-	border-radius: 50%;
-	max-width: 50%;
-	height: auto;
-}
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+  justify-content: center;
+  border: 2px solid black;
+ }
 
-.username{
-	margin-bottom:2vh;
+.username {
+  margin-bottom: 2vh;
 }
 
 input {
-	border-radius: 1px;
-	border: 0;
+  border-radius: 1px;
+  border: 0;
 }
 
-
-
-.change-password-button{
-	margin:1vw;
+.passemail{
+  text-align: right;
+  width:75%;
+}
+.reviews{
+  text-align:left;
+  margin-bottom: 1vh;
+}
+.change-password-button {
+  margin: 1vw;
 }
 
-.change-profile-pic-button{
-	margin-right:1vw;
-}
 
 .profile-card {
-	background-color: rgb(146, 144, 144);
-	border-radius:.5vw;
-    margin:5vw;
-	padding:3vw;
+  border-radius: 0.5vw;
+  // margin: 5vw;
+  padding: 3vw;
 }
+
+

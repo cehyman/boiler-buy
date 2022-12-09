@@ -5,11 +5,14 @@
   text-align: center;
   min-height: 70vh;
 }
+.rvi {
+  margin-top:5vh;
+  margin-bottom:3vh;
+}
 
 .column {
   float: left;
-  width: 48%;
-  margin: 1%;
+  width: 50%;
 }
 
 /* Clear floats after the columns */

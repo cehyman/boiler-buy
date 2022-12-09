@@ -4,6 +4,10 @@
         z-index: 10;
     }
 
+    .themeToggle{
+        font-size: 14px;
+    }
+
     .dm-toggle {
         font-size: small;
     }
@@ -19,7 +23,10 @@
     }
 
     .site-menu-desktop {
-        background-color: #777;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        position: fixed;
+        z-index: 15;
+        top:0;
     }
 
     .site-menu-mobile{
@@ -41,7 +48,6 @@
         padding-right:10px;
     }
 
-
     .menu-button-container {
         display: flex;
         justify-content: center;
@@ -50,7 +56,9 @@
     }
 
     .site-menu-mobile {
-        background-color: #777;
+        position: fixed;
+        z-index: 15;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
     .site-menu-desktop{
