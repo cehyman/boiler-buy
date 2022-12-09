@@ -1,0 +1,244 @@
+@use '@angular/material' as mat;
+
+/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+
+// For more information: https://material.angular.io/guide/theming
+
+@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$custom-gold: (
+    50 : #f9f7f2,
+    100 : #f1eade,
+    200 : #e7dcc8,
+    300 : #ddceb2,
+    400 : #d6c4a2,
+    500 : #cfb991,
+    600 : #cab289,
+    700 : #c3aa7e,
+    800 : #bda274,
+    900 : #b29362,
+    A100 : #ffffff,
+    A200 : #fff8ee,
+    A400 : #ffe4bb,
+    A700 : #ffdaa1,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$custom-yellow: (
+    50 : #fbf5e0,
+    100 : #f4e6b3,
+    200 : #edd580,
+    300 : #e5c44d,
+    400 : #e0b726,
+    500 : #daaa00,
+    600 : #d6a300,
+    700 : #d09900,
+    800 : #cb9000,
+    900 : #c27f00,
+    A100 : #fff7eb,
+    A200 : #ffe3b8,
+    A400 : #ffcf85,
+    A700 : #ffc56b,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$custom-lightgrey: (
+    50 : #f3f3f2,
+    100 : #e2e0df,
+    200 : #cecbca,
+    300 : #bab6b5,
+    400 : #aca7a5,
+    500 : #9d9795,
+    600 : #958f8d,
+    700 : #8b8482,
+    800 : #817a78,
+    900 : #6f6967,
+    A100 : #fdeeea,
+    A200 : #f9c9bb,
+    A400 : #ff9e82,
+    A700 : #ff8a69,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$custom-darkgrey: (
+    50 : #eeeeef,
+    100 : #d4d5d7,
+    200 : #b7b9bd,
+    300 : #9a9ca3,
+    400 : #85878f,
+    500 : #6f727b,
+    600 : #676a73,
+    700 : #5c5f68,
+    800 : #52555e,
+    900 : #40424b,
+    A100 : #acbafb,
+    A200 : #7b92f8,
+    A400 : #4164ff,
+    A700 : #284fff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+// Light Theme
+
+$light-theme-primary: mat-palette($custom-gold);
+$light-theme-accent: mat-palette($custom-darkgrey);
+$light-theme-warn: mat-palette($custom-yellow);
+
+
+// $light-theme: create-light-theme($light-theme-primary, $light-theme-accent, $light-theme-warn);
+// Create the theme object (a Sass map containing all of the palettes).
+
+$light-theme: mat-light-theme(
+  $light-theme-primary,
+  $light-theme-accent,
+  $light-theme-warn
+);
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+}
+
+// Dark Theme
+
+$dark-theme-primary: mat-palette($custom-darkgrey, 900);
+$dark-theme-accent: mat-palette($custom-lightgrey);
+$dark-theme-warn: mat-palette($custom-yellow);
+
+// Create the theme object (a Sass map containing all of the palettes).
+
+$dark-theme: mat-dark-theme(
+  $dark-theme-primary,
+  $dark-theme-accent,
+  $dark-theme-warn
+);
+
+.dark-theme{
+  @include angular-material-theme($dark-theme);
+}
+
+
+
+html, body {
+    height: 100%;
+}
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+  text-align: center;
+}
+
+h2, h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+
+
+button {
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  padding: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.inputContainer {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  margin: auto;
+  border-radius: 25px;
+  border: 3px solid black;
+  padding: 10px;
+}
+
+input[type=text] {
+  display: inline-block;
+  border: solid;
+  border-radius: 10px;
+}
+
+label {
+  text-align: center;
+}

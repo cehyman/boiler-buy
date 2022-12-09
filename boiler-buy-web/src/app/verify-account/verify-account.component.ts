@@ -6,7 +6,7 @@ import { delay } from 'rxjs';
 @Component({
   selector: 'app-verify-account',
   templateUrl: './verify-account.component.html',
-  styleUrls: ['./verify-account.component.css']
+  styleUrls: ['./verify-account.component.scss']
 })
 export class VerifyAccountComponent implements OnInit {
   successful: boolean = false;

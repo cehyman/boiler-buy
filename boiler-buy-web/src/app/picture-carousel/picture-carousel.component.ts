@@ -4,7 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 @Component({
   selector: 'app-picture-carousel',
   templateUrl: './picture-carousel.component.html',
-  styleUrls: ['./picture-carousel.component.css']
+  styleUrls: ['./picture-carousel.component.scss']
 })
 export class PictureCarouselComponent implements OnInit {
 

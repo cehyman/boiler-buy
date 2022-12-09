@@ -7,7 +7,7 @@ import { GroupAdInput, GroupAdObj } from '../product-types';
 @Component({
   selector: 'app-groupad-listing',
   templateUrl: './groupad-listing.component.html',
-  styleUrls: ['./groupad-listing.component.css']
+  styleUrls: ['./groupad-listing.component.scss']
 })
 export class GroupadListingComponent implements OnInit {
   @Input() object: GroupAdObj = {id:0, name: ""} as GroupAdObj

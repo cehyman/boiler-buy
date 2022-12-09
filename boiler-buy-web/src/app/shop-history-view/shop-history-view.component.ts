@@ -8,7 +8,7 @@ import { Globals } from '../globals';
 @Component({
   selector: 'app-shop-history-view',
   templateUrl: './shop-history-view.component.html',
-  styleUrls: ['./shop-history-view.component.css']
+  styleUrls: ['./shop-history-view.component.scss']
 })
 export class ShopHistoryViewComponent implements OnInit {
   items: any[] = [];
