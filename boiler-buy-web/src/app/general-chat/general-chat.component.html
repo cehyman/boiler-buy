@@ -26,6 +26,7 @@
                         </mat-panel-description>
                     </mat-expansion-panel-header>
 
+
                     <mat-form-field appearance="fill">
                         <mat-label>Tracking URL</mat-label>
                         <input matInput [(ngModel)]="trackingLink" type="url">
@@ -37,6 +38,37 @@
                     </mat-form-field>
                     <button mat-button (click)="saveTrackingNumber()">Apply Changes</button>
                 </mat-expansion-panel>
+
+                <mat-divider></mat-divider>
+                                
+                <mat-accordion class="headers-align">
+                    <mat-expansion-panel *ngIf="canShip">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Shipping Information
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                View the shipping address
+                                <mat-icon>markunread_mailbox</mat-icon>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <mat-form-field class="address" 
+                            appearance="fill"
+                            style="width: 100%"
+                            >
+                            <mat-label>Shipping Address</mat-label>
+                            <textarea matInput
+                                rows="4"
+                                cols="40"
+                                maxlength="500"
+                                style="overflow:hidden; height: 6em; resize: none;"
+                                [(ngModel)]="address"
+                                readonly
+                                ></textarea>
+                        </mat-form-field>
+                    </mat-expansion-panel>
+                </mat-accordion>
 
                 <mat-divider></mat-divider>
 
@@ -132,6 +164,38 @@
                 </mat-expansion-panel>
 
                 <mat-divider></mat-divider>
+
+                <mat-accordion class="headers-align">
+                    <mat-expansion-panel *ngIf="canShip">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Shipping Information
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Add a shipping address
+                                <mat-icon>markunread_mailbox</mat-icon>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <mat-form-field class="address" 
+                            appearance="fill"
+                            style="width: 100%"
+                            >
+                            <mat-label>Shipping Address</mat-label>
+                            <textarea matInput
+                                rows="4"
+                                cols="40"
+                                maxlength="500"
+                                style="overflow:hidden; height: 6em; resize: none;"
+                                [(ngModel)]="address"
+                                ></textarea>
+                        </mat-form-field>
+                        <button mat-button (click)="saveAddress()">Apply Changes</button>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-divider></mat-divider>
+
 
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>

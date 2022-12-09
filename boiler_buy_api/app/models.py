@@ -133,4 +133,5 @@ class ChatGroup(models.Model):
     isShipping = models.BooleanField(default=False)
     trackingNumber = models.CharField(max_length=250)
     trackingLink = models.CharField(max_length=500)
+    shippingAddress = models.CharField(max_length=500, null=False, blank=True, default="")
 

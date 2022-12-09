@@ -35,6 +35,8 @@ export class GeneralChatComponent implements OnInit {
   trackingNum = '';
   trackingLink = '';
 
+  address = '';
+
 
   // Store the image path for the current user
   public currImage: string = "";
@@ -100,6 +102,7 @@ export class GeneralChatComponent implements OnInit {
           var cg = output.body as ChatGroupFull;
           this.trackingLink = cg.trackingLink;
           this.trackingNum = cg.trackingNumber;
+          this.address = cg.shippingAddress;
         })
       } else {
         //get tracking info
@@ -111,6 +114,7 @@ export class GeneralChatComponent implements OnInit {
           var cg = output.body as ChatGroupFull;
           this.trackingLink = cg.trackingLink;
           this.trackingNum = cg.trackingNumber;
+          this.address = cg.shippingAddress;
         })  
       }
       
@@ -171,6 +175,24 @@ export class GeneralChatComponent implements OnInit {
       params.set("trackingLink", this.trackingLink);
       params.set("function", "update_tracking");
 
+      this.http.get('api/chatGroup/?' + params.toString(), {responseType: 'json'}).subscribe()
+
+    })
+  }
+
+  saveAddress() {
+     var pk = this.chatService.getChatGroupID({
+      seller: this.chatInfo.otherEmail,
+      buyer: this.chatInfo.currEmail,
+      productID: this.chatInfo.productID,
+    } as ChatGroupPK).subscribe((id) => {
+      console.log('id', id.body);
+
+      let params = new URLSearchParams()
+      params.set("id", id.body);
+      params.set("function", "update_shipping_address");
+      params.set("shippingAddress", this.address)
+
 
       this.http.get('api/chatGroup/?' + params.toString(), {responseType: 'json'}).subscribe()
 
@@ -199,7 +221,7 @@ export class GeneralChatComponent implements OnInit {
       }
     })
   }
-
+  
   blockUser() {
     //add to block column in account db to both buyer and seller 
 

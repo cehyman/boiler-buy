@@ -34,6 +34,7 @@ export interface ChatGroupFull {
     isShipping:boolean,
     trackingNumber:string,
     trackingLink:string,
+    shippingAddress:string,
 }
 
 export interface ChatGroupPK {
