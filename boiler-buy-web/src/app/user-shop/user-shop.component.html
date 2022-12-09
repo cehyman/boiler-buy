@@ -18,7 +18,11 @@
         <app-product-listing style="width: auto;" [object]="product"
             [showButton]="false"></app-product-listing>
     </div>
-    <div class="deleteButton" style="padding: 10px; width: 15%;">
+
+    <div class="buttons" style="padding: 10px; width: 15%;">
+        <button (click)="routeEdit(product.id)" mat-raised-button
+        color="primary" style="margin-bottom: 2vh;">Edit Item</button>
+        <br>
         <button (click)="confirmDelete(product.id)" mat-raised-button
             color="warn">Delete Item</button>
     </div>
