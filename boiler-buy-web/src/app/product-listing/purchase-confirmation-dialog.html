@@ -1,13 +1,20 @@
 <div style="background-color: rgb(206, 202, 202);">
     <h1 mat-dialog-title>Confirm</h1>
+    <h3>Seller's price: ${{data.priceDollars}}.{{(data.priceCents < 10) ? "0" + data.priceCents : data.priceCents}} (each)</h3>
+    <p>If you would like to try to negotiate the price, enter a new price below.</p>
+    <h4>My asking price:</h4>
+    $<input type="number" min="0" matinput [(ngModel)]= "askingPriceDollars">.
+    <input type="number" *ngIf="askingPriceCents < 10" min="0" max="99" matinput [(ngModel)]= "'0' + askingPriceCents">
+    <input type="number" *ngIf="askingPriceCents >= 10" min="0" max="99" matinput [(ngModel)]= "askingPriceCents">
+
     <div mat-dialog-content>
-        Select a quantity and confirm your purchase.
+        Select a quantity and hit confirm to initiate contact with the seller.
     </div>
 
     <input type="number" min="0" matinput [(ngModel)]= "numToBuy">
     
     <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="false">Cancel</button>
-    <button *ngIf="numToBuy > 0" mat-button [mat-dialog-close]="numToBuy" cdkFocusInitial>Confirm</button>
+    <button *ngIf="isConfirmShow()" mat-button [mat-dialog-close]="{'numToBuy': this.numToBuy, 'askingPriceDollars': this.askingPriceDollars, 'askingPriceCents': this.askingPriceCents}" cdkFocusInitial>Confirm</button>
     </div>
 </div>
