@@ -1,7 +1,11 @@
-.purchaseButton{
-    display: flex; 
-    justify-content: right;
-    margin-right: 1vw;
+// .purchaseButton{
+//     display: flex; 
+//     justify-content: right;
+//     margin-right: 1vw;
+// }
+
+.card{
+    padding-bottom: 6vh;
 }
 
 .preview {
@@ -27,6 +31,14 @@
     display: flex;
     align-items: center;
     margin-left:1vw;
+}
+
+.column {
+    float: left;
+    margin-left: 2vw;
+    width: 15%;
+    
+
 }
 
 .icon-text {

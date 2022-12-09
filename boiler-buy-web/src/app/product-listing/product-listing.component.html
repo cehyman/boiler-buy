@@ -1,46 +1,45 @@
 <div class="card">
-  <div *ngIf="this.image != null">
-    <img class="preview" 
-      onerror="this.style='display: none'"
-      src="{{this.image}}">
-  </div>
-
-
-  <div class="name_seller_rating">
-    <!-- Rating: {{object.sellerRatingCount}} -->
-    <h2>{{ object.name }}</h2>
-    <div class="groupbtn">
-      <a
-        mat-raised-button
-        color="accent"
-        (click)="viewDetails()"
-        type="submit"
-        class="viewBtn"
-        >View Details</a
-      >
-      <a
-        mat-raised-button
-        color="accent"
-        (click)="addToWishlist()"
-        type="submit"
-        class="viewBtn"
-        >Add To Wishlist</a
-      >
-      <a
-        mat-raised-button
-        color="accent"
-        (click)="removeFromWishlist()"
-        type="submit"
-        class="viewBtn"
-        >Remove From Wishlist</a
-      >
+  <div class="row">
+    <div class="column">
+      <div *ngIf="this.image != null">
+        <img class="preview"
+          onerror="this.style='display: none'"
+          src="{{this.image}}">
+      </div>
     </div>
-    
-    <div class="purchaseButton">
-        <button *ngIf="showButton" mat-raised-button color="warn" (click)="openDialog()">
-            (${{object.priceDollars}}.{{(object.priceCents < 10) ? '0' : ''}}{{object.priceCents}})
-            {{(curruser != 'Username') ? 'Send an Offer': 'Log In to Purchase'}}
+
+    <div class="name_seller_rating">
+      <!-- Rating: {{object.sellerRatingCount}} -->
+      <h2>{{ object.name }}</h2>
+      <div class="groupbtn">
+        <a
+          mat-raised-button
+          color="accent"
+          (click)="viewDetails()"
+          type="submit"
+          class="viewBtn">View Details</a>
+        <a
+          mat-raised-button
+          color="accent"
+          (click)="addToWishlist()"
+          type="submit"
+          class="viewBtn">Add To Wishlist</a>
+        <a
+          mat-raised-button
+          color="accent"
+          (click)="removeFromWishlist()"
+          type="submit"
+          class="viewBtn">Remove From Wishlist</a>
+
+        <button *ngIf="showButton" mat-raised-button color="warn"
+          (click)="openDialog()">
+          (${{object.priceDollars}}.{{(object.priceCents <10) ? '0' :
+            ''}}{{object.priceCents}})
+            {{(curruser != 'Username') ? 'Send an Offer': 'Log In to
+            Purchase'}}
         </button>
+
+      </div>
     </div>
   </div>
 </div>

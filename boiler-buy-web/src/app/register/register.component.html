@@ -1,5 +1,5 @@
 <div class="header">
-    <h1>Register for Boiler Buy!</h1>
+    <h1><img  class="images" src="./assets/logo.png"/><br>Register for Boiler Buy!</h1>
 </div>
 <div class="register">
     <form>
@@ -16,7 +16,7 @@
             <label for="pass2"><b>Repeat Password</b></label><br>
             <input [(ngModel)]="accountRepeatPassword" type="text" placeholder="Enter Password" name="pass2" id="pass2" required><br>
         
-            <a mat-raised-button (click)="registerAccount()" type="submit" class="registerBtn">Register</a>
+            <a mat-raised-button color="accent" (click)="registerAccount()" type="submit" class="registerBtn">Register</a>
         </div>
         
         <div class="loginContainer">

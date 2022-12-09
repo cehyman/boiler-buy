@@ -9,6 +9,7 @@
 
 .carousel-container #prev-button {
     position: absolute;
+    margin-left: -5vw;
     top: 50%;
     left: 0%;
     transform: translate(0%, -50%);
@@ -17,6 +18,7 @@
 }
 .carousel-container #next-button {
     position: absolute;
+    margin-left: 5vw;
     top: 50%;
     left: 100%;
     transform: translate(-100%, -50%);
