@@ -282,6 +282,7 @@ export class GeneralChatComponent implements OnInit {
 
 
       //trigger venmo tags to be sent
+      this.triggerVenmoTags()
     }
   }
 
@@ -308,6 +309,7 @@ export class GeneralChatComponent implements OnInit {
   }
 
   triggerVenmoTags() {
-
+    //determine if the seller has put a venmo tag
+    
   }
 }
