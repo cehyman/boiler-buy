@@ -34,8 +34,7 @@ class Product(models.Model):
     image = models.FileField(null=True, blank=True, upload_to='products/')
     locations = ArrayField(models.CharField(max_length=200), default=list)
     tags = ArrayField(models.CharField(max_length=50), default=list)
-    allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)
-    
+    allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)    
 
 class ProductImage(models.Model):
     def uploadTo(self, filename):
@@ -45,12 +44,15 @@ class ProductImage(models.Model):
     image = models.ImageField(null=True, blank=False, upload_to=uploadTo)
 
 class Shop(models.Model):
-    description = models.CharField(max_length=250, default='')
+    description = models.CharField(max_length=1000, default='')
     isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
+    featuredProducts = ArrayField(models.PositiveIntegerField(), null=False, blank=True, default=list)
+    
+    image = models.ImageField(null=True, blank=False, default=None, upload_to="shops/")
 
 class Wishlist(models.Model):
-    description = models.CharField(max_length=250, default='')
+    description = models.CharField(max_length=1000, default='')
     products = models.ManyToManyField("Product")
 
 class GroupAds(models.Model):
@@ -78,7 +80,7 @@ class Account(models.Model):
     
 class ShopHistory(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name="sellerHistory")
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=False)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
     action = models.CharField(max_length=32, default='')
     dateTime = models.DateTimeField(auto_now=True)
     
@@ -91,8 +93,8 @@ class ShopHistory(models.Model):
     productId = models.IntegerField(default=1, blank=False)
     productName = models.CharField(max_length=50)
     buyerName = models.CharField(max_length=30, default='')
-
-
+    locations = ArrayField(models.CharField(max_length=200), default=list)
+    
 class PurchaseHistory(models.Model):
     buyerEmail = models.ForeignKey("Account", on_delete=models.CASCADE, related_name='pHistories')
     purchaseTime = models.DateTimeField(auto_now_add=True)
@@ -133,5 +135,5 @@ class ChatGroup(models.Model):
     isShipping = models.BooleanField(default=False)
     trackingNumber = models.CharField(max_length=250)
     trackingLink = models.CharField(max_length=500)
-    shippingAddress = models.CharField(max_length=500, null=False, blank=True, default="")
+    shippingAddress = models.CharField(max_length=500, null=True, blank=True, default="")
 

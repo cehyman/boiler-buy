@@ -84,6 +84,7 @@ import { ChatOverviewComponent } from './chat-overview/chat-overview.component';
 import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
 import { GroupadListingComponent } from './groupad-listing/groupad-listing.component';
 import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
+import { BuyerShopViewComponent } from './buyer-shop-view/buyer-shop-view.component';
 
 @NgModule({
   declarations: [
@@ -120,10 +121,12 @@ import { GroupadDetailsComponent } from './groupad-details/groupad-details.compo
     SpecialResetPasswordComponent,
     VerifyAccountComponent,
     NotVerifiedComponent,
-    ChatOverviewComponent,
     CreateGroupAdComponent,
     GroupadListingComponent,
     GroupadDetailsComponent,
+    CreateGroupAdComponent,
+    ChatOverviewComponent,
+    BuyerShopViewComponent,
   ],
   imports: [
     FormsModule,

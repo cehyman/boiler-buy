@@ -1,14 +1,32 @@
 <app-site-menu></app-site-menu>
 
 <div class="header">
-    <img class="profile-pic" src="{{ imageURL }}"/>
-    <div> <h1>{{this.curruser}}'s Shop</h1>
-        <button class="groupAd" (click)="routeCreateGroupAd()" mat-raised-button
-            color="accent">Create Grouped Ad</button>
-    </div>
+    <h1>{{this.curruser}}'s Shop</h1><br>
+    <button (click)="routeCreateGroupAd()" mat-raised-button color="accent">Create Grouped Ad</button>
 </div>
 
-<div *ngFor="let ad of groupAds; let i= index" style="display: flex;">
+<form class="shopForm">  
+    <div class="flexContainer">
+        <app-picture-upload-new #picUpload [maxImages]="1"></app-picture-upload-new>
+        <mat-form-field class="shopInputDescription">
+            <mat-label for="description">Description</mat-label>
+            <textarea matInput 
+                [(ngModel)]="description"
+                type="text" 
+                cols="1000"
+                rows="15"
+                name="description" 
+                style="overflow:hidden"
+                maxlength="1000"
+                required>
+            </textarea>
+        </mat-form-field>
+    </div>
+    
+    <a mat-raised-button class="submitButton" (click)="submitCustomization()" color="accent" type="submit">Update</a>
+</form>
+
+<div *ngFor="let ad of groupAds; let i = index" style="display: flex;">
     <div style="width: 85%;">
         <app-groupad-listing style="width: auto;" [object]="ad"></app-groupad-listing>
     </div>
@@ -25,5 +43,13 @@
         <br>
         <button (click)="confirmDelete(product.id)" mat-raised-button
             color="warn">Delete Item</button>
+        <span *ngIf="featuredList.includes(product.id); else notFeatured">
+            <button mat-raised-button (click)="removeFeatured(product.id)">Remove Featured</button>
+        </span>
+        <ng-template #notFeatured>
+            <button mat-raised-button (click)="makeFeatured(product.id)">Make Featured</button>
+        </ng-template>
+
+        <button (click)="confirmDelete(product.id)" mat-raised-button color="warn">Delete Item</button>
     </div>
 </div>

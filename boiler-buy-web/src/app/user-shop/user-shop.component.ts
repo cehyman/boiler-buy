@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppComponent } from '../app.component';
 import { ConfirmDeleteDialog } from '../edit-product/edit-product.component';
+import { PictureUploadComponent } from '../picture-upload/picture-upload.component';
 import { GroupAdList, GroupAdObj, Product } from '../product-types';
 
 @Component({
@@ -22,7 +23,12 @@ export class UserShopComponent implements OnInit {
   groupAds: GroupAdObj[] = []
   curruser:string = ''
   curremail:string = ''
-  imageURL!: URL; 
+  featuredList: number[] = [];
+
+  // Things for customization:
+  @ViewChild('picUpload') picUpload !: PictureUploadComponent;
+  background: File | null = null;
+  description: string = "";
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,7 +41,6 @@ export class UserShopComponent implements OnInit {
   ngOnInit(): void {
     this.curruser = <string> this.appcomp.getUsername()
     this.curremail = <string> this.appcomp.getEmail()
-    this.displayProfilePic()
 
     var urlStr = this.activatedRoute.snapshot.url.toString();
     console.log('urlStr: ', urlStr);
@@ -56,7 +61,9 @@ export class UserShopComponent implements OnInit {
     request.subscribe(data => {
       console.log(data)
 
-      this.products = data.products
+      this.products = data.products;
+      this.background = data.image;
+      console.log(`image = ${this.background}`)
 
       let i = 0
       for (i = 0; i < this.products.length; i++) {
@@ -70,26 +77,19 @@ export class UserShopComponent implements OnInit {
         })
       }
     })
+
+    this.getFeaturedProducts();
+    this.fetchCustomization();
   }
 
-  displayProfilePic() {
-    var request = this.http.get<any>(`api/accounts/${this.curremail}/`, {observe: "body"})
-
-    request.subscribe(data => {
-      console.log(data)
-
-      let image = data['image']
-      if (image == null) {
-        this.imageURL = new URL("https://api-private.atlassian.com/users/1a39e945ae51e44675e6c70f682173c4/avatar")
-      } else {
-        //display the image in database
-        var req2 = this.http.get<any>(`api/accounts/${this.curremail}/retrieveImages`, {observe: "body"})
-        req2.subscribe((data: any) => {
-          this.imageURL = data
-        })
-      }
-    })
-
+  getFeaturedProducts() {
+    let request = this.http.get(
+      `/api/shops/${this.shop_id}/featuredProducts/`,
+      {observe: "body"}
+    ).subscribe((data: any) => {
+      this.featuredList = data.featuredProducts;
+      console.log(`Featured list: ${this.featuredList}`);
+    });
   }
 
   getGroupAds() {
@@ -137,4 +137,71 @@ export class UserShopComponent implements OnInit {
     this.router.navigate(['/edit/' + productId.toString()])
   }
 
+  makeFeatured(id: number) {
+    console.log(`Making product #${id} featured`);
+
+    this.http.patch(
+      `/api/shops/${this.shop_id}/addFeatured/`,
+      {"id": id}
+    ).subscribe(response => {
+      console.log("Sent!");
+      this.featuredList.push(id);
+    });
+  }
+
+  removeFeatured(id: number) {
+    console.log(`Making product #${id} not featured`);
+
+    this.http.patch(
+      `/api/shops/${this.shop_id}/removeFeatured/`,
+      {"id": id}
+    ).subscribe(response => {
+      console.log("Sent!");
+    });
+  }
+
+  fetchCustomization() {
+    // Fetch the shop id using the user's account.
+    this.curremail = <string> this.appcomp.getEmail()
+    let request = this.http.get(`/api/accounts/${this.curremail}/`, {observe: "body"});
+    request.subscribe((result: any) => {
+      
+      // Now that we know the id of the shop, we can request the description of the 
+      // shop
+      let subRequest = this.http.get(`/api/shops/${this.shop_id}`, {observe: "body"});
+      subRequest.subscribe((result: any) => {
+        this.description = result.description;
+        this.picUpload.loadFromDatabase(result.image);
+      });
+    }); 
+  }
+
+  submitCustomization() {
+    let body = {
+      "description": this.description
+    };
+
+    let request = this.http.patch(`/api/shops/${this.shop_id}/`, body, {observe: "body"});
+    request.subscribe((result: any) => {
+      console.log("Description Updated");
+    });
+
+    let files: File[] = this.picUpload.getNewFiles();
+    if(files.length > 0) {
+      let formData = new FormData();
+      formData.append('image', files[0]);
+
+      let request2 = this.http.patch(`/api/shops/${this.shop_id}/setImage/`, formData, {observe: "response"});
+      request2.subscribe((result: any) => {
+        console.log("Image sent");
+      });
+    }
+    files = this.picUpload.getExistingFilesToRemove();
+    if(files.length > 0) {
+      let request2 = this.http.patch(`/api/shops/${this.shop_id}/clearImage/`, {}, {observe: "response"});
+      request2.subscribe((result: any) => {
+        console.log("Image sent");
+      })
+    }
+  }
 }

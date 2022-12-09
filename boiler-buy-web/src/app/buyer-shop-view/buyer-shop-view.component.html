@@ -1,0 +1,52 @@
+<app-site-menu></app-site-menu>
+
+<div class="header" mat->
+    <h1>{{this.curruser}}'s Shop</h1>
+</div>
+
+<form class="shopForm">  
+    <div class="flexContainer">
+        <div>  
+            <img src="{{this.background}}">
+        </div>
+        <mat-form-field class="shopInputDescription">
+            <mat-label for="description">Description</mat-label>
+            <textarea matInput 
+                [(ngModel)]="description"
+                type="text" 
+                cols="1000"
+                rows="15"
+                name="description" 
+                style="overflow:hidden"
+                maxlength="1000"
+                readonly>
+                {{description}}
+            </textarea>
+        </mat-form-field>
+    </div>
+</form>
+
+<h1>Featured Products:</h1><br>
+<div *ngFor="let product of productList; let i = index" style="display: flex;">
+    <div style="width: 100%;">
+        <div *ngIf="this.featuredList.includes(product.id)">
+            <app-product-listing style="width: auto;" [object]="product"></app-product-listing>
+        </div>
+    </div>
+</div>
+
+<h1>Grouped Ads:</h1><br>
+<div *ngFor="let ad of groupAds; let i = index" style="display: flex;">
+    <div style="width: 100%;">
+        <app-groupad-listing style="width: auto;" [object]="ad"></app-groupad-listing>
+    </div>
+</div>
+
+<h1>All Ads:</h1><br>
+<div *ngFor="let product of productList; let i = index" style="display: flex;">
+    <div style="width: 100%;">
+        <app-product-listing style="width: auto;" [object]="product"></app-product-listing>
+    </div>
+</div>
+
+

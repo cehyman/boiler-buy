@@ -1,0 +1,37 @@
+
+.header p {
+    padding-left: 4em;
+    padding-right: 4em;
+}
+
+.shopForm {
+    background-color: #777;
+    padding: 2vw;
+    border-radius:1vw;
+}
+
+.header img {
+    padding-left: 4em;
+    padding-right: 4em;
+    width: 20em;
+}
+
+.flexContainer {
+    display: flex;
+    align-items: center;
+}
+
+.shopInputDescription {
+    background-color: rgb(146, 144, 144);
+    margin-left: 2vw;
+    border-radius:1vw;
+    display: inline;
+    width: 100%;
+    height: 20em;
+}
+
+.shopForm img {
+    height: 20em;
+    display: flex;
+    border-radius:1vw;
+}
