@@ -141,6 +141,7 @@ export class UserShopComponent implements OnInit {
       {"id": id}
     ).subscribe(response => {
       console.log("Sent!");
+      this.featuredList.push(id);
     });
   }
 

@@ -8,12 +8,16 @@
 <form class="shopForm">  
     <div class="flexContainer">
         <app-picture-upload-new #picUpload [maxImages]="1"></app-picture-upload-new>
-        <mat-form-field class="shopInputDescription" appearance="fill">
+        <mat-form-field class="shopInputDescription">
             <mat-label for="description">Description</mat-label>
             <textarea matInput 
                 [(ngModel)]="description"
                 type="text" 
+                cols="1000"
+                rows="15"
                 name="description" 
+                style="overflow:hidden"
+                maxlength="1000"
                 required>
             </textarea>
         </mat-form-field>

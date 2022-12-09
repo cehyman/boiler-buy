@@ -44,7 +44,7 @@ class ProductImage(models.Model):
     image = models.ImageField(null=True, blank=False, upload_to=uploadTo)
 
 class Shop(models.Model):
-    description = models.CharField(max_length=250, default='')
+    description = models.CharField(max_length=1000, default='')
     isVisible = models.BooleanField(default=False)
     products = models.ManyToManyField("Product")
     featuredProducts = ArrayField(models.PositiveIntegerField(), null=False, blank=True, default=list)
@@ -52,7 +52,7 @@ class Shop(models.Model):
     image = models.ImageField(null=True, blank=False, default=None, upload_to="shops/")
 
 class Wishlist(models.Model):
-    description = models.CharField(max_length=250, default='')
+    description = models.CharField(max_length=1000, default='')
     products = models.ManyToManyField("Product")
 
 class GroupAds(models.Model):

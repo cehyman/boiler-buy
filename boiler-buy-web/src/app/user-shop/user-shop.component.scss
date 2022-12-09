@@ -20,19 +20,15 @@
     background-color: rgb(146, 144, 144);
     margin-left: 2vw;
     border-radius:1vw;
-    display: flex;
-    width: 60vw;
-}
-
-.shopForm textarea {
+    display: inline;
     width: 100%;
-    height: 100%;
-    display: flex;
+    height: 20em;
 }
 
 .shopForm app-picture-upload-new {
     background-color: rgb(146, 144, 144);
     width: 25%;
+    height: 20em;
     display: flex;
     border-radius:1vw;
 }
