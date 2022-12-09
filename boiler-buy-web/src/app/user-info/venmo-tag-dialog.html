@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+  <p>What's your Venmo Tag (username)?</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Venmo Tag</mat-label>
+    <mat-icon matPrefix>alternate_email</mat-icon>
+    <input matInput [(ngModel)]="data.venmo_tag" value="{{data.venmo_tag}}">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.venmo_tag" cdkFocusInitial>Ok</button>
+</div>

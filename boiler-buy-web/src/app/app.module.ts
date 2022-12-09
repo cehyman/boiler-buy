@@ -47,7 +47,7 @@ import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
-import { UserInfoComponent } from './user-info/user-info.component';
+import { UserInfoComponent, VenmoTagDialog } from './user-info/user-info.component';
 import { FeatureButtonsComponent } from './feature-buttons/feature-buttons.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -120,6 +120,7 @@ import { GroupadDetailsComponent } from './groupad-details/groupad-details.compo
     CreateGroupAdComponent,
     GroupadListingComponent,
     GroupadDetailsComponent,
+    VenmoTagDialog,
   ],
   imports: [
     FormsModule,
