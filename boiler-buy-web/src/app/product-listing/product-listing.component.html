@@ -1,5 +1,11 @@
 <div class="card">
-  <!-- image here -->
+  <div *ngIf="this.image != null">
+    <img class="preview" 
+      onerror="this.style='display: none'"
+      src="{{this.image}}">
+  </div>
+
+
   <div class="name_seller_rating">
     <!-- Rating: {{object.sellerRatingCount}} -->
     <h2>{{ object.name }}</h2>

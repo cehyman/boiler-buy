@@ -4,6 +4,13 @@
     padding: 10px;
 }
 
+.preview {
+    display: flex;
+    flex-direction: column;
+    height: 10em;
+    width: 10em
+}
+
 .name_seller_rating {
     display: flex;
     flex-direction: column;
