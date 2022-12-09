@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-user-wishlist',
   templateUrl: './user-wishlist.component.html',
-  styleUrls: ['./user-wishlist.component.css']
+  styleUrls: ['./user-wishlist.component.scss']
 })
 export class UserWishlistComponent implements OnInit {
   

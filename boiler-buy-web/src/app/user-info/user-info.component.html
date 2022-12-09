@@ -9,19 +9,20 @@
     <div class="username">
         <label class="form-control-label" for="input-username">{{curruser}}</label>
     </div> 
-    
-    <div>
-        <label class="form-control-label" for="input-password">Password: </label>
-        <input type="text" id="input-password" class="form-control form-control-alternative" placeholder="Password"
-            value={{currpass}} readonly>
-    </div>
 
-    <div>
-        <label class="form-control-label" for="input-purdue-email">Email: </label>
-        <input type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="xxxx@purdue.edu"
-            value={{curremail}} readonly>
-    </div>
+    <div class="passemail">
+        <div class="password">
+            <label class="form-control-label" for="input-password">Password: </label>
+            <input class="password-input" type="text" id="input-password" class="form-control form-control-alternative" placeholder="Password"
+                value={{currpass}} readonly>
+        </div>
 
+        <div class="email">
+            <label class="form-control-label" for="input-purdue-email">Email: </label>
+            <input class="email-input" type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="xxxx@purdue.edu"
+                value={{curremail}} readonly>
+        </div>
+    </div>
     <br>
     <div>
         <label class="form-control-label" for="input-purdue-email">Seller Rating: </label>

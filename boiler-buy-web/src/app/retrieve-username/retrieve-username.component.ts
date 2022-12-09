@@ -8,7 +8,7 @@ import {Globals} from '../globals'
 @Component({
   selector: 'app-retrieve-username',
   templateUrl: './retrieve-username.component.html',
-  styleUrls: ['./retrieve-username.component.css']
+  styleUrls: ['./retrieve-username.component.scss']
 })
 export class RetrieveUsernameComponent implements OnInit {
   curUsers:any = []

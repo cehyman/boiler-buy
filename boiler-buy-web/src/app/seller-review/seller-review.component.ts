@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-seller-review',
   templateUrl: './seller-review.component.html',
-  styleUrls: ['./seller-review.component.css']
+  styleUrls: ['./seller-review.component.scss']
 })
 export class SellerReviewComponent implements OnInit {
   reviewDescription:string = ""

@@ -1,23 +1,21 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component, EventEmitter, OnInit, Output, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
-import { DarkModeService } from 'angular-dark-mode';
-import { Observable } from 'rxjs';
+import { FormControl, } from '@angular/forms';
 import { AppComponent } from '../app.component';
 
 
 @Component({
   selector: 'app-site-menu',
   templateUrl: './site-menu.component.html',
-  styleUrls: ['./site-menu.component.css']
+  styleUrls: ['./site-menu.component.scss']
 })
 export class SiteMenuComponent implements OnInit {
-  darkMode$: Observable<boolean> = this.darkModeService.darkMode$;
 
-  constructor(private router: Router, private http: HttpClient, private darkModeService: DarkModeService) {}
+  constructor(private router: Router, private renderer: Renderer2) {}
   private appComp: AppComponent = new AppComponent();
   @Output() public sidenavToggle = new EventEmitter();
+
+  toggleTheme = new FormControl(false);
 
   currUser:string = ''
   currPass:string = ''
@@ -26,8 +24,7 @@ export class SiteMenuComponent implements OnInit {
   wishlistID:number = 0
   shopID:number = 0
 
-
-  ngOnInit(): void {
+  ngOnInit() {
     if (this.appComp.getUsername()) {
       this.currUser = <string> this.appComp.getUsername()
     } else {
@@ -36,17 +33,25 @@ export class SiteMenuComponent implements OnInit {
 
     this.currPass = <string> this.appComp.getPassword()
     this.currEmail = <string> this.appComp.getEmail()
-    
-  }
-  
-  onToggle(): void {
-    this.darkModeService.toggle();
-  }
 
+    this.toggleTheme.valueChanges.subscribe(toggleValue => {
+      if (toggleValue === true) {
+       this.renderer.addClass(document.body, 'dark-theme');
+       this.renderer.removeClass(document.body, 'light-theme');
+      } else {
+       this.renderer.addClass(document.body, 'light-theme');
+       this.renderer.removeClass(document.body, 'dark-theme');
+      }
+     });
+  }
 
   logoutAccount() {
-    //removing information from sessionStorage
-    this.darkModeService.disable()
+    this.toggleTheme.valueChanges.subscribe(toggleValue => {
+      if (toggleValue === true) {
+       this.renderer.addClass(document.body, 'light-theme');
+       this.renderer.removeClass(document.body, 'dark-theme');
+      }
+     });
 
     this.appComp.removeAllSessionStorage()
 

@@ -9,7 +9,7 @@ import { ProductService } from '../product.service';
 @Component({
   selector: 'app-recently-viewed-items',
   templateUrl: './recently-viewed-items.component.html',
-  styleUrls: ['./recently-viewed-items.component.css']
+  styleUrls: ['./recently-viewed-items.component.scss']
 })
 export class RecentlyViewedItemsComponent implements OnInit {
   items: Array<RecentlyViewedItem>;

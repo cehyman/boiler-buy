@@ -8,7 +8,7 @@ import { PictureUploadComponent } from '../picture-upload/picture-upload.compone
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
   public globals: Globals = new Globals;

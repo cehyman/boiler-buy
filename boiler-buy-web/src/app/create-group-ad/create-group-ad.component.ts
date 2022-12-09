@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-create-group-ad',
   templateUrl: './create-group-ad.component.html',
-  styleUrls: ['./create-group-ad.component.css']
+  styleUrls: ['./create-group-ad.component.scss']
 })
 export class CreateGroupAdComponent implements OnInit {
   public globals: Globals = new Globals;

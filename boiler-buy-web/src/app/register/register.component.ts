@@ -10,7 +10,7 @@ import {Globals} from '../globals'
 @Component({
   selector: 'register.component',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  styleUrls: ['./register.component.scss'],
   providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit{
