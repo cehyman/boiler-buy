@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { PictureCarouselComponent } from '../picture-carousel/picture-carousel.component';
 import { AppComponent } from '../app.component';
+import { MatDialog } from '@angular/material/dialog';
+import { PurchaseConfirmationDialog } from '../product-listing/product-listing.component';
+import { ChatService } from '../chat.service';
+import { ChatMessageItem } from '../chat-types';
 import { locationInterface } from '../product-types';
 
 @Component({
@@ -38,7 +42,8 @@ export class ProductDetailsComponent implements OnInit {
 
   @ViewChild('carousel') carousel !: PictureCarouselComponent;
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router, private productService: ProductService) {
+  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router, private productService: ProductService,
+    public dialog: MatDialog, private chatService: ChatService,) {
 
   }
 
@@ -116,7 +121,8 @@ export class ProductDetailsComponent implements OnInit {
   //   });
   // }
 
-  buy() {
+
+  openDialog(): void {
 
     var temp2 = this.locationList.filter(location => location.checked).map(location => location.value)
     // for (var i = 0; i < temp2.length; i++) {
@@ -124,18 +130,54 @@ export class ProductDetailsComponent implements OnInit {
     //   let t = temp2[i]
     // }
 
-    this.productService.purchaseOne(this.id, temp2).subscribe(
-      data => {
-        console.log(data.message);
-        alert("Purchase Successful! Meeting Seller at " + temp2);
-        this.router.navigate(['/sellerReview/' + this.id]);
-      },
-      error => {
-        console.log('purchase failed:', error.error);
-        alert("Purchase Failed, try again.")
-        this.stock = error.error.remainingStock;
-      }
-    )
+    if (this.curruser != 'Username') {
+      const dialogRef = this.dialog.open(PurchaseConfirmationDialog, {
+        width: '400px',
+        data: {
+          priceDollars: this.price.substring(0, this.price.indexOf('.')),
+          priceCents: "" + (+this.price.substring(this.price.indexOf('.')+1, this.price.length)),
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.productService.addProductToViewHistory(this.id).subscribe(() => {
+          console.log("added "+ this.id + " to view history");
+        });
+        console.log(result);
+        if (result != undefined && result != 0) {
+          this.productService.getProductsSellerEmail(this.id).subscribe((sellerEmail) => {
+            console.log(sellerEmail.sellerEmail)
+            console.log(this.id)
+            this.chatService.sendMessage({
+              senderEmail: this.curruser,
+              receiverEmail: sellerEmail.sellerEmail,
+              productID: this.id,
+              message: this.curruser + " is requesting " + result.numToBuy + " items for $"
+                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents)
+                + " each, with a meeting point at " + temp2,
+            } as ChatMessageItem).subscribe((output) => {
+              console.log(output);
+              // Redirect to the chat page
+              var params = new URLSearchParams();
+              params.set('currEmail', this.curruser);
+              params.set('otherEmail', sellerEmail.sellerEmail);
+              params.set('productID', "" + this.id);
+              this.router.navigate(
+                ['/chat-window'], {queryParams: {
+                currEmail: this.curruser,
+                otherEmail: sellerEmail.sellerEmail,
+                productID: this.id
+              }})
+              console.log(params.toString())
+            }, (error) => {
+              console.log(error);
+            })
+          }, (error) => {
+            console.log(error);
+          })
+        }
+      });
+    }
   }
 
   saveTag(id: string) {

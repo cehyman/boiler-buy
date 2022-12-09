@@ -13,7 +13,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
-            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand', 'locations', 'tags']
+            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand', 'locations', 'tags', 'allowOutOfStock']
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,3 +57,8 @@ class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wishlist
         fields = ['description', 'products']
+
+class ChatMessagesSerializer(serializers.Serializer):
+    class Meta:
+        model = ChatMessages
+        fields = ['sender', 'receiver', 'productID', 'message', 'timestamp']
