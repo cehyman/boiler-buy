@@ -112,7 +112,9 @@ class ChatMessages(models.Model):
     productID = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
     message = models.CharField(max_length=256)
     timestamp = models.DateTimeField(auto_now_add=True)
-
+    senderImage = models.FileField(null=True, blank=False, default=None)
+    receiverImage = models.FileField(null=True, blank=False, default=None)
+    
     def __str__(self):
         return str(self.username)
 

@@ -168,6 +168,12 @@
             <!-- Put scroll bar here? -->
             <mat-list class="message-list">
                 <div *ngFor="let item of messages; let i = index">
+                    <span *ngIf="item.image != null && item.image != ''; else invalidImage1">
+                        <img mat-card-sm-image src="/media/{{item.image}}">
+                    </span>
+                    <ng-template #invalidImage1>
+                        <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                    </ng-template>
                     <div style="display: flex; flex-direction: row;">
                         <mat-list-item><b>{{item.name}}</b>: {{item.message}}</mat-list-item>
                         <p>{{item.date}}</p>
