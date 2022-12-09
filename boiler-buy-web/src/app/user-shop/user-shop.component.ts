@@ -22,6 +22,7 @@ export class UserShopComponent implements OnInit {
   groupAds: GroupAdObj[] = []
   curruser:string = ''
   curremail:string = ''
+  imageURL!: URL; 
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,6 +35,7 @@ export class UserShopComponent implements OnInit {
   ngOnInit(): void {
     this.curruser = <string> this.appcomp.getUsername()
     this.curremail = <string> this.appcomp.getEmail()
+    this.displayProfilePic()
 
     var urlStr = this.activatedRoute.snapshot.url.toString();
     console.log('urlStr: ', urlStr);
@@ -68,6 +70,26 @@ export class UserShopComponent implements OnInit {
         })
       }
     })
+  }
+
+  displayProfilePic() {
+    var request = this.http.get<any>(`api/accounts/${this.curremail}/`, {observe: "body"})
+
+    request.subscribe(data => {
+      console.log(data)
+
+      let image = data['image']
+      if (image == null) {
+        this.imageURL = new URL("https://api-private.atlassian.com/users/1a39e945ae51e44675e6c70f682173c4/avatar")
+      } else {
+        //display the image in database
+        var req2 = this.http.get<any>(`api/accounts/${this.curremail}/retrieveImages`, {observe: "body"})
+        req2.subscribe((data: any) => {
+          this.imageURL = data
+        })
+      }
+    })
+
   }
 
   getGroupAds() {

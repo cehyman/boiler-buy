@@ -1,21 +1,25 @@
 <app-site-menu></app-site-menu>
 
 <div class="header">
-    <h1>{{this.curruser}}'s Shop</h1>
-    <button (click)="routeCreateGroupAd()" mat-raised-button color="accent">Create Grouped Ad</button>
+    <img class="profile-pic" src="{{ imageURL }}"/>
+    <div> <h1>{{this.curruser}}'s Shop</h1>
+        <button class="groupAd" (click)="routeCreateGroupAd()" mat-raised-button
+            color="accent">Create Grouped Ad</button>
+    </div>
 </div>
 
-<div *ngFor="let ad of groupAds; let i = index" style="display: flex;">
+<div *ngFor="let ad of groupAds; let i= index" style="display: flex;">
     <div style="width: 85%;">
         <app-groupad-listing style="width: auto;" [object]="ad"></app-groupad-listing>
     </div>
 </div>
-<div *ngFor="let product of productList; let i = index" style="display: flex;">
+<div *ngFor="let product of productList; let i= index" style="display: flex;">
     <div style="width: 85%;">
-        <app-product-listing style="width: auto;" [object]="product" [showButton]="false"></app-product-listing>
+        <app-product-listing style="width: auto;" [object]="product"
+            [showButton]="false"></app-product-listing>
     </div>
-    <div style="padding: 10px; width: 15%;">
-        <button (click)="confirmDelete(product.id)" mat-raised-button color="warn">Delete Item</button>
+    <div class="deleteButton" style="padding: 10px; width: 15%;">
+        <button (click)="confirmDelete(product.id)" mat-raised-button
+            color="warn">Delete Item</button>
     </div>
 </div>
-
