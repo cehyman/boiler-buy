@@ -4,8 +4,9 @@
     <mat-drawer #drawer mode="side">
         <div class="filter-section" >
             <mat-card>
-                <mat-card-content #stickyMenu>
-                    <h2>Filters</h2>
+                <h2 style="text-align:center;">Filters</h2>
+                <mat-card-content class="filters" #stickyMenu>
+                    
                     <section>
                         <mat-checkbox>Min. Price: </mat-checkbox>
                         <input [(ngModel)] = "filters.minPrice" matInput type="number" style="float: right;"><br>
@@ -15,7 +16,9 @@
                         <input [(ngModel)] = "filters.minSellerRating" matInput type="number" style="float: right;"><br>
                         <mat-checkbox>Max. Seller Rating: </mat-checkbox>
                         <input [(ngModel)] = "filters.maxSellerRating" matInput type="number" style="float: right;">
+                        
                         <div class="form-group">
+                            <br>
                             <label for="types">Types:</label>
                             <div *ngFor="let type of types; let i = index">
                                 <label>
@@ -26,7 +29,7 @@
                                     {{type.name}}
                                 </label>
                             </div>
-                        </div>
+                        </div><br>
                         <div class="form-group">
                             <label for="brands">Brands:</label>
                             <div *ngFor="let brand of brands; let i = index">
@@ -39,6 +42,7 @@
                                 </label>
                             </div>
                         </div>
+                        <br>
                         <div class="form-group">
                             <label for="tags">Tags</label>
                             <div *ngFor="let tag of tagList; let i = index">
@@ -50,8 +54,10 @@
                             </div>
                         </div>
                     </section>
-                    <button mat-raised-button (click)="applyFilters()">Apply filters</button>
+                    <br>
+                    
                 </mat-card-content>
+                <button class="filter-button"  mat-raised-button color="primary" (click)="applyFilters()">Apply filters</button>
             </mat-card>
         </div>
     </mat-drawer>

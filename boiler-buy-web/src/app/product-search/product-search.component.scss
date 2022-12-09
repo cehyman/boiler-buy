@@ -43,6 +43,18 @@
 .filter-section {
     flex: 20%;
     margin-top: 3vh;
+    
+}
+
+.filters{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.filter-button{
+    margin-left: 7vw;
 }
 
 .product-listings-container {
