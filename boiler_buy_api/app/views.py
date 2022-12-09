@@ -403,7 +403,11 @@ class ProductViewSet(viewsets.ModelViewSet):
                 shopID = shop.get().get("id")
                 # print('product id:', prod.get('id'))
                 # print('shopID:', shopID)
-                account = Account.objects.filter(shop=shopID).values().get()
+                try: 
+                    account = Account.objects.filter(shop=shopID).values().get()
+                except:
+                    continue
+                
                 prod['sellerRating'] = account.get("sellerRating")
                 prod['sellerRatingCount'] = account.get("sellerRatingCount")
                 if (minSellerFilter == True and maxSellerFilter == True):
