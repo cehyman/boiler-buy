@@ -489,8 +489,23 @@ class ShopViewSet(viewsets.ModelViewSet):
     def addFeatured(self, request, pk):
         print(f"Adding product {pk} as a featured product")
         shop = Shop.objects.get(pk=pk)
-        shop.featuredProducts.append(request.data.get("id"))
-        shop.save()
+        id = request.data.get("id")
+        
+        if id not in shop.featuredProducts:
+            shop.featuredProducts.append(id)
+            shop.save()
+            
+        return JsonResponse({"success": True})
+    
+    @action(detail=True, methods=['patch'])
+    def removeFeatured(self, request, pk):
+        shop = Shop.objects.get(pk=pk)
+        id = request.data.get("id")
+        
+        if id in shop.featuredProducts:
+            shop.featuredProducts.remove(id)
+            shop.save()
+                    
         return JsonResponse({"success": True})
         
     @action(detail=True, methods=['patch'])

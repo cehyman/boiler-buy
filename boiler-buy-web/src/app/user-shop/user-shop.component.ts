@@ -23,6 +23,7 @@ export class UserShopComponent implements OnInit {
   groupAds: GroupAdObj[] = []
   curruser:string = ''
   curremail:string = ''
+  featuredList: number[] = [];
 
   // Things for customization:
   @ViewChild('picUpload') picUpload !: PictureUploadComponent;
@@ -77,7 +78,18 @@ export class UserShopComponent implements OnInit {
       }
     })
 
+    this.getFeaturedProducts();
     this.fetchCustomization();
+  }
+
+  getFeaturedProducts() {
+    let request = this.http.get(
+      `/api/shops/${this.shop_id}/featuredProducts/`,
+      {observe: "body"}
+    ).subscribe((data: any) => {
+      this.featuredList = data.featuredProducts;
+      console.log(`Featured list: ${this.featuredList}`);
+    });
   }
 
   getGroupAds() {
@@ -126,6 +138,17 @@ export class UserShopComponent implements OnInit {
 
     this.http.patch(
       `/api/shops/${this.shop_id}/addFeatured/`,
+      {"id": id}
+    ).subscribe(response => {
+      console.log("Sent!");
+    });
+  }
+
+  removeFeatured(id: number) {
+    console.log(`Making product #${id} not featured`);
+
+    this.http.patch(
+      `/api/shops/${this.shop_id}/removeFeatured/`,
       {"id": id}
     ).subscribe(response => {
       console.log("Sent!");
