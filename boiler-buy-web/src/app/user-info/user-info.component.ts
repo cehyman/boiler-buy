@@ -39,6 +39,8 @@ export class UserInfoComponent implements OnInit {
   wishlist_id:number = 0
   products: any = [];
 
+  shop_id:number = 0
+
   constructor(private router: Router, private http: HttpClient) {}
   
   /* On start up gets the users information from the sessionStorage and */
@@ -61,7 +63,9 @@ export class UserInfoComponent implements OnInit {
 
     this.getUserWishlist()
 
-    var accountURL = "https://boilerbuy-api.azurewebsites.net/api/accounts/"+this.appcomp.getEmail()+"/";
+    this.getUserShopID()
+
+    var accountURL = "api/accounts/"+this.appcomp.getEmail()+"/";
     var request = this.http.get(accountURL, {observe:'response'});
     request.subscribe((data: any) => {
       console.log(data)
@@ -88,9 +92,7 @@ export class UserInfoComponent implements OnInit {
     });
     
     //removing information from sessionStorage
-    this.appcomp.removeUsername()
-    this.appcomp.removePassword()
-    this.appcomp.removeEmail()
+    this.appcomp.removeAllSessionStorage()
 
     alert('Deleted User. Returning Back to Register')
     this.router.navigate(['/register'])
@@ -98,18 +100,14 @@ export class UserInfoComponent implements OnInit {
 
   logoutAccount() {
     //removing information from sessionStorage
-    this.appcomp.removeUsername()
-    this.appcomp.removePassword()
-    this.appcomp.removeEmail()
-    this.appcomp.removeWishlistID()
-    this.appcomp.removeWishlistProductArray()
+    this.appcomp.removeAllSessionStorage()
 
     //route back to /register
     this.router.navigate(['/login'])
   }
 
   getUserWishlist() {
-    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.curremail).concat("/"))
+    var request = this.http.get<any>('api/accounts/'.concat(this.curremail).concat("/"))
     console.log(this.curremail)
     request.subscribe(data => {
       let wishlistLink = data['wishlist']
@@ -118,7 +116,7 @@ export class UserInfoComponent implements OnInit {
       console.log("id: " + this.wishlist_id)
 
       //get the user's wishlist product array
-      var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/wishlist/' + this.wishlist_id, {observe: "body"})
+      var request = this.http.get<any>('api/wishlist/' + this.wishlist_id, {observe: "body"})
       request.subscribe(data => {
       console.log(data)
       this.products = data.products
@@ -128,6 +126,22 @@ export class UserInfoComponent implements OnInit {
       })
     })
   } 
+
+  getUserShopID() {
+    var request = this.http.get<any>('api/accounts/'.concat(this.curremail).concat("/"))
+    console.log(this.curremail)
+    request.subscribe(data => {
+      console.log(data)
+      let shopLink = data['shop']
+
+      let shopUrl = shopLink.split('/')
+
+      this.shop_id = Number(shopUrl[shopUrl.length-2])
+      console.log("shopid: " + this.shop_id)
+
+      this.appcomp.saveShopID(String(this.shop_id))
+    })
+  }
 
   displayProfilePic() {
     var request = this.http.get<any>(`api/accounts/${this.curremail}/`, {observe: "body"})

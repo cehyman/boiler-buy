@@ -42,6 +42,11 @@ router.register(r'shopHistory', views.ShopHistoryViewSet)
 router.register(r'purchaseHistory', views.PurchaseHistoryViewSet)
 router.register(r'viewHistory', views.ViewHistoryViewSet)
 router.register(r'wishlist', views.WishlistViewSet)
+router.register(r'retrieveUsername', views.RetrieveUsernameViewSet)
+router.register(r'chatMessages', views.ChatMessagesViewSet)
+router.register(r'sellerProduct', views.SellerProductViewSet, basename="sellerProduct")
+router.register(r'groupAds', views.GroupAdsViewSet)
+router.register(r'chatGroup', views.ChatGroupViewSet)
 
 urlpatterns = [
     re_path(r'^$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

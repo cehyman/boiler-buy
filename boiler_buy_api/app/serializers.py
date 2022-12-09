@@ -13,17 +13,23 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['productType', 'priceDollars', 'priceCents', 'shippingDollars', 'shippingCents', 'name', 'description', 'reported',
-            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand']
+            'isPending', 'isSold', 'canShip', 'canMeet', 'stockCount', 'image', 'brand', 'locations', 'tags', 'allowOutOfStock']
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
         fields = ['image', 'product']
 
+class GroupAdsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GroupAds
+        fields = ['email', 'name', 'products']
+
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
-        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews', 'wishlist', 'image']
+        fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews', 'wishlist', 'image',
+                  'verified', 'savedTags']
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,7 +40,7 @@ class ShopHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopHistory
         fields = ['shop', 'product', 'action', 'dateTime', 'quantity', 'buyer',
-                  'profit', 'productId', 'productName', 'buyerName'
+                  'profit', 'locations', 'productId', 'productName', 'buyerName'
                   ]
 
 class PurchaseHistorySerializer(serializers.ModelSerializer):
@@ -51,3 +57,13 @@ class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wishlist
         fields = ['description', 'products']
+
+class ChatMessagesSerializer(serializers.Serializer):
+    class Meta:
+        model = ChatMessages
+        fields = ['sender', 'receiver', 'productID', 'message', 'timestamp']
+
+class ChatGroupSerializer(serializers.Serializer):
+    class Meta:
+        model = ChatGroup
+        fields = ['buyer', 'seller', 'product', 'isNegotiating', 'quantity', 'shippingPriceDollars', 'shippingPriceCents', 'finalPriceDollars', 'finalPriceCents', 'isShipping', 'trackingNumber', 'trackingLink']

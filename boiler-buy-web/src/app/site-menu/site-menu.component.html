@@ -3,7 +3,7 @@
     <h2>Boiler Buy</h2>
     <span class="menu-spacer"></span>
     <div>
-      <!-- <a mat-button [routerLink]="'/products/search'"> Shop </a> -->
+      <a mat-button [routerLink]="'/products/search'"> Shop </a>
       <a mat-button [routerLink]="'/create'"> Create Listing </a>
       <a mat-button (click)="routeUserWishlist()"> Wishlist</a>
       <!-- <a mat-button (click)="routePurchaseHistory()"> Purchase History</a> -->
@@ -12,6 +12,11 @@
     <span class="extra-menu"></span>
     
     <div class="menu-button-container">
+      <button mat-icon-button>
+        <mat-icon [routerLink]="'/chat'" color="accent">chat</mat-icon>
+      </button>
+
+      <button mat-button (click)="routeUserShop()"> My Shop</button>
       <button mat-button [routerLink]="'/profile'"> Profile </button>
       <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
     </div>

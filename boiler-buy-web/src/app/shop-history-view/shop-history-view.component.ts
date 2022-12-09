@@ -104,7 +104,7 @@ export class ShopHistoryViewComponent implements OnInit {
   }
 
   soldDescription(item: any) {
-    return `You sold ? of ${this.getProductHtml(item)}. You made ${this.getProfitHtml(item)}!`;
+    return `You sold ? of ${this.getProductHtml(item)}. Meeting at ${this.getLocationHtml(item)}. You made ${this.getProfitHtml(item)}!`;
   }
 
   getProductHtml(item: any) {
@@ -121,5 +121,14 @@ export class ShopHistoryViewComponent implements OnInit {
 
   getProfitHtml(item: any) {
     return `\$${item.profit}`;
+  }
+
+  getLocationHtml(item: any) {
+    if(item.locations == null){
+      return `not found`;
+    }
+    else {
+      return `${item.locations}`;
+    } 
   }
 }

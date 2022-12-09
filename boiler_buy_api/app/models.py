@@ -32,6 +32,10 @@ class Product(models.Model):
     canMeet = models.BooleanField()
     brand = models.CharField(max_length=128, default="")
     image = models.FileField(null=True, blank=True, upload_to='products/')
+    locations = ArrayField(models.CharField(max_length=200), default=list)
+    tags = ArrayField(models.CharField(max_length=50), default=list)
+    allowOutOfStock = models.BooleanField(null=False, blank=False, default=False)
+    
 
 class ProductImage(models.Model):
     def uploadTo(self, filename):
@@ -49,6 +53,11 @@ class Wishlist(models.Model):
     description = models.CharField(max_length=250, default='')
     products = models.ManyToManyField("Product")
 
+class GroupAds(models.Model):
+    email = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    products = models.ManyToManyField("Product")
+
 class Account(models.Model):
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
@@ -59,6 +68,8 @@ class Account(models.Model):
     sellerReviews = ArrayField(models.CharField(max_length=500), default=list)
     wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, null=True, db_column="wishlist_id")
     image = models.ImageField(null=True, blank=False, upload_to='accounts/')
+    verified = models.BooleanField(null=False, blank=True, default=False)
+    savedTags = ArrayField(models.CharField(max_length=50), default=list)
 
     def __str__(self):
         return str(self.username)
@@ -72,7 +83,8 @@ class ShopHistory(models.Model):
     quantity = models.IntegerField(null=True, blank=True)
     buyer = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     profit = models.FloatField(null=True, blank=True, default=None)
-    
+    locations = ArrayField(models.CharField(max_length=200), default=list)
+
     # These fields are redundancy against deleted products/accounts/etc.
     productId = models.IntegerField(default=1, blank=False)
     productName = models.CharField(max_length=50)
@@ -93,4 +105,30 @@ class ViewHistory(models.Model):
     email = models.ForeignKey("Account", on_delete=models.CASCADE)
     productID = models.ForeignKey("Product", null=True, on_delete=models.CASCADE)
     lastViewed = models.DateTimeField(auto_now=True)
+
+class ChatMessages(models.Model):
+    sender = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='senderEmail')
+    receiver = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='receiverEmail')
+    productID = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    message = models.CharField(max_length=256)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    senderImage = models.FileField(null=True, blank=False, default=None)
+    receiverImage = models.FileField(null=True, blank=False, default=None)
+    
+    def __str__(self):
+        return str(self.username)
+
+class ChatGroup(models.Model):
+    buyer = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='buyerEmail')
+    seller = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='sellerEmail')
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    isNegotiating = models.BooleanField(default=True)
+    quantity = models.PositiveIntegerField(null=True)
+    shippingPriceDollars = models.PositiveIntegerField(null=True)
+    shippingPriceCents = models.PositiveIntegerField(null=True)
+    finalPriceDollars = models.PositiveIntegerField(null=True)
+    finalPriceCents = models.PositiveIntegerField(null=True)
+    isShipping = models.BooleanField(default=False)
+    trackingNumber = models.CharField(max_length=250)
+    trackingLink = models.CharField(max_length=500)
 

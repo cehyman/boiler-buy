@@ -1,0 +1,14 @@
+<app-site-menu></app-site-menu>
+
+
+<h1>{{this.name}}</h1>
+
+<div class="noItemsMsg" *ngIf="productList.length == 0; else productsFound">
+    <p>
+        
+    </p>
+</div>
+
+<ng-template #productsFound>
+    <app-product-listing *ngFor="let product of productList; let i = index" [object]="product"></app-product-listing>
+</ng-template>  

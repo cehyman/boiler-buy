@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AppComponent } from '../app.component';
 import { Globals } from '../globals';
@@ -7,6 +7,10 @@ import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatButton } from '@angular/material/button';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ChatService } from '../chat.service';
+import { ChatMessageItem } from '../chat-types';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-listing',
@@ -19,6 +23,7 @@ export class ProductListingComponent implements OnInit {
 
   public globals: Globals = new Globals;
   products:any = []
+  locations:any = ["Other"]
   wishlist_id:number = 0
   curremail:string = ''
   curruser:string = ''
@@ -29,7 +34,9 @@ export class ProductListingComponent implements OnInit {
   fullStars: Array<boolean>;
   emptyStars: Array<boolean>;
 
-  constructor(private productService: ProductService, private router: Router, private http: HttpClient, public dialog: MatDialog) {
+  constructor(private productService: ProductService, private router: Router,
+    private http: HttpClient, public dialog: MatDialog, private chatService: ChatService
+  ) {
     this.fullStars = new Array();
     this.emptyStars = new Array();
   }
@@ -77,7 +84,11 @@ export class ProductListingComponent implements OnInit {
   openDialog(): void {
     if (this.curruser != 'Username') {
       const dialogRef = this.dialog.open(PurchaseConfirmationDialog, {
-        width: '250px',
+        width: '400px',
+        data: {
+          priceDollars: this.object.priceDollars,
+          priceCents: this.object.priceCents,
+        }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -86,28 +97,78 @@ export class ProductListingComponent implements OnInit {
         });
         console.log(result);
         if (result != undefined && result != 0) {
-          this.purchase(result);
+          this.productService.getProductsSellerEmail(this.object.id).subscribe((sellerEmail) => {
+            console.log(sellerEmail.sellerEmail)
+            console.log(this.object.id)
+
+            //create a chatGroup
+            this.chatService.createChatGroup({
+              currEmail: this.curremail,
+              otherEmail: sellerEmail.sellerEmail,
+              productID: this.object.id,
+            }).subscribe((output) => {
+              console.log(output);
+            })
+
+            this.chatService.sendMessage({
+              senderEmail: this.curremail,
+              receiverEmail: sellerEmail.sellerEmail,
+              productID: this.object.id,
+              message: this.curruser + " is requesting " + result.numToBuy + " items for $"
+                + result.askingPriceDollars + "." + ((result.askingPriceCents < 10) ? "0" + result.askingPriceCents : result.askingPriceCents)
+                + " each."
+            } as ChatMessageItem).subscribe((output) => {
+              console.log(output);
+              // Redirect to the chat page
+              var params = new URLSearchParams();
+              params.set('currEmail', this.curremail);
+              params.set('otherEmail', sellerEmail.sellerEmail);
+              params.set('productID', "" + this.object.id);
+              this.router.navigate(
+                ['/chat-window'], {queryParams: {
+                currEmail: this.curremail,
+                otherEmail: sellerEmail.sellerEmail,
+                productID: this.object.id
+              }})
+              console.log(params.toString())
+            }, (error) => {
+              console.log(error);
+            })
+          }, (error) => {
+            console.log(error);
+          })
         }
       });
     }
   }
 
-  purchase(numToPurchase: number): void {
-    console.log('buying', this.object.name);
-    //need to add item to user's purchases
-    this.productService.purchaseMany(this.object.id, numToPurchase).subscribe(
-      data => {
-        console.log(data.message);
-        alert("Purchase Successful!");
-      },
-      error => {
-        console.log('purchase failed:', error.error);
-        alert("Purchase Failed, try again.");
-      },
-      () => {
-        location.reload();
-      }
-    )
+
+  // purchase(numToPurchase: number): void {
+  //   console.log('buying', this.object.name);
+  //   //need to add item to user's purchases
+  //   this.productService.purchaseMany(this.object.id, numToPurchase, this.locations).subscribe(
+  //     data => {
+  //       console.log(data.message);
+  //       alert("Purchase Successful!");
+  //     },
+  //     error => {
+  //       console.log('purchase failed:', error.error);
+  //       alert("Purchase Failed, try again.");
+  //     },
+  //     () => {
+  //       location.reload();
+  //     }
+  //   )
+  // }
+
+  getLocations() {
+    var request = this.http.get('api/products/' + this.object.id, {responseType: 'json'}) as Observable<Product>
+
+    request.subscribe((data:any) => {
+      //console.log(data)
+      this.locations = data.locations
+      console.log(this.locations)
+    })
   }
   
   addToWishlist() {
@@ -132,7 +193,7 @@ export class ProductListingComponent implements OnInit {
       formData.append("username", this.curruser)
       formData.append("request", "add")
 
-      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/wishlist/", formData, {observe: "response"});
+      var request = this.http.post<any>("api/wishlist/", formData, {observe: "response"});
       request.subscribe((data:any) => {
         console.log(data)
 
@@ -166,7 +227,7 @@ export class ProductListingComponent implements OnInit {
       formData.append("username", this.curruser)
       formData.append("request", "remove")
 
-      var request = this.http.post<any>("https://boilerbuy-api.azurewebsites.net/api/wishlist/", formData, {observe: "response"});
+      var request = this.http.post<any>("api/wishlist/", formData, {observe: "response"});
 
       request.subscribe((data:any) => {
         console.log(data)
@@ -182,7 +243,7 @@ export class ProductListingComponent implements OnInit {
   }
 
   getUserWishlist() {
-    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.curremail).concat("/"))
+    var request = this.http.get<any>('api/accounts/'.concat(this.curremail).concat("/"))
     console.log(this.curremail)
     request.subscribe(data => {
       let wishlistLink = data['wishlist']
@@ -191,7 +252,7 @@ export class ProductListingComponent implements OnInit {
       console.log("id: " + this.wishlist_id)
 
       //get the user's wishlist product array
-      var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/wishlist/' + this.wishlist_id, {observe: "body"})
+      var request = this.http.get<any>('api/wishlist/' + this.wishlist_id, {observe: "body"})
       request.subscribe(data => {
       console.log(data)
       this.products = data.products
@@ -208,5 +269,27 @@ export class ProductListingComponent implements OnInit {
 })
 export class PurchaseConfirmationDialog {
   numToBuy: number = 1;
-  constructor(public dialogRef: MatDialogRef<PurchaseConfirmationDialog>) {}
+  locationList = [
+    {name:'WALC', value:'WALC', checked:false},
+    {name:'Corec', value:'Corec', checked:false},
+    {name:'Lawson', value:'Lawson', checked:false},
+    {name:'Other', value:'Other', checked:false}
+  ]
+  askingPriceDollars: number = this.data.priceDollars;
+  askingPriceCents: number = this.data.priceCents;
+
+  constructor(
+    public dialogRef: MatDialogRef<PurchaseConfirmationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+  }
+
+  isConfirmShow(): boolean {
+    return (
+      this.numToBuy > 0 &&
+      this.askingPriceDollars >= 0 &&
+      this.askingPriceCents >= 0 &&
+      this.askingPriceCents < 100
+    );
+  }
 }

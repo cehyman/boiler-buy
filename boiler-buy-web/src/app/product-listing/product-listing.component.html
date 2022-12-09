@@ -33,7 +33,7 @@
     <div style="display: flex; justify-content: right;">
         <button *ngIf="showButton" mat-raised-button color="primary" (click)="openDialog()">
             (${{object.priceDollars}}.{{(object.priceCents < 10) ? '0' : ''}}{{object.priceCents}})
-            {{(curruser != 'Username') ? 'Purchase': 'Log In to Purchase'}}
+            {{(curruser != 'Username') ? 'Send an Offer': 'Log In to Purchase'}}
         </button>
     </div>
   </div>

@@ -14,6 +14,7 @@ export interface Product {
     canMeet: boolean,
     sellerRating: number,
     sellerRatingCount: number,
+    location: string[]
 }
 
 export interface PurchaseInfo {
@@ -35,6 +36,12 @@ export interface RecentlyViewedItem {
     product: Product,
 }
 
+export interface locationInterface {
+    location: string,
+    value: string,
+    checked: boolean
+}
+
 export interface FilterSearchInput {
     name: string | null,
     productType: string[] | null,
@@ -45,4 +52,20 @@ export interface FilterSearchInput {
     brand: string[] | null,
     tags: string[] | null
 }
+
+export interface GroupAdInput {
+    name: string,
+    product_id: number,
+    checked: boolean
+}
+
+export interface GroupAdObj {
+    id: number
+    name: string,
+    email: string,
+    products: number[]
+}
+
+export interface GroupAdList extends Array<GroupAdObj> { }
+
 

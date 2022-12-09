@@ -28,7 +28,8 @@ export class UserWishlistComponent implements OnInit {
     this.curruser = <string> this.appcomp.getUsername()
 
     var urlStr = this.activatedRoute.snapshot.url.toString();
-    this.wishlist_id = Number(urlStr.split(',')[1]);
+    this.wishlist_id = <number><unknown>this.appcomp.getWishlistID();
+    //this.wishlist_id = Number(urlStr.split(',')[1]);
 
     if(isNaN(this.wishlist_id)) {
       alert(`Invalid URL "${urlStr}": "${this.wishlist_id}"`);
@@ -38,7 +39,7 @@ export class UserWishlistComponent implements OnInit {
     console.log(this.wishlist_id)
 
     //create a get request to get all products on a wishlist
-    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/wishlist/' + this.wishlist_id, {observe: "body"})
+    var request = this.http.get<any>('api/wishlist/' + this.wishlist_id, {observe: "body"})
 
     request.subscribe(data => {
       console.log(data)
@@ -50,13 +51,17 @@ export class UserWishlistComponent implements OnInit {
         console.log("product id: " + this.products[i])
 
         //create a product type and add to productList in order to display on screen
-        var req2 = this.http.get('https://boilerbuy-api.azurewebsites.net/api/products/' + this.products[i], {responseType: 'json'}) as Observable<Product>
+        var req2 = this.http.get('api/products/' + this.products[i], {responseType: 'json'}) as Observable<Product>
         req2.subscribe((data:any) => {
           console.log(data)
           this.productList.push(data)
         })
       }
     })
+  }
+
+  displayNoItems() {
+    
   }
 
 }

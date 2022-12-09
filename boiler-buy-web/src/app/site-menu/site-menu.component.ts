@@ -24,6 +24,7 @@ export class SiteMenuComponent implements OnInit {
   currEmail:string = ''
   wishlistLink:string = ''
   wishlistID:number = 0
+  shopID:number = 0
 
 
   ngOnInit(): void {
@@ -34,7 +35,8 @@ export class SiteMenuComponent implements OnInit {
     }
 
     this.currPass = <string> this.appComp.getPassword()
-    this.currPass = <string> this.appComp.getEmail()
+    this.currEmail = <string> this.appComp.getEmail()
+    
   }
   
   onToggle(): void {
@@ -46,28 +48,25 @@ export class SiteMenuComponent implements OnInit {
     //removing information from sessionStorage
     this.darkModeService.disable()
 
-    this.appComp.removeUsername()
-    this.appComp.removePassword()
-    this.appComp.removeEmail()
+    this.appComp.removeAllSessionStorage()
 
     this.router.navigate(['/login'])
   }
 
   routeUserWishlist() {
-    var request = this.http.get<any>('https://boilerbuy-api.azurewebsites.net/api/accounts/'.concat(this.currEmail).concat("/"))
-    console.log(this.currEmail)
-    request.subscribe(data => {
-      this.wishlistLink = data['wishlist']
-
-      let urlSp = this.wishlistLink.split('/')
-      this.wishlistID = Number(urlSp[urlSp.length - 2])
-      console.log("id: " + this.wishlistID)
-    })
+    this.wishlistID = <number> <unknown> this.appComp.getWishlistID();
+    console.log("wishlist id: " + this.wishlistID)
     this.router.navigate(['/wishlist/' + this.wishlistID])
   }
 
   routePurchaseHistory() {
     this.router.navigate(['/profile/purchase-history'])
+  }
+
+  routeUserShop() {
+    this.shopID = <number><unknown> this.appComp.getShopID()
+    console.log("shop id: " + this.shopID)
+    this.router.navigate(['/shop/' + this.shopID])
   }
 
 }

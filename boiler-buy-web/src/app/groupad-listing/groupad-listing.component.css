@@ -1,0 +1,21 @@
+.card {
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
+}
+
+.viewBtn {
+    align-items: center;
+    display: inline-block;
+    width: 25%;
+    margin: 10px;
+}
+
+.icon-text {
+    display: flex;
+    align-items: center;
+}
+
+h2 {
+    margin-left:1vw;
+}

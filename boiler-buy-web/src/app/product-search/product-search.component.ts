@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-import { Product, FilterSearchInput } from '../product-types';
+import { Observable } from 'rxjs';
+import { Product, FilterSearchInput, GroupAdObj, GroupAdList } from '../product-types';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -11,6 +13,7 @@ import { ProductService } from '../product.service';
 })
 export class ProductSearchComponent implements OnInit {
   products: Product[] = [];
+  groupAds: GroupAdObj[] = []
   types = [
     {name:'Food', value:'Food', checked:false},
     {name:'Electronics', value:'Electronics', checked:false},
@@ -18,6 +21,11 @@ export class ProductSearchComponent implements OnInit {
   brands = [
     {name:'Acer', value:'Acer', checked:false},
     {name:'Lenovo', value:'Lenovo', checked:false},
+  ]
+  tagList = [
+    {name:'Old', value:'Old', checked:false},
+    {name:'New', value:'New', checked:false},
+    {name:'Phone', value:'Phone', checked:false},
   ]
   filters: FilterSearchInput = {} as FilterSearchInput;
   
@@ -30,12 +38,13 @@ export class ProductSearchComponent implements OnInit {
   @ViewChild('stickyMenu') menuElement: ElementRef<HTMLInputElement> = {} as ElementRef;
   
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private http: HttpClient) {
     
   }
 
   ngOnInit(): void {
     this.getProductList();
+    this.getGroupAds()
   }
 
   ngAfterViewInit() {
@@ -45,10 +54,20 @@ export class ProductSearchComponent implements OnInit {
   getProductList() {
     this.loading = true;
     this.productService.getProductList().subscribe((productList) => {
-      // console.log(productList);
+      console.log(productList);
       this.products = productList;
       this.loading = false;
     });
+  }
+
+  getGroupAds() {
+    this.loading = true;
+    var request = this.http.get('api/groupAds/', {responseType: 'json'}) as Observable<GroupAdList>
+
+    request.subscribe((data:any) => {
+      console.log(data)
+      this.groupAds = data
+    })
   }
 
   buttonSearchClick() {
@@ -73,6 +92,11 @@ export class ProductSearchComponent implements OnInit {
     // console.log(this.filters.productType)
     console.log(this.filters.minSellerRating)
     console.log(this.filters.maxSellerRating)
+
+    this.filters.tags = this.tagList.filter(tag => tag.checked).map(tag => tag.value)
+
+    console.log(this.filters.tags);
+
     this.loading = true;
     this.products = [];
     this.productService.filterSearch(this.filters).subscribe((productList) => {

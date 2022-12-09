@@ -1,0 +1,13 @@
+<app-site-menu></app-site-menu>
+<div class="verify-account">
+    <div *ngIf="successful">
+        <p>Success! Your account has been verified!</p>
+    </div>
+    <div *ngIf="!successful">
+        <p>
+            An unexpected error occured and we could not verify your account.
+            Please try again in a few seconds
+        </p>
+    </div>
+</div>
+
