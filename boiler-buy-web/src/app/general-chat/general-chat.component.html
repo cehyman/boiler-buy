@@ -1,6 +1,7 @@
+<app-site-menu></app-site-menu>
 <mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side">
-        <button type="button" color="primary" mat-button (click)="drawer.toggle()" style="float: right;">
+    <mat-drawer class="settings-panel" #drawer mode="side">
+        <button  type="button" color="primary" mat-button (click)="drawer.toggle()" style="float: right;">
             <mat-icon>chevron_right</mat-icon>
         </button>
 
@@ -119,12 +120,12 @@
                         </mat-panel-description>
                     </mat-expansion-panel-header>
 
-                    <mat-form-field appearance="fill">
+                    <mat-form-field class="tracking" appearance="fill">
                         <mat-label>Tracking URL</mat-label>
                         <input matInput disabled [(ngModel)]="trackingLink" type="url">
                     </mat-form-field>
 
-                    <mat-form-field appearance="fill">
+                    <mat-form-field class="tracking" appearance="fill">
                         <mat-label>Tracking Number</mat-label>
                         <input matInput disabled [(ngModel)]="trackingNum" type="text">
                     </mat-form-field>
@@ -160,7 +161,7 @@
     <div style="height: 100%;">
         <div class="header">
             <app-site-menu></app-site-menu>
-            <button type="button" color="primary" mat-button (click)="drawer.toggle()">
+            <button class="settings" type="button" color="primary" mat-button (click)="drawer.toggle()">
                 <mat-icon>settings</mat-icon>Settings
             </button>
             <h1>Product #{{chatInfo.productID}}</h1>
@@ -176,13 +177,14 @@
             <!-- Put scroll bar here? -->
             <mat-list class="message-list">
                 <div *ngFor="let item of messages; let i = index">
-                    <span *ngIf="item.image != null && item.image != ''; else invalidImage1">
-                        <img mat-card-sm-image src="/media/{{item.image}}">
-                    </span>
-                    <ng-template #invalidImage1>
-                        <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-                    </ng-template>
-                    <div style="display: flex; flex-direction: row;">
+
+                    <div class="message" style="display: flex; flex-direction: row;">
+                        <span *ngIf="item.image != null && item.image != ''; else invalidImage1">
+                            <img mat-card-sm-image src="/media/{{item.image}}">
+                        </span>
+                        <ng-template #invalidImage1>
+                            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                        </ng-template>
                         <mat-list-item><b>{{item.name}}</b>: {{item.message}}</mat-list-item>
                         <p>{{item.date}}</p>
                     </div>

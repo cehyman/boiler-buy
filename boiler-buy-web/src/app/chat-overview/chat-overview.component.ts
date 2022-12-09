@@ -9,7 +9,7 @@ import { ProductService } from '../product.service';
 @Component({
   selector: 'app-chat-overview',
   templateUrl: './chat-overview.component.html',
-  styleUrls: ['./chat-overview.component.css']
+  styleUrls: ['./chat-overview.component.scss']
 })
 export class ChatOverviewComponent implements OnInit {
   private appcomp: AppComponent = new AppComponent();

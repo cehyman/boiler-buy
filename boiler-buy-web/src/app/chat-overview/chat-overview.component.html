@@ -1,23 +1,23 @@
 <app-site-menu></app-site-menu>
-
-<div *ngFor="let chat of allChats; let i = index">
-    <mat-card class="example-card">
+<h1> Your Chat's </h1>
+<div class="chat" *ngFor="let chat of allChats; let i = index">
+    <mat-card class="card">
         <mat-card-header>
             <!-- put a product image here instead -->
-            <span *ngIf="chat.otherImage === null || chat.otherImage === ''; else validImage">
-                <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            <span  *ngIf="chat.otherImage === null || chat.otherImage === ''; else validImage">
+                <img class="prodImage" mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
             </span>
             <ng-template #validImage>
-                <img mat-card-sm-image src="/media/{{chat.otherImage}}">
+                <img  class="prodImage" mat-card-sm-image src="/media/{{chat.otherImage}}">
             </ng-template>
 
-            <mat-card-title-group style="width: auto;">
+            <mat-card-title-group class="userInfo" >
                 <mat-card-title>{{chat.otherEmail}}</mat-card-title>
                 <mat-card-subtitle>Product: {{chat.productName}}</mat-card-subtitle>
             </mat-card-title-group>
         </mat-card-header>
-        <mat-card-actions>
-            <button mat-button [routerLink]="'/chat-window'" [queryParams]="{
+        <mat-card-actions class="chatButton">
+            <button mat-raised-button color="primary" [routerLink]="'/chat-window'" [queryParams]="{
                 currEmail: chat.currEmail,
                 otherEmail: chat.otherEmail,
                 productID: chat.productID

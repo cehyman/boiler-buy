@@ -11,7 +11,7 @@ import { ProductService } from '../product.service';
 @Component({
   selector: 'app-general-chat',
   templateUrl: './general-chat.component.html',
-  styleUrls: ['./general-chat.component.css']
+  styleUrls: ['./general-chat.component.scss']
 })
 export class GeneralChatComponent implements OnInit {
   public globals: Globals = new Globals;
