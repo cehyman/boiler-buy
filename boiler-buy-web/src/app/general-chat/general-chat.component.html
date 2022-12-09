@@ -1,0 +1,38 @@
+<div style="height: 100%;">
+    <div class="header">
+        <app-site-menu></app-site-menu>
+        <h1>Product #{{chatInfo.productID}}</h1>
+        <h1 *ngIf="isSeller">You are the seller</h1>
+        <h1 *ngIf="!isSeller">You are the buyer</h1>
+    </div>
+
+    <div class="content">
+        <!-- Main content -->
+        <!-- Put loading wheel here while it loads the conversation -->
+        <!-- Put scroll bar here? -->
+
+        <mat-list>
+            <div *ngFor="let item of messages; let i = index">
+                <div style="display: flex; flex-direction: row;">
+                    <mat-list-item>{{item.name}}: {{item.message}}</mat-list-item>
+                    <p>{{item.date}}</p>
+                </div>
+                
+                <mat-divider></mat-divider>
+            </div>
+        </mat-list>
+    </div>
+
+    <div class="footer">
+        <!-- footer w/ text box -->
+        <form class="messagebox-form">
+            <mat-form-field class="messagebox-full-width" appearance="outline">
+                <mat-label>Message</mat-label>
+                <input matInput #message maxlength="256" placeholder="Ex. Is this item still for sale?" autocomplete="off">
+                <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+                <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                <button matSuffix type="submit" (click)="sendMessage(message.value); message.value = '';"><mat-icon>send</mat-icon></button>
+            </mat-form-field>
+        </form>
+    </div>
+</div>

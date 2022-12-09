@@ -79,4 +79,14 @@ export class ProductService {
     return request;
   }
 
+  getProductsSellerEmail(productID: number): Observable<any> {
+    const urlParams = new URLSearchParams();
+    urlParams.set('productID', "" + productID);
+
+    return this.http.get("api/sellerProduct/?" + urlParams.toString(), {responseType: 'json'}) as Observable<any>;
+  }
+
+  getProductFromID(id: number): Observable<any> {
+    return this.http.get('http://localhost:8000/api/products/' + id, {observe: "body"});
+  }
 }
