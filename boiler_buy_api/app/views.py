@@ -446,7 +446,6 @@ class ProductViewSet(viewsets.ModelViewSet):
                     # print(account)
                     prod.update(account)
                     return JsonResponse(prod, safe=False)
-        
 
 class ProductImageViewSet(viewsets.ModelViewSet):
     queryset = ProductImage.objects.all()
@@ -677,3 +676,56 @@ class WishlistViewSet(viewsets.ModelViewSet):
             wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
+
+
+class ChatMessagesViewSet(viewsets.ModelViewSet):
+    serializer_class = ChatMessages
+    queryset = ChatMessages.objects.all()
+
+    def create(self, request):
+        senderObj = Account.objects.get(email=request.data.get('sender'))
+        receiverObj = Account.objects.get(email=request.data.get('receiver'))
+        productObj = Product.objects.get(id=request.data.get('productID'))
+
+        message = ChatMessages.objects.create(
+            sender=senderObj,
+            receiver=receiverObj,
+            productID=productObj,
+            message=request.data.get('message')
+        )
+        return JsonResponse({'success': True})
+
+    def list(self, request):
+        fun = request.GET.get('function')
+        if (fun == 'getMessageList'):
+            return self.getMessageList(request)
+        elif (fun == 'getMessages'):
+            response = self.getMessages(request)
+            return response
+
+
+    def getMessages(self, request):
+        print(request.GET)
+        currentUser = Account.objects.get(email=request.GET.get('currEmail'))
+        receiver = Account.objects.get(email=request.GET.get('otherEmail'))
+        product = Product.objects.get(id=request.GET.get('productID'))
+        data = ChatMessages.objects.filter(sender=currentUser, receiver=receiver, productID=product).order_by('timestamp').values() | \
+            ChatMessages.objects.filter(sender=receiver, receiver=currentUser, productID=product).order_by('timestamp').values()
+        return JsonResponse(list(data), safe=False)
+
+    def getMessageList(self, request):
+        currentUser = Account.objects.get(email=request.GET.get('currEmail'))
+        data = ChatMessages.objects.filter(sender=currentUser).distinct('sender', 'receiver', 'productID').values() | \
+            ChatMessages.objects.filter(receiver=currentUser).distinct('sender', 'receiver', 'productID').values()
+        
+        return JsonResponse(list(data), safe=False)
+
+class SellerProductViewSet(viewsets.ViewSet):
+    serializer_class = ProductSerializer
+    queryset = Product.objects.all()
+
+    def list(self, request):
+        prodID = request.GET.get('productID')
+        sellerShop = Shop.objects.filter(products=prodID).values().first()
+        seller = Account.objects.get(shop=sellerShop.get("id"))
+        return JsonResponse({'sellerEmail': seller.email})
