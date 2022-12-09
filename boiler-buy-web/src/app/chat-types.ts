@@ -11,8 +11,8 @@ export interface ChatGroup {
     otherEmail: string | null,
     productID: number | null,
     productName?: string,
-    currImage: string,
-    otherImage: string,
+    currImage?: string,
+    otherImage?: string,
 }
 
 export interface ChatGroupPK {
