@@ -81,10 +81,10 @@ import { SpecialResetPasswordComponent } from './special-reset-password/special-
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { NotVerifiedComponent } from './not-verified/not-verified.component';
 import { ChatOverviewComponent } from './chat-overview/chat-overview.component';
-import { MyShopComponent } from './my-shop/my-shop.component';
 import { CreateGroupAdComponent } from './create-group-ad/create-group-ad.component';
 import { GroupadListingComponent } from './groupad-listing/groupad-listing.component';
 import { GroupadDetailsComponent } from './groupad-details/groupad-details.component';
+import { BuyerShopViewComponent } from './buyer-shop-view/buyer-shop-view.component';
 
 @NgModule({
   declarations: [
@@ -125,8 +125,8 @@ import { GroupadDetailsComponent } from './groupad-details/groupad-details.compo
     GroupadListingComponent,
     GroupadDetailsComponent,
     CreateGroupAdComponent,
-    MyShopComponent,
     ChatOverviewComponent,
+    BuyerShopViewComponent,
   ],
   imports: [
     FormsModule,
