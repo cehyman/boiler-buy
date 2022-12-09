@@ -36,6 +36,7 @@ export class GeneralChatComponent implements OnInit {
   shippingPrice = '';
   chatGroupID = -1;
   locations = [];
+  sellerVenmoTag = '';
 
   // Store the image path for the current user
   public currImage: string = "";
@@ -123,6 +124,13 @@ export class GeneralChatComponent implements OnInit {
     })
 
     this.refreshMessages();
+
+    //get current venmo tag
+    var requestVenmo = this.http.get('api/accounts/' + this.appcomp.getEmail()+"/")
+    requestVenmo.subscribe((data: any) => {
+      // console.log('request venmo:', data)
+      this.sellerVenmoTag = data.venmoTag;
+    })
   }
 
   refreshMessages() {
@@ -310,6 +318,30 @@ export class GeneralChatComponent implements OnInit {
 
   triggerVenmoTags() {
     //determine if the seller has put a venmo tag
-    
+    //get current venmo tag
+    var requestVenmo = this.http.get('api/accounts/' + this.appcomp.getEmail()+"/")
+    requestVenmo.subscribe((data: any) => {
+      console.log('request venmo:', data)
+      this.sellerVenmoTag = data.venmoTag;
+    })
+
+
+    let venMessage = 'Here is the seller\'s Venmo Tag: @' + this.sellerVenmoTag;
+
+    this.chatService.sendMessage({
+      senderEmail: this.chatInfo.currEmail,
+      receiverEmail: this.chatInfo.otherEmail || '',
+      productID: this.chatInfo.productID || -1,
+      message: venMessage,
+      image: this.currImage
+    }).subscribe((output) => {
+      console.log(output)
+      this.messages = this.messages.concat([{
+        name: this.chatInfo.currEmail,
+        message: venMessage,
+        date: 'now',
+        image: this.currImage
+      }])
+    })
   }
 }

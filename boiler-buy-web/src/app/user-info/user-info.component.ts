@@ -80,8 +80,9 @@ export class UserInfoComponent implements OnInit {
     })
    
     //get current venmo tag
-    var requestVenmo = this.http.get('api/accounts/')
+    var requestVenmo = this.http.get('api/accounts/' + this.appcomp.getEmail()+"/")
     requestVenmo.subscribe((data: any) => {
+      console.log('request venmo:', data)
       this.venmo_tag = data.venmoTag;
     })
   }
@@ -173,6 +174,7 @@ export class UserInfoComponent implements OnInit {
 
   editVenmoTag() {
     //dialog:
+    console.log(this.venmo_tag)
     const dialogRef = this.dialog.open(VenmoTagDialog, {
       data: {"venmo_tag": this.venmo_tag},
     });
@@ -202,11 +204,22 @@ export interface DialogData {
   selector: 'venmo-tag-dialog',
   templateUrl: 'venmo-tag-dialog.html',
 })
-export class VenmoTagDialog {
+export class VenmoTagDialog implements OnInit {
+
+  vt:string = ""
+
   constructor(
     public dialogRef: MatDialogRef<VenmoTagDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+  ) {
+    this.vt = data.venmo_tag
+    console.log(data.venmo_tag)
+  }
+
+  ngOnInit(): void {
+    // this.vt = data.venmo_tag
+    // console.log(this.vt)
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

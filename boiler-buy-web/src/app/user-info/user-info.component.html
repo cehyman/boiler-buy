@@ -39,7 +39,8 @@
     <br>
 
     <div>
-        <a mat-raised-button color="accent" (click)="editVenmoTag()" class="add-venmo-tag-button">Add/Edit Venmo Tag</a>
+        <a mat-raised-button color="accent" (click)="editVenmoTag()" class="add-venmo-tag-button" *ngIf="venmo_tag == ''">Add Venmo Tag</a>
+        <a mat-raised-button color="accent" (click)="editVenmoTag()" class="add-venmo-tag-button" *ngIf="venmo_tag != ''">Edit Venmo Tag</a>
         <a mat-raised-button color="accent" routerLink="/change-profile-pic" class="change-profile-pic-button">Change Profile Pic</a>
     </div>
     <br>
