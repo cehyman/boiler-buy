@@ -10,7 +10,7 @@ import { GroupAdList, GroupAdObj, Product } from '../product-types';
 @Component({
   selector: 'app-user-shop',
   templateUrl: './user-shop.component.html',
-  styleUrls: ['./user-shop.component.css']
+  styleUrls: ['./user-shop.component.scss']
 })
 export class UserShopComponent implements OnInit {
 

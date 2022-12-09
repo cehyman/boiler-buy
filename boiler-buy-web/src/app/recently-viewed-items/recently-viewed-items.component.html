@@ -1,5 +1,12 @@
-<div>
-    Recently viewed items:
+<div class="inputContainer">
+    <h1>Recently viewed items:</h1>
+    <div *ngIf="items.length == 0;">
+        <h3>No Recently Viewed Items</h3>
+        <p>
+            You have not viewed any items recently!
+            Check out the shop!
+        </p>
+    </div>
     <div class="card" *ngFor="let item of items; let i = index" >
         <div *ngIf="i < 5" class="name_seller_rating">
             <button style="margin-bottom: 10px;" mat-raised-button color="secondary" (click)="viewDetails(item.product.id)">

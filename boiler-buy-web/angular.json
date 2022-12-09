@@ -24,10 +24,9 @@
               "src/web.config"
             ],
             "styles": [
-              "src/custom-theme.scss",
-              "src/styles.css"
+              "src/styles.scss"
             ],
-            "scripts": ["./node_modules/angular-dark-mode/angular-dark-mode.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -98,13 +97,18 @@
               "src/web.config"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
               
             ],
             "scripts": []
           }
         }
       }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
     }
   },
   "cli": {

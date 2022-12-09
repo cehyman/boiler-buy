@@ -6,7 +6,7 @@ import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-not-verified',
   templateUrl: './not-verified.component.html',
-  styleUrls: ['./not-verified.component.css']
+  styleUrls: ['./not-verified.component.scss']
 })
 export class NotVerifiedComponent implements OnInit {
 

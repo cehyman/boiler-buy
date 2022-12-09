@@ -6,7 +6,7 @@ import { AppComponent } from '../app.component';
 @Component({
   selector: 'app-feature-buttons',
   templateUrl: './feature-buttons.component.html',
-  styleUrls: ['./feature-buttons.component.css']
+  styleUrls: ['./feature-buttons.component.scss']
 })
 export class FeatureButtonsComponent implements OnInit {
 
