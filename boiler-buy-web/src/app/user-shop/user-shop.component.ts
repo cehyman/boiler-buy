@@ -41,7 +41,6 @@ export class UserShopComponent implements OnInit {
   ngOnInit(): void {
     this.curruser = <string> this.appcomp.getUsername()
     this.curremail = <string> this.appcomp.getEmail()
-    this.displayProfilePic()
 
     var urlStr = this.activatedRoute.snapshot.url.toString();
     console.log('urlStr: ', urlStr);
