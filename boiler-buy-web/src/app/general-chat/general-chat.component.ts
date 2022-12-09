@@ -125,6 +125,8 @@ export class GeneralChatComponent implements OnInit {
     if (message != "") {
       console.log("clicked!", message);
 
+      //recheck block list
+      this.checkBlock()
       if (this.isBlocked) {
         console.log("blocked from sending a message")
         alert("Unable to send message")
@@ -184,15 +186,15 @@ export class GeneralChatComponent implements OnInit {
 
       //check if user is already in blocked list
       var inList = false;
-      for(let i = 0; i < this.blockedList.length; i++) {
-        if (this.blockedList[i] === this.chatInfo.otherEmail) {
+      for(let i = 0; i < checkBlockList.length; i++) {
+        if (checkBlockList[i] === this.chatInfo.otherEmail) {
           inList = true;
           break;
         }
       }
 
       if(inList) {
-        alert("user blocked")
+        // alert("user blocked")
         this.isBlocked = true
       }
     })
