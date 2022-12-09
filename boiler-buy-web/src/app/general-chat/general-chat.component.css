@@ -27,3 +27,8 @@
     display: block;
     height: 118px; /* Set same as footer's height */
 }
+
+img {
+    width: 8em;
+    height:8em;
+}
