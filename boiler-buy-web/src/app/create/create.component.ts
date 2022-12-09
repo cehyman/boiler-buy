@@ -24,7 +24,7 @@ export class CreateComponent implements OnInit {
   shipPrice: string = '';
   description: string = '';
   stock: number = 1;
-  canMeet: boolean = true;
+  canMeet: boolean = false;
   canShip: boolean = false;
   type: string = 'Electronics';
   brand: string = 'Acer';
