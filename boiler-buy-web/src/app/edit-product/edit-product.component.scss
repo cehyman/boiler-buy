@@ -1,4 +1,99 @@
-.inputContainer{
-    width:25%;
+.editProduct {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 4vh;
+
 }
+.edit-form{
+    width: 90%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+    border: 2px solid black;
+}
+.column {
+    float: left;
+    width: 45%;
+    padding: 2vw;
+  }
+
+.productInputBox {
+    margin-bottom: 2vh;
+    width: 33vw;
+    height:9vh;
+    border-radius:2vw;
+}
+
+.productInputDescription {
+    width: 33vw;
+    border-radius:.5vw;
+}
+
+.productInputList{
+    width: 33vw;
+    height:9vh;
+    margin-bottom: 2vh;
+    border-radius:2vw;
+}
+
+.productInputListSelect{
+    width: 33vw;
+    margin: 1vw;
+    margin-bottom: -5vh;
+    border-radius:.5vw;
+}
+
+.productInputCheckbox {
+    width: 33vw;
+    margin-top: 3vh;
+
+    padding-left: 4vw;
+    border-radius:.5vw;
+
+}
+
+.tags{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 33vw;
+    margin-left: 4vw;
+}
+
+.productInputShipping {
+    margin-top: 1vh;
+    // padding-left: 1vw;
+    width: 33vw;
+    border-radius:.5vw;
+}
+
+
+
+.mat-checkbox-label{
+    text-overflow: ellipsis;
+}
+
+.picUpload{
+
+    padding-left: 4vw;
+    width: 33vw;
+    text-align: center;
+    border-radius:.5vw;
+}
+
+.buttons{
+    width: 50vw;
+    margin:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.editButton{
+    margin:2vw;
+    width: 29vw;
+}
+
 
