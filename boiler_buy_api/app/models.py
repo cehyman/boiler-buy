@@ -70,6 +70,7 @@ class Account(models.Model):
     image = models.ImageField(null=True, blank=False, upload_to='accounts/')
     verified = models.BooleanField(null=False, blank=True, default=False)
     savedTags = ArrayField(models.CharField(max_length=50), default=list)
+    venmoTag = models.CharField(max_length=30, null=True)
 
     def __str__(self):
         return str(self.username)
@@ -103,7 +104,7 @@ class PurchaseHistory(models.Model):
 
 class ViewHistory(models.Model):
     email = models.ForeignKey("Account", on_delete=models.CASCADE)
-    productID = models.ForeignKey("Product", null=True, on_delete=models.CASCADE)
+    productID = models.ForeignKey("Product", null=False, on_delete=models.CASCADE)
     lastViewed = models.DateTimeField(auto_now=True)
 
 class ChatMessages(models.Model):

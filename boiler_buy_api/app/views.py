@@ -29,10 +29,7 @@ class RetrieveUsernameViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
-        print(request.data.get('username'))
-        print(request.data.get('email'))
         account = [request.data.get('username'), request.data.get('email')]
-        print(account)
         RetrieveUsernameViewSet._sendUsernameEmail(account)
         return JsonResponse({'observe': 'response'})
 
@@ -58,12 +55,8 @@ class AccountViewSet(viewsets.ModelViewSet):
     lookup_value_regex = "[^/]+"
 
     def create(self, request):
-        print('THIS IS THE REQUEST: ', request)
-        print('REQUEST BODY: ', request.data)
-        print('REQUEST ENDS HERE')
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'Username \'placeholder\' or \'Username\' cannot be used'}, status=400)
-
         newShop = Shop.objects.create(description=request.data.get('username'))
         newWishlist = Wishlist.objects.create(description=request.data.get('username'))
         account = Account.objects.create(username=request.data.get('username'), password=request.data.get('password'), email=request.data.get('email'),
@@ -71,9 +64,9 @@ class AccountViewSet(viewsets.ModelViewSet):
         
         AccountViewSet._sendVerificationEmail(account)
 
-        print('newShop: ', newShop.id)
-        print('newWishlist: ', newWishlist.id)
-        print('username: ', account)
+        
+        
+        
         return JsonResponse({'observe': 'response'})
 
     @staticmethod
@@ -104,7 +97,6 @@ class AccountViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['patch'])
     def verify(self, request, email):
-        print(f"email = {email}")
         account = Account.objects.get(email=email)
         account.verified = True
         account.save()
@@ -119,8 +111,6 @@ class AccountViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['get'])
     def getFromUsername(self, request, pk):
-        print(f"pk = {pk}")
-        
         account = Account.objects.get(username=pk)
         
         return JsonResponse(account, safe=False)
@@ -130,39 +120,29 @@ class AccountViewSet(viewsets.ModelViewSet):
     def retrieveImages(self, request, email):
         account = Account.objects.get(email=email)
         account_image = account.image
-
-        print(account_image)
-        print(account_image.url)
         
         # nameList = list([])
         # nameList.append(image.image.url)
-        
-        # print(f"{nameList}")
         return JsonResponse(account_image.url, safe=False)
 
     # Test to add images to /accounts/<email>/addImages
     @action(detail=True, methods=['patch'])
     def addImages(self, request, email):
-        print(request.data)
         account = Account.objects.get(email=email)
         
         # Add all the images and connect them to this product
         #formImages = request.data.getlist('images')
         # account.image = image
-
-        print(request.data.get('image'))
   
         serializer = AccountSerializer(account, data=request.data, partial=True, context={'request': request}) # set partial=True to update a data partially
         # if serializer.is_valid():
         #     serializer.save()
-            
-        # print(serializer.data)
+        # 
         # return JsonResponse({'observe': 'response'})
 
         if serializer.is_valid():
             try:
                 serializer.save()
-                print(serializer.data)
             except ValueError:
                 return JsonResponse({"detail": "Serializer is not valid"}, status=400)
             return JsonResponse({"detail": "Updated."})
@@ -199,7 +179,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'User is not logged in'}, status=401)
 
-        print('data:', request.data)
         # add the product to the database (and get the product's id)
         product = Product.objects.create(
             productType = request.data.get('productType'),
@@ -217,7 +196,6 @@ class ProductViewSet(viewsets.ModelViewSet):
             tags = request.data.getlist('tags'),
             allowOutOfStock = bool(request.data.get('allowOutOfStock'))
         )
-        print('creating product with product id', product.id)
 
         # get user object of the user adding this product
         user = Account.objects.get(username=request.data.get('username'))
@@ -241,9 +219,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def partial_update(self, request, *args, **kwargs):
         result =  super(ProductViewSet, self).partial_update(request, *args, **kwargs)
-        
         username = request.data.get('username')
-        print(f"username = ${username}")
         
         product = Product.objects.get(id=kwargs['pk'])
         user = Account.objects.get(username=request.data.get('username'))
@@ -256,9 +232,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     
     def delete(self, request, *args, **kwargs):
         result = super(ProductViewSet, self).delete(request, *args, **kwargs)
-        
         username = request.data.get('username')
-        print(f"username = ${username}")
         
         product = Product.objects.get(id=kwargs['pk'])
         user = Account.objects.get(username=request.data.get('username'))
@@ -282,7 +256,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         for image in images:
             nameList.append(image.image.url)
         
-        print(f"{nameList}")
         return JsonResponse(nameList, safe=False)
     
     # Allows images to be added to this product field. This is called with a path of the form:
@@ -327,27 +300,17 @@ class ProductViewSet(viewsets.ModelViewSet):
         maxSeller = 0
         if (request.GET.__contains__('name')):
             # search by name
-            print("here")
             name = request.GET.get('name')
             data = data.filter(name__icontains=name)
         
         if (request.GET.get('productType') != None and request.GET.get('productType') != ""):
-            print(request.GET.get('productType'))
-            print("here3")
             if (request.GET.get('productType') != ""):
-                print("here3.5")
                 type = request.GET.get('productType')
-                print(type)
                 typeSplit = type.split(",")
                 data = data.filter(productType__in=typeSplit).values()
-            # print(request.GET.get('productType'))
         if (request.GET.get('brand') != None and request.GET.get('brand') != ""):
-            print(request.GET.get('brand'))
-            print("here3.6")
             if (request.GET.get('brand') != ""):
-                print("here3.7")
                 type = request.GET.get('brand')
-                print(type)
                 typeSplit = type.split(",")
                 data = data.filter(brand__in=typeSplit).values()
         
@@ -372,37 +335,25 @@ class ProductViewSet(viewsets.ModelViewSet):
             data = combinedSet
             
         if (request.GET.get('minPrice') != None):
-            print("here4")
             minPrice = request.GET.get('minPrice')
             data = data.filter(priceDollars__gte=minPrice).values()
         if (request.GET.get('maxPrice') != None):
-            print("here5")
             maxPrice = request.GET.get('maxPrice')
             data = data.filter(priceDollars__lte=maxPrice).values()
         if (request.GET.get('minSellerRating') != None):
             minSellerRating = request.GET.get('minSellerRating')
             minSeller = minSellerRating
             minSellerFilter = True
-            
         if (request.GET.get('maxSellerRating') != None):
             maxSellerRating = request.GET.get('maxSellerRating')
             maxSeller = maxSellerRating
             maxSellerFilter = True
-        print(minSeller)
-        print(minSellerFilter)
-        print(maxSeller)
-        print(maxSellerFilter)
         temp = []
-        # print(data)
-        
-        print(f"Before for loop: data={data}")
+
         for prod in data:
-            # print(prod.get("id"))
             shop = Shop.objects.filter(products=prod.get("id")).values()
             if (shop.count() > 0):
                 shopID = shop.get().get("id")
-                # print('product id:', prod.get('id'))
-                # print('shopID:', shopID)
                 account = Account.objects.filter(shop=shopID).values().get()
                 prod['sellerRating'] = account.get("sellerRating")
                 prod['sellerRatingCount'] = account.get("sellerRatingCount")
@@ -422,28 +373,18 @@ class ProductViewSet(viewsets.ModelViewSet):
         if (minSellerFilter == True or maxSellerFilter == True):
             data = temp
         
-        print(f"Returning response")
         return JsonResponse(list(data), safe=False)
 
     def retrieve(self, request, pk=None):
-        print(request)
         req = str(request)
         reqSplit = req.split("/")
-        print(reqSplit)
         data = Product.objects.values()
         for prod in data:
-            print(type(prod.get("id")))
-            print(type(reqSplit[len(reqSplit)-2]))
             if (prod.get("id") == int(reqSplit[len(reqSplit)-2])):
                 shop = Shop.objects.filter(products=prod.get("id")).values()
                 if (shop.count() > 0):
                     shopID = shop.get().get("id")
-                    # print('product id:', prod.get('id'))
-                    # print('shopID:', shopID)
                     account = Account.objects.filter(shop=shopID).values().get()
-                    # print(prod)
-                    # print(type(account))
-                    # print(account)
                     prod.update(account)
                     return JsonResponse(prod, safe=False)
 
@@ -485,7 +426,6 @@ class ShopHistoryViewSet(viewsets.ModelViewSet):
     
     @staticmethod
     def newCreate(shop, product): # Add the creation of this product to the user's history
-        print(f"productname = {product.name}")
         
         ShopHistory.objects.create(
             shop=shop,
@@ -599,28 +539,23 @@ class ViewHistoryViewSet(viewsets.ModelViewSet):
 
         # get buyer
         buyer = Account.objects.get(username=request.data.get('username'))
-
+        
         p, created = ViewHistory.objects.get_or_create(
             email = buyer,
             productID = product,
         )
 
-        print("p: ", p)
-        print("Created new view: ", created)
         p.save()
 
         return JsonResponse({'message': 'Product was viewed'}, status=201)
 
     def list(self, request, *args, **kwargs):
         toSend = super().list(request, *args, **kwargs)
-        print(toSend.data)
         dic = json.loads(json.dumps(toSend.data))
 
         toSend.data = []
 
         for prod in dic:
-            print(prod.get('productID'))
-
             # get product from the products db
             matchingProduct = Product.objects.get(id=prod.get('productID'))
 
@@ -657,8 +592,6 @@ class WishlistViewSet(viewsets.ModelViewSet):
         # user isn't logged in, hopefully nobody wants this username
         if (request.data.get('username') == 'placeholder' or request.data.get('username') == 'Username'):
             return JsonResponse({'error': 'User is not logged in'}, status=401)
-        
-        print('data:', request.data)
 
 
         # product_id = request.data.get('productID')
@@ -667,19 +600,13 @@ class WishlistViewSet(viewsets.ModelViewSet):
 
             user = Account.objects.get(username=request.data.get('username'))
             wishlist = Wishlist.objects.get(id=user.wishlist_id)
-            print('wishlist id: ', wishlist)
-
             wishlist.products.add(product.id)
 
             return JsonResponse({'observe': 'response'})
         else:
-            print("here")
             product = Product.objects.get(id=request.data.get('productID'))
-
             user = Account.objects.get(username=request.data.get('username'))
             wishlist = Wishlist.objects.get(id=user.wishlist_id)
-            print('wishlist id: ', wishlist)
-
             wishlist.products.remove(product)
 
         return JsonResponse({'observe': 'response'})
@@ -713,7 +640,6 @@ class ChatMessagesViewSet(viewsets.ModelViewSet):
             return response
 
     def getMessages(self, request):
-        print(request.GET)
         currentUser = Account.objects.get(email=request.GET.get('currEmail'))
         receiver = Account.objects.get(email=request.GET.get('otherEmail'))
         product = Product.objects.get(id=request.GET.get('productID'))

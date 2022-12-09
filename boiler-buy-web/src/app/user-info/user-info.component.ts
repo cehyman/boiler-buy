@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -7,6 +7,7 @@ import { AppComponent } from '../app.component';
 //global variables
 import {Globals} from '../globals'
 import { DeleteAccountService } from '../delete-account.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-info',
@@ -41,7 +42,9 @@ export class UserInfoComponent implements OnInit {
 
   shop_id:number = 0
 
-  constructor(private router: Router, private http: HttpClient) {}
+  venmo_tag: string = ""
+
+  constructor(private router: Router, private http: HttpClient, public dialog: MatDialog) {}
   
   /* On start up gets the users information from the sessionStorage and */
   /* displays on /profile page                                          */
@@ -76,6 +79,11 @@ export class UserInfoComponent implements OnInit {
       this.curruser = data["body"]["username"]  
     })
    
+    //get current venmo tag
+    var requestVenmo = this.http.get('api/accounts/')
+    requestVenmo.subscribe((data: any) => {
+      this.venmo_tag = data.venmoTag;
+    })
   }
 
   deleteAccount(email:string) {
@@ -161,5 +169,46 @@ export class UserInfoComponent implements OnInit {
       }
     })
 
+  }
+
+  editVenmoTag() {
+    //dialog:
+    const dialogRef = this.dialog.open(VenmoTagDialog, {
+      data: {"venmo_tag": this.venmo_tag},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result ', result);
+
+      var body = {
+        venmoTag: result
+      };
+      var accountURL = "api/accounts/".concat(this.curremail).concat("/");
+      var patchRequest = this.http.patch<any>(accountURL, body, {observe: 'response'});
+  
+      patchRequest.subscribe((data: any) => {
+        console.log(data)
+      })
+    });
+
+  }
+}
+
+export interface DialogData {
+  venmo_tag: string;
+}
+
+@Component({
+  selector: 'venmo-tag-dialog',
+  templateUrl: 'venmo-tag-dialog.html',
+})
+export class VenmoTagDialog {
+  constructor(
+    public dialogRef: MatDialogRef<VenmoTagDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

@@ -39,9 +39,14 @@
     <br>
 
     <div>
+        <a mat-raised-button color="accent" (click)="editVenmoTag()" class="add-venmo-tag-button">Add/Edit Venmo Tag</a>
+        <a mat-raised-button color="accent" routerLink="/change-profile-pic" class="change-profile-pic-button">Change Profile Pic</a>
+    </div>
+    <br>
+
+    <div>
         <a mat-raised-button color="accent" routerLink="/change-username" class="change-username-button">Change Username</a>
         <a mat-raised-button color="accent" routerLink="/change-password" class="change-password-button">Change Password</a>
-        <a mat-raised-button color="accent" routerLink="/change-profile-pic" class="change-profile-pic-button">Change Profile Pic</a>
         <a mat-raised-button color="warn" (click)="deleteAccount(curremail)" class="delete-acc-button">Delete Account</a>
     </div>
 
