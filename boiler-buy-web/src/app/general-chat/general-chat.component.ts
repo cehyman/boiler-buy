@@ -21,6 +21,8 @@ export class GeneralChatComponent implements OnInit {
   messages: {name:string, message:string, date:string, image:string}[] = [];
   id = -1;
   isSeller: boolean = false;
+
+  public currImage: string = "";
   
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, 
     private router: Router, private chatService: ChatService, private productService: ProductService
@@ -47,6 +49,10 @@ export class GeneralChatComponent implements OnInit {
       console.log(stuff.body);
 
       stuff.body.forEach((element:any) => {
+        if (element.sender_id == this.chatInfo.currEmail) {
+          this.currImage = element.senderImage
+        }
+
         this.messages = this.messages.concat({
           "name": element.sender_id,
           message: element.message,
@@ -79,7 +85,7 @@ export class GeneralChatComponent implements OnInit {
       } as ChatMessageItem).subscribe((success) => {
 
 
-        this.messages = this.messages.concat([{"name": this.chatInfo.currEmail, "message": message, "date":"now", image: ""}]);
+        this.messages = this.messages.concat([{"name": this.chatInfo.currEmail, "message": message, "date":"now", image: this.currImage}]);
         window.scroll(0, document.documentElement.offsetHeight);
         console.log(success)
       }, (error) => {
