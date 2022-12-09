@@ -109,7 +109,7 @@ export class ProductSearchComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   handleScroll() {
     const windowScroll = window.pageYOffset;
-    if (windowScroll >= this.menuPosition -15) {
+    if (windowScroll >= this.menuPosition) {
       this.sticky = true;
     } else {
       this.sticky = false;

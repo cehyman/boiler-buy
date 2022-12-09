@@ -1,33 +1,39 @@
 .sticky {
     position: fixed;
-    top: 0;
     overflow: hidden;
     z-index: 10;
+
 }
 
 .topnav{
-    overflow: hidden;
-    background-color: rgb(146, 144, 144);
+    overflow: hidden;  
     display: flex;
     align-items: center;
 }
 
 .mat-drawer {
     position: fixed !important;
-    top: 50px;
+    top: 5vh;
 }
 
 .sticky-sidenav {
     position: fixed;
-    top: 0;
+    top: 5vh;
     right: auto;
     overflow: hidden;
     z-index: 10;
 }
 
-.icon {
-    width: auto;
-    padding: 5px;
+.icon-filter {
+    margin-left: 1vw;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.icon-search {
+    margin-left: 1vw;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-right: 2vw;
+
 }
 
 .main-content {
@@ -36,6 +42,7 @@
 
 .filter-section {
     flex: 20%;
+    margin-top: 3vh;
 }
 
 .product-listings-container {
@@ -43,13 +50,17 @@
 }
 
 .search-bar {
-    padding-top: 14px;
-    padding-bottom: 14px;
+    padding: 14px;
+    margin-left: .5vw;
     font-size: 17px;
     border: none;
     display: flex;
-    width: 100%;
-    background-color: lightgray;
+    width: 87%;
+    position: relative;
+    background-color: var(--dividers-color);
+    box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.2), inset 0 1.5px 5px 0 rgba(0, 0, 0, 0.19);
+    border-width: 1px;
+    border-radius: 15px;
 }
 
 .search-bar-container {
@@ -59,7 +70,8 @@
     border: none;
     display: flex;
     width: 100%;
-    background-color: lightgray;
+    background-color: var(--divider-color);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .search-button {
@@ -67,22 +79,20 @@
     margin-top: 8px;
     margin-right: 16px;
     margin-left: 4px;
-    background-color: rgb(146, 144, 144);
     font-size: 17px;
     border: none;
-    cursor: pointer;
 }
 
 .progress-spinner {
     width: 100px;
     height: 100px;
-
+    background: none;
+    border-radius: 50%;
     position: absolute;
     top:0;
     bottom: 0;
     left: 0;
     right: 0;
-    
     margin: auto;
 }
 

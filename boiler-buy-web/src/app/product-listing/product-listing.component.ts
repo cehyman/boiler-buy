@@ -27,6 +27,7 @@ export class ProductListingComponent implements OnInit {
   wishlist_id:number = 0
   curremail:string = ''
   curruser:string = ''
+  image: string | null = null;
   
   private appcomp: AppComponent = new AppComponent();
 
@@ -70,6 +71,8 @@ export class ProductListingComponent implements OnInit {
     //get user wishlist id
     this.curremail = <string> this.appcomp.getEmail()
     this.curruser = <string> this.appcomp.getUsername()
+
+    this.getImage();
   }
 
   viewDetails() {
@@ -170,6 +173,15 @@ export class ProductListingComponent implements OnInit {
       this.locations = data.locations
       console.log(this.locations)
     })
+  }
+
+  getImage() {
+    this.http.get(
+      `/api/products/${this.object.id}/retrieveImages/`,
+      {observe: "body"}
+    ).subscribe((data: any) => {
+      this.image = data.toString();
+    });
   }
   
   addToWishlist() {

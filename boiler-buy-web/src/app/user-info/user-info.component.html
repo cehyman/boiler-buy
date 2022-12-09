@@ -1,40 +1,56 @@
 <!-- Shift + Option + F for auto format -->
 <!-- TODO: Link user info with backend -->
-<div class = "profile-card">
+<div class="profile-card">
+  <div class="profile-pic">
+    <img class="round" src="{{ imageURL }}" alt="user" />
+  </div>
 
-    <div class="profile-pic">
-        <img class="round" src="{{imageURL}}" alt="user" />
+  <div class="username">
+    <label class="form-control-label" for="input-username">{{
+      curruser
+      }}</label>
+  </div>
+
+  <div class="passemail">
+    <div class="email">
+      <label class="form-control-label" for="input-purdue-email">Email: </label>
+      <input
+        class="email-input"
+        type="text"
+        id="input-purdue-email"
+        class="form-control form-control-alternative"
+        placeholder="xxxx@purdue.edu"
+        value="{{ curremail }}"
+        readonly
+        />
     </div>
-
-    <div class="username">
-        <label class="form-control-label" for="input-username">{{curruser}}</label>
-    </div> 
-
-    <div class="passemail">
-        <div class="password">
-            <label class="form-control-label" for="input-password">Password: </label>
-            <input class="password-input" type="text" id="input-password" class="form-control form-control-alternative" placeholder="Password"
-                value={{currpass}} readonly>
-        </div>
-
-        <div class="email">
-            <label class="form-control-label" for="input-purdue-email">Email: </label>
-            <input class="email-input" type="text" id="input-purdue-email" class="form-control form-control-alternative" placeholder="xxxx@purdue.edu"
-                value={{curremail}} readonly>
-        </div>
+    <div class="password">
+      <label class="form-control-label" for="input-password">Password: </label>
+      <input
+        class="password-input"
+        [type]="show ? 'text' : 'password'"
+        id="input-password"
+        class="form-control form-control-alternative"
+        placeholder="Password"
+        value="{{ currpass }}"
+        readonly
+        />
+       
     </div>
-    <br>
+      <mat-checkbox (click)="password()">{{show ? 'Show Password' : 'Hide Password'}}</mat-checkbox>
+
+
+  </div>
+  <br />
+ 
+
+  <div class="inputContainer">
     <div>
-        <label class="form-control-label" for="input-purdue-email">Seller Rating: </label>
-        <label class="form-control-label" for="input-username">{{reviewAvg}}</label>
-    </div>
-    <br>
-    
-    <div>
-        <label class="form-control-label" for="input-purdue-email">Seller Reviews: </label>
-        <li *ngFor="let review of reviews">
-            <label class="form-control-label" for="input-purdue-email">{{review}} </label>
-        </li>
+      <label class="form-control-label" for="input-purdue-email">Seller Rating:
+      </label>
+      <label class="form-control-label" for="input-username">{{
+        reviewAvg
+        }}</label>
     </div>
     <br>
 
@@ -49,9 +65,41 @@
         <a mat-raised-button color="accent" routerLink="/change-username" class="change-username-button">Change Username</a>
         <a mat-raised-button color="accent" routerLink="/change-password" class="change-password-button">Change Password</a>
         <a mat-raised-button color="warn" (click)="deleteAccount(curremail)" class="delete-acc-button">Delete Account</a>
+    <br/>
+    <label class="form-control-label" for="input-purdue-email">Seller Reviews:
+    </label>
+    <div class="scroll">
+      <li class="reviews" *ngFor="let review of reviews">
+        <label  for="input-purdue-email">{{ review }}
+        </label>
+      </li>
     </div>
+  </div>
+  <br />
 
-    <div>
-        
-    </div>
+  <div>
+    <a
+      mat-raised-button
+      color="accent"
+      routerLink="/change-username"
+      class="change-username-button">Change Username</a>
+    <a
+      mat-raised-button
+      color="accent"
+      routerLink="/change-password"
+      class="change-password-button">Change Password</a>
+    <a
+      mat-raised-button
+      color="accent"
+      routerLink="/change-profile-pic"
+      class="change-profile-pic-button">Change Profile Pic</a>
+      <br>
+    <a
+      mat-raised-button
+      color="warn"
+      (click)="deleteAccount(curremail)"
+      class="delete-acc-button">Delete Account</a>
+  </div>
+
+  <div></div>
 </div>

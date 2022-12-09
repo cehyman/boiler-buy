@@ -1,5 +1,5 @@
 <div class="inputContainer">
-    <h1>Recently viewed items:</h1>
+    <h1>Recently Viewed Items</h1>
     <div *ngIf="items.length == 0;">
         <h3>No Recently Viewed Items</h3>
         <p>
@@ -7,11 +7,14 @@
             Check out the shop!
         </p>
     </div>
-    <div class="card" *ngFor="let item of items; let i = index" >
-        <div *ngIf="i < 5" class="name_seller_rating">
-            <button style="margin-bottom: 10px;" mat-raised-button color="secondary" (click)="viewDetails(item.product.id)">
-                {{item.product.name}}
-            </button>
+    <div class="scroll">
+        <div class="itemCard" *ngFor="let item of items; let i= index">
+            <div *ngIf="i <5" class="name_seller_rating">
+                <button style="margin-bottom: 10px;" mat-raised-button
+                    color="primary" (click)="viewDetails(item.product.id)">
+                    {{item.product.name}}
+                </button>
+            </div>
         </div>
     </div>
 </div>
