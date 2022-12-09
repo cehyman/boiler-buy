@@ -32,9 +32,10 @@ export class GeneralChatComponent implements OnInit {
   willAccept = false;
   sellerMin = 0;
   quantityToBuy = 1;
-  price = '';
+  price:string = '';
   shippingPrice = '';
   chatGroupID = -1;
+  locations = [];
 
   // Store the image path for the current user
   public currImage: string = "";
@@ -95,9 +96,11 @@ export class GeneralChatComponent implements OnInit {
           buyer: this.chatInfo.otherEmail || '',
           productID: +(this.chatInfo.productID || '')
         }).subscribe((output) => {
-          var cg = output.body as ChatGroupFull;
-          this.trackingLink = cg.trackingLink;
-          this.trackingNum = cg.trackingNumber;
+          var cg = output.body as ChatGroupFull2;
+          this.trackingLink = cg.trackingLink ||'';
+          this.trackingNum = cg.trackingNumber ||'';
+          this.chatGroupID = cg.id || -1;
+          this.quantityToBuy = cg.quantity || 1;
         })
       } else {
         //get tracking info
@@ -116,7 +119,47 @@ export class GeneralChatComponent implements OnInit {
 
     this.productService.getProductFromID(this.id).subscribe((product:Product) => {
       this.canShip = product.canShip;
+      this.price = product.priceDollars + '.' + ((product.priceCents < 10) ? '0' + product.priceCents :product.priceCents)
     })
+
+    this.refreshMessages();
+  }
+
+  refreshMessages() {
+    window.setInterval(() => {
+    //get messages
+    var urlStr = this.activatedRoute.snapshot.queryParamMap;
+    this.id = +(urlStr.get('productID') || -1);
+    console.log('id:' + this.id)
+
+    var urlParams = new URLSearchParams();
+    urlParams.set('id', "" + this.id)
+
+    this.chatService.getMessages({
+      currEmail: this.appcomp.getEmail(),
+      otherEmail: this.chatInfo.otherEmail,
+      productID: this.chatInfo.productID
+    } as ChatGroup).subscribe((stuff) => {
+      console.log(stuff.body);
+
+      let newmessages:any[] = []
+      stuff.body.forEach((element:any) => {
+        // If the given element is the sent by the current user, set the image
+        // we are storing for the current user. This avoids a HTTP request
+        if (element.sender_id == this.chatInfo.currEmail) {
+          this.currImage = element.senderImage
+        }
+
+        newmessages = newmessages.concat({
+          "name": element.sender_id,
+          message: element.message,
+          date: element.timestamp,
+          image: element.senderImage,
+        })
+      });
+      this.messages = newmessages
+    });
+    }, 5000);
   }
 
   sendMessage(message: string) {
@@ -202,7 +245,7 @@ export class GeneralChatComponent implements OnInit {
       let priceCents = this.price.split('.')[1]
 
       let shippingPriceDollars = this.shippingPrice.split('.')[0]
-      let shippingPriceCents = this.shippingPrice.split('.')[1]
+      let shippingPriceCents = this.shippingPrice.split('.')[1] || ''
 
       console.log('productID:', this.chatInfo.productID)
       console.log('quantity:', this.quantityToBuy)
@@ -213,31 +256,58 @@ export class GeneralChatComponent implements OnInit {
       console.log('chatGroupID:', this.chatGroupID)
       console.log('isShipping:', this.isShipping)
 
-      // this.productService.purchaseManyWithPrice(
-      //   this.chatInfo.productID || -1,
-      //   this.quantityToBuy,
-      //   +priceDollars,
-      //   +priceCents,
-      //   +shippingPriceDollars,
-      //   +shippingPriceCents
-      // ).subscribe((output) =>{
-      //   console.log(output);
-      // });
+      this.productService.purchaseManyWithPrice(
+        this.chatInfo.productID || -1,
+        this.quantityToBuy,
+        +priceDollars,
+        +priceCents,
+        +shippingPriceDollars,
+        +shippingPriceCents
+      ).subscribe((output) =>{
+        console.log(output);
+      });
 
-      // this.chatService.chatGroupPurchase({
-      //   id: this.chatGroupID,
-      //   shippingPriceDollars: +shippingPriceDollars,
-      //   shippingPriceCents: +shippingPriceCents,
-      //   isShipping: this.isShipping,
-      //   finalPriceDollars: +priceDollars,
-      //   finalPriceCents: +priceCents,
-      //   quantity: this.quantityToBuy,
-      // } as ChatGroupFull2).subscribe((output2) => {
-      //   console.log(output2)
-      //   alert("Marked as Purchased!")
-      // });
+      this.chatService.chatGroupPurchase({
+        id: this.chatGroupID,
+        shippingPriceDollars: +shippingPriceDollars,
+        shippingPriceCents: +shippingPriceCents,
+        isShipping: this.isShipping,
+        finalPriceDollars: +priceDollars,
+        finalPriceCents: +priceCents,
+        quantity: this.quantityToBuy,
+      } as ChatGroupFull2).subscribe((output2) => {
+        console.log(output2)
+        alert("Marked as Purchased!")
+      });
+
+
+      //trigger venmo tags to be sent
     }
-  
-    //trigger venmo tags to be sent
+  }
+
+  negotiate() {
+    //send a message stating the price per unit, quantity, and shipping
+    let negMessage = this.chatInfo.currEmail + ' wants ' + this.quantityToBuy + ' items for $' + this.price + ' each.';
+
+    this.chatService.sendMessage({
+      senderEmail: this.chatInfo.currEmail,
+      receiverEmail: this.chatInfo.otherEmail || '',
+      productID: this.chatInfo.productID || -1,
+      message: negMessage,
+      image: this.currImage
+    }).subscribe((output) => {
+      console.log(output)
+      this.messages = this.messages.concat([{
+        name: this.chatInfo.currEmail,
+        message: negMessage,
+        date: 'now',
+        image: this.currImage
+      }])
+    })
+    
+  }
+
+  triggerVenmoTags() {
+
   }
 }

@@ -44,11 +44,12 @@ export class ChatService {
     return this.http.get("api/chatMessages/?" + urlParams.toString(), {observe:'response'});
   }
 
-  createChatGroup(data: ChatGroup): Observable<any> {
+  createChatGroup(data: ChatGroupFull2): Observable<any> {
     var formData = new FormData();
-    formData.append("buyer", data.currEmail);
-    formData.append("seller", data.otherEmail || '');
-    formData.append("productID", `${data.productID}`);
+    formData.append("buyer", data.buyer || '');
+    formData.append("seller", data.seller || '');
+    formData.append("productID", `${data.product}`);
+    formData.append("quantity", '' + data.quantity);
 
     return this.http.post<any>("api/chatGroup/", formData, {observe: "response"});
   }

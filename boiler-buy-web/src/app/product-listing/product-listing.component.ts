@@ -103,9 +103,10 @@ export class ProductListingComponent implements OnInit {
 
             //create a chatGroup
             this.chatService.createChatGroup({
-              currEmail: this.curremail,
-              otherEmail: sellerEmail.sellerEmail,
-              productID: this.object.id,
+              buyer: this.curremail,
+              seller: sellerEmail.sellerEmail,
+              product: this.object.id,
+              quantity: result.numToBuy
             }).subscribe((output) => {
               console.log(output);
             })

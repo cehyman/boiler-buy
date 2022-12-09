@@ -11,6 +11,7 @@
     <span class="extra-menu"></span>
     <mat-slide-toggle class="themeToggle" [formControl]="toggleTheme"></mat-slide-toggle>
     <div class="menu-button-container">
+      <button mat-button [routerLink]="'/chat'"><mat-icon>message</mat-icon></button>
       <button mat-button (click)="routeUserShop()">My Shop</button>
       <button mat-button [routerLink]="'/profile'">Profile</button>
         <button mat-button (click)="logoutAccount()">Log Out</button>

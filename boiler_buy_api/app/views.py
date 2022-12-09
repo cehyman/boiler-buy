@@ -766,7 +766,11 @@ class ChatGroupViewSet(viewsets.ViewSet):
             row.shippingPriceCents = request.GET.get('shippingPriceCents')
             row.finalPriceDollars = request.GET.get('totalPriceDollars')
             row.finalPriceCents = request.GET.get('totalPriceCents')
-            row.isShipping = request.GET.get('isShipping')
+            if (request.GET.get('isShipping') == 'false'):
+                row.isShipping = False
+            else:
+                row.isShipping = True
+            
             row.save()
         else:
             print("else")
@@ -786,6 +790,7 @@ class ChatGroupViewSet(viewsets.ViewSet):
             buyer=buyer,
             seller=seller,
             product=productObj,
+            quantity=request.data.get('quantity')
         )
         return JsonResponse({'success': True})
 
