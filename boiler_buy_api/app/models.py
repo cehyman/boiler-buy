@@ -117,3 +117,18 @@ class ChatMessages(models.Model):
     
     def __str__(self):
         return str(self.username)
+
+class ChatGroup(models.Model):
+    buyer = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='buyerEmail')
+    seller = models.ForeignKey(Account, on_delete=models.CASCADE, null=False, related_name='sellerEmail')
+    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+    isNegotiating = models.BooleanField(default=True)
+    quantity = models.PositiveIntegerField(null=True)
+    shippingPriceDollars = models.PositiveIntegerField(null=True)
+    shippingPriceCents = models.PositiveIntegerField(null=True)
+    finalPriceDollars = models.PositiveIntegerField(null=True)
+    finalPriceCents = models.PositiveIntegerField(null=True)
+    isShipping = models.BooleanField(default=False)
+    trackingNumber = models.CharField(max_length=250)
+    trackingLink = models.CharField(max_length=500)
+

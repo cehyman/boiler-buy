@@ -1,45 +1,201 @@
-<div style="height: 100%;">
-    <div class="header">
-        <app-site-menu></app-site-menu>
-        <h1>Product #{{chatInfo.productID}}</h1>
-        <h1 *ngIf="isSeller">You are the seller</h1>
-        <h1 *ngIf="!isSeller">You are the buyer</h1>
-    </div>
+<mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side">
+        <button type="button" color="primary" mat-button (click)="drawer.toggle()" style="float: right;">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
 
-    <div class="content">
-        <!-- Main content -->
-        <!-- Put loading wheel here while it loads the conversation -->
-        <!-- Put scroll bar here? -->
+        <!-- Drawer that comes from the side -->
+        <div *ngIf="isSeller">
+            <!-- Seller dashboard -->
+            <h1>You are the seller</h1>
+            <!-- <button mat-raised-button color="primary">Primary</button> -->
 
-        <mat-list>
-            <div *ngFor="let item of messages; let i = index">
-                <span *ngIf="item.image != null && item.image != ''; else invalidImage1">
-                    <img mat-card-sm-image src="/media/{{item.image}}">
-                </span>
-                <ng-template #invalidImage1>
-                    <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-                </ng-template>
+            <mat-accordion class="headers-align">
+                <mat-expansion-panel *ngIf="canShip">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Tracking Information
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Add tracking info for shipping
+                            <mat-icon>local_shipping</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
 
-                <div style="display: flex; flex-direction: row;">
-                    <mat-list-item>{{item.name}}: {{item.message}}</mat-list-item>
-                    <p>{{item.date}}</p>
-                </div>
-                
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tracking URL</mat-label>
+                        <input matInput [(ngModel)]="trackingLink" type="url">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tracking Number</mat-label>
+                        <input matInput [(ngModel)]="trackingNum" type="text">
+                    </mat-form-field>
+                    <button mat-button (click)="saveTrackingNumber()">Apply Changes</button>
+                </mat-expansion-panel>
+
                 <mat-divider></mat-divider>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Negotiation Status
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Mark as sold
+                            <mat-icon>point_of_sale</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field appearance="fill">
+                        <mat-slide-toggle [(ngModel)]="pricedPerUnit">{{(pricedPerUnit) ? "Cost per unit" : "Total Cost"}}</mat-slide-toggle>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Price</mat-label>
+                            <input matInput type="number" min="0">
+                        </mat-form-field>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Quantity</mat-label>
+                            <input matInput type="number" min="1">
+                        </mat-form-field>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-slide-toggle *ngIf="canShip" [(ngModel)]="isShipping">{{(isShipping) ? "Shipping" : "Not Shipping"}}</mat-slide-toggle>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Price</mat-label>
+                            <input matInput type="number" min="0">
+                        </mat-form-field>
+                    </mat-form-field>
+
+                </mat-expansion-panel>
+                <mat-divider></mat-divider>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Send Venmo Tag
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Send your Venmo Tag for quick and easy access!
+                            <mat-icon>alternate_email</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <button mat-button>
+                        Send Venmo Tag
+                    </button>
+
+                </mat-expansion-panel>
+
+                <mat-divider></mat-divider>
+
+            </mat-accordion>
+
+        </div>
+        <div *ngIf="!isSeller">
+            <!-- Buyer dashboard -->
+            <h1>You are the buyer</h1>
+
+            <mat-accordion class="headers-align">
+                <mat-expansion-panel *ngIf="canShip">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Tracking Information
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Add tracking info for shipping
+                            <mat-icon>local_shipping</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tracking URL</mat-label>
+                        <input matInput disabled [(ngModel)]="trackingLink" type="url">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tracking Number</mat-label>
+                        <input matInput disabled [(ngModel)]="trackingNum" type="text">
+                    </mat-form-field>
+                </mat-expansion-panel>
+
+                <mat-divider></mat-divider>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Negotiation Status
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Mark as sold, in progress, or cancelled
+                        <mat-icon>point_of_sale</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tracking URL</mat-label>
+                        <input matInput type="url">
+                    </mat-form-field>
+                </mat-form-field>
+            </mat-expansion-panel>
+            <mat-divider></mat-divider>
+
+            </mat-accordion>
+        </div>
+        
+    </mat-drawer>
+
+    <div style="height: 100%;">
+        <div class="header">
+            <app-site-menu></app-site-menu>
+            <button type="button" color="primary" mat-button (click)="drawer.toggle()">
+                <mat-icon>settings</mat-icon>Settings
+            </button>
+            <h1>Product #{{chatInfo.productID}}</h1>
+            <div style="display:flex;">
+                <!-- header for the chat -->
             </div>
-        </mat-list>
+            
+        </div>
+
+        <div class="content">
+            <!-- Main content -->
+            <!-- Put loading wheel here while it loads the conversation -->
+            <!-- Put scroll bar here? -->
+            <mat-list class="message-list">
+                <div *ngFor="let item of messages; let i = index">
+                    <span *ngIf="item.image != null && item.image != ''; else invalidImage1">
+                        <img mat-card-sm-image src="/media/{{item.image}}">
+                    </span>
+                    <ng-template #invalidImage1>
+                        <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                    </ng-template>
+                    <div style="display: flex; flex-direction: row;">
+                        <mat-list-item><b>{{item.name}}</b>: {{item.message}}</mat-list-item>
+                        <p>{{item.date}}</p>
+                    </div>
+                    
+                    <mat-divider></mat-divider>
+                </div>
+            </mat-list>
+        </div>
+
+        <div class="footer">
+            <!-- footer w/ text box -->
+            <form class="messagebox-form">
+                <mat-form-field class="messagebox-full-width" appearance="outline">
+                    <mat-label>Message</mat-label>
+                    <input matInput #message maxlength="256" placeholder="Ex. Is this item still for sale?" autocomplete="off">
+                    <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+                    <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                    <button matSuffix type="submit" (click)="sendMessage(message.value); message.value = '';"><mat-icon>send</mat-icon></button>
+                </mat-form-field>
+            </form>
+        </div>
     </div>
 
-    <div class="footer">
-        <!-- footer w/ text box -->
-        <form class="messagebox-form">
-            <mat-form-field class="messagebox-full-width" appearance="outline">
-                <mat-label>Message</mat-label>
-                <input matInput #message maxlength="256" placeholder="Ex. Is this item still for sale?" autocomplete="off">
-                <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
-                <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
-                <button matSuffix type="submit" (click)="sendMessage(message.value); message.value = '';"><mat-icon>send</mat-icon></button>
-            </mat-form-field>
-        </form>
-    </div>
-</div>
+</mat-drawer-container>
