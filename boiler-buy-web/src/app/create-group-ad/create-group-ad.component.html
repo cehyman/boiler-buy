@@ -15,10 +15,10 @@
                 <mat-label><b>My Ads</b></mat-label><br><br>
                 <ng-container *ngFor="let ad of groupAdList">
                     <label>
-                        <input type="checkbox"
+                        <mat-checkbox type="checkbox"
                                name="ad"
                                value="{{ad.product_id}}"
-                               [(ngModel)]="ad.checked"/>
+                               [(ngModel)]="ad.checked"></mat-checkbox>
                         {{ad.name}}
                     </label><br>
                     <!-- <mat-checkbox> {{item.name}} </mat-checkbox><br> -->
