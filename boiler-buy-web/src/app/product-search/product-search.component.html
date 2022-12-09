@@ -22,10 +22,10 @@
                             <label for="types">Types:</label>
                             <div *ngFor="let type of types; let i = index">
                                 <label>
-                                    <input type="checkbox"
+                                    <mat-checkbox type="checkbox"
                                            name="types"
                                            value="{{type.value}}"
-                                           [(ngModel)]="type.checked"/>
+                                           [(ngModel)]="type.checked"></mat-checkbox>
                                     {{type.name}}
                                 </label>
                             </div>
@@ -46,10 +46,10 @@
                         <div class="form-group">
                             <label for="tags">Tags</label>
                             <div *ngFor="let tag of tagList; let i = index">
-                                <input type="checkbox"
+                                <mat-checkbox type="checkbox"
                                        name="tags"
                                        value="{{tag.value}}"
-                                       [(ngModel)]="tag.checked"/>
+                                       [(ngModel)]="tag.checked"></mat-checkbox>
                                 {{tag.name}}
                             </div>
                         </div>
