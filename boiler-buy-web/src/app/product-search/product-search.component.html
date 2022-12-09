@@ -34,10 +34,10 @@
                             <label for="brands">Brands:</label>
                             <div *ngFor="let brand of brands; let i = index">
                                 <label>
-                                    <input type="checkbox"
+                                    <mat-checkbox type="checkbox"
                                            name="brands"
                                            value="{{brand.value}}"
-                                           [(ngModel)]="brand.checked"/>
+                                           [(ngModel)]="brand.checked"></mat-checkbox>
                                     {{brand.name}}
                                 </label>
                             </div>
