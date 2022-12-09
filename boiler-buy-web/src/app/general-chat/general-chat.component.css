@@ -55,3 +55,12 @@ img {
     width: 8em;
     height:8em;
 }
+
+.settingHeader {
+    align-items: center;
+    display: flex;
+}
+
+.blockButton {
+    margin-left: 10px;
+}

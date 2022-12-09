@@ -70,6 +70,8 @@ class Account(models.Model):
     image = models.ImageField(null=True, blank=False, upload_to='accounts/')
     verified = models.BooleanField(null=False, blank=True, default=False)
     savedTags = ArrayField(models.CharField(max_length=50), default=list)
+    blockedUsers = ArrayField(models.CharField(max_length=50), default=list)
+
 
     def __str__(self):
         return str(self.username)

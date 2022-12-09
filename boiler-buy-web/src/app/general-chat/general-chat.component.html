@@ -6,9 +6,12 @@
 
         <!-- Drawer that comes from the side -->
         <div *ngIf="isSeller">
-            <!-- Seller dashboard -->
-            <h1>You are the seller</h1>
-            <!-- <button mat-raised-button color="primary">Primary</button> -->
+            <div class="settingHeader">
+                <h1>You are the Seller</h1>
+                <!-- <button mat-raised-button color="primary">Primary</button> -->
+                <!-- Block User Button -->
+                <button class="blockButton" mat-raised-button color="primary" (click)="blockUser()">Block Buyer</button><br>
+            </div>
 
             <mat-accordion class="headers-align">
                 <mat-expansion-panel *ngIf="canShip">
@@ -97,7 +100,12 @@
         </div>
         <div *ngIf="!isSeller">
             <!-- Buyer dashboard -->
-            <h1>You are the buyer</h1>
+            <div class="settingHeader">
+                <h1>You are the Buyer</h1>
+                <!-- <button mat-raised-button color="primary">Primary</button> -->
+                <!-- Block User Button -->
+                <button class="blockButton" mat-raised-button color="primary" (click)="blockUser()">Block Seller</button><br>
+            </div>
 
             <mat-accordion class="headers-align">
                 <mat-expansion-panel *ngIf="canShip">

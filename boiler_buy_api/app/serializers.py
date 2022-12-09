@@ -29,7 +29,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
         fields = ['username', 'password', 'email', 'shop', 'sellerRating', 'sellerRatingCount', 'sellerReviews', 'wishlist', 'image',
-                  'verified', 'savedTags']
+                  'verified', 'savedTags', 'blockedUsers']
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
