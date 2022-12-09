@@ -1,12 +1,12 @@
-<div style="background-color: white !important;">
+<div>
     <h1 mat-dialog-title>Confirm Product Deletion</h1>
     <div mat-dialog-content>
-        <p style="color: red; font-size:larger;">Warning: This will delete this product.<br><br>
+        <p style=>Warning: This will delete this product.<br><br>
             You will <b>NOT</b> be able to undo this.
         </p>
     </div>
-    <div style="background-color: white !important;" mat-dialog-actions>
-        <button mat-button style="color: white; background-color: darkgreen;" (click)="onNoClick()">Cancel</button>
-        <button mat-button style="color: white; background-color: red;" [mat-dialog-close]="true" cdkFocusInitial>Delete</button>
+    <div  mat-dialog-actions>
+        <button mat-raised-button color="accent" (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button  color="warn" [mat-dialog-close]="true" cdkFocusInitial>Delete</button>
     </div>
 </div>
