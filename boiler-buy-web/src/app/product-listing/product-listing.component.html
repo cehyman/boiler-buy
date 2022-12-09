@@ -1,5 +1,11 @@
 <div class="card">
-  <!-- image here -->
+  <div *ngIf="this.image != null">
+    <img class="preview" 
+      onerror="this.style='display: none'"
+      src="{{this.image}}">
+  </div>
+
+
   <div class="name_seller_rating">
     <!-- Rating: {{object.sellerRatingCount}} -->
     <h2>{{ object.name }}</h2>
@@ -30,8 +36,8 @@
       >
     </div>
     
-    <div style="display: flex; justify-content: right;">
-        <button *ngIf="showButton" mat-raised-button color="primary" (click)="openDialog()">
+    <div class="purchaseButton">
+        <button *ngIf="showButton" mat-raised-button color="warn" (click)="openDialog()">
             (${{object.priceDollars}}.{{(object.priceCents < 10) ? '0' : ''}}{{object.priceCents}})
             {{(curruser != 'Username') ? 'Send an Offer': 'Log In to Purchase'}}
         </button>
