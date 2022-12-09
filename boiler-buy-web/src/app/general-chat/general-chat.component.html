@@ -42,7 +42,7 @@
                             Negotiation Status
                         </mat-panel-title>
                         <mat-panel-description>
-                            Mark as sold
+                            Explore options for marking as sold
                             <mat-icon>point_of_sale</mat-icon>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -51,24 +51,27 @@
                         <mat-slide-toggle [(ngModel)]="pricedPerUnit">{{(pricedPerUnit) ? "Cost per unit" : "Total Cost"}}</mat-slide-toggle>
                         <mat-form-field appearance="fill">
                             <mat-label>Price</mat-label>
-                            <input matInput type="number" min="0">
+                            <input matInput type="number" [(ngModel)]="price" min="0">
                         </mat-form-field>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
                         <mat-form-field appearance="fill">
                             <mat-label>Quantity</mat-label>
-                            <input matInput type="number" min="1">
+                            <input matInput type="number" [(ngModel)]="quantityToBuy" min="1">
                         </mat-form-field>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
                         <mat-slide-toggle *ngIf="canShip" [(ngModel)]="isShipping">{{(isShipping) ? "Shipping" : "Not Shipping"}}</mat-slide-toggle>
                         <mat-form-field appearance="fill">
-                            <mat-label>Price</mat-label>
+                            <mat-label>Shipping price</mat-label>
                             <input matInput type="number" min="0">
                         </mat-form-field>
                     </mat-form-field>
+
+
+                    <button mat-button>Apply</button>
 
                 </mat-expansion-panel>
                 <mat-divider></mat-divider>
@@ -90,6 +93,33 @@
 
                 </mat-expansion-panel>
 
+                <mat-divider></mat-divider>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Quick Reply
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Reply with your decision, or give a minimum amount that you will go
+                            <mat-icon>check</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+
+                    <mat-form-field appearance="fill">
+                        <mat-form-field appearance="fill">
+                            <mat-slide-toggle [(ngModel)]="willAccept">{{(willAccept) ? "Accept" : "Decline"}}</mat-slide-toggle>
+                            <input matInput [(ngModel)]="sellerMin" type="number" min="1" placeholder="{{(willAccept)? '' : 'Reply with a minimum'}}">
+                        </mat-form-field>
+                    </mat-form-field>
+
+
+                    
+
+                    <button mat-button (click)="sendDecision()">Apply</button>
+
+                </mat-expansion-panel>
                 <mat-divider></mat-divider>
 
             </mat-accordion>

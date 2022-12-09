@@ -555,14 +555,21 @@ class PurchaseHistoryViewSet(viewsets.ModelViewSet):
         shopID = shop.id
         seller = Account.objects.get(shop=shopID)
 
-        # get total prices
         totalPriceDollars = 0
-        totalPriceCents = product.priceCents + product.shippingCents
-        if (totalPriceCents >= 100):
-            totalPriceDollars = 1
-            totalPriceCents -= 100
+        totalPriceCents = 0
+        if (request.data.get('totalPriceDollars') != None):
+            totalPriceDollars = request.data.get('totalPriceDollars')
+            totalPriceCents = request.data.get('totalPriceCents')
+        else:
+            totalPriceCents = product.priceCents + product.shippingCents
+            if (totalPriceCents >= 100):
+                totalPriceDollars = 1
+                totalPriceCents -= 100
 
-        totalPriceDollars += product.priceDollars + product.shippingDollars
+                totalPriceDollars += product.priceDollars + product.shippingDollars
+        # get total prices
+        
+        
 
         #TODO: either change the db to include a quantity, or adjust the front end to account for this
         for i in range(request.data.get('quantity')):
@@ -751,6 +758,16 @@ class ChatGroupViewSet(viewsets.ViewSet):
             product = Product.objects.get(id=request.GET.get('productID'))
             data = ChatGroup.objects.values().get(buyer=buyer, seller=seller, product=product)
             return JsonResponse(data, safe=False)
+        elif (request.GET.get('function') == "purchase"):
+            row = ChatGroup.objects.get(id=request.GET.get('id'))
+            row.isNegotiating = False
+            row.quantity = request.GET.get('quantity')
+            row.shippingPriceDollars = request.GET.get('shippingPriceDollars')
+            row.shippingPriceCents = request.GET.get('shippingPriceCents')
+            row.finalPriceDollars = request.GET.get('totalPriceDollars')
+            row.finalPriceCents = request.GET.get('totalPriceCents')
+            row.isShipping = request.GET.get('isShipping')
+            row.save()
         else:
             print("else")
             buyer = Account.objects.get(email=request.GET.get('buyer'))

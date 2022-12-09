@@ -42,17 +42,18 @@ export interface ChatGroupPK {
     productID: number,
 }
 
-export interface ChatGroupFull {
-    buyer: string,
-    seller:string,
-    product:number,
-    isNegotiating:boolean,
-    quantity:number,
-    shippingPriceDollars:number,
-    shippingPriceCents:number,
-    finalPriceDollars:number,
-    finalPriceCents:number,
-    isShipping:boolean,
-    trackingNumber:string,
-    trackingLink:string,
+export interface ChatGroupFull2 {
+    id?: number,
+    buyer?: string,
+    seller?:string,
+    product?:number,
+    isNegotiating?:boolean,
+    quantity?:number,
+    shippingPriceDollars?:number,
+    shippingPriceCents?:number,
+    finalPriceDollars?:number,
+    finalPriceCents?:number,
+    isShipping?:boolean,
+    trackingNumber?:string,
+    trackingLink?:string,
 }

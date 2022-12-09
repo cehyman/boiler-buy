@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AppComponent } from '../app.component';
-import { ChatMessageItem, ChatGroup, ChatGroupPK, ChatGroupFull } from '../chat-types';
+import { ChatMessageItem, ChatGroup, ChatGroupPK, ChatGroupFull, ChatGroupFull2 } from '../chat-types';
 import { ChatService } from '../chat.service';
 import { Globals } from '../globals';
 import { Product } from '../product-types';
@@ -29,7 +29,12 @@ export class GeneralChatComponent implements OnInit {
   isShipping = false;
   trackingNum = '';
   trackingLink = '';
-
+  willAccept = false;
+  sellerMin = 0;
+  quantityToBuy = 1;
+  price = '';
+  shippingPrice = '';
+  chatGroupID = -1;
 
   // Store the image path for the current user
   public currImage: string = "";
@@ -161,5 +166,78 @@ export class GeneralChatComponent implements OnInit {
       this.http.get('api/chatGroup/?' + params.toString(), {responseType: 'json'}).subscribe()
 
     })
+  }
+
+  sendDecision() {
+    console.log('sending dec')
+    let message:string;
+    if (this.willAccept) {
+      message = this.chatInfo.currEmail + " accepted your offer."
+    } else {
+      message = this.chatInfo.currEmail + " declined your offer, stating a minimum of $" + this.sellerMin;
+    }
+    let newMessage = {
+      senderEmail: this.chatInfo.currEmail,
+      receiverEmail: this.chatInfo.otherEmail || '',
+      productID: this.chatInfo.productID || -1,
+      image: this.currImage,
+      message: message
+    } as ChatMessageItem
+
+    let nM = {
+      name: this.chatInfo.currEmail,
+      message: message,
+      date: 'now',
+      image: this.currImage,
+    }
+
+    this.chatService.sendMessage(newMessage).subscribe((output) => {
+      console.log(output)
+      this.messages = this.messages.concat([nM])
+    })
+
+    //mark the item is sold in the database
+    if (this.willAccept) {
+      let priceDollars = this.price.split('.')[0]
+      let priceCents = this.price.split('.')[1]
+
+      let shippingPriceDollars = this.shippingPrice.split('.')[0]
+      let shippingPriceCents = this.shippingPrice.split('.')[1]
+
+      console.log('productID:', this.chatInfo.productID)
+      console.log('quantity:', this.quantityToBuy)
+      console.log('priceDollars:', priceDollars)
+      console.log('priceCents:', priceCents)
+      console.log('shippingDollars:', shippingPriceDollars)
+      console.log('shippingCents:', shippingPriceCents)
+      console.log('chatGroupID:', this.chatGroupID)
+      console.log('isShipping:', this.isShipping)
+
+      // this.productService.purchaseManyWithPrice(
+      //   this.chatInfo.productID || -1,
+      //   this.quantityToBuy,
+      //   +priceDollars,
+      //   +priceCents,
+      //   +shippingPriceDollars,
+      //   +shippingPriceCents
+      // ).subscribe((output) =>{
+      //   console.log(output);
+      // });
+
+      // this.chatService.chatGroupPurchase({
+      //   id: this.chatGroupID,
+      //   shippingPriceDollars: +shippingPriceDollars,
+      //   shippingPriceCents: +shippingPriceCents,
+      //   isShipping: this.isShipping,
+      //   finalPriceDollars: +priceDollars,
+      //   finalPriceCents: +priceCents,
+      //   quantity: this.quantityToBuy,
+      // } as ChatGroupFull2).subscribe((output2) => {
+      //   console.log(output2)
+      //   alert("Marked as Purchased!")
+      // });
+    }
+  
+    //trigger venmo tags to be sent
   }
 }

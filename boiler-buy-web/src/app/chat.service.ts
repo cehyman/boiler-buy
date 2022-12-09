@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppComponent } from './app.component';
 import { Globals } from './globals';
 import { Observable } from 'rxjs';
-import { ChatGroup, ChatGroupPK, ChatMessageItem } from './chat-types';
+import { ChatGroup, ChatGroupFull, ChatGroupFull2, ChatGroupPK, ChatMessageItem } from './chat-types';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +72,20 @@ export class ChatService {
     urlParams.set('buyer', data.buyer);
     urlParams.set('productID', "" + data.productID);
     urlParams.set('function', 'getCG');
+
+    return this.http.get("api/chatGroup/?" + urlParams.toString(), {observe:'response'});
+  }
+
+  chatGroupPurchase(data: ChatGroupFull2) {
+    var urlParams = new URLSearchParams();
+    urlParams.set('id', '' + data.id);
+    urlParams.set('shippingPriceDollars', ''+data.shippingPriceDollars);
+    urlParams.set('shippingPriceCents', "" + data.shippingPriceCents);
+    urlParams.set('isShipping', ''+data.isShipping);
+    urlParams.set('totalPriceCents', "" + data.finalPriceCents);
+    urlParams.set('totalPriceDollars', "" + data.finalPriceDollars);
+    urlParams.set('quantity', "" + data.quantity);
+    urlParams.set('function', 'purchase');
 
     return this.http.get("api/chatGroup/?" + urlParams.toString(), {observe:'response'});
   }

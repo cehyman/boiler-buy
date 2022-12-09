@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { AppComponent } from './app.component';
 import { Globals } from './globals';
 import { FilterSearchInput, ProductList } from './product-types';
+import { ChatService } from './chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class ProductService {
   constructor(
     private http: HttpClient, 
     private location: Location,
+    private chatService: ChatService
   ) {}
 
   getProductList(): Observable<ProductList> {
@@ -88,5 +90,28 @@ export class ProductService {
 
   getProductFromID(id: number): Observable<any> {
     return this.http.get('http://localhost:8000/api/products/' + id, {observe: "body"});
+  }
+
+  purchaseManyWithPrice(
+    productID: number,
+    quantity: number,
+    priceDollars: number,
+    priceCents: number,
+    priceShippingDollars:number,
+    priceShippingCents:number): Observable<any> {
+
+    let totalPriceCents = (priceCents * quantity) + priceShippingCents;
+    let carry = Math.trunc(totalPriceCents/100);
+    totalPriceCents = totalPriceCents % 100;
+    let totalPriceDollars = (priceDollars * quantity) + priceShippingDollars + carry;
+    var body = {
+      "username": this.appcomp.getUsername(),
+      "productID": productID,
+      "quantity": quantity,
+      "totalPriceDollars": totalPriceDollars,
+      "totalPriceCents": totalPriceCents,
+    }
+    var request = this.http.post('api/purchaseHistory/', body);
+    return request;
   }
 }
