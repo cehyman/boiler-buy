@@ -484,6 +484,14 @@ class ShopViewSet(viewsets.ModelViewSet):
         shop = Shop.objects.get(pk=pk)
         data = {"featuredProducts": shop.featuredProducts} 
         return JsonResponse(data)
+    
+    @action(detail=True, methods=['patch'])
+    def addFeatured(self, request, pk):
+        print(f"Adding product {pk} as a featured product")
+        shop = Shop.objects.get(pk=pk)
+        shop.featuredProducts.append(request.data.get("id"))
+        shop.save()
+        return JsonResponse({"success": True})
         
     @action(detail=True, methods=['patch'])
     def setImage(self, request, pk):
@@ -496,6 +504,7 @@ class ShopViewSet(viewsets.ModelViewSet):
     def clearImage(self, request, pk):
         shop = Shop.objects.get(pk=pk)
         shop.image = None
+        shop.save()
         return JsonResponse({"success": True})
     
     

@@ -124,7 +124,9 @@ import { GroupadDetailsComponent } from './groupad-details/groupad-details.compo
     CreateGroupAdComponent,
     GroupadListingComponent,
     GroupadDetailsComponent,
-    CreateGroupAdComponent
+    CreateGroupAdComponent,
+    MyShopComponent,
+    ChatOverviewComponent,
   ],
   imports: [
     FormsModule,

@@ -34,7 +34,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
-        fields = ['description', 'isVisible', 'products', 'image']
+        fields = ['description', 'isVisible', 'products', 'image', 'featuredProducts']
 
 class ShopHistorySerializer(serializers.ModelSerializer):
     class Meta:

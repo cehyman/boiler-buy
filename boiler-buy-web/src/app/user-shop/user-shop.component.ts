@@ -121,6 +121,17 @@ export class UserShopComponent implements OnInit {
     this.router.navigate(['/create-group-ad'])
   }
 
+  makeFeatured(id: number) {
+    console.log(`Making product #${id} featured`);
+
+    this.http.patch(
+      `/api/shops/${this.shop_id}/addFeatured/`,
+      {"id": id}
+    ).subscribe(response => {
+      console.log("Sent!");
+    });
+  }
+
   fetchCustomization() {
     // Fetch the shop id using the user's account.
     this.curremail = <string> this.appcomp.getEmail()
